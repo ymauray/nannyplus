@@ -1,0 +1,138 @@
+import 'package:childcare2/src/models/entry.dart';
+import 'package:childcare2/src/models/rates.dart';
+import 'package:childcare2/src/pages/rates_page.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:gettext_i18n/gettext_i18n.dart';
+
+import '../models/folder.dart';
+import '../models/app_theme.dart';
+import '../utils/database_utils.dart';
+
+class SettingsMenu extends StatelessWidget {
+  const SettingsMenu({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var themes = context.read<AppTheme>();
+    return Drawer(
+      child: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0, bottom: 8),
+              child: Text(
+                context.t('Settings'),
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            ),
+            const Divider(),
+            //
+            // Use dark mode
+            //
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(context.t('Use dark mode')),
+                  Switch(
+                    value: Theme.of(context).brightness == Brightness.dark,
+                    onChanged: (value) {
+                      themes.useDarkMode = value;
+                    },
+                  ),
+                ],
+              ),
+            ),
+            const Divider(),
+            ListTile(
+              title: Text(context.t("Tarifs")),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const RatesPage(),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+            ),
+            const Divider(),
+            //
+            // Reset database
+            //
+            if (kDebugMode) ...[
+              Consumer<Folders>(
+                builder: (context, folders, _) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      await DatabaseUtils.databaseUtils.deleteDatabase();
+                      context.read<Folders>().reload();
+                    },
+                    child: Text(context.t('Reset database')),
+                    style: ElevatedButton.styleFrom(primary: Colors.blue),
+                  ),
+                ),
+              ),
+              Consumer<Rates>(
+                builder: (_, rates, __) => Consumer<Folders>(
+                  builder: (context, folders, _) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await folders.addFolders([
+                          Folder.create(firstName: 'Catherine', lastName: 'Chaussée', preSchool: true, archived: false),
+                          Folder.create(firstName: 'Anne', lastName: 'Rochefort', preSchool: true, archived: false),
+                          Folder.create(firstName: 'Arnaud', lastName: 'Houle', preSchool: true, archived: false),
+                          Folder.create(firstName: 'Georgette', lastName: 'Gingras', preSchool: true, archived: false),
+                          Folder.create(firstName: 'Antoine', lastName: 'Vachon', preSchool: true, archived: false),
+                          Folder.create(firstName: 'Didier', lastName: 'Courtois', preSchool: true, archived: true),
+                          Folder.create(firstName: 'Roland', lastName: 'Duperré', preSchool: true, archived: false),
+                          Folder.create(firstName: 'Morgana', lastName: 'Louineaux', preSchool: true, archived: true),
+                          Folder.create(firstName: 'Hardouin', lastName: 'Leroux', preSchool: true, archived: false),
+                          Folder.create(firstName: 'Sibyla', lastName: 'Bouvier', preSchool: true, archived: false),
+                          Folder.create(firstName: 'Anouk', lastName: 'Lavoie', preSchool: true, archived: false),
+                          Folder.create(firstName: 'Lucas', lastName: 'Devost', preSchool: true, archived: false),
+                          Folder.create(firstName: 'Solaine', lastName: 'Franchet', preSchool: true, archived: true),
+                          Folder.create(firstName: 'Charlotte', lastName: 'Desaulniers', preSchool: true, archived: false),
+                          Folder.create(firstName: 'Laurene', lastName: 'Faucher', preSchool: true, archived: false),
+                          Folder.create(firstName: 'Yolette', lastName: 'Rouze', preSchool: true, archived: false)
+                        ]);
+                        var entries = Entries.load(folders.data[0]);
+                        //var rates = context.read<Rates>();
+                        await entries.addEntries([
+                          rates.createEntry(DateTime.parse('2021-10-28'), 1, 00, false, false, false, true)..invoiceId = 1,
+                          rates.createEntry(DateTime.parse('2021-10-26'), 1, 15, false, false, false, true)..invoiceId = 1,
+                          rates.createEntry(DateTime.parse('2021-10-14'), 1, 15, false, false, false, true)..invoiceId = 1,
+                          rates.createEntry(DateTime.parse('2021-10-13'), 1, 30, false, true, false, true)..invoiceId = 1,
+                          rates.createEntry(DateTime.parse('2021-10-12'), 1, 30, false, false, false, true)..invoiceId = 1,
+                          rates.createEntry(DateTime.parse('2021-10-06'), 1, 00, false, false, false, true)..invoiceId = 1,
+                          rates.createEntry(DateTime.parse('2021-10-05'), 1, 00, false, false, false, true)..invoiceId = 1,
+                          rates.createEntry(DateTime.parse('2021-10-04'), 7, 45, false, true, false, true)..invoiceId = 1,
+                          rates.createEntry(DateTime.parse('2021-11-04'), 0, 45, false, false, false, true),
+                          rates.createEntry(DateTime.parse('2021-11-09'), 1, 15, false, false, false, true),
+                          rates.createEntry(DateTime.parse('2021-11-17'), 1, 00, false, false, false, true),
+                          rates.createEntry(DateTime.parse('2021-11-18'), 2, 00, false, true, false, true),
+                          rates.createEntry(DateTime.parse('2021-11-21'), 4, 00, false, false, false, true),
+                          rates.createEntry(DateTime.parse('2021-11-23'), 2, 00, false, true, false, true),
+                          rates.createEntry(DateTime.parse('2021-11-30'), 2, 00, false, true, false, true),
+                        ]);
+                      },
+                      child: Text(context.t('Insert test data')),
+                      style: ElevatedButton.styleFrom(primary: Colors.blue),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
