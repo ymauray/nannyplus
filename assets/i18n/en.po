@@ -1,30 +1,65 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: childcare2\n"
+"Project-Id-Version: \n"
 "POT-Creation-Date: 2021-09-29 09:59+0200\n"
-"PO-Revision-Date: 2021-11-14 16:43+0100\n"
-"Last-Translator: Yannick Mauray\n"
-"Language-Team: Yannick Mauray <yannick.mauray@gmail.com>\n"
-"Language: en\n"
+"PO-Revision-Date: 2021-09-29 10:00+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en\n"
 
-#, fuzzy
 msgid "Settings"
 msgstr "Settings"
 
-#, fuzzy
 msgid "Use dark mode"
 msgstr "Use dark mode"
 
-#, fuzzy
 msgid "Reset database"
 msgstr "Reset database"
 
-#, fuzzy
 msgid "Insert test data"
 msgstr "Insert test data"
+
+msgid "Meals"
+msgstr "Meals"
+
+msgid "Preschool"
+msgstr "Preschool"
+
+msgid "Kindergarden"
+msgstr "Kindergarden"
+
+msgid "Misc"
+msgstr "Misc"
+
+msgid "Night"
+msgstr "Night"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Tarifs"
+msgstr "Tarifs"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Duration"
+msgstr "Duration"
+
+msgid "Rates"
+msgstr "Rates"
+
+msgid "Hours"
+msgstr "Hours"
+
+msgid "Week"
+msgstr "Week"
+
+msgid "Weekend"
+msgstr "Weekend"

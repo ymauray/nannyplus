@@ -1,0 +1,10 @@
+[main]
+host = https://www.transifex.com
+
+[nanny.enpo]
+file_filter = assets/i18n/<lang>.po
+minimum_perc = 0
+source_file = assets/i18n/en.po
+source_lang = en
+type = PO
+

@@ -1,30 +1,69 @@
+# 
+# Translators:
+# Yannick Mauray <yannick@frenchguy.ch>, 2021
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2021-09-29 09:59+0200\n"
-"PO-Revision-Date: 2021-11-14 16:44+0100\n"
-"Last-Translator: Yannick Mauray\n"
-"Language-Team: \n"
-"Language: fr_CH\n"
+"PO-Revision-Date: 2021-12-27 00:06+0000\n"
+"Last-Translator: Yannick Mauray <yannick@frenchguy.ch>, 2021\n"
+"Language-Team: French (Switzerland) (https://www.transifex.com/frenchguych/teams/129640/fr_CH/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fr_CH\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.0\n"
 "X-Poedit-Basepath: .\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#, fuzzy
 msgid "Settings"
 msgstr "Paramètres"
 
-#, fuzzy
 msgid "Use dark mode"
 msgstr "Utiliser le mode sombre"
 
-#, fuzzy
 msgid "Reset database"
 msgstr "Réinitialiser la base de données"
 
-#, fuzzy
 msgid "Insert test data"
 msgstr "Insérer des données de test"
+
+msgid "Meals"
+msgstr "Repas"
+
+msgid "Preschool"
+msgstr "Pré-scolaire"
+
+msgid "Kindergarden"
+msgstr "Parascolaire"
+
+msgid "Misc"
+msgstr "Divers"
+
+msgid "Night"
+msgstr "Nuit"
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Tarifs"
+msgstr "Tarifs"
+
+msgid "Delete"
+msgstr "Supprimer"
+
+msgid "Duration"
+msgstr "Durée"
+
+msgid "Rates"
+msgstr "Tarifs"
+
+msgid "Hours"
+msgstr "Heures"
+
+msgid "Week"
+msgstr "Semaine"
+
+msgid "Weekend"
+msgstr "Week-end"
