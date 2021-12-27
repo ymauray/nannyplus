@@ -49,7 +49,7 @@ class SettingsMenu extends StatelessWidget {
             ),
             const Divider(),
             ListTile(
-              title: Text(context.t("Tarifs")),
+              title: Text(context.t("Rates")),
               trailing: const Icon(Icons.chevron_right),
               onTap: () {
                 Navigator.of(context).pop();
