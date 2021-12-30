@@ -1,6 +1,6 @@
-import 'package:childcare2/src/models/entry.dart';
-import 'package:childcare2/src/models/rates.dart';
-import 'package:childcare2/src/pages/rates_page.dart';
+import 'package:nannyplus/src/models/entry.dart';
+import 'package:nannyplus/src/models/rates.dart';
+import 'package:nannyplus/src/pages/rates_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -86,41 +86,128 @@ class SettingsMenu extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () async {
                         await folders.addFolders([
-                          Folder.create(firstName: 'Catherine', lastName: 'Chaussée', preSchool: true, archived: false),
-                          Folder.create(firstName: 'Anne', lastName: 'Rochefort', preSchool: true, archived: false),
-                          Folder.create(firstName: 'Arnaud', lastName: 'Houle', preSchool: true, archived: false),
-                          Folder.create(firstName: 'Georgette', lastName: 'Gingras', preSchool: true, archived: false),
-                          Folder.create(firstName: 'Antoine', lastName: 'Vachon', preSchool: true, archived: false),
-                          Folder.create(firstName: 'Didier', lastName: 'Courtois', preSchool: true, archived: true),
-                          Folder.create(firstName: 'Roland', lastName: 'Duperré', preSchool: true, archived: false),
-                          Folder.create(firstName: 'Morgana', lastName: 'Louineaux', preSchool: true, archived: true),
-                          Folder.create(firstName: 'Hardouin', lastName: 'Leroux', preSchool: true, archived: false),
-                          Folder.create(firstName: 'Sibyla', lastName: 'Bouvier', preSchool: true, archived: false),
-                          Folder.create(firstName: 'Anouk', lastName: 'Lavoie', preSchool: true, archived: false),
-                          Folder.create(firstName: 'Lucas', lastName: 'Devost', preSchool: true, archived: false),
-                          Folder.create(firstName: 'Solaine', lastName: 'Franchet', preSchool: true, archived: true),
-                          Folder.create(firstName: 'Charlotte', lastName: 'Desaulniers', preSchool: true, archived: false),
-                          Folder.create(firstName: 'Laurene', lastName: 'Faucher', preSchool: true, archived: false),
-                          Folder.create(firstName: 'Yolette', lastName: 'Rouze', preSchool: true, archived: false)
+                          Folder.create(
+                              firstName: 'Catherine',
+                              lastName: 'Chaussée',
+                              preSchool: true,
+                              archived: false),
+                          Folder.create(
+                              firstName: 'Anne',
+                              lastName: 'Rochefort',
+                              preSchool: true,
+                              archived: false),
+                          Folder.create(
+                              firstName: 'Arnaud',
+                              lastName: 'Houle',
+                              preSchool: true,
+                              archived: false),
+                          Folder.create(
+                              firstName: 'Georgette',
+                              lastName: 'Gingras',
+                              preSchool: true,
+                              archived: false),
+                          Folder.create(
+                              firstName: 'Antoine',
+                              lastName: 'Vachon',
+                              preSchool: true,
+                              archived: false),
+                          Folder.create(
+                              firstName: 'Didier',
+                              lastName: 'Courtois',
+                              preSchool: true,
+                              archived: true),
+                          Folder.create(
+                              firstName: 'Roland',
+                              lastName: 'Duperré',
+                              preSchool: true,
+                              archived: false),
+                          Folder.create(
+                              firstName: 'Morgana',
+                              lastName: 'Louineaux',
+                              preSchool: true,
+                              archived: true),
+                          Folder.create(
+                              firstName: 'Hardouin',
+                              lastName: 'Leroux',
+                              preSchool: true,
+                              archived: false),
+                          Folder.create(
+                              firstName: 'Sibyla',
+                              lastName: 'Bouvier',
+                              preSchool: true,
+                              archived: false),
+                          Folder.create(
+                              firstName: 'Anouk',
+                              lastName: 'Lavoie',
+                              preSchool: true,
+                              archived: false),
+                          Folder.create(
+                              firstName: 'Lucas',
+                              lastName: 'Devost',
+                              preSchool: true,
+                              archived: false),
+                          Folder.create(
+                              firstName: 'Solaine',
+                              lastName: 'Franchet',
+                              preSchool: true,
+                              archived: true),
+                          Folder.create(
+                              firstName: 'Charlotte',
+                              lastName: 'Desaulniers',
+                              preSchool: true,
+                              archived: false),
+                          Folder.create(
+                              firstName: 'Laurene',
+                              lastName: 'Faucher',
+                              preSchool: true,
+                              archived: false),
+                          Folder.create(
+                              firstName: 'Yolette',
+                              lastName: 'Rouze',
+                              preSchool: true,
+                              archived: false)
                         ]);
                         var entries = Entries.load(folders.data[0]);
                         //var rates = context.read<Rates>();
                         await entries.addEntries([
-                          rates.createEntry(DateTime.parse('2021-10-28'), 1, 00, false, false, false, true)..invoiceId = 1,
-                          rates.createEntry(DateTime.parse('2021-10-26'), 1, 15, false, false, false, true)..invoiceId = 1,
-                          rates.createEntry(DateTime.parse('2021-10-14'), 1, 15, false, false, false, true)..invoiceId = 1,
-                          rates.createEntry(DateTime.parse('2021-10-13'), 1, 30, false, true, false, true)..invoiceId = 1,
-                          rates.createEntry(DateTime.parse('2021-10-12'), 1, 30, false, false, false, true)..invoiceId = 1,
-                          rates.createEntry(DateTime.parse('2021-10-06'), 1, 00, false, false, false, true)..invoiceId = 1,
-                          rates.createEntry(DateTime.parse('2021-10-05'), 1, 00, false, false, false, true)..invoiceId = 1,
-                          rates.createEntry(DateTime.parse('2021-10-04'), 7, 45, false, true, false, true)..invoiceId = 1,
-                          rates.createEntry(DateTime.parse('2021-11-04'), 0, 45, false, false, false, true),
-                          rates.createEntry(DateTime.parse('2021-11-09'), 1, 15, false, false, false, true),
-                          rates.createEntry(DateTime.parse('2021-11-17'), 1, 00, false, false, false, true),
-                          rates.createEntry(DateTime.parse('2021-11-18'), 2, 00, false, true, false, true),
-                          rates.createEntry(DateTime.parse('2021-11-21'), 4, 00, false, false, false, true),
-                          rates.createEntry(DateTime.parse('2021-11-23'), 2, 00, false, true, false, true),
-                          rates.createEntry(DateTime.parse('2021-11-30'), 2, 00, false, true, false, true),
+                          rates.createEntry(DateTime.parse('2021-10-28'), 1, 00,
+                              false, false, false, true)
+                            ..invoiceId = 1,
+                          rates.createEntry(DateTime.parse('2021-10-26'), 1, 15,
+                              false, false, false, true)
+                            ..invoiceId = 1,
+                          rates.createEntry(DateTime.parse('2021-10-14'), 1, 15,
+                              false, false, false, true)
+                            ..invoiceId = 1,
+                          rates.createEntry(DateTime.parse('2021-10-13'), 1, 30,
+                              false, true, false, true)
+                            ..invoiceId = 1,
+                          rates.createEntry(DateTime.parse('2021-10-12'), 1, 30,
+                              false, false, false, true)
+                            ..invoiceId = 1,
+                          rates.createEntry(DateTime.parse('2021-10-06'), 1, 00,
+                              false, false, false, true)
+                            ..invoiceId = 1,
+                          rates.createEntry(DateTime.parse('2021-10-05'), 1, 00,
+                              false, false, false, true)
+                            ..invoiceId = 1,
+                          rates.createEntry(DateTime.parse('2021-10-04'), 7, 45,
+                              false, true, false, true)
+                            ..invoiceId = 1,
+                          rates.createEntry(DateTime.parse('2021-11-04'), 0, 45,
+                              false, false, false, true),
+                          rates.createEntry(DateTime.parse('2021-11-09'), 1, 15,
+                              false, false, false, true),
+                          rates.createEntry(DateTime.parse('2021-11-17'), 1, 00,
+                              false, false, false, true),
+                          rates.createEntry(DateTime.parse('2021-11-18'), 2, 00,
+                              false, true, false, true),
+                          rates.createEntry(DateTime.parse('2021-11-21'), 4, 00,
+                              false, false, false, true),
+                          rates.createEntry(DateTime.parse('2021-11-23'), 2, 00,
+                              false, true, false, true),
+                          rates.createEntry(DateTime.parse('2021-11-30'), 2, 00,
+                              false, true, false, true),
                         ]);
                       },
                       child: Text(context.t('Insert test data')),

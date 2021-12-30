@@ -1,4 +1,4 @@
-import 'package:childcare2/src/models/entry.dart';
+import 'package:nannyplus/src/models/entry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Rates {
@@ -29,7 +29,8 @@ class Rates {
   }
 
   double computeTotal(Entry entry, bool preSchool) {
-    var total = (entry.hours! + entry.minutes! / 60) * (entry.date!.isWeekend() ? weekendHours! : weekHours!) +
+    var total = (entry.hours! + entry.minutes! / 60) *
+            (entry.date!.isWeekend() ? weekendHours! : weekHours!) +
         (entry.lunch!
             ? preSchool
                 ? mealPreschool!
@@ -45,8 +46,10 @@ class Rates {
     return total;
   }
 
-  Entry createEntry(DateTime date, int hours, int minutes, bool lunch, bool diner, bool night, bool preSchool) {
-    var total = (hours + minutes / 60) * (date.isWeekend() ? weekendHours! : weekHours!) +
+  Entry createEntry(DateTime date, int hours, int minutes, bool lunch,
+      bool diner, bool night, bool preSchool) {
+    var total = (hours + minutes / 60) *
+            (date.isWeekend() ? weekendHours! : weekHours!) +
         (lunch
             ? preSchool
                 ? mealPreschool!

@@ -1,6 +1,6 @@
-import 'package:childcare2/src/models/rates.dart';
-import 'package:childcare2/src/widgets/ex_forms/ex_form_row.dart';
-import 'package:childcare2/src/widgets/ex_forms/ex_text_field.dart';
+import 'package:nannyplus/src/models/rates.dart';
+import 'package:nannyplus/src/widgets/ex_forms/ex_form_row.dart';
+import 'package:nannyplus/src/widgets/ex_forms/ex_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -47,8 +47,11 @@ class RatesPage extends StatelessWidget {
                         child: ExTextField(
                           label: Text(context.t("Week")),
                           keyboardType: TextInputType.number,
-                          controller: TextEditingController(text: rates.weekHours?.toString()),
-                          validator: (value) => (value == null || value.isEmpty) ? context.t('This value cannot be empty') : null,
+                          controller: TextEditingController(
+                              text: rates.weekHours?.toString()),
+                          validator: (value) => (value == null || value.isEmpty)
+                              ? context.t('This value cannot be empty')
+                              : null,
                           onSaved: (value) {
                             rates.weekHours = double.parse(value!);
                           },
@@ -58,8 +61,11 @@ class RatesPage extends StatelessWidget {
                         child: ExTextField(
                           label: Text(context.t("Weekend")),
                           keyboardType: TextInputType.number,
-                          controller: TextEditingController(text: rates.weekendHours?.toString()),
-                          validator: (value) => (value == null || value.isEmpty) ? context.t('This value cannot be empty') : null,
+                          controller: TextEditingController(
+                              text: rates.weekendHours?.toString()),
+                          validator: (value) => (value == null || value.isEmpty)
+                              ? context.t('This value cannot be empty')
+                              : null,
                           onSaved: (value) {
                             rates.weekendHours = double.parse(value!);
                           },
@@ -87,8 +93,11 @@ class RatesPage extends StatelessWidget {
                             context.t("Preschool"),
                           ),
                           keyboardType: TextInputType.number,
-                          controller: TextEditingController(text: rates.mealPreschool?.toString()),
-                          validator: (value) => (value == null || value.isEmpty) ? context.t('This value cannot be empty') : null,
+                          controller: TextEditingController(
+                              text: rates.mealPreschool?.toString()),
+                          validator: (value) => (value == null || value.isEmpty)
+                              ? context.t('This value cannot be empty')
+                              : null,
                           onSaved: (value) {
                             rates.mealPreschool = double.parse(value!);
                           },
@@ -100,8 +109,11 @@ class RatesPage extends StatelessWidget {
                             context.t("Kindergarden"),
                           ),
                           keyboardType: TextInputType.number,
-                          controller: TextEditingController(text: rates.mealKindergarden?.toString()),
-                          validator: (value) => (value == null || value.isEmpty) ? context.t('This value cannot be empty') : null,
+                          controller: TextEditingController(
+                              text: rates.mealKindergarden?.toString()),
+                          validator: (value) => (value == null || value.isEmpty)
+                              ? context.t('This value cannot be empty')
+                              : null,
                           onSaved: (value) {
                             rates.mealKindergarden = double.parse(value!);
                           },
@@ -129,8 +141,11 @@ class RatesPage extends StatelessWidget {
                             context.t("Night"),
                           ),
                           keyboardType: TextInputType.number,
-                          controller: TextEditingController(text: rates.night?.toString()),
-                          validator: (value) => (value == null || value.isEmpty) ? context.t('This value cannot be empty') : null,
+                          controller: TextEditingController(
+                              text: rates.night?.toString()),
+                          validator: (value) => (value == null || value.isEmpty)
+                              ? context.t('This value cannot be empty')
+                              : null,
                           onSaved: (value) {
                             rates.night = double.parse(value!);
                           },

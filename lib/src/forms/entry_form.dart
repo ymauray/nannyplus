@@ -1,6 +1,5 @@
-import 'package:childcare2/src/models/rates.dart';
+import 'package:nannyplus/src/models/rates.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../models/entry.dart';
 import '../widgets/ex_forms/ex_date_picker.dart';
@@ -44,7 +43,9 @@ class _EntryFormState extends State<EntryForm> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: widget.input == null ? const Text('Add entry') : const Text('Edit entry'),
+        title: widget.input == null
+            ? const Text('Add entry')
+            : const Text('Edit entry'),
         actions: [
           TextButton(
             onPressed: () {

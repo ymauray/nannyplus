@@ -1,7 +1,7 @@
-import 'package:childcare2/src/widgets/ex_forms/ex_date_picker.dart';
-import 'package:childcare2/src/widgets/ex_forms/ex_form_row.dart';
-import 'package:childcare2/src/widgets/ex_forms/ex_switch_button.dart';
-import 'package:childcare2/src/widgets/ex_forms/ex_text_field.dart';
+import 'package:nannyplus/src/widgets/ex_forms/ex_date_picker.dart';
+import 'package:nannyplus/src/widgets/ex_forms/ex_form_row.dart';
+import 'package:nannyplus/src/widgets/ex_forms/ex_switch_button.dart';
+import 'package:nannyplus/src/widgets/ex_forms/ex_text_field.dart';
 import 'package:flutter/material.dart';
 
 import '../models/folder.dart';
@@ -19,7 +19,8 @@ class _FolderFormState extends State<FolderForm> {
   final _formKey = GlobalKey<FormState>();
   final _returnValue = Folder.empty();
 
-  String? notNullNorEmpty(String? value) => (value == null || value.isEmpty) ? '' : null;
+  String? notNullNorEmpty(String? value) =>
+      (value == null || value.isEmpty) ? '' : null;
 
   bool _preSchool = false;
   bool _kindergarden = false;
@@ -28,7 +29,10 @@ class _FolderFormState extends State<FolderForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.input != null ? '${widget.input!.firstName} ${widget.input!.lastName ?? ''}'.trim() : 'New folder'),
+        title: Text(widget.input != null
+            ? '${widget.input!.firstName} ${widget.input!.lastName ?? ''}'
+                .trim()
+            : 'New folder'),
         centerTitle: true,
         actions: [
           TextButton(
@@ -107,7 +111,8 @@ class _FolderFormState extends State<FolderForm> {
                             _kindergarden = !value;
                           });
                         },
-                        validator: (_) => !_preSchool && !_kindergarden ? '' : null,
+                        validator: (_) =>
+                            !_preSchool && !_kindergarden ? '' : null,
                         onSaved: (value) {
                           _returnValue.preSchool = value;
                         },
@@ -123,7 +128,8 @@ class _FolderFormState extends State<FolderForm> {
                             _preSchool = !value;
                           });
                         },
-                        validator: (_) => !_preSchool && !_kindergarden ? '' : null,
+                        validator: (_) =>
+                            !_preSchool && !_kindergarden ? '' : null,
                         onSaved: (value) {
                           _returnValue.kinderGarden = value;
                         },

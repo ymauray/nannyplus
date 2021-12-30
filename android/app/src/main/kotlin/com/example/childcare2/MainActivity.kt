@@ -1,4 +1,4 @@
-package com.example.childcare2
+package ch.frenchguy.nannyplus
 
 import io.flutter.embedding.android.FlutterActivity
 
