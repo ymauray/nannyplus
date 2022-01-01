@@ -65,20 +65,20 @@ class SettingsMenu extends StatelessWidget {
             //
             // Reset database
             //
-            if (kDebugMode) ...[
-              Consumer<Folders>(
-                builder: (context, folders, _) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await DatabaseUtils.databaseUtils.deleteDatabase();
-                      context.read<Folders>().reload();
-                    },
-                    child: Text(context.t('Reset database')),
-                    style: ElevatedButton.styleFrom(primary: Colors.blue),
-                  ),
+            Consumer<Folders>(
+              builder: (context, folders, _) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    await DatabaseUtils.databaseUtils.deleteDatabase();
+                    context.read<Folders>().reload();
+                  },
+                  child: Text(context.t('Reset database')),
+                  style: ElevatedButton.styleFrom(primary: Colors.blue),
                 ),
               ),
+            ),
+            if (kDebugMode) ...[
               Consumer<Rates>(
                 builder: (_, rates, __) => Consumer<Folders>(
                   builder: (context, folders, _) => Padding(
@@ -95,7 +95,8 @@ class SettingsMenu extends StatelessWidget {
                               firstName: 'Anne',
                               lastName: 'Rochefort',
                               preSchool: true,
-                              archived: false),
+                              archived: false,
+                              phoneNumber: "+41786481543"),
                           Folder.create(
                               firstName: 'Arnaud',
                               lastName: 'Houle',

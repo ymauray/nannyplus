@@ -5,7 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 
 import 'models/app_theme.dart';
-import 'pages/home_page.dart';
+import 'pages/tabbed_home_page.dart';
 
 class NannyPlusApp extends StatelessWidget {
   const NannyPlusApp({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class NannyPlusApp extends StatelessWidget {
         theme: appTheme.lightTheme,
         darkTheme: appTheme.darkTheme,
         themeMode: appTheme.themeMode,
-        home: const HomePage(),
+        home: const TabbedHomePage(),
         supportedLocales: const [
           /*
            * List of locales (language + country) we have translations for.
@@ -50,12 +50,14 @@ class NannyPlusApp extends StatelessWidget {
         localeListResolutionCallback: (locales, supportedLocales) {
           if (locales != null) {
             for (var locale in locales) {
-              var supportedLocale =
-                  supportedLocales.where((element) => element.languageCode == locale.languageCode && element.countryCode == locale.countryCode);
+              var supportedLocale = supportedLocales.where((element) =>
+                  element.languageCode == locale.languageCode &&
+                  element.countryCode == locale.countryCode);
               if (supportedLocale.isNotEmpty) {
                 return supportedLocale.first;
               }
-              supportedLocale = supportedLocales.where((element) => element.languageCode == locale.languageCode);
+              supportedLocale = supportedLocales.where(
+                  (element) => element.languageCode == locale.languageCode);
               if (supportedLocale.isNotEmpty) {
                 return supportedLocale.first;
               }

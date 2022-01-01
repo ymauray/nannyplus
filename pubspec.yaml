@@ -43,6 +43,7 @@ dependencies:
   logger: ^1.1.0
   gettext_i18n: ^1.0.2
   shared_preferences: ^2.0.9
+  url_launcher: ^6.0.17
 
 dev_dependencies:
   flutter_test:

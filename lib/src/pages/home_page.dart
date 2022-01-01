@@ -21,23 +21,39 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: const Text('Nanny+'),
           centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () async {
+                var result = await Navigator.of(context).push<Folder>(
+                  MaterialPageRoute(
+                    fullscreenDialog: true,
+                    builder: (context) => const FolderForm(),
+                  ),
+                );
+                if (result != null) {
+                  folders.createFolder(result);
+                }
+              },
+              icon: const Icon(Icons.add),
+            ),
+          ],
         ),
         drawer: const SettingsMenu(),
         body: FoldersList(folders),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            var result = await Navigator.of(context).push<Folder>(
-              MaterialPageRoute(
-                fullscreenDialog: true,
-                builder: (context) => const FolderForm(),
-              ),
-            );
-            if (result != null) {
-              folders.createFolder(result);
-            }
-          },
-          child: const Icon(Icons.add),
-        ),
+        //floatingActionButton: FloatingActionButton(
+        //  onPressed: () async {
+        //    var result = await Navigator.of(context).push<Folder>(
+        //      MaterialPageRoute(
+        //        fullscreenDialog: true,
+        //        builder: (context) => const FolderForm(),
+        //      ),
+        //    );
+        //    if (result != null) {
+        //      folders.createFolder(result);
+        //    }
+        //  },
+        //  child: const Icon(Icons.add),
+        //),
       ),
     );
   }
