@@ -5,6 +5,7 @@ class ExTextField extends StatelessWidget {
     Key? key,
     required this.label,
     this.keyboardType,
+    this.textCapitalization,
     this.showCursor,
     this.enableInteractiveSelection = true,
     this.onTap,
@@ -16,6 +17,7 @@ class ExTextField extends StatelessWidget {
 
   final Widget label;
   final TextInputType? keyboardType;
+  final TextCapitalization? textCapitalization;
   final bool? showCursor;
   final bool enableInteractiveSelection;
   final GestureTapCallback? onTap;
@@ -33,6 +35,7 @@ class ExTextField extends StatelessWidget {
         errorStyle: const TextStyle(height: 0),
       ),
       keyboardType: keyboardType,
+      textCapitalization: textCapitalization ?? TextCapitalization.none,
       showCursor: showCursor,
       enableInteractiveSelection: enableInteractiveSelection,
       onTap: onTap,

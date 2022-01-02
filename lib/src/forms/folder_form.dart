@@ -63,6 +63,8 @@ class _FolderFormState extends State<FolderForm> {
                     const Icon(Icons.child_care),
                     Expanded(
                       child: ExTextField(
+                        keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.sentences,
                         label: const Text('First name'),
                         validator: notNullNorEmpty,
                         onSaved: (value) {
@@ -77,6 +79,8 @@ class _FolderFormState extends State<FolderForm> {
                     const SizedBox(width: 24),
                     Expanded(
                       child: ExTextField(
+                        keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.sentences,
                         label: const Text('Last name'),
                         onSaved: (value) {
                           _returnValue.lastName = value;
@@ -142,6 +146,8 @@ class _FolderFormState extends State<FolderForm> {
                     const SizedBox(width: 24),
                     Expanded(
                       child: ExTextField(
+                        keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.sentences,
                         label: const Text('Allergies'),
                         maxLines: 2,
                         onSaved: (value) {
@@ -156,6 +162,8 @@ class _FolderFormState extends State<FolderForm> {
                     const Icon(Icons.people),
                     Expanded(
                       child: ExTextField(
+                        keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.words,
                         label: const Text('Parents name'),
                         maxLines: 2,
                         onSaved: (value) {
@@ -170,6 +178,8 @@ class _FolderFormState extends State<FolderForm> {
                     const SizedBox(width: 24),
                     Expanded(
                       child: ExTextField(
+                        keyboardType: TextInputType.multiline,
+                        textCapitalization: TextCapitalization.words,
                         label: const Text('Address'),
                         maxLines: 2,
                         onSaved: (value) {
@@ -184,6 +194,8 @@ class _FolderFormState extends State<FolderForm> {
                     const Icon(Icons.phone),
                     Expanded(
                       child: ExTextField(
+                        keyboardType: TextInputType.phone,
+                        textCapitalization: TextCapitalization.sentences,
                         label: const Text('Phone number'),
                         onSaved: (value) {
                           _returnValue.phoneNumber = value;
@@ -197,6 +209,8 @@ class _FolderFormState extends State<FolderForm> {
                     const Icon(Icons.info),
                     Expanded(
                       child: ExTextField(
+                        keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.sentences,
                         label: const Text('Other information'),
                         maxLines: 3,
                         onSaved: (value) {

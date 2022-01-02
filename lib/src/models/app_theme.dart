@@ -19,7 +19,8 @@ class AppTheme extends ChangeNotifier {
         color: Colors.white,
       ),
     ),
-    floatingActionButtonTheme: yaru.lightTheme.floatingActionButtonTheme.copyWith(
+    floatingActionButtonTheme:
+        yaru.lightTheme.floatingActionButtonTheme.copyWith(
       backgroundColor: Colors.blue,
     ),
   );
@@ -30,6 +31,10 @@ class AppTheme extends ChangeNotifier {
   ThemeData get lightTheme => _lightTheme;
   ThemeData get darkTheme => _darkTheme;
   ThemeMode get themeMode => _themeMode ?? ThemeMode.system;
+
+  void setDarkMode(bool useDarkMode) {
+    _themeMode = useDarkMode ? ThemeMode.dark : ThemeMode.light;
+  }
 
   set useDarkMode(bool useDarkMode) {
     _themeMode = useDarkMode ? ThemeMode.dark : ThemeMode.light;

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/app_theme.dart';
 import 'pages/tabbed_home_page.dart';
@@ -13,14 +14,24 @@ class NannyPlusApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppTheme>(
-      builder: (context, appTheme, _) => MaterialApp(
-        theme: appTheme.lightTheme,
-        darkTheme: appTheme.darkTheme,
-        themeMode: appTheme.themeMode,
-        home: const TabbedHomePage(),
-        supportedLocales: const [
-          /*
+    return FutureBuilder<SharedPreferences>(
+      future: SharedPreferences.getInstance(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.data != null) {
+          var pref = snapshot.data!.getBool("useDarkMode");
+          if (pref != null) {
+            var appTheme = context.read<AppTheme>();
+            appTheme.setDarkMode(pref);
+          }
+          return Consumer<AppTheme>(
+            builder: (context, appTheme, _) => MaterialApp(
+              theme: appTheme.lightTheme,
+              darkTheme: appTheme.darkTheme,
+              themeMode: appTheme.themeMode,
+              home: const TabbedHomePage(),
+              supportedLocales: const [
+                /*
            * List of locales (language + country) we have translations for.
            * 
            * If there is a file for the tuple (langue, country) in assets/lib/i18n, then this
@@ -38,34 +49,41 @@ class NannyPlusApp extends StatelessWidget {
            * but are present in fr.po, the missing translations will not be picked up from fr.po,
            * and thus will show up in english.
            */
-          Locale('en'),
-          Locale('fr'),
-          Locale('fr', 'CH'),
-        ],
-        localizationsDelegates: [
-          GettextLocalizationsDelegate(defaultLanguage: 'en'),
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        localeListResolutionCallback: (locales, supportedLocales) {
-          if (locales != null) {
-            for (var locale in locales) {
-              var supportedLocale = supportedLocales.where((element) =>
-                  element.languageCode == locale.languageCode &&
-                  element.countryCode == locale.countryCode);
-              if (supportedLocale.isNotEmpty) {
-                return supportedLocale.first;
-              }
-              supportedLocale = supportedLocales.where(
-                  (element) => element.languageCode == locale.languageCode);
-              if (supportedLocale.isNotEmpty) {
-                return supportedLocale.first;
-              }
-            }
-          }
-          return null;
-        },
-      ),
+                Locale('en'),
+                Locale('fr'),
+                Locale('fr', 'CH'),
+              ],
+              localizationsDelegates: [
+                GettextLocalizationsDelegate(defaultLanguage: 'en'),
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              localeListResolutionCallback: (locales, supportedLocales) {
+                if (locales != null) {
+                  for (var locale in locales) {
+                    var supportedLocale = supportedLocales.where((element) =>
+                        element.languageCode == locale.languageCode &&
+                        element.countryCode == locale.countryCode);
+                    if (supportedLocale.isNotEmpty) {
+                      return supportedLocale.first;
+                    }
+                    supportedLocale = supportedLocales.where((element) =>
+                        element.languageCode == locale.languageCode);
+                    if (supportedLocale.isNotEmpty) {
+                      return supportedLocale.first;
+                    }
+                  }
+                }
+                return null;
+              },
+            ),
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }

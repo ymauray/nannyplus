@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/folder.dart';
 import '../models/app_theme.dart';
@@ -42,6 +43,8 @@ class SettingsMenu extends StatelessWidget {
                     value: Theme.of(context).brightness == Brightness.dark,
                     onChanged: (value) {
                       themes.useDarkMode = value;
+                      SharedPreferences.getInstance()
+                          .then((prefs) => prefs.setBool("useDarkMode", value));
                     },
                   ),
                 ],
