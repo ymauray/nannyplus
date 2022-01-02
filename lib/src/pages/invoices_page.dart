@@ -1,9 +1,7 @@
 import 'package:nannyplus/src/models/entry.dart';
 import 'package:nannyplus/src/widgets/ex_forms/ex_form_row.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-import 'package:provider/provider.dart';
 
 import '../models/folder.dart';
 

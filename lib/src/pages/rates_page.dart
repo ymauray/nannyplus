@@ -2,8 +2,6 @@ import 'package:nannyplus/src/models/rates.dart';
 import 'package:nannyplus/src/widgets/ex_forms/ex_form_row.dart';
 import 'package:nannyplus/src/widgets/ex_forms/ex_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:provider/provider.dart';

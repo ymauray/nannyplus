@@ -1,4 +1,3 @@
-import 'package:nannyplus/src/models/rates.dart';
 import 'package:flutter/material.dart';
 
 import '../models/entry.dart';

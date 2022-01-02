@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'folder.dart';
-import 'rates.dart';
 import '../utils/database_utils.dart';
 
 extension DateTimeExt on DateTime {
@@ -14,7 +13,8 @@ extension DateTimeExt on DateTime {
 }
 
 class Entry {
-  Entry.create(this.date, this.hours, this.minutes, this.lunch, this.diner, this.night, this.total);
+  Entry.create(this.date, this.hours, this.minutes, this.lunch, this.diner,
+      this.night, this.total);
 
   Entry.empty();
 
@@ -47,7 +47,8 @@ class Entry {
   Entry.fromDbMap(Map<String, Object?> row)
       : id = row['id'] as int,
         folderId = row['folderId'] as int,
-        date = row['date'] == null ? null : DateTime.parse(row['date'] as String),
+        date =
+            row['date'] == null ? null : DateTime.parse(row['date'] as String),
         total = row['total'] as double,
         hours = row['hours'] as int,
         minutes = row['minutes'] as int,
@@ -85,10 +86,13 @@ class Entries extends ChangeNotifier {
   final _data = <Entry>[];
   final Folder _folder;
 
-  List<Entry> get data => UnmodifiableListView(_data.where((element) => (element.invoiceId == null)));
+  List<Entry> get data => UnmodifiableListView(
+      _data.where((element) => (element.invoiceId == null)));
 
   double total() {
-    return data.isEmpty ? 0 : data.map((e) => e.total!).reduce((value, element) => value + element);
+    return data.isEmpty
+        ? 0
+        : data.map((e) => e.total!).reduce((value, element) => value + element);
   }
 
   void createEntry(Entry entry) async {
