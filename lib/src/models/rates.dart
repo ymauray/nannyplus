@@ -8,6 +8,18 @@ class Rates {
   double? mealKindergarden;
   double? night;
 
+  bool get allSet =>
+      weekHours != null &&
+      weekHours! > 0 &&
+      weekendHours != null &&
+      weekendHours! > 0 &&
+      mealPreschool != null &&
+      mealPreschool! > 0 &&
+      mealKindergarden != null &&
+      mealKindergarden! > 0 &&
+      night != null &&
+      night! > 0;
+
   void commit() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setDouble("weekHours", weekHours!);

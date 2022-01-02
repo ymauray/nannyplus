@@ -15,6 +15,7 @@ void main() {
         ChangeNotifierProvider<Folders>(create: (_) => Folders()),
         ChangeNotifierProvider<AppTheme>(create: (_) => AppTheme()),
         FutureProvider<Rates>(
+          lazy: false,
           create: (_) {
             var rates = Rates();
             return rates.load();

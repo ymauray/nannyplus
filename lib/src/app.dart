@@ -19,36 +19,37 @@ class NannyPlusApp extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data != null) {
-          var pref = snapshot.data!.getBool("useDarkMode");
-          if (pref != null) {
+          var sharedPreferences = snapshot.data!;
+          var useDarkMode = sharedPreferences.getBool("useDarkMode");
+          if (useDarkMode != null) {
             var appTheme = context.read<AppTheme>();
-            appTheme.setDarkMode(pref);
+            appTheme.setDarkMode(useDarkMode);
           }
           return Consumer<AppTheme>(
             builder: (context, appTheme, _) => MaterialApp(
               theme: appTheme.lightTheme,
               darkTheme: appTheme.darkTheme,
               themeMode: appTheme.themeMode,
-              home: const TabbedHomePage(),
+              home: TabbedHomePage(sharedPreferences: sharedPreferences),
               supportedLocales: const [
                 /*
-           * List of locales (language + country) we have translations for.
-           * 
-           * If there is a file for the tuple (langue, country) in assets/lib/i18n, then this
-           * will be used for translation.
-           * 
-           * If there is not, then we'll look for a file for the language only.
-           * 
-           * If there is no file for the language code, we'll fallback to the english file.
-           * 
-           * Example : let's say the locale is fr_CH. We will look for "assets/lib/i18n/fr_CH.po", 
-           * "assets/lib/i18n/fr.po", and "assets/lib/i18n/en.po", stopping at the first file we
-           * find.
-           * 
-           * Translation files are not merged, meaning if some translations are missing in fr_CH.po
-           * but are present in fr.po, the missing translations will not be picked up from fr.po,
-           * and thus will show up in english.
-           */
+                 * List of locales (language + country) we have translations for.
+                 * 
+                 * If there is a file for the tuple (langue, country) in assets/lib/i18n, then this
+                 * will be used for translation.
+                 * 
+                 * If there is not, then we'll look for a file for the language only.
+                 * 
+                 * If there is no file for the language code, we'll fallback to the english file.
+                 * 
+                 * Example : let's say the locale is fr_CH. We will look for "assets/lib/i18n/fr_CH.po", 
+                 * "assets/lib/i18n/fr.po", and "assets/lib/i18n/en.po", stopping at the first file we
+                 * find.
+                 * 
+                 * Translation files are not merged, meaning if some translations are missing in fr_CH.po
+                 * but are present in fr.po, the missing translations will not be picked up from fr.po,
+                 * and thus will show up in english.
+                 */
                 Locale('en'),
                 Locale('fr'),
                 Locale('fr', 'CH'),

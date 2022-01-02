@@ -74,6 +74,8 @@ class SettingsMenu extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () async {
                     await DatabaseUtils.databaseUtils.deleteDatabase();
+                    final prefs = await SharedPreferences.getInstance();
+                    prefs.clear();
                     context.read<Folders>().reload();
                   },
                   child: Text(context.t('Reset database')),
