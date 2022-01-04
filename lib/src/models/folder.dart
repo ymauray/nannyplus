@@ -96,8 +96,13 @@ class Folders extends ChangeNotifier {
 
   final _data = <Folder>[];
 
-  List<Folder> get data =>
-      UnmodifiableListView(_data.where((element) => !element.archived!));
+  List<Folder> getData(bool showArchived) {
+    if (!showArchived) {
+      return UnmodifiableListView(_data.where((element) => !element.archived!));
+    } else {
+      return UnmodifiableListView(_data);
+    }
+  }
 
   Future<Folder> createFolder(Folder folder) async {
     var db = await DatabaseUtils.databaseUtils.database;

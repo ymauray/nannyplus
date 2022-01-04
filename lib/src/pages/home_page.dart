@@ -14,6 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool _showArchived = false;
   @override
   Widget build(BuildContext context) {
     return Consumer<Folders>(
@@ -21,39 +22,35 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: const Text('Nanny+'),
           centerTitle: true,
+          //bottom: const MyFilter(),
           actions: [
-            IconButton(
-              onPressed: () async {
-                var result = await Navigator.of(context).push<Folder>(
-                  MaterialPageRoute(
-                    fullscreenDialog: true,
-                    builder: (context) => const FolderForm(),
-                  ),
-                );
-                if (result != null) {
-                  folders.createFolder(result);
-                }
-              },
-              icon: const Icon(Icons.add),
-            ),
+            Switch(
+                activeColor: Colors.white,
+                activeTrackColor: Colors.grey[300],
+                value: _showArchived,
+                onChanged: (value) {
+                  setState(() {
+                    _showArchived = value;
+                  });
+                })
           ],
         ),
         drawer: const SettingsMenu(),
-        body: FoldersList(folders),
-        //floatingActionButton: FloatingActionButton(
-        //  onPressed: () async {
-        //    var result = await Navigator.of(context).push<Folder>(
-        //      MaterialPageRoute(
-        //        fullscreenDialog: true,
-        //        builder: (context) => const FolderForm(),
-        //      ),
-        //    );
-        //    if (result != null) {
-        //      folders.createFolder(result);
-        //    }
-        //  },
-        //  child: const Icon(Icons.add),
-        //),
+        body: FoldersList(folders, _showArchived),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            var result = await Navigator.of(context).push<Folder>(
+              MaterialPageRoute(
+                fullscreenDialog: true,
+                builder: (context) => const FolderForm(),
+              ),
+            );
+            if (result != null) {
+              folders.createFolder(result);
+            }
+          },
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }

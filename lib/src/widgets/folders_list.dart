@@ -9,19 +9,22 @@ import '../models/folder.dart';
 import '../pages/entries_page.dart';
 
 class FoldersList extends StatelessWidget {
-  const FoldersList(this.folders, {Key? key}) : super(key: key);
+  const FoldersList(this.folders, this.showArchived, {Key? key})
+      : super(key: key);
 
   final Folders folders;
+  final bool showArchived;
 
   @override
   Widget build(BuildContext context) {
+    var data = folders.getData(showArchived);
     return ListView.separated(
-      itemCount: folders.data.length + 2,
+      itemCount: data.length + 2,
       itemBuilder: (context, index) {
-        if (index == 0 || index == folders.data.length + 1) {
+        if (index == 0 || index == data.length + 1) {
           return Container(); // Height 0, so invisible
         } else {
-          var folder = folders.data[index - 1];
+          var folder = data[index - 1];
           return ListTile(
             leading: IconButton(
               icon: Icon(

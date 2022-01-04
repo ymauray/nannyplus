@@ -201,7 +201,7 @@ class _SettingsMenuState extends State<SettingsMenu> {
                               preSchool: true,
                               archived: false)
                         ]);
-                        var entries = Entries.load(folders.data[0]);
+                        var entries = Entries.load(folders.getData(true)[0]);
                         //var rates = context.read<Rates>();
                         await entries.addEntries([
                           rates.createEntry(DateTime.parse('2021-10-28'), 1, 00,
