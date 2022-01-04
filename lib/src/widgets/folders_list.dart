@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
@@ -36,7 +37,9 @@ class FoldersList extends StatelessWidget {
                 }
               },
             ),
-            title: Text("${folder.firstName!} ${folder.lastName}".trim()),
+            title: Text(
+                "${folder.firstName!} ${folder.lastName} ${kDebugMode ? folder.id : ''}"
+                    .trim()),
             subtitle: Text((folder.allergies ?? "").isEmpty
                 ? context.t("No known allergies")
                 : folder.allergies),

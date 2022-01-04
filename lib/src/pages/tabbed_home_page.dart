@@ -8,16 +8,29 @@ import '../models/rates.dart';
 import 'home_page.dart';
 import 'rates_page.dart';
 
+class TabMeta {
+  final String label;
+  final Icon icon;
+  final Widget widget;
+
+  TabMeta({required this.label, required this.icon, required this.widget});
+}
+
 class TabbedHomePage extends StatefulWidget {
   const TabbedHomePage({Key? key, required this.sharedPreferences})
       : super(key: key);
 
   final SharedPreferences sharedPreferences;
 
-  static const List<Widget> _widgetOptions = [
-    HomePage(),
-    HomePage(),
-    HomePage(),
+  static final List<TabMeta> _widgetOptions = [
+    TabMeta(
+        label: 'Children',
+        icon: const Icon(Icons.folder),
+        widget: const HomePage()),
+    TabMeta(
+        label: 'Taxes',
+        icon: const Icon(FontAwesomeIcons.euroSign),
+        widget: const HomePage()),
   ];
 
   @override
@@ -32,29 +45,19 @@ class _TabbedHomePageState extends State<TabbedHomePage> {
       builder: (context, rates, _) {
         if (rates.allSet) {
           return DefaultTabController(
-            length: 3,
+            length: TabbedHomePage._widgetOptions.length,
             child: Scaffold(
               body: Center(
-                child: TabbedHomePage._widgetOptions.elementAt(_selectedIndex),
+                child: TabbedHomePage._widgetOptions
+                    .elementAt(_selectedIndex)
+                    .widget,
               ),
               bottomNavigationBar: BottomNavigationBar(
                   selectedItemColor: Colors.blue,
-                  items: [
-                    BottomNavigationBarItem(
-                      label: context.t("Children"),
-                      icon: const Icon(Icons.folder),
-                    ),
-                    BottomNavigationBarItem(
-                      label: context.t("Invoices"),
-                      icon: const Icon(FontAwesomeIcons.solidFilePdf),
-                    ),
-                    BottomNavigationBarItem(
-                      label: context.t("Taxes"),
-                      icon: const Icon(
-                        FontAwesomeIcons.euroSign,
-                      ),
-                    )
-                  ],
+                  items: TabbedHomePage._widgetOptions
+                      .map((e) =>
+                          BottomNavigationBarItem(icon: e.icon, label: e.label))
+                      .toList(),
                   currentIndex: _selectedIndex,
                   onTap: (int index) {
                     setState(() {

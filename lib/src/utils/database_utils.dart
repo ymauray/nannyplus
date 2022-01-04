@@ -16,14 +16,18 @@ class DatabaseUtils {
   sqlite.Database? _database;
 
   Future<String>? _path;
-  Future<String> get _databasePath async => _path ?? (_path = Future.value(join(await sqlite.getDatabasesPath(), 'nannyplus.db')));
+  Future<String> get _databasePath async =>
+      _path ??
+      (_path =
+          Future.value(join(await sqlite.getDatabasesPath(), 'nannyplus.db')));
 
   Future<sqlite.Database> get database async {
     if (_database != null) {
       return _database!;
     }
 
-    _database = await sqlite.openDatabase(await _databasePath, version: 1, onCreate: _create);
+    _database = await sqlite.openDatabase(await _databasePath,
+        version: 1, onCreate: _create);
 
     return _database!;
   }
@@ -60,6 +64,18 @@ class DatabaseUtils {
           invoiceId INTEGER
         )
         ''');
+
+    await db.execute('''
+        CREATE TABLE invoice(
+          id INTEGER PRIMARY KEY,
+          folderId INTEGER,
+          number INTEGER,
+          date TEXT,
+          total DOUBLE,
+          parents TEXT,
+          address TEXT
+        )
+    ''');
   }
 
   Future<void> deleteDatabase() async {

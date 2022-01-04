@@ -38,7 +38,9 @@ class Folder {
       : id = row['id'] as int,
         firstName = row['firstName'] as String?,
         lastName = row['lastName'] as String?,
-        birthDate = row['birthDate'] == null ? null : DateTime.parse(row['birthDate'] as String),
+        birthDate = row['birthDate'] == null
+            ? null
+            : DateTime.parse(row['birthDate'] as String),
         preSchool = row['preSchool'].toBool(),
         kinderGarden = row['kinderGarden'].toBool(),
         allergies = row['allergies'] as String?,
@@ -48,11 +50,27 @@ class Folder {
         misc = row['misc'] as String?,
         archived = row['archived'].toBool();
 
+  Folder.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        firstName = json['firstName'],
+        lastName = json['lastName'],
+        birthDate = null,
+        preSchool = true,
+        kinderGarden = false,
+        allergies = null,
+        parentsName = json['parentsName'],
+        address = json['address'],
+        phoneNumber = null,
+        misc = null,
+        archived = json['archived'];
+
   Map<String, Object?> toDbMap() {
     return {
       'firstName': firstName,
       'lastName': lastName,
-      'birthDate': birthDate == null ? null : DateFormat('yyyy-MM-dd').format(birthDate!),
+      'birthDate': birthDate == null
+          ? null
+          : DateFormat('yyyy-MM-dd').format(birthDate!),
       'preSchool': preSchool.toDbInt(),
       'kinderGarden': kinderGarden.toDbInt(),
       'allergies': allergies,
@@ -78,12 +96,15 @@ class Folders extends ChangeNotifier {
 
   final _data = <Folder>[];
 
-  List<Folder> get data => UnmodifiableListView(_data.where((element) => !element.archived!));
+  List<Folder> get data =>
+      UnmodifiableListView(_data.where((element) => !element.archived!));
 
-  Future<void> createFolder(Folder folder) async {
+  Future<Folder> createFolder(Folder folder) async {
     var db = await DatabaseUtils.databaseUtils.database;
-    await db.insert('folder', folder.toDbMap());
+    var id = await db.insert('folder', folder.toDbMap());
+    folder.id = id;
     reload();
+    return folder;
   }
 
   Future<void> addFolders(List<Folder> folders) async {

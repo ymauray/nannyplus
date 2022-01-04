@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:nannyplus/src/models/entry.dart';
 import 'package:nannyplus/src/models/rates.dart';
+import 'package:nannyplus/src/pages/import_page.dart';
 import 'package:nannyplus/src/pages/rates_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +15,17 @@ import '../models/folder.dart';
 import '../models/app_theme.dart';
 import '../utils/database_utils.dart';
 
-class SettingsMenu extends StatelessWidget {
+class SettingsMenu extends StatefulWidget {
   const SettingsMenu({Key? key}) : super(key: key);
+
+  @override
+  State<SettingsMenu> createState() => _SettingsMenuState();
+}
+
+class _SettingsMenuState extends State<SettingsMenu> {
+  Timer? _timer;
+  int _tapCount = 0;
+  bool _showExtraMenu = kDebugMode;
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +36,25 @@ class SettingsMenu extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 16.0, bottom: 8),
-              child: Text(
-                context.t('Settings'),
-                style: Theme.of(context).textTheme.subtitle1,
+              child: GestureDetector(
+                onTap: () {
+                  _tapCount += 1;
+                  if (_tapCount == 7) {
+                    setState(() {
+                      _showExtraMenu = true;
+                    });
+                  }
+                  if (_timer != null) {
+                    _timer!.cancel();
+                  }
+                  _timer = Timer(const Duration(milliseconds: 200), () {
+                    _tapCount = 0;
+                  });
+                },
+                child: Text(
+                  context.t('Settings'),
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
               ),
             ),
             const Divider(),
@@ -223,6 +251,22 @@ class SettingsMenu extends StatelessWidget {
                 ),
               ),
             ],
+            if (_showExtraMenu) ...[
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ImportPage(),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(primary: Colors.blue),
+                child: Text(
+                  context.t("Import data"),
+                ),
+              ),
+            ]
           ],
         ),
       ),

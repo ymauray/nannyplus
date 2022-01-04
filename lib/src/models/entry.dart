@@ -29,21 +29,6 @@ class Entry {
   double? total;
   int? invoiceId;
 
-  //double total(Rates rates) {
-  //  return (hours! + minutes! / 60) * (date!.isWeekend() ? rates.weekendHours! : rates.weekHours!) +
-  //      (lunch!
-  //          ? preSchool!
-  //              ? rates.mealPreschool!
-  //              : rates.mealKindergarden!
-  //          : 0) +
-  //      (diner!
-  //          ? preSchool!
-  //              ? rates.mealPreschool!
-  //              : rates.mealKindergarden!
-  //          : 0) +
-  //      (night! ? rates.night! : 0);
-  //}
-
   Entry.fromDbMap(Map<String, Object?> row)
       : id = row['id'] as int,
         folderId = row['folderId'] as int,
@@ -95,11 +80,13 @@ class Entries extends ChangeNotifier {
         : data.map((e) => e.total!).reduce((value, element) => value + element);
   }
 
-  void createEntry(Entry entry) async {
+  Future<Entry> createEntry(Entry entry) async {
     entry.folderId = _folder.id;
     var db = await DatabaseUtils.databaseUtils.database;
-    await db.insert('entry', entry.toDbMap());
+    var id = await db.insert('entry', entry.toDbMap());
+    entry.id = id;
     reload();
+    return entry;
   }
 
   Future<void> addEntries(List<Entry> entries) async {

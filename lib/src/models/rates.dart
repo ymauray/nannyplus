@@ -58,6 +58,17 @@ class Rates {
     return total;
   }
 
+  Entry createEntryFromJson(Map<String, dynamic> json, bool preSchool) {
+    var date = DateTime.parse(json['date']);
+    var hours = json['hours'];
+    var minutes = json['minutes'];
+    var lunch = json['lunch'];
+    var diner = json['night'];
+    var night = false;
+
+    return createEntry(date, hours, minutes, lunch, diner, night, preSchool);
+  }
+
   Entry createEntry(DateTime date, int hours, int minutes, bool lunch,
       bool diner, bool night, bool preSchool) {
     var total = (hours + minutes / 60) *
