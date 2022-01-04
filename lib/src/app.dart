@@ -30,7 +30,7 @@ class NannyPlusApp extends StatelessWidget {
               theme: appTheme.lightTheme,
               darkTheme: appTheme.darkTheme,
               themeMode: appTheme.themeMode,
-              home: TabbedHomePage(sharedPreferences: sharedPreferences),
+              home: TabbedHomePage(),
               supportedLocales: const [
                 /*
                  * List of locales (language + country) we have translations for.

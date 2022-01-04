@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../pages/tabbed_entries_page.dart';
 import '../models/entry.dart';
 import '../models/folder.dart';
-import '../pages/entries_page.dart';
 
 class FoldersList extends StatelessWidget {
   const FoldersList(this.folders, this.showArchived, {Key? key})
@@ -41,8 +41,13 @@ class FoldersList extends StatelessWidget {
               },
             ),
             title: Text(
-                "${folder.firstName!} ${folder.lastName} ${kDebugMode ? folder.id : ''}"
-                    .trim()),
+              "${folder.firstName!} ${folder.lastName} ${kDebugMode ? folder.id : ''}"
+                  .trim(),
+              style: (folder.archived ?? false)
+                  ? const TextStyle(
+                      fontStyle: FontStyle.italic, color: Colors.grey)
+                  : null,
+            ),
             subtitle: Text((folder.allergies ?? "").isEmpty
                 ? context.t("No known allergies")
                 : folder.allergies),
@@ -51,7 +56,7 @@ class FoldersList extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => ChangeNotifierProvider<Entries>(
                     create: (_) => Entries.load(folder),
-                    builder: (context, _) => EntriesPage(folder),
+                    builder: (context, _) => TabbedEntriesPage(folder),
                   ),
                 ),
               );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:gettext_i18n/gettext_i18n.dart';
 
 import '../forms/folder_form.dart';
 import '../models/folder.dart';
@@ -21,18 +22,29 @@ class _HomePageState extends State<HomePage> {
       builder: (context, folders, _) => Scaffold(
         appBar: AppBar(
           title: const Text('Nanny+'),
-          centerTitle: true,
-          //bottom: const MyFilter(),
+          //centerTitle: true,
           actions: [
-            Switch(
-                activeColor: Colors.white,
-                activeTrackColor: Colors.grey[300],
-                value: _showArchived,
-                onChanged: (value) {
+            PopupMenuButton<String>(
+              itemBuilder: (context) => [
+                PopupMenuItem<String>(
+                  value: "show_archived",
+                  child: Row(
+                    children: [
+                      Text(_showArchived
+                          ? context.t("Hide archived folders")
+                          : context.t("Show archived folders")),
+                    ],
+                  ),
+                ),
+              ],
+              onSelected: (value) {
+                if (value == 'show_archived') {
                   setState(() {
-                    _showArchived = value;
+                    _showArchived = !_showArchived;
                   });
-                })
+                }
+              },
+            ),
           ],
         ),
         drawer: const SettingsMenu(),

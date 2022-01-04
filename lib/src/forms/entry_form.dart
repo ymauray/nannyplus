@@ -41,7 +41,7 @@ class _EntryFormState extends State<EntryForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        //centerTitle: true,
         title: widget.input == null
             ? const Text('Add entry')
             : const Text('Edit entry'),

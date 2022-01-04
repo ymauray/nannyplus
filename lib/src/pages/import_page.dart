@@ -21,7 +21,7 @@ class ImportPage extends StatelessWidget {
     return Consumer<Folders>(
       builder: (context, folders, _) => Scaffold(
         appBar: AppBar(
-          centerTitle: true,
+          //centerTitle: true,
           title: Text(
             context.t("Import data"),
           ),

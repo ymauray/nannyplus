@@ -101,7 +101,8 @@ class Entries extends ChangeNotifier {
   void updateEntry(Entry entry) async {
     entry.folderId = _folder.id;
     var db = await DatabaseUtils.databaseUtils.database;
-    await db.update('entry', entry.toDbMap());
+    await db.update('entry', entry.toDbMap(),
+        where: 'id = ?', whereArgs: [entry.id]);
     reload();
   }
 

@@ -7,7 +7,6 @@ import '../forms/entry_form.dart';
 import '../models/entry.dart';
 import '../models/folder.dart';
 import '../models/rates.dart';
-import '../pages/invoices_page.dart';
 
 class TableHeader extends StatelessWidget {
   const TableHeader({Key? key}) : super(key: key);
@@ -98,9 +97,15 @@ class EntryRow extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            Icon(entry.lunch! ? Icons.check_box_outlined : Icons.check_box_outline_blank),
-            Icon(entry.diner! ? Icons.check_box_outlined : Icons.check_box_outline_blank),
-            Icon(entry.night! ? Icons.check_box_outlined : Icons.check_box_outline_blank),
+            Icon(entry.lunch!
+                ? Icons.check_box_outlined
+                : Icons.check_box_outline_blank),
+            Icon(entry.diner!
+                ? Icons.check_box_outlined
+                : Icons.check_box_outline_blank),
+            Icon(entry.night!
+                ? Icons.check_box_outlined
+                : Icons.check_box_outline_blank),
             SizedBox(
               width: 60,
               child: Text(
@@ -119,7 +124,8 @@ class EntryRow extends StatelessWidget {
           );
           if (result != null) {
             result.id = entry.id;
-            result.total = context.read<Rates>().computeTotal(result, preSchool);
+            result.total =
+                context.read<Rates>().computeTotal(result, preSchool);
             context.read<Entries>().updateEntry(result);
           }
         },
@@ -134,7 +140,8 @@ class EntryRow extends StatelessWidget {
       builder: (context) {
         return AlertDialog(
           title: Text(context.t('Delete')),
-          content: Text(context.t('Are you sure you want to delete this entry ?')),
+          content:
+              Text(context.t('Are you sure you want to delete this entry ?')),
           actions: [
             TextButton(
               onPressed: () {
@@ -157,29 +164,69 @@ class EntryRow extends StatelessWidget {
   }
 }
 
-class EntriesPage extends StatelessWidget {
+class EntriesPage extends StatefulWidget {
   const EntriesPage(this.folder, {Key? key}) : super(key: key);
 
   final Folder folder;
 
+  @override
+  State<EntriesPage> createState() => _EntriesPageState();
+}
+
+class _EntriesPageState extends State<EntriesPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<Entries>(
       builder: (context, entries, _) {
         return Scaffold(
           appBar: AppBar(
-            title: Text("${folder.firstName} ${folder.lastName}"),
-            centerTitle: true,
+            title: Text(
+              "${widget.folder.firstName} ${widget.folder.lastName}",
+              style: (widget.folder.archived ?? false)
+                  ? const TextStyle(fontStyle: FontStyle.italic)
+                  : null,
+            ),
+            //centerTitle: true,
             actions: [
               PopupMenuButton<String>(
                 itemBuilder: (context) => [
-                  PopupMenuItem<String>(value: "invoices", child: Text(context.t("Invoices"))),
-                  const PopupMenuItem(enabled: false, height: 1, child: Divider()),
-                  PopupMenuItem<String>(value: "view", child: Text(context.t("View"))),
-                  PopupMenuItem<String>(value: "delete", child: Text(context.t("Delete"), style: const TextStyle(color: Colors.red))),
+                  //PopupMenuItem<String>(
+                  //    value: "invoices", child: Text(context.t("Invoices"))),
+                  //const PopupMenuItem(
+                  //    enabled: false, height: 1, child: Divider()),
+                  //PopupMenuItem<String>(
+                  //    value: "view", child: Text(context.t("View"))),
+                  PopupMenuItem<String>(
+                    value: "archive",
+                    child: Text(
+                      widget.folder.archived ?? false
+                          ? context.t("Un-archive")
+                          : context.t("Archive"),
+                    ),
+                  ),
+                  PopupMenuItem<String>(
+                    value: "delete",
+                    child: Text(
+                      context.t("Delete"),
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  ),
                 ],
                 onSelected: (value) {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => InvoicesPage(folder: folder, entries: entries)));
+                  switch (value) {
+                    case 'archive':
+                      setState(() {
+                        widget.folder.archived =
+                            !(widget.folder.archived ?? false);
+                      });
+                      var folders = context.read<Folders>();
+                      folders.updateFolder(widget.folder);
+                      break;
+                    case 'delete':
+                      break;
+                    default:
+                      break;
+                  }
                 },
               ),
             ],
@@ -197,7 +244,7 @@ class EntriesPage extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     var entry = entries.data[index];
-                    return EntryRow(entry, folder.preSchool!);
+                    return EntryRow(entry, widget.folder.preSchool!);
                   },
                   separatorBuilder: (context, index) => Container(
                     height: 1,
@@ -218,7 +265,9 @@ class EntriesPage extends StatelessWidget {
               );
               if (returnValue != null) {
                 //returnValue.preSchool = returnValue.preSchool ?? folder.preSchool;
-                returnValue.total = context.read<Rates>().computeTotal(returnValue, folder.preSchool!);
+                returnValue.total = context
+                    .read<Rates>()
+                    .computeTotal(returnValue, widget.folder.preSchool!);
                 entries.createEntry(returnValue);
               }
             },

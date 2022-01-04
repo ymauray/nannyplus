@@ -120,6 +120,17 @@ class Folders extends ChangeNotifier {
     await reload();
   }
 
+  void updateFolder(Folder folder) async {
+    var db = await DatabaseUtils.databaseUtils.database;
+    await db.update(
+      'folder',
+      folder.toDbMap(),
+      where: 'id = ?',
+      whereArgs: [folder.id],
+    );
+    reload();
+  }
+
   Future<void> reload() async {
     var db = await DatabaseUtils.databaseUtils.database;
     var rows = await db.query('folder');

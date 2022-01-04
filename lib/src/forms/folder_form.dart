@@ -33,7 +33,7 @@ class _FolderFormState extends State<FolderForm> {
             ? '${widget.input!.firstName} ${widget.input!.lastName ?? ''}'
                 .trim()
             : 'New folder'),
-        centerTitle: true,
+        //centerTitle: true,
         actions: [
           TextButton(
             onPressed: () {

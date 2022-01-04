@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:nannyplus/src/models/rates.dart';
 import 'package:nannyplus/src/widgets/ex_forms/ex_form_row.dart';
 import 'package:nannyplus/src/widgets/ex_forms/ex_text_field.dart';
@@ -13,11 +12,10 @@ class RatesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    final _numberFormat = NumberFormat.currency();
     return Scaffold(
       appBar: AppBar(
         title: Text(context.t('Rates')),
-        centerTitle: true,
+        //centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Consumer<Rates>(

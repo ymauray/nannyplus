@@ -2,30 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utils/tab_meta.dart';
 import '../models/rates.dart';
 import 'home_page.dart';
 import 'rates_page.dart';
 
-class TabMeta {
-  final String label;
-  final Icon icon;
-  final Widget widget;
-
-  TabMeta({required this.label, required this.icon, required this.widget});
-}
-
 class TabbedHomePage extends StatefulWidget {
-  const TabbedHomePage({Key? key, required this.sharedPreferences})
-      : super(key: key);
+  TabbedHomePage({Key? key}) : super(key: key);
 
-  final SharedPreferences sharedPreferences;
-
-  static final List<TabMeta> _widgetOptions = [
+  final List<TabMeta> _widgetOptions = [
     TabMeta(
         label: 'Children',
-        icon: const Icon(Icons.folder),
+        icon: const Icon(Icons.child_care),
         widget: const HomePage()),
     TabMeta(
         label: 'Taxes',
@@ -45,16 +34,14 @@ class _TabbedHomePageState extends State<TabbedHomePage> {
       builder: (context, rates, _) {
         if (rates.allSet) {
           return DefaultTabController(
-            length: TabbedHomePage._widgetOptions.length,
+            length: widget._widgetOptions.length,
             child: Scaffold(
               body: Center(
-                child: TabbedHomePage._widgetOptions
-                    .elementAt(_selectedIndex)
-                    .widget,
+                child: widget._widgetOptions.elementAt(_selectedIndex).widget,
               ),
               bottomNavigationBar: BottomNavigationBar(
                   selectedItemColor: Colors.blue,
-                  items: TabbedHomePage._widgetOptions
+                  items: widget._widgetOptions
                       .map((e) =>
                           BottomNavigationBarItem(icon: e.icon, label: e.label))
                       .toList(),
