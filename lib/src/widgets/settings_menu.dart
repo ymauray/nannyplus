@@ -1,16 +1,17 @@
 import 'dart:async';
+import 'dart:convert';
 
-import 'package:nannyplus/src/models/entry.dart';
-import 'package:nannyplus/src/models/rates.dart';
-import 'package:nannyplus/src/pages/import_page.dart';
-import 'package:nannyplus/src/pages/rates_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:nannyplus/src/models/invoice.dart';
 import 'package:provider/provider.dart';
-
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
+import '../models/entry.dart';
+import '../models/rates.dart';
+import '../pages/rates_page.dart';
 import '../models/folder.dart';
 import '../models/app_theme.dart';
 import '../utils/database_utils.dart';
@@ -252,18 +253,65 @@ class _SettingsMenuState extends State<SettingsMenu> {
               ),
             ],
             if (_showExtraMenu) ...[
-              ElevatedButton(
-                onPressed: () {
+              Consumer<Rates>(
+                builder: (_, rates, __) => Consumer<Folders>(
+                  builder: (context, folders, _) => ElevatedButton(
+                    onPressed: () async {
+                      String basicAuth = 'Basic c2FuZHJpbmU6bm91cnMxNDA4MDQ=';
+
+                      final response = await http.get(
+                        Uri.parse('https://sandrinekohler.ch/api/json'),
+                        headers: {
+                          'authorization': basicAuth,
+                        },
+                      );
+                      Map<String, dynamic> jsonData = jsonDecode(response.body);
+
+                      // Iterate of children in json file
+                      var children = jsonData['children'] as List;
+                      for (var child in children) {
+                        // Create a folder from json data
+                        var folder =
+                            await folders.createFolder(Folder.fromJson(child));
+
+                        // Create invoices from json data, mapping them to newly created folder
+                        // Also create a map of old ids => new ids
+                        var idMap = <int, int>{};
+                        var invoices = Invoices.load(folder);
+                        var invoicesData = child['_invoices'] as List;
+                        for (var invoiceData in invoicesData) {
+                          var invoice = Invoice.fromJson(invoiceData);
+                          var oldId = invoice.id!;
+                          invoice = await invoices.createInvoice(invoice);
+                          idMap[oldId] = invoice.id!;
+                        }
+
+                        // Create entries from json data, mapping old invoice ids to new ones
+                        var entries = Entries.load(folder);
+                        var entriesData = child['_entries'] as List;
+                        for (var entryData in entriesData) {
+                          var entry =
+                              rates.createEntryFromJson(entryData, true);
+                          entry.invoiceId =
+                              idMap[int.tryParse(entryData['invoiceId'])!];
+                          entry = await entries.createEntry(entry);
+                        }
+                      }
+
+                      /*
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => const ImportPage(),
                     ),
                   );
-                },
-                style: ElevatedButton.styleFrom(primary: Colors.blue),
-                child: Text(
-                  context.t("Import data"),
+                  */
+                    },
+                    style: ElevatedButton.styleFrom(primary: Colors.blue),
+                    child: Text(
+                      context.t("Import data"),
+                    ),
+                  ),
                 ),
               ),
             ]
