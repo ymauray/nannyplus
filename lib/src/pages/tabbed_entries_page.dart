@@ -4,25 +4,25 @@ import 'package:nannyplus/src/pages/invoices_page.dart';
 
 import '../models/folder.dart';
 import '../pages/entries_page.dart';
-import '../utils/tab_meta.dart';
+import '../../tools/tab_meta.dart';
 
 class TabbedEntriesPage extends StatefulWidget {
   TabbedEntriesPage(this.folder, {Key? key})
       : _widgetOptions = [
-          TabMeta(
-              label: 'Entries',
-              icon: const Icon(Icons.hourglass_empty),
-              widget: EntriesPage(folder)),
-          TabMeta(
-              label: 'Invoices',
-              icon: const Icon(FontAwesomeIcons.filePdf),
-              widget: InvoicesPage(
-                folder: folder,
-              )),
-          TabMeta(
-              label: 'Folder',
-              icon: const Icon(FontAwesomeIcons.folder),
-              widget: Container()),
+          //TabMeta(
+          //    label: 'Entries',
+          //    icon: const Icon(Icons.hourglass_empty),
+          //    widget: OldEntriesPage(folder)),
+          //TabMeta(
+          //    label: 'Invoices',
+          //    icon: const Icon(FontAwesomeIcons.filePdf),
+          //    widget: InvoicesPage(
+          //      folder: folder,
+          //    )),
+          //TabMeta(
+          //    label: 'Folder',
+          //    icon: const Icon(FontAwesomeIcons.folder),
+          //    widget: Container()),
         ],
         super(key: key);
 

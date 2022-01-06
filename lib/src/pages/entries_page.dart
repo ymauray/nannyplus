@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nannyplus/cubit/entries_page_cubit.dart';
+import 'package:nannyplus/src/models/entries_repository.dart';
+import 'package:nannyplus/src/widgets/child_name_app_bar_title.dart';
+import 'package:nannyplus/src/widgets/pending_balance.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
@@ -164,29 +169,127 @@ class EntryRow extends StatelessWidget {
   }
 }
 
-class EntriesPage extends StatefulWidget {
+class EntriesPage extends StatelessWidget {
   const EntriesPage(this.folder, {Key? key}) : super(key: key);
 
   final Folder folder;
 
   @override
-  State<EntriesPage> createState() => _EntriesPageState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =>
+          EntriesPageCubit(EntriesRepository())..getEntries(folder.id!),
+      child: BlocBuilder<EntriesPageCubit, EntriesPageState>(
+        builder: (context, entriesPageState) {
+          return Scaffold(
+            appBar: AppBar(
+              title: ChildNameAppBarTitle(folder),
+              actions: [
+                PopupMenuButton<String>(
+                  itemBuilder: (context) => [
+                    //PopupMenuItem<String>(
+                    //    value: "invoices", child: Text(context.t("Invoices"))),
+                    //const PopupMenuItem(
+                    //    enabled: false, height: 1, child: Divider()),
+                    //PopupMenuItem<String>(
+                    //    value: "view", child: Text(context.t("View"))),
+                    PopupMenuItem<String>(
+                      value: "archive",
+                      child: Text(
+                        folder.archived ?? false
+                            ? context.t("Un-archive")
+                            : context.t("Archive"),
+                      ),
+                    ),
+                    PopupMenuItem<String>(
+                      value: "delete",
+                      child: Text(
+                        context.t("Delete"),
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  ],
+                  onSelected: (value) {
+                    switch (value) {
+                      case 'archive':
+                        //setState(() {
+                        //  widget.folder.archived =
+                        //      !(widget.folder.archived ?? false);
+                        //});
+                        var folders = context.read<Folders>();
+                        folders.updateFolder(folder);
+                        break;
+                      case 'delete':
+                        break;
+                      default:
+                        break;
+                    }
+                  },
+                ),
+              ],
+            ),
+            body: Column(
+              children: [
+                //PendingBalance(entriesPageState.entries),
+                const TableHeader(),
+                Expanded(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      var entry = entriesPageState.entries[index];
+                      return EntryRow(entry, folder.preSchool!);
+                    },
+                    separatorBuilder: (context, index) => Container(
+                      height: 1,
+                      color: Colors.grey,
+                    ),
+                    itemCount: entriesPageState.entries.length,
+                  ),
+                ),
+              ],
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () async {
+                var returnValue = await Navigator.of(context).push<Entry>(
+                  MaterialPageRoute(
+                    fullscreenDialog: true,
+                    builder: (_) => const EntryForm(),
+                  ),
+                );
+                if (returnValue != null) {
+                  //returnValue.preSchool = returnValue.preSchool ?? folder.preSchool;
+                  returnValue.total = context
+                      .read<Rates>()
+                      .computeTotal(returnValue, folder.preSchool!);
+                  //entries.createEntry(returnValue);
+                }
+              },
+              child: const Icon(Icons.add),
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
 
-class _EntriesPageState extends State<EntriesPage> {
+class OldEntriesPage extends StatefulWidget {
+  const OldEntriesPage(this.folder, {Key? key}) : super(key: key);
+
+  final Folder folder;
+
+  @override
+  State<OldEntriesPage> createState() => _OldEntriesPageState();
+}
+
+class _OldEntriesPageState extends State<OldEntriesPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<Entries>(
       builder: (context, entries, _) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(
-              "${widget.folder.firstName} ${widget.folder.lastName}",
-              style: (widget.folder.archived ?? false)
-                  ? const TextStyle(fontStyle: FontStyle.italic)
-                  : null,
-            ),
-            //centerTitle: true,
+            title: ChildNameAppBarTitle(widget.folder),
             actions: [
               PopupMenuButton<String>(
                 itemBuilder: (context) => [
@@ -233,11 +336,7 @@ class _EntriesPageState extends State<EntriesPage> {
           ),
           body: Column(
             children: [
-              ListTile(
-                title: Text(
-                  "Pending balance : ${entries.total().toStringAsFixed(2)}",
-                ),
-              ),
+              PendingBalance(entries),
               const TableHeader(),
               Expanded(
                 child: ListView.separated(

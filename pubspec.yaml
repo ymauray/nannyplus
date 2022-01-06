@@ -45,6 +45,8 @@ dependencies:
   shared_preferences: ^2.0.9
   url_launcher: ^6.0.17
   http: ^0.13.4
+  bloc: ^8.0.2
+  flutter_bloc: ^8.0.1
 
 dev_dependencies:
   flutter_test:

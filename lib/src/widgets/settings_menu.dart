@@ -267,6 +267,17 @@ class _SettingsMenuState extends State<SettingsMenu> {
                       );
                       Map<String, dynamic> jsonData = jsonDecode(response.body);
 
+                      // Get price list
+                      var priceList =
+                          jsonData['pricelist'] as Map<String, dynamic>;
+                      var rates = context.read<Rates>();
+                      rates.weekHours = 1.0 * priceList['week'];
+                      rates.weekendHours = 1.0 * priceList['weekend'];
+                      rates.mealPreschool = 1.0 * priceList['lunch'];
+                      rates.mealPreschool = 1.0 * priceList['diner'];
+                      rates.night = 1.0 * priceList['night'];
+                      rates.commit();
+
                       // Iterate of children in json file
                       var children = jsonData['children'] as List;
                       for (var child in children) {

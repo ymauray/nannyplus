@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:provider/provider.dart';
 
-import '../utils/tab_meta.dart';
+import '../../tools/tab_meta.dart';
 import '../models/rates.dart';
 import 'home_page.dart';
 import 'rates_page.dart';
@@ -12,14 +12,14 @@ class TabbedHomePage extends StatefulWidget {
   TabbedHomePage({Key? key}) : super(key: key);
 
   final List<TabMeta> _widgetOptions = [
-    TabMeta(
-        label: 'Children',
-        icon: const Icon(Icons.child_care),
-        widget: const HomePage()),
-    TabMeta(
-        label: 'Taxes',
-        icon: const Icon(FontAwesomeIcons.euroSign),
-        widget: const HomePage()),
+    //TabMeta(
+    //    label: 'Children',
+    //    icon: const Icon(Icons.child_care),
+    //    widget: const HomePage()),
+    //TabMeta(
+    //    label: 'Taxes',
+    //    icon: const Icon(FontAwesomeIcons.euroSign),
+    //    widget: const HomePage()),
   ];
 
   @override
