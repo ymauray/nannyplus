@@ -6,7 +6,7 @@ import 'package:yaru/yaru.dart' as yaru;
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../home/home_view.dart';
+import 'pages/home/home_page.dart';
 import 'src/models/app_theme.dart';
 import 'src/pages/tabbed_home_page.dart';
 
@@ -16,7 +16,10 @@ class NannyPlusApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _lightTheme = yaru.lightTheme.copyWith(
-      primaryColor: Colors.blue,
+      colorScheme: yaru.lightTheme.colorScheme.copyWith(
+        primary: Colors.blue,
+        onPrimary: Colors.white,
+      ),
       appBarTheme: yaru.lightTheme.appBarTheme.copyWith(
         backgroundColor: Colors.blue,
         titleTextStyle: yaru.lightTheme.appBarTheme.titleTextStyle?.copyWith(
@@ -37,7 +40,7 @@ class NannyPlusApp extends StatelessWidget {
     );
     final _darkTheme = yaru.darkTheme.copyWith();
     return MaterialApp(
-      home: HomeView(),
+      home: HomePage(),
       theme: _lightTheme,
       darkTheme: _darkTheme,
       supportedLocales: const [

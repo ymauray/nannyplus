@@ -5,7 +5,7 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 import '../forms/folder_form.dart';
 import '../models/folder.dart';
 import '../widgets/folders_list.dart';
-import '../widgets/settings_menu.dart';
+import '../../pages/home/drawer/home_drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

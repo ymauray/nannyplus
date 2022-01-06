@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../tools/tab_meta.dart';
 import '../models/rates.dart';
 import 'home_page.dart';
-import 'rates_page.dart';
+import '../../pages/price_list/price_list_page.dart';
 
 class TabbedHomePage extends StatefulWidget {
   TabbedHomePage({Key? key}) : super(key: key);
@@ -79,7 +79,7 @@ class _TabbedHomePageState extends State<TabbedHomePage> {
                   onPressed: () async {
                     await Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const RatesPage(),
+                        builder: (context) => const PriceListPage(),
                         fullscreenDialog: true,
                       ),
                     );

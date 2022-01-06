@@ -8,15 +8,90 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-import '../models/invoice.dart';
-import '../models/entry.dart';
-import '../models/rates.dart';
-import '../pages/rates_page.dart';
-import '../models/folder.dart';
-import '../models/app_theme.dart';
-import '../utils/database_utils.dart';
+import '../../../src/models/invoice.dart';
+import '../../../src/models/entry.dart';
+import '../../../src/models/rates.dart';
+import '../../price_list/price_list_page.dart';
+import '../../../src/models/folder.dart';
+import '../../../src/models/app_theme.dart';
+import '../../../src/utils/database_utils.dart';
+import '../../../src/widgets/basic_auth.dart';
 
-import 'basic_auth.dart';
+class HomeDrawer extends StatelessWidget {
+  const HomeDrawer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Timer? _timer;
+    int _tapCount = 0;
+    bool _showExtraMenu = kDebugMode;
+    return Drawer(
+      child: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0, bottom: 8),
+              child: GestureDetector(
+                onTap: () {
+                  _tapCount += 1;
+                  if (_tapCount == 7) {
+                    //setState(() {
+                    //  _showExtraMenu = true;
+                    //});
+                  }
+                  if (_timer != null) {
+                    _timer!.cancel();
+                  }
+                  _timer = Timer(const Duration(milliseconds: 200), () {
+                    _tapCount = 0;
+                  });
+                },
+                child: Text(
+                  context.t('Settings'),
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+              ),
+            ),
+            const Divider(),
+            ListTile(
+              title: Text(context.t("Price list")),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const PriceListPage(),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+            ),
+            const Divider(),
+            if (kDebugMode) ...[
+              //
+              // Reset database
+              //
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    await DatabaseUtils.databaseUtils.deleteDatabase();
+                    final prefs = await SharedPreferences.getInstance()
+                      ..clear();
+                    prefs.clear();
+                    //context.read<Folders>().reload();
+                  },
+                  child: Text(context.t('Reset database')),
+                  style: ElevatedButton.styleFrom(primary: Colors.blue),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class SettingsMenu extends StatefulWidget {
   const SettingsMenu({Key? key}) : super(key: key);
@@ -89,7 +164,7 @@ class _SettingsMenuState extends State<SettingsMenu> {
                 Navigator.of(context).pop();
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const RatesPage(),
+                    builder: (context) => const PriceListPage(),
                     fullscreenDialog: true,
                   ),
                 );

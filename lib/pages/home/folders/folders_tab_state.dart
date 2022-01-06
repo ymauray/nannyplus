@@ -1,8 +1,8 @@
-part of 'folders_page_cubit.dart';
+part of 'folders_tab_cubit.dart';
 
 @immutable
-class FoldersPageState {
-  const FoldersPageState(this.folders, this.showArchived);
+class FoldersTabState {
+  const FoldersTabState(this.folders, this.showArchived);
 
   final List<Folder> folders;
   final bool showArchived;
@@ -11,7 +11,7 @@ class FoldersPageState {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is FoldersPageState && listEquals(other.folders, folders);
+    return other is FoldersTabState && listEquals(other.folders, folders);
   }
 
   @override

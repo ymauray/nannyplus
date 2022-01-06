@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nannyplus/cubit/folders_page_cubit.dart';
-import 'package:nannyplus/src/models/folders_repository.dart';
+import 'package:nannyplus/model/price_list.dart';
 import 'package:provider/provider.dart';
 
 import 'src/models/folder.dart';
 import 'src/models/app_theme.dart';
-//import 'src/models/settings.dart';
 import 'app.dart';
 import 'src/models/rates.dart';
 
@@ -31,21 +28,17 @@ void oldmain() {
   );
 }
 
-void main() {
-  runApp(const NannyPlusApp());
-  //MultiProvider(
-  //  providers: [
-  //    BlocProvider(
-  //      create: (context) {
-  //        var foldersCubit = FoldersPageCubit(
-  //          FoldersRepository(),
-  //        );
-  //        foldersCubit.getFolders(false);
-  //        return foldersCubit;
-  //      },
-  //      lazy: false,
-  //    ),
-  //  ],
-  //  builder: (context, _) => const NannyPlusApp(),
-  //),
+void main() async {
+  runApp(
+    MultiProvider(
+      providers: [
+        FutureProvider<PriceList>(
+          initialData: PriceList(0.0, 0.0, 0.0, 0.0, 0.0),
+          create: (context) => PriceList.load(),
+          lazy: false,
+        ),
+      ],
+      child: const NannyPlusApp(),
+    ),
+  );
 }

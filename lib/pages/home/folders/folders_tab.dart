@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/src/models/folders_repository.dart';
 
-import '../../cubit/folders_page_cubit.dart';
-import '../../src/widgets/folder_tile.dart';
+import '../drawer/home_drawer.dart';
+import 'folders_tab_cubit.dart';
+import '../../../src/widgets/folder_tile.dart';
 
 class FoldersTab extends StatelessWidget {
   const FoldersTab({Key? key}) : super(key: key);
@@ -13,8 +14,8 @@ class FoldersTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          FoldersPageCubit(FoldersRepository())..getFolders(false),
-      child: BlocBuilder<FoldersPageCubit, FoldersPageState>(
+          FoldersTabCubit(FoldersRepository())..getFolders(false),
+      child: BlocBuilder<FoldersTabCubit, FoldersTabState>(
         builder: (context, foldersPageState) {
           return Scaffold(
             appBar: AppBar(
@@ -37,12 +38,13 @@ class FoldersTab extends StatelessWidget {
                   ],
                   onSelected: (value) {
                     if (value == 'show_archived') {
-                      context.read<FoldersPageCubit>().toggleShowArchived();
+                      context.read<FoldersTabCubit>().toggleShowArchived();
                     }
                   },
                 ),
               ],
             ),
+            drawer: const HomeDrawer(),
             body: ListView.builder(
               itemCount: foldersPageState.folders.length + 2,
               itemBuilder: (context, index) {
