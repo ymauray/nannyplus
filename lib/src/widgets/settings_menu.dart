@@ -257,8 +257,6 @@ class _SettingsMenuState extends State<SettingsMenu> {
                 builder: (_, rates, __) => Consumer<Folders>(
                   builder: (context, folders, _) => ElevatedButton(
                     onPressed: () async {
-                      String basicAuth = 'Basic c2FuZHJpbmU6bm91cnMxNDA4MDQ=';
-
                       final response = await http.get(
                         Uri.parse('https://sandrinekohler.ch/api/json'),
                         headers: {
