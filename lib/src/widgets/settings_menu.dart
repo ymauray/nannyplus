@@ -3,18 +3,20 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nannyplus/src/models/invoice.dart';
 import 'package:provider/provider.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/invoice.dart';
 import '../models/entry.dart';
 import '../models/rates.dart';
 import '../pages/rates_page.dart';
 import '../models/folder.dart';
 import '../models/app_theme.dart';
 import '../utils/database_utils.dart';
+
+import 'basic_auth.dart';
 
 class SettingsMenu extends StatefulWidget {
   const SettingsMenu({Key? key}) : super(key: key);
@@ -258,7 +260,7 @@ class _SettingsMenuState extends State<SettingsMenu> {
                   builder: (context, folders, _) => ElevatedButton(
                     onPressed: () async {
                       final response = await http.get(
-                        Uri.parse('https://sandrinekohler.ch/api/json'),
+                        Uri.parse(endpoint),
                         headers: {
                           'authorization': basicAuth,
                         },
