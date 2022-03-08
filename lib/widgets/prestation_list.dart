@@ -18,10 +18,10 @@ class PrestationList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String currentDate = '';
-    bool showDivider = false;
+    double dailyTotal = 0.0;
     double pendingTotal =
         prestations.fold(0.0, (acc, prestation) => acc + prestation.price);
+    String? currentDate;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -34,20 +34,24 @@ class PrestationList extends StatelessWidget {
               shrinkWrap: true,
               itemCount: prestations.length,
               itemBuilder: (context, index) {
-                if (prestations[index].date != currentDate) {
-                  showDivider = true;
-                } else {
-                  showDivider = false;
-                }
-                currentDate = prestations[index].date;
-                return PrestationListItem(
+                dailyTotal += prestations[index].price;
+                bool showDivider = (index + 1 == prestations.length) ||
+                    (prestations[index].date != prestations[index + 1].date);
+                bool showDate = prestations[index].date != currentDate;
+                var item = PrestationListItem(
                   prestation: prestations[index],
                   child: child,
+                  showDate: showDate,
                   showDivider: showDivider,
+                  dailyTotal: dailyTotal,
                 );
+                if (showDivider) {
+                  dailyTotal = 0.0;
+                }
+                currentDate = prestations[index].date;
+                return item;
               },
             ),
-            const Divider(),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Row(
