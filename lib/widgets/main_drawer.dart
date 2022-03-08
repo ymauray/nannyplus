@@ -97,10 +97,10 @@ class MainDrawer extends StatelessWidget {
     }
 
     var semaine =
-        const Price(id: 1, label: 'Semaine', amount: 7.0, fixedPrice: 0);
+        const Price(id: 1, label: 'Heures semaine', amount: 7.0, fixedPrice: 0);
     pricesRepository.create(semaine);
     var weekend =
-        const Price(id: 2, label: 'Weekend', amount: 8.0, fixedPrice: 0);
+        const Price(id: 2, label: 'Heures weekend', amount: 8.0, fixedPrice: 0);
     pricesRepository.create(weekend);
     var petitRepas =
         const Price(id: 3, label: 'Petit repas', amount: 5.0, fixedPrice: 1);
