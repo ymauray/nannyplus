@@ -287,13 +287,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-  myforms:
-    dependency: "direct main"
-    description:
-      path: "../myforms"
-      relative: true
-    source: path
-    version: "0.0.1"
   nested:
     dependency: transitive
     description:

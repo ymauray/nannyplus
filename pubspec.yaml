@@ -51,8 +51,6 @@ dependencies:
   get: ^4.6.1
   image_picker: ^0.8.4+4
   path_provider: ^2.0.8
-  myforms: 
-    path: ../myforms
   intersperse: ^2.0.0
 
 dev_dependencies:
