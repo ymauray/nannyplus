@@ -6,6 +6,7 @@ class Prestation {
   final String date;
   final int priceId;
   final String? priceLabel;
+  final int? isFixedPrice;
   final int? hours;
   final int? minutes;
   final double price;
@@ -18,6 +19,7 @@ class Prestation {
     required this.date,
     required this.priceId,
     this.priceLabel,
+    this.isFixedPrice,
     this.hours,
     this.minutes,
     required this.price,
@@ -31,6 +33,7 @@ class Prestation {
     String? date,
     int? priceId,
     String? priceLabel,
+    int? isFixedPrice,
     int? hours,
     int? minutes,
     double? price,
@@ -43,6 +46,7 @@ class Prestation {
       date: date ?? this.date,
       priceId: priceId ?? this.priceId,
       priceLabel: priceLabel ?? this.priceLabel,
+      isFixedPrice: isFixedPrice ?? this.isFixedPrice,
       hours: hours ?? this.hours,
       minutes: minutes ?? this.minutes,
       price: price ?? this.price,
@@ -58,6 +62,7 @@ class Prestation {
       'date': date,
       'priceId': priceId,
       'priceLabel': priceLabel,
+      'isFixedPrice': isFixedPrice,
       'hours': hours,
       'minutes': minutes,
       'price': price,
@@ -73,6 +78,7 @@ class Prestation {
       date: map['date'] ?? '',
       priceId: map['priceId']?.toInt() ?? 0,
       priceLabel: map['priceLabel'],
+      isFixedPrice: map['isFixedPrice']?.toInt(),
       hours: map['hours']?.toInt(),
       minutes: map['minutes']?.toInt(),
       price: map['price']?.toDouble() ?? 0.0,
@@ -88,7 +94,7 @@ class Prestation {
 
   @override
   String toString() {
-    return 'Prestation(id: $id, childId: $childId, date: $date, priceId: $priceId, priceLabel: $priceLabel, hours: $hours, minutes: $minutes, price: $price, invoiced: $invoiced, invoiceId: $invoiceId)';
+    return 'Prestation(id: $id, childId: $childId, date: $date, priceId: $priceId, priceLabel: $priceLabel, isFixedPrice: $isFixedPrice, hours: $hours, minutes: $minutes, price: $price, invoiced: $invoiced, invoiceId: $invoiceId)';
   }
 
   @override
@@ -101,6 +107,7 @@ class Prestation {
         other.date == date &&
         other.priceId == priceId &&
         other.priceLabel == priceLabel &&
+        other.isFixedPrice == isFixedPrice &&
         other.hours == hours &&
         other.minutes == minutes &&
         other.price == price &&
@@ -115,6 +122,7 @@ class Prestation {
         date.hashCode ^
         priceId.hashCode ^
         priceLabel.hashCode ^
+        isFixedPrice.hashCode ^
         hours.hashCode ^
         minutes.hashCode ^
         price.hashCode ^

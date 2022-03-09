@@ -9,17 +9,40 @@ import 'package:nannyplus/data/model/prestation.dart';
 import 'package:nannyplus/utils/i18n_utils.dart';
 import 'package:nannyplus/views/app_view.dart';
 
-class PrestationForm extends StatelessWidget {
+class PrestationForm extends StatefulWidget {
   final Prestation? prestation;
-  final Key _formKey = GlobalKey<FormBuilderState>();
 
-  PrestationForm({this.prestation, Key? key}) : super(key: key);
+  const PrestationForm({this.prestation, Key? key}) : super(key: key);
+
+  @override
+  State<PrestationForm> createState() => _PrestationFormState();
+}
+
+class _PrestationFormState extends State<PrestationForm> {
+  final _formKey = GlobalKey<FormBuilderState>();
+
+  DateTime? date;
+  int? priceId;
+  bool? isFixedPrice;
+  int? hours;
+  int? minutes;
+
+  @override
+  void initState() {
+    date = DateFormat('yyyy-MM-dd')
+        .parse(widget.prestation?.date ?? DateTime.now().toString());
+    priceId = widget.prestation?.priceId;
+    hours = widget.prestation?.hours ?? 0;
+    minutes = widget.prestation?.minutes ?? 0;
+    isFixedPrice = (widget.prestation?.isFixedPrice ?? 1) == 1;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     context.read<PriceListCubit>().getPriceList();
     return AppView(
-      title: Text(prestation != null
+      title: Text(widget.prestation != null
           ? context.t('Edit prestation')
           : context.t('Add prestation')),
       body: BlocConsumer<PriceListCubit, PriceListState>(
@@ -32,9 +55,10 @@ class PrestationForm extends StatelessWidget {
                 child: FormBuilder(
                   key: _formKey,
                   initialValue: {
-                    'date': DateFormat('yyyy-MM-dd')
-                        .parse(prestation?.date ?? DateTime.now().toString()),
-                    'prestation': prestation?.priceId,
+                    'date': date,
+                    'priceId': priceId,
+                    'hours': hours,
+                    'minutes': minutes,
                   },
                   autovalidateMode: AutovalidateMode.always,
                   child: Column(
@@ -54,7 +78,7 @@ class PrestationForm extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),
                         child: FormBuilderDropdown(
-                          name: 'prestation',
+                          name: 'priceId',
                           decoration: InputDecoration(
                             labelText: context.t('Prestation'),
                             floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -65,6 +89,80 @@ class PrestationForm extends StatelessWidget {
                               child: Text(p.label),
                             );
                           }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              isFixedPrice = state.priceList
+                                  .firstWhere((element) => element.id == value)
+                                  .isFixedPrice;
+                            });
+                          },
+                        ),
+                      ),
+                      if (!(isFixedPrice ?? true))
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: FormBuilderDropdown(
+                                  name: 'hours',
+                                  decoration: InputDecoration(
+                                    labelText: context.t('Hours'),
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.always,
+                                  ),
+                                  items: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                                      .map((e) => DropdownMenuItem(
+                                            value: e,
+                                            child: Text(e.toString()),
+                                          ))
+                                      .toList(),
+                                ),
+                              ),
+                              const SizedBox(width: 8.0),
+                              Expanded(
+                                flex: 1,
+                                child: FormBuilderDropdown(
+                                  name: 'minutes',
+                                  decoration: InputDecoration(
+                                    labelText: context.t('Minutes'),
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.always,
+                                  ),
+                                  items: [0, 15, 30, 45]
+                                      .map(
+                                        (e) => DropdownMenuItem(
+                                          value: e,
+                                          child: Text(
+                                            e.toString().padLeft(2, '0'),
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _formKey.currentState!.save();
+                            if (_formKey.currentState!.validate()) {
+                              print(_formKey.currentState!.value);
+                              var map = Map<String, dynamic>.from(
+                                  _formKey.currentState!.value);
+                              map['date'] = DateFormat('yyyy-MM-dd')
+                                  .format(map['date'] as DateTime);
+                              var prestation = Prestation.fromMap(map);
+                              Navigator.of(context).pop(prestation);
+                            } else {
+                              print("validation failed");
+                            }
+                          },
+                          child: Text(context.t("Save")),
                         ),
                       ),
                     ],
@@ -72,35 +170,6 @@ class PrestationForm extends StatelessWidget {
                 ),
               ),
             );
-            //return Form(
-            //  key: GlobalKey(),
-            //  child: SingleChildScrollView(
-            //    child: Padding(
-            //      padding: const EdgeInsets.all(16.0),
-            //      child: Column(
-            //        children: [
-            //          TextFormField(
-            //            initialValue: prestation?.date,
-            //            decoration:
-            //                InputDecoration(labelText: context.t('Date')),
-            //            onSaved: (newValue) {},
-            //          ),
-            //          DropdownButtonFormField<Price>(
-            //            hint: Text(context.t('Price')),
-            //            items: state.priceList.map((price) {
-            //              return DropdownMenuItem<Price>(
-            //                value: price,
-            //                child: Text(price.label),
-            //              );
-            //            }).toList(),
-            //            onChanged: (newValue) {},
-            //            onSaved: (newValue) {},
-            //          )
-            //        ],
-            //      ),
-            //    ),
-            //  ),
-            //);
           } else {
             return const Center(child: CircularProgressIndicator());
           }

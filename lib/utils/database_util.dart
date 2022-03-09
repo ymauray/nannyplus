@@ -69,6 +69,7 @@ class DatabaseUtil {
         date TEXT,
         priceId INTEGER NOT NULL,
         priceLabel TEXT,
+        isFixedPrice INTEGER,
         hours INTEGER,
         minutes INTEGER,
         price DOUBLE,

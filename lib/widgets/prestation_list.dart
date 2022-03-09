@@ -30,6 +30,24 @@ class PrestationList extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      context.t('Pending total'),
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ),
+                  Text(
+                    pendingTotal.toStringAsFixed(2),
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ],
+              ),
+            ),
+            const Divider(),
             const PrestationListHeader(),
             GroupedListView<Prestation, String>(
               physics: const NeverScrollableScrollPhysics(),
@@ -89,22 +107,8 @@ class PrestationList extends StatelessWidget {
                 child: BoldText(element.date.formatDate()),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      context.t('Pending total'),
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                  Text(
-                    pendingTotal.toStringAsFixed(2),
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                ],
-              ),
+            const SizedBox(
+              height: 56,
             ),
           ],
         ),

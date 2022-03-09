@@ -24,7 +24,7 @@ class PrestationListView extends StatelessWidget {
         onPressed: () async {
           var prestation = await Navigator.of(context).push(
             MaterialPageRoute<Prestation>(
-              builder: (context) => PrestationForm(),
+              builder: (context) => const PrestationForm(),
               fullscreenDialog: true,
             ),
           );

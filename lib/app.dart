@@ -17,17 +17,21 @@ class NannyPlusApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var childrenRepository = const ChildrenRepository();
+    var pricesRepository = const PricesRepository();
+    var prestationsRepository = const PrestationsRepository();
+
     return MultiProvider(
       providers: [
         BlocProvider<ChildListCubit>(
-          create: (context) => ChildListCubit(const ChildrenRepository()),
+          create: (context) => ChildListCubit(childrenRepository),
         ),
         BlocProvider<PriceListCubit>(
-          create: (context) => PriceListCubit(const PricesRepository()),
+          create: (context) => PriceListCubit(pricesRepository),
         ),
         BlocProvider<PrestationListCubit>(
           create: (context) =>
-              PrestationListCubit(const PrestationsRepository()),
+              PrestationListCubit(prestationsRepository, pricesRepository),
         ),
       ],
       child: MaterialApp(

@@ -68,7 +68,8 @@ msgstr "Total à facturer"
 msgid "Not implemented"
 msgstr "Fonctionalité non implémentée"
 
-
+msgid "Save"
+msgstr "Enregistrer"
 
 # Legacy messages
 

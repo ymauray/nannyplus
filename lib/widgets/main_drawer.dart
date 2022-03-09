@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import 'package:nannyplus/data/children_repository.dart';
-import 'package:nannyplus/data/database_util.dart';
+import 'package:nannyplus/utils/database_util.dart';
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/data/model/prestation.dart';
 import 'package:nannyplus/data/model/price.dart';
@@ -123,6 +123,7 @@ class MainDrawer extends StatelessWidget {
             date: legacyEntry.date,
             priceId: semaine.id!,
             priceLabel: semaine.label,
+            isFixedPrice: semaine.isFixedPrice ? 1 : 0,
             hours: legacyEntry.hours,
             minutes: legacyEntry.minutes,
             price:
@@ -135,6 +136,7 @@ class MainDrawer extends StatelessWidget {
             prestation = prestation.copyWith(
               priceId: weekend.id!,
               priceLabel: weekend.label,
+              isFixedPrice: weekend.isFixedPrice ? 1 : 0,
               price: weekend.amount *
                   (legacyEntry.hours + legacyEntry.minutes / 60),
             );
@@ -148,6 +150,7 @@ class MainDrawer extends StatelessWidget {
             date: legacyEntry.date,
             priceId: petitRepas.id!,
             priceLabel: petitRepas.label,
+            isFixedPrice: petitRepas.isFixedPrice ? 1 : 0,
             price: petitRepas.amount,
             invoiced: legacyEntry.invoiced ? 1 : 0,
             invoiceId:

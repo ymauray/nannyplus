@@ -1,4 +1,4 @@
-import 'package:nannyplus/data/database_util.dart';
+import 'package:nannyplus/utils/database_util.dart';
 
 import 'model/child.dart';
 

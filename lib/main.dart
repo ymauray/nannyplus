@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'app.dart';
-import 'data/database_util.dart';
+import 'utils/database_util.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

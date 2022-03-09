@@ -1,20 +1,22 @@
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/data/model/prestation.dart';
 
-import 'database_util.dart';
+import '../utils/database_util.dart';
 
 class PrestationsRepository {
   const PrestationsRepository();
 
-  static int _id = 0;
-
   Future<Prestation> create(Prestation prestation) async {
     var db = await DatabaseUtil.instance;
-    var p = prestation.copyWith(id: ++_id);
-    await db.insert('prestations', p.toMap());
-    var created =
-        await db.query('prestations', where: 'id = ?', whereArgs: [p.id]);
-    return Prestation.fromMap(created.first);
+    var id = await db.insert('prestations', prestation.toMap());
+    return read(id);
+  }
+
+  Future<Prestation> read(int id) async {
+    var db = await DatabaseUtil.instance;
+    var prestation =
+        await db.query('prestations', where: 'id = ?', whereArgs: [id]);
+    return Prestation.fromMap(prestation.first);
   }
 
   Future<List<Prestation>> getPrestations(Child child) async {
