@@ -42,6 +42,23 @@ class ServiceListCubit extends Cubit<ServiceListState> {
     }
   }
 
+  Future<void> update(Service service, Child child) async {
+    try {
+      var price = await pricesRepository.read(service.priceId);
+      service = service.copyWith(
+        priceLabel: price.label,
+        isFixedPrice: price.isFixedPrice ? 1 : 0,
+        price: price.isFixedPrice
+            ? price.amount
+            : price.amount * (service.hours! + service.minutes! / 60),
+      );
+      servicesRepository.update(service, child);
+      loadServices(child);
+    } catch (e) {
+      emit(ServiceListError(e.toString()));
+    }
+  }
+
   Future<void> delete(Service service, Child child) async {
     try {
       await servicesRepository.delete(service.id!);

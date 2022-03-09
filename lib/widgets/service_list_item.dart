@@ -6,7 +6,7 @@ import 'package:nannyplus/cubit/service_list_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/data/model/service.dart';
 import 'package:nannyplus/utils/date_format_extension.dart';
-import 'package:nannyplus/views/service_form.dart';
+import 'package:nannyplus/forms/service_form.dart';
 
 import 'bold_text.dart';
 import 'service_list_item_detail.dart';
@@ -73,7 +73,14 @@ class ServiceListItem extends StatelessWidget {
                 ),
               );
               if (service != null) {
-                context.read<ServiceListCubit>().create(service, child);
+                context.read<ServiceListCubit>().update(
+                    this.service.copyWith(
+                          date: service.date,
+                          priceId: service.priceId,
+                          hours: service.hours,
+                          minutes: service.minutes,
+                        ),
+                    child);
               }
             },
             child: ServiceListItemDetail(service: service),

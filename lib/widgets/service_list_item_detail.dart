@@ -25,7 +25,7 @@ class ServiceListItemDetail extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Text(
-              service.hours != null
+              service.isFixedPrice! == 0
                   ? "${service.hours}h${service.minutes!.toString().padLeft(2, '0')}"
                   : "",
               textAlign: TextAlign.end,

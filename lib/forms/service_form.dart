@@ -151,7 +151,6 @@ class _ServiceFormState extends State<ServiceForm> {
                           onPressed: () {
                             _formKey.currentState!.save();
                             if (_formKey.currentState!.validate()) {
-                              print(_formKey.currentState!.value);
                               var map = Map<String, dynamic>.from(
                                   _formKey.currentState!.value);
                               map['date'] = DateFormat('yyyy-MM-dd')
@@ -159,7 +158,7 @@ class _ServiceFormState extends State<ServiceForm> {
                               var service = Service.fromMap(map);
                               Navigator.of(context).pop(service);
                             } else {
-                              print("validation failed");
+                              // Validation failed, do something.
                             }
                           },
                           child: Text(context.t("Save")),

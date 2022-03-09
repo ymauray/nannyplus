@@ -18,6 +18,13 @@ class ServicesRepository {
     return Service.fromMap(service.first);
   }
 
+  Future<Service> update(Service service, Child child) async {
+    var db = await DatabaseUtil.instance;
+    await db.update('services', service.toMap(),
+        where: 'id = ?', whereArgs: [service.id]);
+    return read(service.id!);
+  }
+
   Future<void> delete(int id) async {
     var db = await DatabaseUtil.instance;
     db.delete('services', where: 'id = ?', whereArgs: [id]);
