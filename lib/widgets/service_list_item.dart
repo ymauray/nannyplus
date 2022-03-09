@@ -60,7 +60,7 @@ class ServiceListItem extends StatelessWidget {
             ),
           ),
           onDismissed: (direction) {
-            //
+            context.read<ServiceListCubit>().delete(service, child);
           },
           child: GestureDetector(
             onTap: () async {

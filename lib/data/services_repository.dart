@@ -18,6 +18,11 @@ class ServicesRepository {
     return Service.fromMap(service.first);
   }
 
+  Future<void> delete(int id) async {
+    var db = await DatabaseUtil.instance;
+    db.delete('services', where: 'id = ?', whereArgs: [id]);
+  }
+
   Future<List<Service>> getServices(Child child) async {
     var db = await DatabaseUtil.instance;
 

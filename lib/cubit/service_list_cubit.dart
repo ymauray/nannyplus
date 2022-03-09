@@ -41,4 +41,13 @@ class ServiceListCubit extends Cubit<ServiceListState> {
       emit(ServiceListError(e.toString()));
     }
   }
+
+  Future<void> delete(Service service, Child child) async {
+    try {
+      await servicesRepository.delete(service.id!);
+      getServices(child);
+    } catch (e) {
+      emit(ServiceListError(e.toString()));
+    }
+  }
 }
