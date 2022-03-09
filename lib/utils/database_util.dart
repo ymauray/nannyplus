@@ -63,7 +63,7 @@ class DatabaseUtil {
       ''');
 
     await db.execute('''
-      CREATE TABLE prestations(
+      CREATE TABLE services(
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         childId INTEGER NOT NULL,
         date TEXT,

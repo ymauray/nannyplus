@@ -9,9 +9,9 @@ import 'package:intl/intl.dart';
 import 'package:nannyplus/data/children_repository.dart';
 import 'package:nannyplus/utils/database_util.dart';
 import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/data/model/prestation.dart';
+import 'package:nannyplus/data/model/service.dart';
 import 'package:nannyplus/data/model/price.dart';
-import 'package:nannyplus/data/prestations_repository.dart';
+import 'package:nannyplus/data/services_repository.dart';
 import 'package:nannyplus/data/prices_repository.dart';
 import 'package:nannyplus/views/price_list_view.dart';
 
@@ -85,7 +85,7 @@ class MainDrawer extends StatelessWidget {
     await DatabaseUtil.deleteDatabase();
     var childrenRepository = const ChildrenRepository();
     var pricesRepository = const PricesRepository();
-    var prestationsRepository = const PrestationsRepository();
+    var servicesRepository = const ServicesRepository();
 
     var response = await http.get(Uri.parse('http://10.0.2.2/api/json'));
     var jsonResponse = jsonDecode(response.body);
@@ -118,7 +118,7 @@ class MainDrawer extends StatelessWidget {
         if (legacyEntry.hours + legacyEntry.minutes > 0) {
           var weekDay = (date.weekday != DateTime.sunday &&
               date.weekday != DateTime.saturday);
-          var prestation = Prestation(
+          var service = Service(
             childId: c['id'],
             date: legacyEntry.date,
             priceId: semaine.id!,
@@ -133,7 +133,7 @@ class MainDrawer extends StatelessWidget {
                 legacyEntry.invoiced ? int.parse(legacyEntry.invoiceId) : null,
           );
           if (!weekDay) {
-            prestation = prestation.copyWith(
+            service = service.copyWith(
               priceId: weekend.id!,
               priceLabel: weekend.label,
               isFixedPrice: weekend.isFixedPrice ? 1 : 0,
@@ -141,11 +141,11 @@ class MainDrawer extends StatelessWidget {
                   (legacyEntry.hours + legacyEntry.minutes / 60),
             );
           }
-          await prestationsRepository.create(prestation);
+          await servicesRepository.create(service);
         }
 
         if (legacyEntry.lunch) {
-          var prestation = Prestation(
+          var service = Service(
             childId: c['id'],
             date: legacyEntry.date,
             priceId: petitRepas.id!,
@@ -156,7 +156,7 @@ class MainDrawer extends StatelessWidget {
             invoiceId:
                 legacyEntry.invoiced ? int.parse(legacyEntry.invoiceId) : null,
           );
-          await prestationsRepository.create(prestation);
+          await servicesRepository.create(service);
         }
       }
     }

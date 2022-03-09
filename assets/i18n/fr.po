@@ -47,16 +47,16 @@ msgstr "Prix"
 msgid "Hours"
 msgstr "Heures"
 
-msgid "Prestations"
+msgid "Services"
 msgstr "Prestations"
 
-msgid "Prestation"
+msgid "Service"
 msgstr "Prestation"
 
-msgid "Add prestation"
+msgid "Add service"
 msgstr "Ajouter une prestation"
 
-msgid "Edit prestation"
+msgid "Edit service"
 msgstr "Modifier une prestation"
 
 msgid "Date"

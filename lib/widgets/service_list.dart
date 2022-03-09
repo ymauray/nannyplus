@@ -3,18 +3,18 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:nannyplus/data/model/child.dart';
 
-import 'package:nannyplus/data/model/prestation.dart';
+import 'package:nannyplus/data/model/service.dart';
 import 'package:nannyplus/utils/date_format_extension.dart';
-import 'package:nannyplus/widgets/prestation_list_item.dart';
+import 'package:nannyplus/widgets/service_list_item.dart';
 
 import 'bold_text.dart';
-import 'prestation_list_header.dart';
+import 'service_list_header.dart';
 
-class PrestationList extends StatelessWidget {
-  final List<Prestation> prestations;
+class ServiceList extends StatelessWidget {
+  final List<Service> services;
   final Child child;
-  const PrestationList({
-    required this.prestations,
+  const ServiceList({
+    required this.services,
     required this.child,
     Key? key,
   }) : super(key: key);
@@ -23,7 +23,7 @@ class PrestationList extends StatelessWidget {
   Widget build(BuildContext context) {
     double dailyTotal = 0.0;
     double pendingTotal =
-        prestations.fold(0.0, (acc, prestation) => acc + prestation.price);
+        services.fold(0.0, (acc, service) => acc + service.price);
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -48,21 +48,21 @@ class PrestationList extends StatelessWidget {
               ),
             ),
             const Divider(),
-            const PrestationListHeader(),
-            GroupedListView<Prestation, String>(
+            const ServiceListHeader(),
+            GroupedListView<Service, String>(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               groupComparator: (value1, value2) => value2.compareTo(value1),
-              elements: prestations,
+              elements: services,
               groupBy: (element) => element.date,
               indexedItemBuilder: (context, element, index) {
-                var showFooter = (index + 1 == prestations.length) ||
-                    (prestations[index].date != prestations[index + 1].date);
+                var showFooter = (index + 1 == services.length) ||
+                    (services[index].date != services[index + 1].date);
                 dailyTotal += element.price;
                 var item = Column(
                   children: [
-                    PrestationListItem(
-                      prestation: element,
+                    ServiceListItem(
+                      service: element,
                       showDate: false,
                       showDivider: false,
                       child: child,

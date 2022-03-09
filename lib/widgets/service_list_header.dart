@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 
-class PrestationListHeader extends StatelessWidget {
-  const PrestationListHeader({
+class ServiceListHeader extends StatelessWidget {
+  const ServiceListHeader({
     Key? key,
   }) : super(key: key);
 
@@ -25,7 +25,7 @@ class PrestationListHeader extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  context.t("Prestation"),
+                  context.t("Service"),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),

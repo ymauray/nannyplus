@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 
 import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/views/prestations_list_view.dart';
+import 'package:nannyplus/views/service_list_view.dart';
 
 class ChildList extends StatelessWidget {
   final List<Child> _children;
@@ -20,7 +20,7 @@ class ChildList extends StatelessWidget {
           title: Text(child.displayName),
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
               fullscreenDialog: true,
-              builder: (context) => PrestationListView(child))),
+              builder: (context) => ServiceListView(child))),
           subtitle: child.hasAllergies
               ? Text(child.alergies!)
               : Text(context.t("No known allergies")),

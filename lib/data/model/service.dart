@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class Prestation {
+class Service {
   final int? id;
   final int childId;
   final String date;
@@ -13,7 +13,7 @@ class Prestation {
   final int invoiced;
   final int? invoiceId;
 
-  Prestation({
+  Service({
     this.id,
     required this.childId,
     required this.date,
@@ -27,7 +27,7 @@ class Prestation {
     this.invoiceId,
   });
 
-  Prestation copyWith({
+  Service copyWith({
     int? id,
     int? childId,
     String? date,
@@ -40,7 +40,7 @@ class Prestation {
     int? invoiced,
     int? invoiceId,
   }) {
-    return Prestation(
+    return Service(
       id: id ?? this.id,
       childId: childId ?? this.childId,
       date: date ?? this.date,
@@ -71,8 +71,8 @@ class Prestation {
     };
   }
 
-  factory Prestation.fromMap(Map<String, dynamic> map) {
-    return Prestation(
+  factory Service.fromMap(Map<String, dynamic> map) {
+    return Service(
       id: map['id']?.toInt(),
       childId: map['childId']?.toInt() ?? 0,
       date: map['date'] ?? '',
@@ -89,19 +89,19 @@ class Prestation {
 
   String toJson() => json.encode(toMap());
 
-  factory Prestation.fromJson(String source) =>
-      Prestation.fromMap(json.decode(source));
+  factory Service.fromJson(String source) =>
+      Service.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'Prestation(id: $id, childId: $childId, date: $date, priceId: $priceId, priceLabel: $priceLabel, isFixedPrice: $isFixedPrice, hours: $hours, minutes: $minutes, price: $price, invoiced: $invoiced, invoiceId: $invoiceId)';
+    return 'Service(id: $id, childId: $childId, date: $date, priceId: $priceId, priceLabel: $priceLabel, isFixedPrice: $isFixedPrice, hours: $hours, minutes: $minutes, price: $price, invoiced: $invoiced, invoiceId: $invoiceId)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Prestation &&
+    return other is Service &&
         other.id == id &&
         other.childId == childId &&
         other.date == date &&

@@ -5,20 +5,20 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 
 import 'package:nannyplus/cubit/price_list_cubit.dart';
-import 'package:nannyplus/data/model/prestation.dart';
+import 'package:nannyplus/data/model/service.dart';
 import 'package:nannyplus/utils/i18n_utils.dart';
 import 'package:nannyplus/views/app_view.dart';
 
-class PrestationForm extends StatefulWidget {
-  final Prestation? prestation;
+class ServiceForm extends StatefulWidget {
+  final Service? service;
 
-  const PrestationForm({this.prestation, Key? key}) : super(key: key);
+  const ServiceForm({this.service, Key? key}) : super(key: key);
 
   @override
-  State<PrestationForm> createState() => _PrestationFormState();
+  State<ServiceForm> createState() => _ServiceFormState();
 }
 
-class _PrestationFormState extends State<PrestationForm> {
+class _ServiceFormState extends State<ServiceForm> {
   final _formKey = GlobalKey<FormBuilderState>();
 
   DateTime? date;
@@ -30,11 +30,11 @@ class _PrestationFormState extends State<PrestationForm> {
   @override
   void initState() {
     date = DateFormat('yyyy-MM-dd')
-        .parse(widget.prestation?.date ?? DateTime.now().toString());
-    priceId = widget.prestation?.priceId;
-    hours = widget.prestation?.hours ?? 0;
-    minutes = widget.prestation?.minutes ?? 0;
-    isFixedPrice = (widget.prestation?.isFixedPrice ?? 1) == 1;
+        .parse(widget.service?.date ?? DateTime.now().toString());
+    priceId = widget.service?.priceId;
+    hours = widget.service?.hours ?? 0;
+    minutes = widget.service?.minutes ?? 0;
+    isFixedPrice = (widget.service?.isFixedPrice ?? 1) == 1;
     super.initState();
   }
 
@@ -42,9 +42,9 @@ class _PrestationFormState extends State<PrestationForm> {
   Widget build(BuildContext context) {
     context.read<PriceListCubit>().getPriceList();
     return AppView(
-      title: Text(widget.prestation != null
-          ? context.t('Edit prestation')
-          : context.t('Add prestation')),
+      title: Text(widget.service != null
+          ? context.t('Edit service')
+          : context.t('Add service')),
       body: BlocConsumer<PriceListCubit, PriceListState>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -80,7 +80,7 @@ class _PrestationFormState extends State<PrestationForm> {
                         child: FormBuilderDropdown(
                           name: 'priceId',
                           decoration: InputDecoration(
-                            labelText: context.t('Prestation'),
+                            labelText: context.t('Service'),
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                           ),
                           items: state.priceList.map((p) {
@@ -156,8 +156,8 @@ class _PrestationFormState extends State<PrestationForm> {
                                   _formKey.currentState!.value);
                               map['date'] = DateFormat('yyyy-MM-dd')
                                   .format(map['date'] as DateTime);
-                              var prestation = Prestation.fromMap(map);
-                              Navigator.of(context).pop(prestation);
+                              var service = Service.fromMap(map);
+                              Navigator.of(context).pop(service);
                             } else {
                               print("validation failed");
                             }

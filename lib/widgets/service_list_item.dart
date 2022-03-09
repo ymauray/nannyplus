@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:provider/provider.dart';
 
-import 'package:nannyplus/cubit/prestation_list_cubit.dart';
+import 'package:nannyplus/cubit/service_list_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/data/model/prestation.dart';
+import 'package:nannyplus/data/model/service.dart';
 import 'package:nannyplus/utils/date_format_extension.dart';
-import 'package:nannyplus/views/prestation_form.dart';
+import 'package:nannyplus/views/service_form.dart';
 
 import 'bold_text.dart';
-import 'prestation_list_item_detail.dart';
+import 'service_list_item_detail.dart';
 
-class PrestationListItem extends StatelessWidget {
-  final Prestation prestation;
+class ServiceListItem extends StatelessWidget {
+  final Service service;
   final Child child;
   final bool showDate;
   final bool showDivider;
   final double? dailyTotal;
 
-  const PrestationListItem({
-    required this.prestation,
+  const ServiceListItem({
+    required this.service,
     required this.child,
     required this.showDate,
     required this.showDivider,
@@ -35,7 +35,7 @@ class PrestationListItem extends StatelessWidget {
         if (showDate)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: BoldText(prestation.date.formatDate()),
+            child: BoldText(service.date.formatDate()),
           ),
         Dismissible(
           key: UniqueKey(),
@@ -64,19 +64,19 @@ class PrestationListItem extends StatelessWidget {
           },
           child: GestureDetector(
             onTap: () async {
-              var prestation = await Navigator.of(context).push(
-                MaterialPageRoute<Prestation>(
-                  builder: (context) => PrestationForm(
-                    prestation: this.prestation,
+              var service = await Navigator.of(context).push(
+                MaterialPageRoute<Service>(
+                  builder: (context) => ServiceForm(
+                    service: this.service,
                   ),
                   fullscreenDialog: true,
                 ),
               );
-              if (prestation != null) {
-                context.read<PrestationListCubit>().create(prestation, child);
+              if (service != null) {
+                context.read<ServiceListCubit>().create(service, child);
               }
             },
-            child: PrestationListItemDetail(prestation: prestation),
+            child: ServiceListItemDetail(service: service),
           ),
         ),
         if (showDivider) ...[

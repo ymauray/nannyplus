@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/cubit/child_list_cubit.dart';
-import 'package:nannyplus/cubit/prestation_list_cubit.dart';
+import 'package:nannyplus/cubit/service_list_cubit.dart';
 import 'package:nannyplus/cubit/price_list_cubit.dart';
 import 'package:nannyplus/data/children_repository.dart';
-import 'package:nannyplus/data/prestations_repository.dart';
+import 'package:nannyplus/data/services_repository.dart';
 import 'package:nannyplus/data/prices_repository.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,7 @@ class NannyPlusApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var childrenRepository = const ChildrenRepository();
     var pricesRepository = const PricesRepository();
-    var prestationsRepository = const PrestationsRepository();
+    var servicesRepository = const ServicesRepository();
 
     return MultiProvider(
       providers: [
@@ -29,9 +29,9 @@ class NannyPlusApp extends StatelessWidget {
         BlocProvider<PriceListCubit>(
           create: (context) => PriceListCubit(pricesRepository),
         ),
-        BlocProvider<PrestationListCubit>(
+        BlocProvider<ServiceListCubit>(
           create: (context) =>
-              PrestationListCubit(prestationsRepository, pricesRepository),
+              ServiceListCubit(servicesRepository, pricesRepository),
         ),
       ],
       child: MaterialApp(

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:nannyplus/data/model/prestation.dart';
+import 'package:nannyplus/data/model/service.dart';
 
-class PrestationListItemDetail extends StatelessWidget {
-  const PrestationListItemDetail({
+class ServiceListItemDetail extends StatelessWidget {
+  const ServiceListItemDetail({
     Key? key,
-    required this.prestation,
+    required this.service,
   }) : super(key: key);
 
-  final Prestation prestation;
+  final Service service;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class PrestationListItemDetail extends StatelessWidget {
         children: [
           Expanded(
             flex: 1,
-            child: Text(prestation.priceLabel!),
+            child: Text(service.priceLabel!),
           ),
           const SizedBox(
             width: 8,
@@ -25,8 +25,8 @@ class PrestationListItemDetail extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Text(
-              prestation.hours != null
-                  ? "${prestation.hours}h${prestation.minutes!.toString().padLeft(2, '0')}"
+              service.hours != null
+                  ? "${service.hours}h${service.minutes!.toString().padLeft(2, '0')}"
                   : "",
               textAlign: TextAlign.end,
             ),
@@ -37,7 +37,7 @@ class PrestationListItemDetail extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Text(
-              prestation.price.toStringAsFixed(2),
+              service.price.toStringAsFixed(2),
               textAlign: TextAlign.end,
             ),
           ),
