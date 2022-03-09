@@ -14,7 +14,7 @@ class ServiceListCubit extends Cubit<ServiceListState> {
   ServiceListCubit(this.servicesRepository, this.pricesRepository)
       : super(const ServiceListInitial());
 
-  Future<void> getServices(Child child) async {
+  Future<void> loadServices(Child child) async {
     emit(const ServiceListLoading());
     try {
       final services = await servicesRepository.getServices(child);
@@ -36,7 +36,7 @@ class ServiceListCubit extends Cubit<ServiceListState> {
             : price.amount * (service.hours! + service.minutes! / 60),
       );
       servicesRepository.create(service);
-      getServices(child);
+      loadServices(child);
     } catch (e) {
       emit(ServiceListError(e.toString()));
     }
@@ -45,7 +45,7 @@ class ServiceListCubit extends Cubit<ServiceListState> {
   Future<void> delete(Service service, Child child) async {
     try {
       await servicesRepository.delete(service.id!);
-      getServices(child);
+      loadServices(child);
     } catch (e) {
       emit(ServiceListError(e.toString()));
     }

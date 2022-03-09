@@ -17,7 +17,7 @@ class ServiceListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<ServiceListCubit>().getServices(child);
+    context.read<ServiceListCubit>().loadServices(child);
     return AppView(
       title: Text(context.t("Services")),
       floatingActionButton: FloatingActionButton(
