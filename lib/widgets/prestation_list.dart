@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:grouped_list/grouped_list.dart';
 import 'package:nannyplus/data/model/child.dart';
 
 import 'package:nannyplus/data/model/prestation.dart';
+import 'package:nannyplus/utils/date_format_extension.dart';
 import 'package:nannyplus/widgets/prestation_list_item.dart';
 
+import 'bold_text.dart';
 import 'prestation_list_header.dart';
 
 class PrestationList extends StatelessWidget {
@@ -21,7 +24,6 @@ class PrestationList extends StatelessWidget {
     double dailyTotal = 0.0;
     double pendingTotal =
         prestations.fold(0.0, (acc, prestation) => acc + prestation.price);
-    String? currentDate;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -29,28 +31,63 @@ class PrestationList extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const PrestationListHeader(),
-            ListView.builder(
+            GroupedListView<Prestation, String>(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: prestations.length,
-              itemBuilder: (context, index) {
-                dailyTotal += prestations[index].price;
-                bool showDivider = (index + 1 == prestations.length) ||
+              groupComparator: (value1, value2) => value2.compareTo(value1),
+              elements: prestations,
+              groupBy: (element) => element.date,
+              indexedItemBuilder: (context, element, index) {
+                var showFooter = (index + 1 == prestations.length) ||
                     (prestations[index].date != prestations[index + 1].date);
-                bool showDate = prestations[index].date != currentDate;
-                var item = PrestationListItem(
-                  prestation: prestations[index],
-                  child: child,
-                  showDate: showDate,
-                  showDivider: showDivider,
-                  dailyTotal: dailyTotal,
+                dailyTotal += element.price;
+                var item = Column(
+                  children: [
+                    PrestationListItem(
+                      prestation: element,
+                      showDate: false,
+                      showDivider: false,
+                      child: child,
+                    ),
+                    if (showFooter) ...[
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 5,
+                            child: Container(),
+                          ),
+                          const Expanded(
+                            flex: 1,
+                            child: Divider(),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 5,
+                            child: Container(),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: BoldText(
+                              dailyTotal.toStringAsFixed(2),
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Divider(),
+                    ],
+                  ],
                 );
-                if (showDivider) {
-                  dailyTotal = 0.0;
-                }
-                currentDate = prestations[index].date;
+                if (showFooter) dailyTotal = 0.0;
                 return item;
               },
+              groupHeaderBuilder: (element) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: BoldText(element.date.formatDate()),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
