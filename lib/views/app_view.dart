@@ -24,6 +24,7 @@ class AppView extends StatelessWidget {
           : const MainDrawer(),
       body: body,
       floatingActionButton: floatingActionButton,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
