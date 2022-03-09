@@ -4,6 +4,7 @@ import 'package:nannyplus/cubit/child_list_cubit.dart';
 import 'package:nannyplus/views/app_view.dart';
 import 'package:nannyplus/widgets/child_list.dart';
 import 'package:nannyplus/widgets/loading_indicator.dart';
+import 'package:nannyplus/widgets/main_drawer.dart';
 
 class ChildListView extends StatelessWidget {
   const ChildListView({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class ChildListView extends StatelessWidget {
     context.read<ChildListCubit>().getChildList();
     return AppView(
       title: const Text("Nanny+"),
+      drawer: const MainDrawer(),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () async {},

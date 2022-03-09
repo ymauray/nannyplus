@@ -4,11 +4,12 @@ import 'package:nannyplus/widgets/main_drawer.dart';
 class AppView extends StatelessWidget {
   final Widget title;
   final Widget body;
+  final Widget? drawer;
   final Widget? floatingActionButton;
-
   const AppView({
     required this.title,
     required this.body,
+    this.drawer,
     this.floatingActionButton,
     Key? key,
   }) : super(key: key);
@@ -19,9 +20,7 @@ class AppView extends StatelessWidget {
       appBar: AppBar(
         title: title,
       ),
-      drawer: (ModalRoute.of(context) as PageRoute).fullscreenDialog
-          ? null
-          : const MainDrawer(),
+      drawer: drawer,
       body: body,
       floatingActionButton: floatingActionButton,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

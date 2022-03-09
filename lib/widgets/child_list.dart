@@ -18,9 +18,8 @@ class ChildList extends StatelessWidget {
         final child = _children[index];
         return ListTile(
           title: Text(child.displayName),
-          onTap: () => Navigator.of(context).push(MaterialPageRoute(
-              fullscreenDialog: true,
-              builder: (context) => ServiceListView(child))),
+          onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => ServiceListView(child))),
           subtitle: child.hasAllergies
               ? Text(child.alergies!)
               : Text(context.t("No known allergies")),

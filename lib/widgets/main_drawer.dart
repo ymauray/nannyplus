@@ -69,7 +69,6 @@ class MainDrawer extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const PriceListView(),
-                    fullscreenDialog: true,
                   ),
                 );
               },
