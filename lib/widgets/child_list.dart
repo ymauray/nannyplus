@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nannyplus/forms/child_form.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 
@@ -52,8 +53,16 @@ class ChildList extends StatelessWidget {
                 textStyle: const TextStyle(color: Colors.red),
               ),
             ],
-            onSelected: (value) {
+            onSelected: (value) async {
               if (value == 'edit') {
+                var editedChild = await Navigator.of(context).push<Child>(
+                  MaterialPageRoute(
+                    builder: (context) => ChildForm(
+                      child: child,
+                    ),
+                  ),
+                );
+                // Do something with the editedChild
               } else if (value == 'delete') {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(

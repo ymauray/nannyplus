@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nannyplus/widgets/main_drawer.dart';
 
 class AppView extends StatelessWidget {
   final Widget title;
