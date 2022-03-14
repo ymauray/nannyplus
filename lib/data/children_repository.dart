@@ -14,9 +14,20 @@ class ChildrenRepository {
 
   Future<Child> create(Child child) async {
     var db = await DatabaseUtil.instance;
-    await db.insert('children', child.toMap());
-    var created =
-        await db.query('children', where: 'id = ?', whereArgs: [child.id]);
-    return Child.fromMap(created.first);
+    var id = await db.insert('children', child.toMap());
+    return read(id);
+  }
+
+  Future<Child> read(int id) async {
+    var db = await DatabaseUtil.instance;
+    var child = await db.query('children', where: 'id = ?', whereArgs: [id]);
+    return Child.fromMap(child.first);
+  }
+
+  Future<Child> update(Child child) async {
+    var db = await DatabaseUtil.instance;
+    await db.update('children', child.toMap(),
+        where: 'id = ?', whereArgs: [child.id]);
+    return read(child.id!);
   }
 }

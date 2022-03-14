@@ -4,8 +4,9 @@ class Child {
   final int? id;
   final String firstName;
   final String? lastName;
+  final String? birthdate;
   final String? phoneNumber;
-  final String? alergies;
+  final String? allergies;
   final String? parentsName;
   final String? address;
   final int archived;
@@ -14,8 +15,9 @@ class Child {
     this.id,
     required this.firstName,
     this.lastName,
+    this.birthdate,
     this.phoneNumber,
-    this.alergies,
+    this.allergies,
     this.parentsName,
     this.address,
     this.archived = 0,
@@ -25,7 +27,7 @@ class Child {
 
   bool get hasPhoneNumber => !(phoneNumber?.isEmpty ?? true);
 
-  bool get hasAllergies => !(alergies?.isEmpty ?? true);
+  bool get hasAllergies => !(allergies?.isEmpty ?? true);
 
   // ---------------------------------------------------------------------------
 
@@ -33,8 +35,9 @@ class Child {
     int? id,
     String? firstName,
     String? lastName,
+    String? birthdate,
     String? phoneNumber,
-    String? alergies,
+    String? allergies,
     String? parentsName,
     String? address,
     int? archived,
@@ -43,8 +46,9 @@ class Child {
       id: id ?? this.id,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
+      birthdate: birthdate ?? this.birthdate,
       phoneNumber: phoneNumber ?? this.phoneNumber,
-      alergies: alergies ?? this.alergies,
+      allergies: allergies ?? this.allergies,
       parentsName: parentsName ?? this.parentsName,
       address: address ?? this.address,
       archived: archived ?? this.archived,
@@ -56,8 +60,9 @@ class Child {
       'id': id,
       'firstName': firstName,
       'lastName': lastName,
+      'birthdate': birthdate,
       'phoneNumber': phoneNumber,
-      'alergies': alergies,
+      'allergies': allergies,
       'parentsName': parentsName,
       'address': address,
       'archived': archived,
@@ -69,8 +74,9 @@ class Child {
       id: map['id']?.toInt(),
       firstName: map['firstName'] ?? '',
       lastName: map['lastName'],
+      birthdate: map['birthdate'],
       phoneNumber: map['phoneNumber'],
-      alergies: map['alergies'],
+      allergies: map['allergies'],
       parentsName: map['parentsName'],
       address: map['address'],
       archived: map['archived']?.toInt() ?? 0,
@@ -83,7 +89,7 @@ class Child {
 
   @override
   String toString() {
-    return 'Child(id: $id, firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, alergies: $alergies, parentsName: $parentsName, address: $address, archived: $archived)';
+    return 'Child(id: $id, firstName: $firstName, lastName: $lastName, birthdate: $birthdate, phoneNumber: $phoneNumber, allergies: $allergies, parentsName: $parentsName, address: $address, archived: $archived)';
   }
 
   @override
@@ -94,8 +100,9 @@ class Child {
         other.id == id &&
         other.firstName == firstName &&
         other.lastName == lastName &&
+        other.birthdate == birthdate &&
         other.phoneNumber == phoneNumber &&
-        other.alergies == alergies &&
+        other.allergies == allergies &&
         other.parentsName == parentsName &&
         other.address == address &&
         other.archived == archived;
@@ -106,8 +113,9 @@ class Child {
     return id.hashCode ^
         firstName.hashCode ^
         lastName.hashCode ^
+        birthdate.hashCode ^
         phoneNumber.hashCode ^
-        alergies.hashCode ^
+        allergies.hashCode ^
         parentsName.hashCode ^
         address.hashCode ^
         archived.hashCode;

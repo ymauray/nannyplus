@@ -71,6 +71,34 @@ msgstr "Fonctionalité non implémentée"
 msgid "Save"
 msgstr "Enregistrer"
 
+msgid "Edit Child"
+msgstr "Modifier un dossier"
+
+msgid "Add Child"
+msgstr "Ajouter un dossier"
+
+msgid "First name"
+msgstr "Prénom"
+
+msgid "Last name"
+msgstr "Nom"
+
+msgid "Birthdate"
+msgstr "Date de naissance"
+
+msgid "Phone number"
+msgstr "Numéro de téléphone"
+
+msgid "Parents name"
+msgstr "Nom des parents"
+
+msgid "Address"
+msgstr "Adresse"
+
+msgid "Allergies"
+msgstr "Allergies"
+
+
 # Legacy messages
 
 # msgid "Settings"

@@ -45,8 +45,9 @@ class DatabaseUtil {
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         firstName TEXT NOT NULL,
         lastName TEXT,
+        birthdate TEXT,
         phoneNumber TEXT,
-        alergies TEXT,
+        allergies TEXT,
         parentsName TEXT,
         address TEXT,
         archived INTEGER NOT NULL DEFAULT 0

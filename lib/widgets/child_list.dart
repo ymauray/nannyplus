@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nannyplus/cubit/child_list_cubit.dart';
 import 'package:nannyplus/forms/child_form.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 
@@ -22,7 +24,7 @@ class ChildList extends StatelessWidget {
           onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => ServiceListView(child))),
           subtitle: child.hasAllergies
-              ? Text(child.alergies!)
+              ? Text(child.allergies!)
               : Text(context.t("No known allergies")),
           leading: IconButton(
             icon: const Icon(
@@ -60,9 +62,16 @@ class ChildList extends StatelessWidget {
                     builder: (context) => ChildForm(
                       child: child,
                     ),
+                    fullscreenDialog: true,
                   ),
                 );
-                // Do something with the editedChild
+                if (editedChild != null) {
+                  context.read<ChildListCubit>().update(
+                        editedChild.copyWith(
+                          id: _children[index].id,
+                        ),
+                      );
+                }
               } else if (value == 'delete') {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
