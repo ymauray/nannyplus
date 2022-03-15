@@ -5,19 +5,25 @@ part of 'child_list_cubit.dart';
 @immutable
 abstract class ChildListState {
   const ChildListState();
+  bool get showArchivedItems;
 }
 
 // ---------------------------------------------------------------------------
 
 class ChildListInitial extends ChildListState {
   const ChildListInitial();
+
+  @override
+  bool get showArchivedItems => false;
 }
 
 // ---------------------------------------------------------------------------
 
 class ChildListLoaded extends ChildListState {
   final List<Child> children;
-  const ChildListLoaded(this.children);
+  final bool showArchived;
+
+  const ChildListLoaded(this.children, {this.showArchived = false});
 
   @override
   bool operator ==(Object other) {
@@ -28,6 +34,9 @@ class ChildListLoaded extends ChildListState {
 
   @override
   int get hashCode => children.hashCode;
+
+  @override
+  bool get showArchivedItems => showArchived;
 }
 
 // ---------------------------------------------------------------------------
@@ -45,6 +54,9 @@ class ChildListError extends ChildListState {
 
   @override
   int get hashCode => message.hashCode;
+
+  @override
+  bool get showArchivedItems => false;
 }
 
 // ---------------------------------------------------------------------------

@@ -5,11 +5,13 @@ class AppView extends StatelessWidget {
   final Widget body;
   final Widget? drawer;
   final Widget? floatingActionButton;
+  final List<Widget>? actions;
   const AppView({
     required this.title,
     required this.body,
     this.drawer,
     this.floatingActionButton,
+    this.actions,
     Key? key,
   }) : super(key: key);
 
@@ -18,6 +20,7 @@ class AppView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: title,
+        actions: actions,
       ),
       drawer: drawer,
       body: body,

@@ -9,6 +9,7 @@ class Child {
   final String? allergies;
   final String? parentsName;
   final String? address;
+  final int preschool;
   final int archived;
 
   Child({
@@ -20,6 +21,7 @@ class Child {
     this.allergies,
     this.parentsName,
     this.address,
+    this.preschool = 1,
     this.archived = 0,
   });
 
@@ -40,6 +42,7 @@ class Child {
     String? allergies,
     String? parentsName,
     String? address,
+    int? preschool,
     int? archived,
   }) {
     return Child(
@@ -51,6 +54,7 @@ class Child {
       allergies: allergies ?? this.allergies,
       parentsName: parentsName ?? this.parentsName,
       address: address ?? this.address,
+      preschool: preschool ?? this.preschool,
       archived: archived ?? this.archived,
     );
   }
@@ -65,6 +69,7 @@ class Child {
       'allergies': allergies,
       'parentsName': parentsName,
       'address': address,
+      'preschool': preschool,
       'archived': archived,
     };
   }
@@ -79,6 +84,7 @@ class Child {
       allergies: map['allergies'],
       parentsName: map['parentsName'],
       address: map['address'],
+      preschool: map['preschool']?.toInt() ?? 0,
       archived: map['archived']?.toInt() ?? 0,
     );
   }
@@ -89,7 +95,7 @@ class Child {
 
   @override
   String toString() {
-    return 'Child(id: $id, firstName: $firstName, lastName: $lastName, birthdate: $birthdate, phoneNumber: $phoneNumber, allergies: $allergies, parentsName: $parentsName, address: $address, archived: $archived)';
+    return 'Child(id: $id, firstName: $firstName, lastName: $lastName, birthdate: $birthdate, phoneNumber: $phoneNumber, allergies: $allergies, parentsName: $parentsName, address: $address, preschool: $preschool, archived: $archived)';
   }
 
   @override
@@ -105,6 +111,7 @@ class Child {
         other.allergies == allergies &&
         other.parentsName == parentsName &&
         other.address == address &&
+        other.preschool == preschool &&
         other.archived == archived;
   }
 
@@ -118,6 +125,7 @@ class Child {
         allergies.hashCode ^
         parentsName.hashCode ^
         address.hashCode ^
+        preschool.hashCode ^
         archived.hashCode;
   }
 }

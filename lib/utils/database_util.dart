@@ -50,7 +50,8 @@ class DatabaseUtil {
         allergies TEXT,
         parentsName TEXT,
         address TEXT,
-        archived INTEGER NOT NULL DEFAULT 0
+        archived INTEGER NOT NULL DEFAULT 0,
+        preschool INTEGER NOT NULL DEFAULT 1
       )
     ''');
 

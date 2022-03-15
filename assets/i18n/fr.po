@@ -98,6 +98,9 @@ msgstr "Adresse"
 msgid "Allergies"
 msgstr "Allergies"
 
+msgid "Archive"
+msgstr "Archiver"
+
 
 # Legacy messages
 

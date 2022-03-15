@@ -5,10 +5,12 @@ import 'model/child.dart';
 class ChildrenRepository {
   const ChildrenRepository();
 
-  Future<List<Child>> getChildList() async {
+  Future<List<Child>> getChildList(bool showArchived) async {
     var db = await DatabaseUtil.instance;
     var rows = await db.query('children',
-        where: 'archived = ?', whereArgs: [0], orderBy: 'firstName, lastName');
+        where: 'archived <= ?',
+        whereArgs: [showArchived ? 1 : 0],
+        orderBy: 'firstName, lastName');
     return rows.map((row) => Child.fromMap(row)).toList();
   }
 
@@ -29,5 +31,10 @@ class ChildrenRepository {
     await db.update('children', child.toMap(),
         where: 'id = ?', whereArgs: [child.id]);
     return read(child.id!);
+  }
+
+  Future<void> delete(Child child) async {
+    var db = await DatabaseUtil.instance;
+    await db.delete('children', where: 'id = ?', whereArgs: [child.id]);
   }
 }

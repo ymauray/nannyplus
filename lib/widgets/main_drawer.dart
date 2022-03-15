@@ -91,6 +91,7 @@ class MainDrawer extends StatelessWidget {
     var children = jsonResponse['children'];
     for (var c in children) {
       c['archived'] = c['archived'] ?? true ? 1 : 0;
+      c['preschool'] = c['preschool'] ?? true ? 1 : 0;
       var child = Child.fromMap(c);
       await childrenRepository.create(child);
     }
@@ -147,10 +148,13 @@ class MainDrawer extends StatelessWidget {
           var service = Service(
             childId: c['id'],
             date: legacyEntry.date,
-            priceId: petitRepas.id!,
-            priceLabel: petitRepas.label,
-            isFixedPrice: petitRepas.isFixedPrice ? 1 : 0,
-            price: petitRepas.amount,
+            priceId: c['preschool'] == 1 ? petitRepas.id! : grandRepas.id!,
+            priceLabel:
+                c['preschool'] == 1 ? petitRepas.label : grandRepas.label,
+            isFixedPrice: c['preschool'] == 1
+                ? (petitRepas.isFixedPrice ? 1 : 0)
+                : (grandRepas.isFixedPrice ? 1 : 0),
+            price: c['preschool'] == 1 ? petitRepas.amount : grandRepas.amount,
             invoiced: legacyEntry.invoiced ? 1 : 0,
             invoiceId:
                 legacyEntry.invoiced ? int.parse(legacyEntry.invoiceId) : null,

@@ -45,6 +45,10 @@ class ChildList extends StatelessWidget {
                 value: 'edit',
                 child: Text(context.t('Edit')),
               ),
+              PopupMenuItem(
+                value: 'archive',
+                child: Text(context.t('Archive')),
+              ),
               const PopupMenuItem(
                 height: 0,
                 child: Divider(),
@@ -72,12 +76,10 @@ class ChildList extends StatelessWidget {
                         ),
                       );
                 }
+              } else if (value == 'archive') {
+                context.read<ChildListCubit>().archive(child);
               } else if (value == 'delete') {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(context.t('Not implemented')),
-                  ),
-                );
+                context.read<ChildListCubit>().delete(child);
               }
             },
           ),
