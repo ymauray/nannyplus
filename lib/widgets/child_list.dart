@@ -20,7 +20,12 @@ class ChildList extends StatelessWidget {
       itemBuilder: (context, index) {
         final child = _children[index];
         return ListTile(
-          title: Text(child.displayName),
+          title: Text(
+            child.displayName,
+            style: child.isArchived
+                ? const TextStyle(fontStyle: FontStyle.italic)
+                : null,
+          ),
           onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => ServiceListView(child))),
           subtitle: child.hasAllergies
@@ -45,19 +50,25 @@ class ChildList extends StatelessWidget {
                 value: 'edit',
                 child: Text(context.t('Edit')),
               ),
-              PopupMenuItem(
-                value: 'archive',
-                child: Text(context.t('Archive')),
-              ),
-              const PopupMenuItem(
-                height: 0,
-                child: Divider(),
-              ),
-              PopupMenuItem(
-                value: 'delete',
-                child: Text(context.t('Delete')),
-                textStyle: const TextStyle(color: Colors.red),
-              ),
+              if (!child.isArchived)
+                PopupMenuItem(
+                  value: 'archive',
+                  child: Text(context.t('Archive')),
+                ),
+              if (child.isArchived)
+                PopupMenuItem(
+                  value: 'unarchive',
+                  child: Text(context.t('Unarchive')),
+                ),
+              // const PopupMenuItem(
+              //   height: 0,
+              //   child: Divider(),
+              // ),
+              // PopupMenuItem(
+              //   value: 'delete',
+              //   child: Text(context.t('Delete')),
+              //   textStyle: const TextStyle(color: Colors.red),
+              // ),
             ],
             onSelected: (value) async {
               if (value == 'edit') {
@@ -78,8 +89,8 @@ class ChildList extends StatelessWidget {
                 }
               } else if (value == 'archive') {
                 context.read<ChildListCubit>().archive(child);
-              } else if (value == 'delete') {
-                context.read<ChildListCubit>().delete(child);
+                // } else if (value == 'delete') {
+                //   context.read<ChildListCubit>().delete(child);
               }
             },
           ),

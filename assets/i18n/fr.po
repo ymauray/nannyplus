@@ -101,6 +101,9 @@ msgstr "Allergies"
 msgid "Archive"
 msgstr "Archiver"
 
+msgid "Unarchive"
+msgstr "Desarchiver"
+
 
 # Legacy messages
 

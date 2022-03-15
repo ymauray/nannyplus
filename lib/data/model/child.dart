@@ -31,6 +31,8 @@ class Child {
 
   bool get hasAllergies => !(allergies?.isEmpty ?? true);
 
+  bool get isArchived => archived == 1;
+
   // ---------------------------------------------------------------------------
 
   Child copyWith({
