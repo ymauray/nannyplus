@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import 'package:nannyplus/data/children_repository.dart';
+import 'package:nannyplus/data/invoices_repository.dart';
+import 'package:nannyplus/data/model/invoice.dart';
 import 'package:nannyplus/utils/database_util.dart';
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/data/model/service.dart';
@@ -85,16 +87,8 @@ class MainDrawer extends StatelessWidget {
     var childrenRepository = const ChildrenRepository();
     var pricesRepository = const PricesRepository();
     var servicesRepository = const ServicesRepository();
-
+    var invoicesRepository = const InvoicesRepository();
     var response = await http.get(Uri.parse('http://10.0.2.2/api/json'));
-    var jsonResponse = jsonDecode(response.body);
-    var children = jsonResponse['children'];
-    for (var c in children) {
-      c['archived'] = c['archived'] ?? true ? 1 : 0;
-      c['preschool'] = c['preschool'] ?? true ? 1 : 0;
-      var child = Child.fromMap(c);
-      await childrenRepository.create(child);
-    }
 
     var semaine =
         const Price(id: 1, label: 'Heures semaine', amount: 7.0, fixedPrice: 0);
@@ -109,7 +103,14 @@ class MainDrawer extends StatelessWidget {
         const Price(id: 4, label: 'Grand repas', amount: 7.0, fixedPrice: 1);
     pricesRepository.create(grandRepas);
 
+    var jsonResponse = jsonDecode(response.body);
+    var children = jsonResponse['children'];
     for (var c in children) {
+      c['archived'] = c['archived'] ?? true ? 1 : 0;
+      c['preschool'] = c['preschool'] ?? true ? 1 : 0;
+      var child = Child.fromMap(c);
+      await childrenRepository.create(child);
+
       var entries = c['_entries'];
       for (var e in entries) {
         var legacyEntry = LegacyEntry.fromMap(e);
@@ -161,6 +162,11 @@ class MainDrawer extends StatelessWidget {
           );
           await servicesRepository.create(service);
         }
+      }
+
+      for (var i in c['_invoices']) {
+        var invoice = Invoice.fromMap(i);
+        await invoicesRepository.create(invoice);
       }
     }
   }

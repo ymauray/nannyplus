@@ -29,11 +29,13 @@ class ChildListLoaded extends ChildListState {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is ChildListLoaded && listEquals(other.children, children);
+    return other is ChildListLoaded &&
+        listEquals(other.children, children) &&
+        other.showArchived == showArchived;
   }
 
   @override
-  int get hashCode => children.hashCode;
+  int get hashCode => children.hashCode ^ showArchived.hashCode;
 
   @override
   bool get showArchivedItems => showArchived;

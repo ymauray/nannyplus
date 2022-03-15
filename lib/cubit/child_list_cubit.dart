@@ -62,6 +62,16 @@ class ChildListCubit extends Cubit<ChildListState> {
     }
   }
 
+  Future<void> unarchive(Child child) async {
+    try {
+      child = child.copyWith(archived: 0);
+      await _childrenRepository.update(child);
+      loadChildList();
+    } catch (e) {
+      emit(ChildListError(e.toString()));
+    }
+  }
+
   Future<void> showArchivedItems() async {
     try {
       if (state is ChildListLoaded) {

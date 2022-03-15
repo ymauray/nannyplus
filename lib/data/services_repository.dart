@@ -39,4 +39,13 @@ class ServicesRepository {
         orderBy: 'date DESC');
     return rows.map((e) => Service.fromMap(e)).toList();
   }
+
+  Future<List<Service>> getServicesForInvoice(int invoiceId) async {
+    var db = await DatabaseUtil.instance;
+
+    var rows = await db.query('services',
+        where: 'invoiceId = ?', whereArgs: [invoiceId], orderBy: 'date DESC');
+
+    return rows.map((e) => Service.fromMap(e)).toList();
+  }
 }

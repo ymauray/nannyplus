@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nannyplus/cubit/child_list_cubit.dart';
 import 'package:nannyplus/forms/child_form.dart';
+import 'package:nannyplus/views/invoice_list_view.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
@@ -60,10 +61,14 @@ class ChildList extends StatelessWidget {
                   value: 'unarchive',
                   child: Text(context.t('Unarchive')),
                 ),
-              // const PopupMenuItem(
-              //   height: 0,
-              //   child: Divider(),
-              // ),
+              const PopupMenuItem(
+                height: 0,
+                child: Divider(),
+              ),
+              PopupMenuItem(
+                value: 'invoices',
+                child: Text(context.t('Invoices')),
+              ),
               // PopupMenuItem(
               //   value: 'delete',
               //   child: Text(context.t('Delete')),
@@ -89,8 +94,14 @@ class ChildList extends StatelessWidget {
                 }
               } else if (value == 'archive') {
                 context.read<ChildListCubit>().archive(child);
-                // } else if (value == 'delete') {
-                //   context.read<ChildListCubit>().delete(child);
+              } else if (value == 'unarchive') {
+                context.read<ChildListCubit>().unarchive(child);
+              } else if (value == 'invoices') {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => InvoiceListView(child),
+                  ),
+                );
               }
             },
           ),

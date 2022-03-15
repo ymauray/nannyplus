@@ -79,6 +79,18 @@ class DatabaseUtil {
         invoiceId INTEGER
       )
       ''');
+
+    await db.execute('''
+      CREATE TABLE invoices(
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        number INTEGER NOT NULL,
+        childId INTEGER NOT NULL,
+        date TEXT,
+        total DOUBLE NOT NULL,
+        parentsName TEXT NOT NULL,
+        address TEXT NOT NULL
+      )
+      ''');
   }
 
   static void _upgradeTo(int version, sqlite.Database db) async {}

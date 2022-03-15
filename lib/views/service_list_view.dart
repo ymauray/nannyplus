@@ -19,6 +19,33 @@ class ServiceListView extends StatelessWidget {
     context.read<ServiceListCubit>().loadServices(child);
     return AppView(
       title: Text(context.t("Services")),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: PopupMenuButton(
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'create_invoice',
+                child: Text(context.t('Create invoice')),
+              ),
+            ],
+            onSelected: (value) {
+              if (value == 'create_invoice') {
+                // Navigator.of(context).push<Service>(
+                //   MaterialPageRoute(
+                //     builder: (context) => const ServiceForm(child: null),
+                //   ),
+                // );
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Invoice created"),
+                  ),
+                );
+              }
+            },
+          ),
+        ),
+      ],
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () async {

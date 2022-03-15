@@ -32,17 +32,23 @@ class ServiceList extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                child.displayName,
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(
+                    child: BoldText(
                       context.t('Pending total'),
-                      style: Theme.of(context).textTheme.headline6,
                     ),
                   ),
-                  Text(
+                  BoldText(
                     pendingTotal.toStringAsFixed(2),
-                    style: Theme.of(context).textTheme.headline6,
+                    //style: Theme.of(context).textTheme.subtitle2,
                   ),
                 ],
               ),

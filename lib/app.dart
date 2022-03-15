@@ -10,6 +10,8 @@ import 'package:nannyplus/data/services_repository.dart';
 import 'package:nannyplus/data/prices_repository.dart';
 import 'package:provider/provider.dart';
 
+import 'cubit/invoice_list_cubit.dart';
+import 'data/invoices_repository.dart';
 import 'views/child_list_view.dart';
 
 class NannyPlusApp extends StatelessWidget {
@@ -20,6 +22,7 @@ class NannyPlusApp extends StatelessWidget {
     var childrenRepository = const ChildrenRepository();
     var pricesRepository = const PricesRepository();
     var servicesRepository = const ServicesRepository();
+    var invoicesRepository = const InvoicesRepository();
 
     return MultiProvider(
       providers: [
@@ -32,6 +35,9 @@ class NannyPlusApp extends StatelessWidget {
         BlocProvider<ServiceListCubit>(
           create: (context) =>
               ServiceListCubit(servicesRepository, pricesRepository),
+        ),
+        BlocProvider<InvoiceListCubit>(
+          create: (context) => InvoiceListCubit(invoicesRepository),
         ),
       ],
       child: MaterialApp(

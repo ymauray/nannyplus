@@ -104,6 +104,21 @@ msgstr "Archiver"
 msgid "Unarchive"
 msgstr "Desarchiver"
 
+msgid "Show archived items"
+msgstr "Afficher les archives"
+
+msgid "Hide archived items"
+msgstr "Cacher les archives"
+
+msgid "Create invoice"
+msgstr "Créer une facture"
+
+msgid "Invoices"
+msgstr "Factures"
+
+msgid "Invoice for {0}"
+msgstr "Facture pour {0}"
+
 
 # Legacy messages
 
