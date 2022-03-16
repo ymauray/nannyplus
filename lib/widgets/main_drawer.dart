@@ -88,7 +88,6 @@ class MainDrawer extends StatelessWidget {
     var pricesRepository = const PricesRepository();
     var servicesRepository = const ServicesRepository();
     var invoicesRepository = const InvoicesRepository();
-    var response = await http.get(Uri.parse('http://10.0.2.2/api/json'));
 
     var semaine =
         const Price(id: 1, label: 'Heures semaine', amount: 7.0, fixedPrice: 0);
@@ -103,6 +102,8 @@ class MainDrawer extends StatelessWidget {
         const Price(id: 4, label: 'Grand repas', amount: 7.0, fixedPrice: 1);
     pricesRepository.create(grandRepas);
 
+    var response =
+        await http.get(Uri.parse('https://sandrinekohler.ch/api/json'));
     var jsonResponse = jsonDecode(response.body);
     var children = jsonResponse['children'];
     for (var c in children) {
