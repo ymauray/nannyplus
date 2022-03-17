@@ -42,29 +42,30 @@ class MainDrawer extends StatelessWidget {
                   _tapCount = 0;
                 });
               },
-              child: const ListTile(
+              child: ListTile(
                 tileColor: Colors.blue,
                 textColor: Colors.white,
                 iconColor: Colors.white,
-                title: Text('Nanny+'),
+                title: const Text(
+                  'Nanny+',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                leading: Image.asset(
+                  'assets/img/logo-125x100.png',
+                  height: 24,
+                ),
               ),
             ),
             const Divider(),
             ListTile(
-              title: Text(context.t('Settings')),
-              leading: const Icon(Icons.settings),
-              onTap: () {
-                Navigator.of(context).pop();
-                //Navigator.of(context).push(
-                //  MaterialPageRoute(
-                //    builder: (context) => const SettingsView(),
-                //  ),
-                //);
-              },
-            ),
-            const Divider(),
-            ListTile(
-              title: Text(context.t('Price list')),
+              title: Text(
+                context.t('Price list'),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               leading: const Icon(Icons.payment),
               onTap: () {
                 Navigator.of(context).pop();
@@ -73,6 +74,24 @@ class MainDrawer extends StatelessWidget {
                     builder: (context) => const PriceListView(),
                   ),
                 );
+              },
+            ),
+            const Divider(),
+            ListTile(
+              title: Text(
+                context.t('Settings'),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              leading: const Icon(Icons.settings),
+              onTap: () {
+                Navigator.of(context).pop();
+                //Navigator.of(context).push(
+                //  MaterialPageRoute(
+                //    builder: (context) => const SettingsView(),
+                //  ),
+                //);
               },
             ),
             const Divider(),

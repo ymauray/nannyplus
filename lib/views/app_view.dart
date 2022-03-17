@@ -25,7 +25,7 @@ class AppView extends StatelessWidget {
       drawer: drawer,
       body: body,
       floatingActionButton: floatingActionButton,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

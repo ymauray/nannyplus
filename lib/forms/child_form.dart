@@ -55,7 +55,12 @@ class _ChildFormState extends State<ChildForm> {
                             labelText: context.t('First name'),
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                           ),
+                          autocorrect: false,
+                          textCapitalization: TextCapitalization.words,
                         ),
+                      ),
+                      const SizedBox(
+                        width: 16,
                       ),
                       Expanded(
                         flex: 1,
@@ -65,6 +70,8 @@ class _ChildFormState extends State<ChildForm> {
                             labelText: context.t('Last name'),
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                           ),
+                          autocorrect: false,
+                          textCapitalization: TextCapitalization.words,
                         ),
                       ),
                     ],
@@ -97,6 +104,7 @@ class _ChildFormState extends State<ChildForm> {
                       labelText: context.t('Allergies'),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                     ),
+                    textCapitalization: TextCapitalization.sentences,
                   ),
                 ),
                 Padding(
@@ -107,6 +115,8 @@ class _ChildFormState extends State<ChildForm> {
                       labelText: context.t('Parents name'),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                     ),
+                    autocorrect: false,
+                    textCapitalization: TextCapitalization.words,
                   ),
                 ),
                 Padding(
@@ -117,6 +127,9 @@ class _ChildFormState extends State<ChildForm> {
                       labelText: context.t('Phone number'),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                     ),
+                    autocorrect: false,
+                    textCapitalization: TextCapitalization.words,
+                    keyboardType: TextInputType.phone,
                   ),
                 ),
                 Padding(
@@ -129,6 +142,7 @@ class _ChildFormState extends State<ChildForm> {
                       labelText: context.t('Address'),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                     ),
+                    textCapitalization: TextCapitalization.words,
                   ),
                 ),
                 Padding(
@@ -139,8 +153,10 @@ class _ChildFormState extends State<ChildForm> {
                       if (_formKey.currentState!.validate()) {
                         var map = Map<String, dynamic>.from(
                             _formKey.currentState!.value);
-                        map['birthdate'] = DateFormat('yyyy-MM-dd')
-                            .format(map['birthdate'] as DateTime);
+                        if (map['birthdate'] != null) {
+                          map['birthdate'] = DateFormat('yyyy-MM-dd')
+                              .format(map['birthdate'] as DateTime);
+                        }
                         var data = Child.fromMap(map);
                         Navigator.of(context).pop(data);
                       } else {

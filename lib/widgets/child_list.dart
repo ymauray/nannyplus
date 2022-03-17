@@ -33,8 +33,9 @@ class ChildList extends StatelessWidget {
               ? Text(child.allergies!)
               : Text(context.t("No known allergies")),
           leading: IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.phone,
+              color: child.hasPhoneNumber ? Colors.green : null,
             ),
             onPressed: () => child.hasPhoneNumber
                 ? launch('tel://${child.phoneNumber}')
@@ -44,7 +45,6 @@ class ChildList extends StatelessWidget {
                     ),
                   ),
           ),
-          iconColor: child.hasPhoneNumber ? Colors.green : null,
           trailing: PopupMenuButton(
             itemBuilder: (context) => [
               PopupMenuItem(
@@ -69,11 +69,6 @@ class ChildList extends StatelessWidget {
                 value: 'invoices',
                 child: Text(context.t('Invoices')),
               ),
-              // PopupMenuItem(
-              //   value: 'delete',
-              //   child: Text(context.t('Delete')),
-              //   textStyle: const TextStyle(color: Colors.red),
-              // ),
             ],
             onSelected: (value) async {
               if (value == 'edit') {
