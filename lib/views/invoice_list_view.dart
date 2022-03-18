@@ -12,7 +12,7 @@ class InvoiceListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<InvoiceListCubit>().loadInvoiceList(child);
+    context.read<InvoiceListCubit>().loadInvoiceList(child.id!);
     return AppView(
       title: Text(
         context.t('Invoices'),
@@ -22,14 +22,12 @@ class InvoiceListView extends StatelessWidget {
           if (state is InvoiceListError) {}
         },
         builder: (context, state) {
-          if (state is InvoiceListLoading) {
+          if (state is InvoiceListLoaded) {
+            return InvoiceList(state.invoices);
+          } else {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state is InvoiceListLoaded) {
-            return InvoiceList(state.invoices, child);
-          } else {
-            return Container();
           }
         },
       ),

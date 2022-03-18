@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:nannyplus/widgets/bold_text.dart';
 
 class ServiceListHeader extends StatelessWidget {
   const ServiceListHeader({
@@ -18,17 +19,11 @@ class ServiceListHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
+                BoldText(
                   context.t("Date"),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
                 ),
-                Text(
+                BoldText(
                   context.t("Service"),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
                 )
               ],
             ),
@@ -42,17 +37,11 @@ class ServiceListHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Text(
+                const BoldText(
                   '',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
                 ),
-                Text(
+                BoldText(
                   context.t("Hours"),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
                 ),
               ],
             ),
@@ -66,17 +55,11 @@ class ServiceListHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Text(
+                const BoldText(
                   '',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
                 ),
-                Text(
+                BoldText(
                   context.t("Price"),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
                 ),
               ],
             ),

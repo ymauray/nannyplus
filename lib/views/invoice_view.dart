@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/data/model/invoice.dart';
-import 'package:nannyplus/data/services_repository.dart';
-import 'package:nannyplus/utils/date_format_extension.dart';
+import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:printing/printing.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -11,144 +8,151 @@ import 'package:shared_preferences/shared_preferences.dart';
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
 
+import '../data/model/child.dart';
+import '../data/model/invoice.dart';
+import '../data/services_repository.dart';
+import '../utils/date_format_extension.dart';
+import '../views/app_view.dart';
+
 class InvoiceView extends StatelessWidget {
   final Invoice invoice;
-  final Child child;
   final GettextLocalizations gettext;
-  const InvoiceView(this.invoice, this.child, this.gettext, {Key? key})
-      : super(key: key);
+  const InvoiceView(this.invoice, this.gettext, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<pw.Document>(
-      future: (() async {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        var title1 = prefs.getString('title1');
-        var title2 = prefs.getString('title2');
-        var conditions = prefs.getString('conditions');
+    return AppView(
+      title: Text(context.t('Invoice #{0}', args: [invoice.number])),
+      body: FutureBuilder<pw.Document>(
+        future: (() async {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          var title1 = prefs.getString('title1');
+          var title2 = prefs.getString('title2');
+          var conditions = prefs.getString('conditions');
 
-        var servicesRepository = const ServicesRepository();
-        var services =
-            await servicesRepository.getServicesForInvoice(invoice.id);
+          var servicesRepository = const ServicesRepository();
+          var services =
+              await servicesRepository.getServicesForInvoice(invoice.id);
 
-        var rows = services.map(
-          (service) => pw.TableRow(
-            decoration: const pw.BoxDecoration(
-              border: pw.Border(
-                bottom: pw.BorderSide(color: PdfColors.grey),
+          var rows = services.map(
+            (service) => pw.TableRow(
+              decoration: const pw.BoxDecoration(
+                border: pw.Border(
+                  bottom: pw.BorderSide(color: PdfColors.grey),
+                ),
               ),
+              children: [
+                pw.Padding(
+                  padding: const pw.EdgeInsets.symmetric(vertical: 8.0),
+                  child: pw.Text(
+                    service.date.formatDate(),
+                    textAlign: pw.TextAlign.left,
+                    style: const pw.TextStyle(fontSize: 14),
+                  ),
+                ),
+                pw.Padding(
+                  padding: const pw.EdgeInsets.symmetric(vertical: 8.0),
+                  child: pw.Text(
+                    service.priceLabel!,
+                    textAlign: pw.TextAlign.left,
+                    style: const pw.TextStyle(fontSize: 14),
+                  ),
+                ),
+                pw.Padding(
+                  padding: const pw.EdgeInsets.symmetric(vertical: 8.0),
+                  child: pw.Text(
+                    service.isFixedPrice == 1
+                        ? '-'
+                        : (service.hours.toString() +
+                            ":" +
+                            service.minutes.toString().padLeft(2, '0')),
+                    textAlign: pw.TextAlign.center,
+                    style: const pw.TextStyle(fontSize: 14),
+                  ),
+                ),
+                pw.Padding(
+                  padding: const pw.EdgeInsets.symmetric(vertical: 8.0),
+                  child: pw.Text(
+                    service.price.toStringAsFixed(2),
+                    textAlign: pw.TextAlign.right,
+                    style: const pw.TextStyle(fontSize: 14),
+                  ),
+                ),
+              ],
             ),
-            children: [
-              pw.Padding(
-                padding: const pw.EdgeInsets.symmetric(vertical: 8.0),
-                child: pw.Text(
-                  service.date.formatDate(),
-                  textAlign: pw.TextAlign.left,
-                  style: const pw.TextStyle(fontSize: 14),
-                ),
-              ),
-              pw.Padding(
-                padding: const pw.EdgeInsets.symmetric(vertical: 8.0),
-                child: pw.Text(
-                  service.priceLabel!,
-                  textAlign: pw.TextAlign.left,
-                  style: const pw.TextStyle(fontSize: 14),
-                ),
-              ),
-              pw.Padding(
-                padding: const pw.EdgeInsets.symmetric(vertical: 8.0),
-                child: pw.Text(
-                  service.isFixedPrice == 1
-                      ? '-'
-                      : (service.hours.toString() +
-                          ":" +
-                          service.minutes.toString().padLeft(2, '0')),
-                  textAlign: pw.TextAlign.center,
-                  style: const pw.TextStyle(fontSize: 14),
-                ),
-              ),
-              pw.Padding(
-                padding: const pw.EdgeInsets.symmetric(vertical: 8.0),
-                child: pw.Text(
-                  service.price.toStringAsFixed(2),
-                  textAlign: pw.TextAlign.right,
-                  style: const pw.TextStyle(fontSize: 14),
-                ),
-              ),
-            ],
-          ),
-        );
+          );
 
-        final byteData =
-            await rootBundle.load('assets/fonts/chinese.stcaiyun.ttf');
-        final font = pw.Font.ttf(byteData);
+          final byteData =
+              await rootBundle.load('assets/fonts/chinese.stcaiyun.ttf');
+          final font = pw.Font.ttf(byteData);
 
-        var doc = pw.Document();
-        doc.addPage(
-          pw.Page(
-            pageFormat: PdfPageFormat.a4,
-            margin: const pw.EdgeInsets.all(20),
-            build: (pw.Context context) {
-              return pw.Stack(
-                children: [
-                  pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: [
-                      invoiceHeader(title1, title2, font),
-                      invoiceTitle(),
-                      invoiceMeta(),
-                      invoiceTable(rows),
-                      pw.Column(
-                        children: [
-                          pw.Row(
-                            children: [
-                              pw.Expanded(
-                                child: pw.Text(
-                                  gettext.t('Total incl. VAT', null) + " : ",
+          var doc = pw.Document();
+          doc.addPage(
+            pw.Page(
+              pageFormat: PdfPageFormat.a4,
+              margin: const pw.EdgeInsets.all(20),
+              build: (pw.Context context) {
+                return pw.Stack(
+                  children: [
+                    pw.Column(
+                      crossAxisAlignment: pw.CrossAxisAlignment.start,
+                      children: [
+                        invoiceHeader(title1, title2, font),
+                        invoiceTitle(),
+                        invoiceMeta(),
+                        invoiceTable(rows),
+                        pw.Column(
+                          children: [
+                            pw.Row(
+                              children: [
+                                pw.Expanded(
+                                  child: pw.Text(
+                                    gettext.t('Total incl. VAT', null) + " : ",
+                                    style: pw.TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: pw.FontWeight.bold,
+                                      color: PdfColors.blue,
+                                    ),
+                                    textAlign: pw.TextAlign.right,
+                                  ),
+                                ),
+                                pw.Text(
+                                  invoice.total.toStringAsFixed(2),
                                   style: pw.TextStyle(
                                     fontSize: 16,
                                     fontWeight: pw.FontWeight.bold,
-                                    color: PdfColors.blue,
                                   ),
                                   textAlign: pw.TextAlign.right,
                                 ),
-                              ),
-                              pw.Text(
-                                invoice.total.toStringAsFixed(2),
-                                style: pw.TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: pw.FontWeight.bold,
+                              ],
+                            ),
+                            pw.Row(
+                              mainAxisAlignment: pw.MainAxisAlignment.end,
+                              children: [
+                                pw.Text(
+                                  conditions ??
+                                      'Facture payable sous 10 jours, par virement bancaire ou par TWINT',
+                                  style: const pw.TextStyle(
+                                    fontSize: 12,
+                                  ),
                                 ),
-                                textAlign: pw.TextAlign.right,
-                              ),
-                            ],
-                          ),
-                          pw.Row(
-                            mainAxisAlignment: pw.MainAxisAlignment.end,
-                            children: [
-                              pw.Text(
-                                conditions ??
-                                    'Facture payable sous 10 jours, par virement bancaire ou par TWINT',
-                                style: const pw.TextStyle(
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            },
-          ),
-        );
-        return doc;
-      })(),
-      builder: (context, snapshot) {
-        return PdfPreview(build: (pageFormat) => snapshot.data!.save());
-      },
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ),
+          );
+          return doc;
+        })(),
+        builder: (context, snapshot) {
+          return PdfPreview(build: (pageFormat) => snapshot.data!.save());
+        },
+      ),
     );
   }
 
@@ -308,7 +312,7 @@ class InvoiceView extends StatelessWidget {
                 child: pw.Padding(
                   padding: const pw.EdgeInsets.symmetric(vertical: 8),
                   child: pw.Text(
-                    gettext.t("Invoice for {0}", [child.displayName]),
+                    gettext.t("Invoice for {0}", ["tmpName"]),
                     textAlign: pw.TextAlign.center,
                     style: const pw.TextStyle(
                       fontSize: 17,

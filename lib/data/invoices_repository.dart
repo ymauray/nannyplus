@@ -1,4 +1,3 @@
-import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/utils/database_util.dart';
 
 import 'model/invoice.dart';
@@ -6,12 +5,12 @@ import 'model/invoice.dart';
 class InvoicesRepository {
   const InvoicesRepository();
 
-  Future<List<Invoice>> getInvoiceList(Child child) async {
+  Future<List<Invoice>> getInvoiceList(int childId) async {
     var db = await DatabaseUtil.instance;
     var rows = await db.query(
       'invoices',
       where: 'childId = ?',
-      whereArgs: [child.id],
+      whereArgs: [childId],
       orderBy: 'date desc',
     );
     return rows.map((row) => Invoice.fromMap(row)).toList();

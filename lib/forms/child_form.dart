@@ -24,6 +24,34 @@ class _ChildFormState extends State<ChildForm> {
       title: Text(widget.child != null
           ? context.t('Edit Child')
           : context.t('Add Child')),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: TextButton(
+            onPressed: () {
+              _formKey.currentState!.save();
+              if (_formKey.currentState!.validate()) {
+                var map =
+                    Map<String, dynamic>.from(_formKey.currentState!.value);
+                if (map['birthdate'] != null) {
+                  map['birthdate'] = DateFormat('yyyy-MM-dd')
+                      .format(map['birthdate'] as DateTime);
+                }
+                var data = Child.fromMap(map);
+                Navigator.of(context).pop(data);
+              } else {
+                // Validation failed, do something.
+              }
+            },
+            child: Text(
+              context.t('Save'),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+            ),
+          ),
+        ),
+      ],
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -143,27 +171,6 @@ class _ChildFormState extends State<ChildForm> {
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                     ),
                     textCapitalization: TextCapitalization.words,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _formKey.currentState!.save();
-                      if (_formKey.currentState!.validate()) {
-                        var map = Map<String, dynamic>.from(
-                            _formKey.currentState!.value);
-                        if (map['birthdate'] != null) {
-                          map['birthdate'] = DateFormat('yyyy-MM-dd')
-                              .format(map['birthdate'] as DateTime);
-                        }
-                        var data = Child.fromMap(map);
-                        Navigator.of(context).pop(data);
-                      } else {
-                        // Validation failed, do something.
-                      }
-                    },
-                    child: Text(context.t("Save")),
                   ),
                 ),
               ],

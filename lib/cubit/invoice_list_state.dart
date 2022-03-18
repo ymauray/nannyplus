@@ -15,12 +15,6 @@ class InvoiceListInitial extends InvoiceListState {
 
 // ---------------------------------------------------------------------------
 
-class InvoiceListLoading extends InvoiceListState {
-  const InvoiceListLoading();
-}
-
-// ---------------------------------------------------------------------------
-
 class InvoiceListLoaded extends InvoiceListState {
   final List<Invoice> invoices;
 

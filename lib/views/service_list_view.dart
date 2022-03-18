@@ -1,84 +1,108 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:nannyplus/views/invoice_list_view.dart';
 
-import 'package:nannyplus/cubit/service_list_cubit.dart';
-import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/data/model/service.dart';
-import 'package:nannyplus/widgets/service_list.dart';
+import '../cubit/service_list_cubit.dart';
+import '../data/model/service.dart';
+import '../forms/service_form.dart';
+import '../widgets/service_list.dart';
 
 import 'app_view.dart';
-import '../forms/service_form.dart';
+import 'child_info_view.dart';
 
 class ServiceListView extends StatelessWidget {
-  final Child child;
+  final int childId;
 
-  const ServiceListView(this.child, {Key? key}) : super(key: key);
+  const ServiceListView(this.childId, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    context.read<ServiceListCubit>().loadServices(child);
-    return AppView(
-      title: Text(context.t("Services")),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 16.0),
-          child: PopupMenuButton(
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 'create_invoice',
-                child: Text(context.t('Create invoice')),
-              ),
-            ],
-            onSelected: (value) {
-              if (value == 'create_invoice') {
-                // Navigator.of(context).push<Service>(
-                //   MaterialPageRoute(
-                //     builder: (context) => const ServiceForm(child: null),
-                //   ),
-                // );
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Invoice created"),
+    context.read<ServiceListCubit>().loadServices(childId);
+    return BlocConsumer<ServiceListCubit, ServiceListState>(
+      listener: (context, state) {
+        if (state is ServiceListError) {}
+      },
+      builder: (context, state) => AppView(
+        title: Text(context.t('Services')),
+        actions: [
+          if (state is ServiceListLoaded)
+            Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: PopupMenuButton(
+                itemBuilder: (context) => <PopupMenuEntry>[
+                  PopupMenuItem(
+                    value: 'create_invoice',
+                    child: Text(context.t('Create invoice')),
                   ),
-                );
-              }
-            },
-          ),
-        ),
-      ],
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () async {
-          var service = await Navigator.of(context).push(
-            MaterialPageRoute<Service>(
-              builder: (context) => const ServiceForm(),
-              fullscreenDialog: true,
+                  const PopupMenuDivider(),
+                  PopupMenuItem(
+                    value: 'invoices',
+                    child: Text(context.t('Invoices')),
+                  ),
+                  PopupMenuItem(
+                    value: 'info',
+                    child: Text(context.t('Info')),
+                  ),
+                ],
+                onSelected: (value) async {
+                  switch (value) {
+                    case 'create_invoice':
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Invoice created"),
+                        ),
+                      );
+                      break;
+                    case 'invoices':
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => InvoiceListView(state.child),
+                        ),
+                      );
+                      break;
+                    case 'info':
+                      await Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ChildInfoView(state.child.id!),
+                        ),
+                      );
+                      context
+                          .read<ServiceListCubit>()
+                          .loadServices(state.child.id!);
+                      break;
+                  }
+                },
+              ),
             ),
-          );
-          if (service != null) {
-            context.read<ServiceListCubit>().create(service, child);
-          }
-        },
-      ),
-      body: BlocConsumer<ServiceListCubit, ServiceListState>(
-        listener: (context, state) {
-          if (state is ServiceListError) {}
-        },
-        builder: (context, state) {
-          if (state is ServiceListLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (state is ServiceListLoaded) {
-            return ServiceList(
-              services: state.services,
-              child: child,
-            );
-          } else {
-            return Container();
-          }
-        },
+        ],
+        floatingActionButton: state is ServiceListLoaded
+            ? FloatingActionButton(
+                child: const Icon(Icons.add),
+                onPressed: () async {
+                  var service = await Navigator.of(context).push(
+                    MaterialPageRoute<Service>(
+                      builder: (context) => const ServiceForm(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                  if (service != null) {
+                    context.read<ServiceListCubit>().create(
+                          service,
+                          state.child.id!,
+                        );
+                  }
+                },
+              )
+            : null,
+        body: state is ServiceListLoaded
+            ? ServiceList(
+                services: state.services,
+                child: state.child,
+              )
+            : const Center(
+                child: CircularProgressIndicator(),
+              ),
       ),
     );
   }
