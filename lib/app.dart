@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-import 'package:nannyplus/cubit/child_info_cubit.dart';
-import 'package:nannyplus/cubit/child_list_cubit.dart';
-import 'package:nannyplus/cubit/service_list_cubit.dart';
-import 'package:nannyplus/cubit/price_list_cubit.dart';
-import 'package:nannyplus/data/children_repository.dart';
-import 'package:nannyplus/data/services_repository.dart';
-import 'package:nannyplus/data/prices_repository.dart';
 import 'package:provider/provider.dart';
 
+import 'cubit/child_info_cubit.dart';
+import 'cubit/child_list_cubit.dart';
 import 'cubit/invoice_list_cubit.dart';
+import 'cubit/price_list_cubit.dart';
+import 'cubit/service_list_cubit.dart';
+import 'data/children_repository.dart';
 import 'data/invoices_repository.dart';
+import 'data/prices_repository.dart';
+import 'data/services_repository.dart';
 import 'views/child_list_view.dart';
 
 class NannyPlusApp extends StatelessWidget {
@@ -50,8 +50,10 @@ class NannyPlusApp extends StatelessWidget {
       child: MaterialApp(
         home: const ChildListView(),
         theme: ThemeData(
+          fontFamily: 'SF Pro',
           textTheme: Theme.of(context).textTheme.apply(
                 fontSizeFactor: 1.125,
+                fontFamily: 'SF Pro Text',
               ),
         ),
         darkTheme: ThemeData.dark(),

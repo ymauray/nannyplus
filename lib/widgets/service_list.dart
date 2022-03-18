@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-import 'package:grouped_list/grouped_list.dart';
-import 'package:nannyplus/data/model/child.dart';
+import 'package:intl/intl.dart';
 
+import '../data/model/child.dart';
 import '../data/model/service.dart';
-import '../utils/date_format_extension.dart';
-import 'bold_text.dart';
+import '../utils/i18n_utils.dart';
+import '../utils/list_extensions.dart';
+import '../widgets/card_scroll_view.dart';
 import 'service_list_item.dart';
 
 class ServiceList extends StatelessWidget {
@@ -19,98 +20,96 @@ class ServiceList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double dailyTotal = 0.0;
     double pendingTotal =
         services.fold(0.0, (acc, service) => acc + service.price);
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    var s = services.groupBy<DateTime>(
+      (service) => DateFormat('yyyy-MM-dd').parse(service.date),
+      groupComparator: (a, b) => b.compareTo(a),
+    );
+
+    return CardScrollView(
+      bottomPadding: 80,
+      children: [
+        Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      context.t('Pending total'),
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                  ),
-                  Text(
-                    pendingTotal.toStringAsFixed(2),
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                ],
+            Expanded(
+              child: Text(
+                context.t('Pending total'),
+                style: const TextStyle(
+                  inherit: true,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            const Divider(),
-            GroupedListView<Service, String>(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              groupComparator: (value1, value2) => value2.compareTo(value1),
-              elements: services,
-              groupBy: (element) => element.date,
-              indexedItemBuilder: (context, element, index) {
-                var showFooter = (index + 1 == services.length) ||
-                    (services[index].date != services[index + 1].date);
-                dailyTotal += element.price;
-                var item = Column(
-                  children: [
-                    ServiceListItem(
-                      service: element,
-                      showDate: false,
-                      showDivider: false,
-                      child: child,
-                    ),
-                    if (showFooter) ...[
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 5,
-                            child: Container(),
-                          ),
-                          const Expanded(
-                            flex: 1,
-                            child: Divider(),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 5,
-                            child: Container(),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: BoldText(
-                              dailyTotal.toStringAsFixed(2),
-                              textAlign: TextAlign.end,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Divider(),
-                    ],
-                  ],
-                );
-                if (showFooter) dailyTotal = 0.0;
-                return item;
-              },
-              groupHeaderBuilder: (element) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: BoldText(element.date.formatDate()),
+            Text(
+              pendingTotal.toStringAsFixed(2),
+              style: const TextStyle(
+                inherit: true,
+                fontWeight: FontWeight.bold,
               ),
-            ),
-            const SizedBox(
-              height: 56,
             ),
           ],
         ),
-      ),
+        ...s.map(
+          (group) {
+            double dailyTotal = 0.0;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  DateFormat.yMMMMd(I18nUtils.locale).format(group.key),
+                  style: const TextStyle(
+                    inherit: true,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Divider(),
+                ...group.value.map(
+                  (service) {
+                    dailyTotal += service.price;
+                    return ServiceListItem(
+                      service: service,
+                      child: child,
+                    );
+                  },
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 5,
+                      child: Container(),
+                    ),
+                    const Expanded(
+                      flex: 1,
+                      child: Divider(),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 5,
+                      child: Container(),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Text(
+                        dailyTotal.toStringAsFixed(2),
+                        textAlign: TextAlign.end,
+                        style: const TextStyle(
+                          inherit: true,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
+        ),
+      ],
     );
   }
 }

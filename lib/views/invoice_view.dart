@@ -8,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
 
-import '../data/model/child.dart';
 import '../data/model/invoice.dart';
 import '../data/services_repository.dart';
 import '../utils/date_format_extension.dart';

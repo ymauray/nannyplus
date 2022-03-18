@@ -23,11 +23,16 @@ class TabView extends StatelessWidget {
               ? Text(state.child.displayName)
               : Text(context.t('Loading...')),
         ),
-        tabBar: TabBar(tabs: [
-          Tab(text: context.t('Services')),
-          Tab(text: context.t('Invoices')),
-          Tab(text: context.t('Info')),
-        ]),
+        tabBar: TabBar(
+          tabs: [
+            Tab(text: context.t('Services')),
+            Tab(text: context.t('Invoices')),
+            Tab(text: context.t('Info')),
+          ],
+          labelStyle: Theme.of(context).primaryTextTheme.bodyText1!.copyWith(
+                fontSize: 16,
+              ),
+        ),
         body: TabBarView(children: [
           ServiceListTabView(childId),
           InvoiceListTabView(childId),

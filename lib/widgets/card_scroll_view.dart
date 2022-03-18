@@ -2,46 +2,53 @@ import 'package:flutter/material.dart';
 
 class CardScrollView extends StatelessWidget {
   final List<Widget> children;
-  final double marginBottom;
-
+  final double? bottomPadding;
   const CardScrollView({
     required this.children,
-    this.marginBottom = 8.0,
+    this.bottomPadding,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final c = children.map<Widget>((w) {
-      return Card(
-        margin: const EdgeInsets.only(
-          left: 8.0,
-          right: 8.0,
-          top: 8.0,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: w,
-        ),
-      );
-    }).toList()
-      ..add(
-        SizedBox(
-          height: marginBottom,
-        ),
-      );
-    return Stack(
-      children: [
-        Container(
-          color: const Color.fromARGB(0xff - 0xf4, 0, 0, 0),
-        ),
-        SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: c,
+    return Theme(
+      data: Theme.of(context).copyWith(
+        cardTheme: Theme.of(context).cardTheme.copyWith(
+              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(1),
+              ),
+            ),
+      ),
+      child: Stack(
+        children: [
+          Container(
+            color: const Color.fromARGB(0x04, 0, 0, 0),
           ),
-        ),
-      ],
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 4,
+                ),
+                ...children.map(
+                  (e) => Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: e,
+                    ),
+                  ),
+                ),
+                if (bottomPadding != null)
+                  SizedBox(
+                    height: bottomPadding,
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
