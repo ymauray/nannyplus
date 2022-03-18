@@ -49,7 +49,11 @@ class NannyPlusApp extends StatelessWidget {
       ],
       child: MaterialApp(
         home: const ChildListView(),
-        theme: ThemeData(),
+        theme: ThemeData(
+          textTheme: Theme.of(context).textTheme.apply(
+                fontSizeFactor: 1.125,
+              ),
+        ),
         darkTheme: ThemeData.dark(),
         supportedLocales: const [Locale('fr')],
         localizationsDelegates: [

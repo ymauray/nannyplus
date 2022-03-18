@@ -6,7 +6,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../cubit/child_list_cubit.dart';
 import '../data/model/child.dart';
-import '../views/service_list_view.dart';
 
 class ChildList extends StatelessWidget {
   final List<Child> _children;
@@ -23,8 +22,8 @@ class ChildList extends StatelessWidget {
           title: Text(
             child.displayName,
             style: child.isArchived
-                ? const TextStyle(fontStyle: FontStyle.italic)
-                : null,
+                ? const TextStyle(inherit: true, fontStyle: FontStyle.italic)
+                : const TextStyle(inherit: true, fontWeight: FontWeight.bold),
           ),
           onTap: () async {
             await Navigator.of(context).push(
