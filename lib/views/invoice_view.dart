@@ -81,8 +81,7 @@ class InvoiceView extends StatelessWidget {
             ),
           );
 
-          final byteData =
-              await rootBundle.load('assets/fonts/chinese.stcaiyun.ttf');
+          final byteData = await rootBundle.load('assets/fonts/STCaiyun.ttf');
           final font = pw.Font.ttf(byteData);
 
           var doc = pw.Document();
