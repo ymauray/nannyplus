@@ -23,6 +23,9 @@ class TabView extends StatelessWidget {
               ? Text(state.child.displayName)
               : Text(context.t('Loading...')),
         ),
+        actions: [
+          IconButton(icon: const Icon(Icons.edit), onPressed: () => {}),
+        ],
         tabBar: TabBar(
           tabs: [
             Tab(text: context.t('Services')),
