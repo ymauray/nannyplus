@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:printing/printing.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -25,8 +26,6 @@ class InvoiceView extends StatelessWidget {
       body: FutureBuilder<pw.Document>(
         future: (() async {
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          var title1 = prefs.getString('title1');
-          var title2 = prefs.getString('title2');
           var conditions = prefs.getString('conditions');
 
           var servicesRepository = const ServicesRepository();
@@ -95,7 +94,8 @@ class InvoiceView extends StatelessWidget {
                     pw.Column(
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: [
-                        invoiceHeader(title1, title2, font),
+                        invoiceHeader(PrefsUtil.getInstance().line1,
+                            PrefsUtil.getInstance().line2, font),
                         invoiceTitle(),
                         invoiceMeta(),
                         invoiceTable(rows),
