@@ -23,7 +23,7 @@ class CardScrollView extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            color: const Color.fromARGB(0x04, 0, 0, 0),
+            color: const Color.fromARGB(0xff, 0xfa, 0xfa, 0xfa),
           ),
           SingleChildScrollView(
             child: Column(
