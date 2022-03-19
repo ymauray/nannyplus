@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:nannyplus/cubit/settings_cubit.dart';
+import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:provider/provider.dart';
 
 import 'cubit/child_info_cubit.dart';
@@ -25,6 +27,9 @@ class NannyPlusApp extends StatelessWidget {
     var servicesRepository = const ServicesRepository();
     var invoicesRepository = const InvoicesRepository();
 
+    // Warmup prefs
+    PrefsUtil.getInstance();
+
     return MultiProvider(
       providers: [
         BlocProvider<ChildListCubit>(
@@ -45,6 +50,9 @@ class NannyPlusApp extends StatelessWidget {
         ),
         BlocProvider<ChildInfoCubit>(
           create: (context) => ChildInfoCubit(childrenRepository),
+        ),
+        BlocProvider<SettingsCubit>(
+          create: (context) => SettingsCubit(),
         ),
       ],
       child: MaterialApp(
