@@ -17,6 +17,8 @@ import 'package:nannyplus/data/services_repository.dart';
 import 'package:nannyplus/data/prices_repository.dart';
 import 'package:nannyplus/views/price_list_view.dart';
 
+import '../views/settings_view.dart';
+
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key}) : super(key: key);
 
@@ -87,11 +89,12 @@ class MainDrawer extends StatelessWidget {
               leading: const Icon(Icons.settings),
               onTap: () {
                 Navigator.of(context).pop();
-                //Navigator.of(context).push(
-                //  MaterialPageRoute(
-                //    builder: (context) => const SettingsView(),
-                //  ),
-                //);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    fullscreenDialog: true,
+                    builder: (context) => const SettingsView(),
+                  ),
+                );
               },
             ),
             const Divider(),
