@@ -60,7 +60,7 @@ class NannyPlusApp extends StatelessWidget {
         supportedLocales: const [Locale('fr')],
         localizationsDelegates: [
           GettextLocalizationsDelegate(defaultLanguage: 'fr'),
-          GlobalMaterialLocalizations.delegate,
+          ...GlobalMaterialLocalizations.delegates,
           GlobalWidgetsLocalizations.delegate,
         ],
         localeListResolutionCallback: (locales, supportedLocales) {
