@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/utils/prefs_util.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -31,6 +34,11 @@ class InvoiceView extends StatelessWidget {
           var servicesRepository = const ServicesRepository();
           var services =
               await servicesRepository.getServicesForInvoice(invoice.id);
+
+          final applicationDirectory = await getApplicationDocumentsDirectory();
+          final appDocumentsPath = applicationDirectory.path;
+          final filePath = '$appDocumentsPath/logo';
+          final file = File(filePath);
 
           var rows = services.map(
             (service) => pw.TableRow(
@@ -138,6 +146,17 @@ class InvoiceView extends StatelessWidget {
                           ],
                         ),
                       ],
+                    ),
+                    pw.Positioned(
+                      right: 0,
+                      top: 0,
+                      child: pw.Image(
+                        pw.MemoryImage(
+                          file.readAsBytesSync(),
+                        ),
+                        height: 120,
+                        fit: pw.BoxFit.contain,
+                      ),
                     ),
                   ],
                 );
