@@ -128,8 +128,7 @@ class InvoiceView extends StatelessWidget {
                               mainAxisAlignment: pw.MainAxisAlignment.end,
                               children: [
                                 pw.Text(
-                                  conditions ??
-                                      'Facture payable sous 10 jours, par virement bancaire ou par TWINT',
+                                  conditions ?? 'Payment conditions not set',
                                   style: const pw.TextStyle(
                                     fontSize: 12,
                                   ),
@@ -337,14 +336,14 @@ class InvoiceView extends StatelessWidget {
             pw.Column(
               children: [
                 pw.Text(
-                  title1 ?? 'SANDRINE KOHLER',
+                  title1 ?? 'Title 1 not set',
                   style: pw.TextStyle(
                     font: font,
                     fontSize: 30,
                   ),
                 ),
                 pw.Text(
-                  title2 ?? 'Les petits ours blancs',
+                  title2 ?? 'Title 2 not set',
                   style: const pw.TextStyle(
                     fontSize: 13,
                   ),
