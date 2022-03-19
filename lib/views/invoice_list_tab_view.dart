@@ -27,7 +27,7 @@ class InvoiceListTabView extends StatelessWidget {
       },
       builder: (context, state) => state is InvoiceListLoaded
           ? InvoiceList(state.invoices)
-          : Container(),
+          : const Center(child: CircularProgressIndicator()),
     );
   }
 }
