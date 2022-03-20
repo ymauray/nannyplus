@@ -119,6 +119,35 @@ msgstr "Factures"
 msgid "Invoice for {0}"
 msgstr "Facture pour {0}"
 
+msgid "Info"
+msgstr "Information"
+
+msgid "Loading..."
+msgstr "Chargement..."
+
+msgid "Identity"
+msgstr "Identité"
+
+msgid "Line 1"
+msgstr "Ligne 1"
+
+msgid "Line 2"
+msgstr "Ligne 2"
+
+msgid "Choose a logo"
+msgstr "Choisir un logo"
+
+msgid "Invoice #{0}"
+msgstr "Facture #{0}"
+
+msgid "Invoice number"
+msgstr "Numéro de facture"
+
+msgid "Invoiced to"
+msgstr "Facturé à"
+
+msgid "Total incl. VAT"
+msgstr "Total TTC"
 
 # Legacy messages
 
