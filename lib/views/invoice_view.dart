@@ -147,17 +147,18 @@ class InvoiceView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    pw.Positioned(
-                      right: 0,
-                      top: 0,
-                      child: pw.Image(
-                        pw.MemoryImage(
-                          file.readAsBytesSync(),
+                    if (file.existsSync())
+                      pw.Positioned(
+                        right: 0,
+                        top: 0,
+                        child: pw.Image(
+                          pw.MemoryImage(
+                            file.readAsBytesSync(),
+                          ),
+                          height: 120,
+                          fit: pw.BoxFit.contain,
                         ),
-                        height: 120,
-                        fit: pw.BoxFit.contain,
                       ),
-                    ),
                   ],
                 );
               },
@@ -201,7 +202,7 @@ class InvoiceView extends StatelessWidget {
                 pw.Padding(
                   padding: const pw.EdgeInsets.only(bottom: 6),
                   child: pw.Text(
-                    gettext.t("Prestation", null),
+                    gettext.t("Service", null),
                     textAlign: pw.TextAlign.left,
                     style: pw.TextStyle(
                       fontWeight: pw.FontWeight.bold,
