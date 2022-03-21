@@ -17,6 +17,7 @@ import 'package:nannyplus/data/services_repository.dart';
 import 'package:nannyplus/data/prices_repository.dart';
 import 'package:nannyplus/views/price_list_view.dart';
 
+import '../views/privacy_settings_view.dart';
 import '../views/settings_view.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -93,6 +94,25 @@ class MainDrawer extends StatelessWidget {
                   MaterialPageRoute(
                     fullscreenDialog: true,
                     builder: (context) => const SettingsView(),
+                  ),
+                );
+              },
+            ),
+            const Divider(),
+            ListTile(
+              title: Text(
+                context.t('Privacy settings'),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              leading: const Icon(Icons.privacy_tip),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    fullscreenDialog: true,
+                    builder: (context) => const PrivacySettingsView(),
                   ),
                 );
               },

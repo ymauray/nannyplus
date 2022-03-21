@@ -149,6 +149,9 @@ msgstr "Facturé à"
 msgid "Total incl. VAT"
 msgstr "Total TTC"
 
+msgid "Privacy settings"
+msgstr "Politique de confidentialité"
+
 # Legacy messages
 
 # msgid "Settings"
