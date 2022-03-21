@@ -27,32 +27,34 @@ class ServiceListTabView extends StatelessWidget {
         }
       },
       builder: (context, state) => state is ServiceListLoaded
-          ? Stack(children: [
-              ServiceList(child: state.child, services: state.services),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: FloatingActionButton(
-                    child: const Icon(Icons.add),
-                    onPressed: () async {
-                      var service = await Navigator.of(context).push(
-                        MaterialPageRoute<Service>(
-                          builder: (context) => const ServiceForm(),
-                          fullscreenDialog: true,
-                        ),
-                      );
-                      if (service != null) {
-                        context.read<ServiceListCubit>().create(
-                              service,
-                              state.child.id!,
-                            );
-                      }
-                    },
+          ? Stack(
+              children: [
+                ServiceList(child: state.child, services: state.services),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: FloatingActionButton(
+                      child: const Icon(Icons.add),
+                      onPressed: () async {
+                        var service = await Navigator.of(context).push(
+                          MaterialPageRoute<Service>(
+                            builder: (context) => const ServiceForm(),
+                            fullscreenDialog: true,
+                          ),
+                        );
+                        if (service != null) {
+                          context.read<ServiceListCubit>().create(
+                                service,
+                                state.child.id!,
+                              );
+                        }
+                      },
+                    ),
                   ),
                 ),
-              )
-            ])
+              ],
+            )
           : const Center(child: CircularProgressIndicator()),
     );
   }

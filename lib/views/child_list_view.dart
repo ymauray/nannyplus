@@ -48,19 +48,19 @@ class ChildListView extends StatelessWidget {
         ),
       ],
       drawer: const MainDrawer(),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () async {
-          var child = await Navigator.of(context).push<Child>(
-            MaterialPageRoute(
-              builder: (context) => const ChildForm(),
-            ),
-          );
-          if (child != null) {
-            context.read<ChildListCubit>().create(child);
-          }
-        },
-      ),
+      //floatingActionButton: FloatingActionButton(
+      //  child: const Icon(Icons.add),
+      //  onPressed: () async {
+      //    var child = await Navigator.of(context).push<Child>(
+      //      MaterialPageRoute(
+      //        builder: (context) => const ChildForm(),
+      //      ),
+      //    );
+      //    if (child != null) {
+      //      context.read<ChildListCubit>().create(child);
+      //    }
+      //  },
+      //),
       body: BlocConsumer<ChildListCubit, ChildListState>(
         listener: (context, state) {
           if (state is ChildListError) {
@@ -75,7 +75,30 @@ class ChildListView extends StatelessWidget {
           if (state is ChildListInitial) {
             return const LoadingIndicator();
           } else if (state is ChildListLoaded) {
-            return ChildList(state.children);
+            return Stack(
+              children: [
+                ChildList(state.children),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: FloatingActionButton(
+                      child: const Icon(Icons.add),
+                      onPressed: () async {
+                        var child = await Navigator.of(context).push<Child>(
+                          MaterialPageRoute(
+                            builder: (context) => const ChildForm(),
+                          ),
+                        );
+                        if (child != null) {
+                          context.read<ChildListCubit>().create(child);
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            );
           } else {
             return Container();
           }
