@@ -88,8 +88,15 @@ class InvoiceView extends StatelessWidget {
             ),
           );
 
-          final byteData = await rootBundle.load('assets/fonts/STCaiyun.ttf');
-          final font = pw.Font.ttf(byteData);
+          //final byteData = await rootBundle.load('assets/fonts/STCaiyun.ttf');
+          final byteData1 = await rootBundle.load(
+            PrefsUtil.getInstance().line1FontAsset,
+          );
+          final line1Font = pw.Font.ttf(byteData1);
+          final byteData2 = await rootBundle.load(
+            PrefsUtil.getInstance().line2FontAsset,
+          );
+          final line2Font = pw.Font.ttf(byteData2);
 
           var doc = pw.Document();
           doc.addPage(
@@ -102,8 +109,12 @@ class InvoiceView extends StatelessWidget {
                     pw.Column(
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: [
-                        invoiceHeader(PrefsUtil.getInstance().line1,
-                            PrefsUtil.getInstance().line2, font),
+                        invoiceHeader(
+                          PrefsUtil.getInstance().line1,
+                          PrefsUtil.getInstance().line2,
+                          line1Font,
+                          line2Font,
+                        ),
                         invoiceTitle(),
                         invoiceMeta(),
                         invoiceTable(rows),
@@ -348,7 +359,12 @@ class InvoiceView extends StatelessWidget {
     );
   }
 
-  pw.Widget invoiceHeader(String? title1, String? title2, pw.Font font) {
+  pw.Widget invoiceHeader(
+    String? title1,
+    String? title2,
+    pw.Font line1Font,
+    pw.Font line2Font,
+  ) {
     return pw.Column(
       children: [
         pw.Row(
@@ -358,13 +374,14 @@ class InvoiceView extends StatelessWidget {
                 pw.Text(
                   title1 ?? 'Title 1 not set',
                   style: pw.TextStyle(
-                    font: font,
+                    font: line1Font,
                     fontSize: 30,
                   ),
                 ),
                 pw.Text(
                   title2 ?? 'Title 2 not set',
-                  style: const pw.TextStyle(
+                  style: pw.TextStyle(
+                    font: line2Font,
                     fontSize: 13,
                   ),
                 ),

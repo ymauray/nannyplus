@@ -133,3 +133,24 @@ flutter:
     - family: STCaiyun
       fonts:
         - asset: assets/fonts/STCaiyun.ttf
+    - family: Butterfly Kids
+      fonts:
+        - asset: assets/fonts/ButterflyKids-Regular.ttf
+    - family: Fredericka the Great
+      fonts:
+        - asset: assets/fonts/FrederickatheGreat-Regular.ttf
+    - family: Gwendolyn
+      fonts:
+        - asset: assets/fonts/Gwendolyn-Bold.ttf
+    - family: Mystery Quest
+      fonts:
+        - asset: assets/fonts/MysteryQuest-Regular.ttf
+    - family: Oswald
+      fonts:
+        - asset: assets/fonts/Oswald-Regular.ttf
+    - family: Playfair Display
+      fonts:
+        - asset: assets/fonts/PlayfairDisplay-Italic.ttf
+    - family: Rampart One
+      fonts:
+        - asset: assets/fonts/RampartOne-Regular.ttf
