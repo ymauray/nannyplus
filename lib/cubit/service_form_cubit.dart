@@ -32,7 +32,7 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
       //     groups.map((group) => pricesMap[group.key]!).toList();
 
       // emit(ServiceFormLoaded(orderedPrices));
-      emit(ServiceFormLoaded(0, orderedServices, prices));
+      emit(ServiceFormLoaded(0, orderedServices, prices, const []));
     } catch (e) {
       emit(ServiceFormError(e.toString()));
     }
@@ -40,5 +40,10 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
 
   Future<void> selectTab(int index) async {
     emit((state as ServiceFormLoaded).copyWith(selectedTab: index));
+  }
+
+  Future<void> addService(Service service) async {
+    emit((state as ServiceFormLoaded)
+        .copyWith(services: (state as ServiceFormLoaded).services + [service]));
   }
 }

@@ -47,6 +47,9 @@ msgstr "Prix"
 msgid "Hours"
 msgstr "Heures"
 
+msgid "Minutes"
+msgstr "Minutes"
+
 msgid "Services"
 msgstr "Prestations"
 
@@ -151,6 +154,21 @@ msgstr "Total TTC"
 
 msgid "Privacy settings"
 msgstr "Politique de confidentialité"
+
+msgid "Recent"
+msgstr "Récents"
+
+msgid "All"
+msgstr "Tous"
+
+msgid "Added"
+msgstr "Ajoutés"
+
+msgid "Added successfully"
+msgstr "Saisie ajoutée avec succès"
+
+msgid "Input canceled"
+msgstr "Saisie annulée"
 
 # Legacy messages
 

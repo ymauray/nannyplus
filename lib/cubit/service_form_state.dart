@@ -13,11 +13,11 @@ class ServiceFormLoaded extends ServiceFormState {
   final int selectedTab;
   final List<Service> services;
   final List<Price> prices;
+  final List<Service> selectedServices;
+
   const ServiceFormLoaded(
-    this.selectedTab,
-    this.services,
-    this.prices,
-  ) : super();
+      this.selectedTab, this.services, this.prices, this.selectedServices)
+      : super();
 
   @override
   bool operator ==(Object other) {
@@ -26,22 +26,29 @@ class ServiceFormLoaded extends ServiceFormState {
     return other is ServiceFormLoaded &&
         other.selectedTab == selectedTab &&
         listEquals(other.services, services) &&
-        listEquals(other.prices, prices);
+        listEquals(other.prices, prices) &&
+        listEquals(other.selectedServices, selectedServices);
   }
 
   @override
-  int get hashCode =>
-      selectedTab.hashCode ^ services.hashCode ^ prices.hashCode;
+  int get hashCode {
+    return selectedTab.hashCode ^
+        services.hashCode ^
+        prices.hashCode ^
+        selectedServices.hashCode;
+  }
 
   ServiceFormLoaded copyWith({
     int? selectedTab,
     List<Service>? services,
     List<Price>? prices,
+    List<Service>? selectedServices,
   }) {
     return ServiceFormLoaded(
       selectedTab ?? this.selectedTab,
       services ?? this.services,
       prices ?? this.prices,
+      selectedServices ?? this.selectedServices,
     );
   }
 
@@ -50,6 +57,7 @@ class ServiceFormLoaded extends ServiceFormState {
       'selectedTab': selectedTab,
       'services': services.map((x) => x.toMap()).toList(),
       'prices': prices.map((x) => x.toMap()).toList(),
+      'selectedServices': selectedServices.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -58,6 +66,8 @@ class ServiceFormLoaded extends ServiceFormState {
       map['selectedTab']?.toInt() ?? 0,
       List<Service>.from(map['services']?.map((x) => Service.fromMap(x))),
       List<Price>.from(map['prices']?.map((x) => Price.fromMap(x))),
+      List<Service>.from(
+          map['selectedServices']?.map((x) => Service.fromMap(x))),
     );
   }
 
@@ -67,8 +77,9 @@ class ServiceFormLoaded extends ServiceFormState {
       ServiceFormLoaded.fromMap(json.decode(source));
 
   @override
-  String toString() =>
-      'ServiceFormLoaded(selectedTab: $selectedTab, services: $services, prices: $prices)';
+  String toString() {
+    return 'ServiceFormLoaded(selectedTab: $selectedTab, services: $services, prices: $prices, selectedServices: $selectedServices)';
+  }
 }
 
 class ServiceFormError extends ServiceFormState {

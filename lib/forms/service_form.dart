@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
-import 'package:nannyplus/cubit/service_form_cubit.dart';
-import 'package:nannyplus/utils/snack_bar_util.dart';
-import 'package:nannyplus/widgets/card_scroll_view.dart';
-import 'package:nannyplus/widgets/time_input_dialog.dart';
+
+import '../cubit/service_form_cubit.dart';
+import '../utils/snack_bar_util.dart';
+import '../widgets/card_scroll_view.dart';
+import '../widgets/time_input_dialog.dart';
 
 import '../data/model/service.dart';
 import '../utils/i18n_utils.dart';
@@ -70,7 +71,7 @@ class ServiceForm extends StatelessWidget {
                             ),
                             Tab(
                               child: Text(
-                                context.t('Added'),
+                                context.t("Added") + " (3)",
                               ),
                             ),
                           ],
@@ -95,7 +96,14 @@ class ServiceForm extends StatelessWidget {
                                   ),
                                   trailing: IconButton(
                                     icon: const Icon(Icons.add),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      ScaffoldMessenger.of(context).success(
+                                        context.t("Added successfully"),
+                                      );
+                                      context
+                                          .read<ServiceFormCubit>()
+                                          .addService(service);
+                                    },
                                   ),
                                 ),
                               )
