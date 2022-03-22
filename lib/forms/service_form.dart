@@ -71,7 +71,8 @@ class ServiceForm extends StatelessWidget {
                             ),
                             Tab(
                               child: Text(
-                                context.t("Added") + " (3)",
+                                context.t("Added") +
+                                    " (${state.selectedServices.length})",
                               ),
                             ),
                           ],
@@ -97,12 +98,21 @@ class ServiceForm extends StatelessWidget {
                                   trailing: IconButton(
                                     icon: const Icon(Icons.add),
                                     onPressed: () {
+                                      _formKey.currentState!.save();
                                       ScaffoldMessenger.of(context).success(
                                         context.t("Added successfully"),
                                       );
+                                      var newService = service.copyWith(
+                                        id: null,
+                                        invoiceId: null,
+                                        invoiced: 0,
+                                        date: DateFormat('yyyy-MM-dd').format(
+                                          _formKey.currentState!.value['date'],
+                                        ),
+                                      );
                                       context
                                           .read<ServiceFormCubit>()
-                                          .addService(service);
+                                          .addService(newService);
                                     },
                                   ),
                                 ),
@@ -125,10 +135,28 @@ class ServiceForm extends StatelessWidget {
                               trailing: IconButton(
                                 icon: const Icon(Icons.add),
                                 onPressed: () async {
+                                  _formKey.currentState!.save();
                                   if (price.isFixedPrice) {
                                     ScaffoldMessenger.of(context).success(
                                       context.t("Added successfully"),
                                     );
+                                    var service = Service(
+                                      childId: childId,
+                                      date: DateFormat('yyyy-MM-dd').format(
+                                        _formKey.currentState!.value['date'],
+                                      ),
+                                      priceId: price.id!,
+                                      priceLabel: price.label,
+                                      priceAmount: price.amount,
+                                      isFixedPrice: 1,
+                                      hours: 0,
+                                      minutes: 0,
+                                      total: price.amount,
+                                      invoiced: 0,
+                                    );
+                                    context
+                                        .read<ServiceFormCubit>()
+                                        .addService(service);
                                   } else {
                                     var time = await showDialog<TimeInputData>(
                                       context: context,
@@ -146,6 +174,25 @@ class ServiceForm extends StatelessWidget {
                                         ScaffoldMessenger.of(context).success(
                                           context.t("Added successfully"),
                                         );
+                                        var service = Service(
+                                          childId: childId,
+                                          date: DateFormat('yyyy-MM-dd').format(
+                                            _formKey
+                                                .currentState!.value['date'],
+                                          ),
+                                          priceId: price.id!,
+                                          priceLabel: price.label,
+                                          priceAmount: price.amount,
+                                          isFixedPrice: 0,
+                                          hours: time.hours,
+                                          minutes: time.minutes,
+                                          total: price.amount *
+                                              (time.hours + time.minutes / 60),
+                                          invoiced: 0,
+                                        );
+                                        context
+                                            .read<ServiceFormCubit>()
+                                            .addService(service);
                                       }
                                     }
                                   }

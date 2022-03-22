@@ -37,19 +37,20 @@ class ServiceListTabView extends StatelessWidget {
                     child: FloatingActionButton(
                       child: const Icon(Icons.add),
                       onPressed: () async {
-                        var service = await Navigator.of(context).push(
+                        await Navigator.of(context).push(
                           MaterialPageRoute<Service>(
                             builder: (context) =>
                                 ServiceForm(childId: state.child.id!),
                             fullscreenDialog: true,
                           ),
                         );
-                        if (service != null) {
-                          context.read<ServiceListCubit>().create(
-                                service,
-                                state.child.id!,
-                              );
-                        }
+                        //if (service != null) {
+                        //  context.read<ServiceListCubit>().create(
+                        //        service,
+                        //        state.child.id!,
+                        //      );
+                        //}
+                        context.read<ServiceListCubit>().loadServices(childId);
                       },
                     ),
                   ),

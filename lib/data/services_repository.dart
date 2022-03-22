@@ -9,7 +9,7 @@ class ServicesRepository {
 
   Future<Service> create(Service service) async {
     var db = await DatabaseUtil.instance;
-    var id = await db.insert('services', service.toMap());
+    var id = await db.insert('services', service.toMap()..["id"] = null);
     return read(id);
   }
 

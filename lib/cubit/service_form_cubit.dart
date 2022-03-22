@@ -43,7 +43,9 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
   }
 
   Future<void> addService(Service service) async {
-    emit((state as ServiceFormLoaded)
-        .copyWith(services: (state as ServiceFormLoaded).services + [service]));
+    var newService = await _servicesRepository.create(service);
+    emit((state as ServiceFormLoaded).copyWith(
+        selectedServices:
+            (state as ServiceFormLoaded).selectedServices + [newService]));
   }
 }

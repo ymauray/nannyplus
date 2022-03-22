@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:nannyplus/data/model/service.dart';
 
 class ServiceListItemDetail extends StatelessWidget {
@@ -14,19 +15,21 @@ class ServiceListItemDetail extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            flex: 1,
+            flex: 2,
             child: Text(service.priceLabel!),
           ),
           const SizedBox(
             width: 8,
           ),
           Expanded(
-            flex: 1,
+            flex: 2,
             child: Text(
               service.isFixedPrice! == 0 ? service.priceDetail : "",
               textAlign: TextAlign.end,
+              style: const TextStyle(inherit: true, fontSize: 12),
             ),
           ),
           const SizedBox(
