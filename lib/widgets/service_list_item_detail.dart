@@ -37,7 +37,7 @@ class ServiceListItemDetail extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Text(
-              service.price.toStringAsFixed(2),
+              service.total.toStringAsFixed(2),
               textAlign: TextAlign.end,
             ),
           ),

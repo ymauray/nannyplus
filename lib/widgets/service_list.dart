@@ -21,7 +21,7 @@ class ServiceList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double pendingTotal =
-        services.fold(0.0, (acc, service) => acc + service.price);
+        services.fold(0.0, (acc, service) => acc + service.total);
 
     var s = services.groupBy<DateTime>(
       (service) => DateFormat('yyyy-MM-dd').parse(service.date),
@@ -67,7 +67,7 @@ class ServiceList extends StatelessWidget {
                 const Divider(),
                 ...group.value.map(
                   (service) {
-                    dailyTotal += service.price;
+                    dailyTotal += service.total;
                     return ServiceListItem(
                       service: service,
                       child: child,

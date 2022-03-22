@@ -1,5 +1,119 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:intl/intl.dart';
+import 'package:nannyplus/cubit/service_form_cubit.dart';
+import 'package:nannyplus/widgets/card_scroll_view.dart';
+
+import '../data/model/service.dart';
+import '../utils/i18n_utils.dart';
+import '../views/app_view.dart';
+
+class ServiceForm extends StatelessWidget {
+  final int childId;
+  final Service? service;
+  const ServiceForm({
+    required this.childId,
+    this.service,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    context.read<ServiceFormCubit>().loadRecentServices(childId);
+    final _formKey = GlobalKey<FormBuilderState>();
+    final date = DateFormat('yyyy-MM-dd')
+        .parse(service?.date ?? DateTime.now().toString());
+
+    return AppView(
+      title: Text(service != null
+          ? context.t('Edit service')
+          : context.t('Add service')),
+      body: BlocConsumer<ServiceFormCubit, ServiceFormState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          if (state is ServiceFormLoaded) {
+            return FormBuilder(
+              key: _formKey,
+              initialValue: {
+                'date': date,
+              },
+              child: CardScrollView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: FormBuilderDateTimePicker(
+                      name: 'date',
+                      decoration: InputDecoration(
+                        labelText: context.t('Date'),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                      ),
+                      inputType: InputType.date,
+                      format: DateFormat.yMMMMd(I18nUtils.locale),
+                    ),
+                  ),
+                  DefaultTabController(
+                    initialIndex: state.selectedTab,
+                    length: 3,
+                    child: Column(
+                      children: [
+                        TabBar(
+                          indicatorColor: Colors.grey,
+                          labelColor: Colors.black,
+                          unselectedLabelColor: Colors.grey[500],
+                          tabs: [
+                            Tab(
+                              text: context.t('Recent'),
+                            ),
+                            Tab(
+                              text: context.t('All'),
+                            ),
+                            Tab(
+                              text: context.t('Added'),
+                            ),
+                          ],
+                          onTap: (index) {
+                            context.read<ServiceFormCubit>().selectTab(index);
+                          },
+                        ),
+                        if (state.selectedTab == 0)
+                          ...state.services
+                              .map(
+                                (service) => ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  title: Text(
+                                    service.priceLabel!,
+                                    style: const TextStyle(
+                                      inherit: true,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    service.priceDetail,
+                                  ),
+                                  trailing: const Icon(Icons.add),
+                                ),
+                              )
+                              .toList(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+    );
+  }
+}
+/*
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
@@ -177,3 +291,4 @@ class _ServiceFormState extends State<ServiceForm> {
     );
   }
 }
+*/

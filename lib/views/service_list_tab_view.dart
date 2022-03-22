@@ -39,7 +39,8 @@ class ServiceListTabView extends StatelessWidget {
                       onPressed: () async {
                         var service = await Navigator.of(context).push(
                           MaterialPageRoute<Service>(
-                            builder: (context) => const ServiceForm(),
+                            builder: (context) =>
+                                ServiceForm(childId: state.child.id!),
                             fullscreenDialog: true,
                           ),
                         );

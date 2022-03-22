@@ -6,10 +6,11 @@ class Service {
   final String date;
   final int priceId;
   final String? priceLabel;
+  final double? priceAmount;
   final int? isFixedPrice;
   final int? hours;
   final int? minutes;
-  final double price;
+  final double total;
   final int invoiced;
   final int? invoiceId;
 
@@ -19,13 +20,18 @@ class Service {
     required this.date,
     required this.priceId,
     this.priceLabel,
+    this.priceAmount,
     this.isFixedPrice,
     this.hours,
     this.minutes,
-    required this.price,
+    required this.total,
     this.invoiced = 0,
     this.invoiceId,
   });
+
+  String get priceDetail =>
+      "$total" +
+      ((isFixedPrice == 1) ? "" : " (${hours}h$minutes x $priceAmount)");
 
   Service copyWith({
     int? id,
@@ -33,10 +39,11 @@ class Service {
     String? date,
     int? priceId,
     String? priceLabel,
+    double? priceAmount,
     int? isFixedPrice,
     int? hours,
     int? minutes,
-    double? price,
+    double? total,
     int? invoiced,
     int? invoiceId,
   }) {
@@ -46,10 +53,11 @@ class Service {
       date: date ?? this.date,
       priceId: priceId ?? this.priceId,
       priceLabel: priceLabel ?? this.priceLabel,
+      priceAmount: priceAmount ?? this.priceAmount,
       isFixedPrice: isFixedPrice ?? this.isFixedPrice,
       hours: hours ?? this.hours,
       minutes: minutes ?? this.minutes,
-      price: price ?? this.price,
+      total: total ?? this.total,
       invoiced: invoiced ?? this.invoiced,
       invoiceId: invoiceId ?? this.invoiceId,
     );
@@ -62,10 +70,11 @@ class Service {
       'date': date,
       'priceId': priceId,
       'priceLabel': priceLabel,
+      'priceAmount': priceAmount,
       'isFixedPrice': isFixedPrice,
       'hours': hours,
       'minutes': minutes,
-      'price': price,
+      'total': total,
       'invoiced': invoiced,
       'invoiceId': invoiceId,
     };
@@ -78,10 +87,11 @@ class Service {
       date: map['date'] ?? '',
       priceId: map['priceId']?.toInt() ?? 0,
       priceLabel: map['priceLabel'],
+      priceAmount: map['priceAmount']?.toDouble(),
       isFixedPrice: map['isFixedPrice']?.toInt(),
       hours: map['hours']?.toInt(),
       minutes: map['minutes']?.toInt(),
-      price: map['price']?.toDouble() ?? 0.0,
+      total: map['total']?.toDouble() ?? 0.0,
       invoiced: map['invoiced']?.toInt() ?? 0,
       invoiceId: map['invoiceId']?.toInt(),
     );
@@ -94,7 +104,7 @@ class Service {
 
   @override
   String toString() {
-    return 'Service(id: $id, childId: $childId, date: $date, priceId: $priceId, priceLabel: $priceLabel, isFixedPrice: $isFixedPrice, hours: $hours, minutes: $minutes, price: $price, invoiced: $invoiced, invoiceId: $invoiceId)';
+    return 'Service(id: $id, childId: $childId, date: $date, priceId: $priceId, priceLabel: $priceLabel, priceAmount: $priceAmount, isFixedPrice: $isFixedPrice, hours: $hours, minutes: $minutes, total: $total, invoiced: $invoiced, invoiceId: $invoiceId)';
   }
 
   @override
@@ -107,10 +117,11 @@ class Service {
         other.date == date &&
         other.priceId == priceId &&
         other.priceLabel == priceLabel &&
+        other.priceAmount == priceAmount &&
         other.isFixedPrice == isFixedPrice &&
         other.hours == hours &&
         other.minutes == minutes &&
-        other.price == price &&
+        other.total == total &&
         other.invoiced == invoiced &&
         other.invoiceId == invoiceId;
   }
@@ -122,10 +133,11 @@ class Service {
         date.hashCode ^
         priceId.hashCode ^
         priceLabel.hashCode ^
+        priceAmount.hashCode ^
         isFixedPrice.hashCode ^
         hours.hashCode ^
         minutes.hashCode ^
-        price.hashCode ^
+        total.hashCode ^
         invoiced.hashCode ^
         invoiceId.hashCode;
   }

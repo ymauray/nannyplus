@@ -34,7 +34,7 @@ class ServiceListCubit extends Cubit<ServiceListState> {
         childId: childId,
         priceLabel: price.label,
         isFixedPrice: price.isFixedPrice ? 1 : 0,
-        price: price.isFixedPrice
+        total: price.isFixedPrice
             ? price.amount
             : price.amount * (service.hours! + service.minutes! / 60),
       );
@@ -51,7 +51,7 @@ class ServiceListCubit extends Cubit<ServiceListState> {
       service = service.copyWith(
         priceLabel: price.label,
         isFixedPrice: price.isFixedPrice ? 1 : 0,
-        price: price.isFixedPrice
+        total: price.isFixedPrice
             ? price.amount
             : price.amount * (service.hours! + service.minutes! / 60),
       );

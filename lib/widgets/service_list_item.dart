@@ -56,6 +56,7 @@ class ServiceListItem extends StatelessWidget {
               var service = await Navigator.of(context).push(
                 MaterialPageRoute<Service>(
                   builder: (context) => ServiceForm(
+                    childId: child.id!,
                     service: this.service,
                   ),
                   fullscreenDialog: true,

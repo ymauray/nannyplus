@@ -79,7 +79,7 @@ class InvoiceView extends StatelessWidget {
                 pw.Padding(
                   padding: const pw.EdgeInsets.symmetric(vertical: 8.0),
                   child: pw.Text(
-                    service.price.toStringAsFixed(2),
+                    service.total.toStringAsFixed(2),
                     textAlign: pw.TextAlign.right,
                     style: const pw.TextStyle(fontSize: 14),
                   ),

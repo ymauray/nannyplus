@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:nannyplus/cubit/service_form_cubit.dart';
 import 'package:nannyplus/cubit/settings_cubit.dart';
 import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:provider/provider.dart';
@@ -51,9 +52,13 @@ class NannyPlusApp extends StatelessWidget {
         BlocProvider<ChildInfoCubit>(
           create: (context) => ChildInfoCubit(childrenRepository),
         ),
-        BlocProvider<SettingsCubit>(
-          create: (context) => SettingsCubit(),
-        ),
+        BlocProvider<SettingsCubit>(create: (context) => SettingsCubit()),
+        BlocProvider<ServiceFormCubit>(
+          create: (context) => ServiceFormCubit(
+            servicesRepository,
+            pricesRepository,
+          ),
+        )
       ],
       child: MaterialApp(
         home: const ChildListView(),

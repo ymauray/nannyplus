@@ -71,10 +71,11 @@ class DatabaseUtil {
         date TEXT,
         priceId INTEGER NOT NULL,
         priceLabel TEXT,
+        priceAmount DOUBLE,
         isFixedPrice INTEGER,
         hours INTEGER,
         minutes INTEGER,
-        price DOUBLE,
+        total DOUBLE,
         invoiced INTEGER,
         invoiceId INTEGER
       )

@@ -48,4 +48,13 @@ class ServicesRepository {
 
     return rows.map((e) => Service.fromMap(e)).toList();
   }
+
+  Future<List<Service>> getRecentServices(int childId) async {
+    var db = await DatabaseUtil.instance;
+
+    var rows = await db.query('services',
+        where: 'childId = ?', whereArgs: [childId], orderBy: 'date DESC');
+
+    return rows.map((e) => Service.fromMap(e)).toList();
+  }
 }

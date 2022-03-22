@@ -167,10 +167,11 @@ class MainDrawer extends StatelessWidget {
             date: legacyEntry.date,
             priceId: semaine.id!,
             priceLabel: semaine.label,
+            priceAmount: semaine.amount,
             isFixedPrice: semaine.isFixedPrice ? 1 : 0,
             hours: legacyEntry.hours,
             minutes: legacyEntry.minutes,
-            price:
+            total:
                 semaine.amount * (legacyEntry.hours + legacyEntry.minutes / 60),
             invoiced: legacyEntry.invoiced ? 1 : 0,
             invoiceId:
@@ -180,8 +181,9 @@ class MainDrawer extends StatelessWidget {
             service = service.copyWith(
               priceId: weekend.id!,
               priceLabel: weekend.label,
+              priceAmount: weekend.amount,
               isFixedPrice: weekend.isFixedPrice ? 1 : 0,
-              price: weekend.amount *
+              total: weekend.amount *
                   (legacyEntry.hours + legacyEntry.minutes / 60),
             );
           }
@@ -195,10 +197,12 @@ class MainDrawer extends StatelessWidget {
             priceId: c['preschool'] == 1 ? petitRepas.id! : grandRepas.id!,
             priceLabel:
                 c['preschool'] == 1 ? petitRepas.label : grandRepas.label,
+            priceAmount:
+                c['preschool'] == 1 ? petitRepas.amount : grandRepas.amount,
             isFixedPrice: c['preschool'] == 1
                 ? (petitRepas.isFixedPrice ? 1 : 0)
                 : (grandRepas.isFixedPrice ? 1 : 0),
-            price: c['preschool'] == 1 ? petitRepas.amount : grandRepas.amount,
+            total: c['preschool'] == 1 ? petitRepas.amount : grandRepas.amount,
             invoiced: legacyEntry.invoiced ? 1 : 0,
             invoiceId:
                 legacyEntry.invoiced ? int.parse(legacyEntry.invoiceId) : null,
