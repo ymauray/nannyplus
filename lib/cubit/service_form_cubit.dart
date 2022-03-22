@@ -18,6 +18,7 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
       : super(const ServiceFormInitial());
 
   Future<void> loadRecentServices(int childId) async {
+    emit(const ServiceFormInitial());
     try {
       // final pricesMap =
       //     Map<int, Price>.fromIterable(prices, key: (prices) => prices.id);

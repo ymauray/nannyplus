@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
 import 'package:nannyplus/cubit/service_form_cubit.dart';
+import 'package:nannyplus/utils/snack_bar_util.dart';
 import 'package:nannyplus/widgets/card_scroll_view.dart';
+import 'package:nannyplus/widgets/time_input_dialog.dart';
 
 import '../data/model/service.dart';
 import '../utils/i18n_utils.dart';
@@ -42,17 +43,14 @@ class ServiceForm extends StatelessWidget {
               },
               child: CardScrollView(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0),
-                    child: FormBuilderDateTimePicker(
-                      name: 'date',
-                      decoration: InputDecoration(
-                        labelText: context.t('Date'),
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                      ),
-                      inputType: InputType.date,
-                      format: DateFormat.yMMMMd(I18nUtils.locale),
+                  FormBuilderDateTimePicker(
+                    name: 'date',
+                    decoration: InputDecoration(
+                      labelText: context.t('Date'),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                     ),
+                    inputType: InputType.date,
+                    format: DateFormat.yMMMMd(I18nUtils.locale),
                   ),
                   DefaultTabController(
                     initialIndex: state.selectedTab,
@@ -71,7 +69,9 @@ class ServiceForm extends StatelessWidget {
                               text: context.t('All'),
                             ),
                             Tab(
-                              text: context.t('Added'),
+                              child: Text(
+                                context.t('Added'),
+                              ),
                             ),
                           ],
                           onTap: (index) {
@@ -93,10 +93,58 @@ class ServiceForm extends StatelessWidget {
                                   subtitle: Text(
                                     service.priceDetail,
                                   ),
-                                  trailing: const Icon(Icons.add),
+                                  trailing: IconButton(
+                                    icon: const Icon(Icons.add),
+                                    onPressed: () {},
+                                  ),
                                 ),
                               )
                               .toList(),
+                        if (state.selectedTab == 1)
+                          ...state.prices.map(
+                            (price) => ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              title: Text(
+                                price.label,
+                                style: const TextStyle(
+                                  inherit: true,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              subtitle: Text(
+                                price.detail,
+                              ),
+                              trailing: IconButton(
+                                icon: const Icon(Icons.add),
+                                onPressed: () async {
+                                  if (price.isFixedPrice) {
+                                    ScaffoldMessenger.of(context).success(
+                                      context.t("Added successfully"),
+                                    );
+                                  } else {
+                                    var time = await showDialog<TimeInputData>(
+                                      context: context,
+                                      builder: (context) {
+                                        return const TimeInputDialog();
+                                      },
+                                    );
+                                    if (time != null) {
+                                      if (time.hours == 0 &&
+                                          time.minutes == 0) {
+                                        ScaffoldMessenger.of(context).failure(
+                                          context.t("Input canceled"),
+                                        );
+                                      } else {
+                                        ScaffoldMessenger.of(context).success(
+                                          context.t("Added successfully"),
+                                        );
+                                      }
+                                    }
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                   ),

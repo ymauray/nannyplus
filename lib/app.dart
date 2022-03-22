@@ -64,6 +64,10 @@ class NannyPlusApp extends StatelessWidget {
         home: const ChildListView(),
         theme: ThemeData(
           fontFamily: 'SF Pro',
+          inputDecorationTheme: Theme.of(context).inputDecorationTheme.copyWith(
+                filled: true,
+                fillColor: const Color.fromARGB(255, 236, 246, 250),
+              ),
           textTheme: Theme.of(context).textTheme.apply(
                 fontSizeFactor: 1.125,
                 fontFamily: 'SF Pro Text',

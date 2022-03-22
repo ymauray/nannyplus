@@ -15,6 +15,8 @@ class Price {
 
   bool get isFixedPrice => fixedPrice == 1;
 
+  String get detail => amount.toStringAsFixed(2) + (isFixedPrice ? "" : " / h");
+
   // --------------------------------------------------
 
   Price copyWith({

@@ -30,8 +30,10 @@ class Service {
   });
 
   String get priceDetail =>
-      "$total" +
-      ((isFixedPrice == 1) ? "" : " (${hours}h$minutes x $priceAmount)");
+      total.toStringAsFixed(2) +
+      ((isFixedPrice == 1)
+          ? ""
+          : " (${hours}h$minutes x ${priceAmount?.toStringAsFixed(2)})");
 
   Service copyWith({
     int? id,
