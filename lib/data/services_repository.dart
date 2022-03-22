@@ -1,5 +1,6 @@
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/data/model/service.dart';
+import 'package:nannyplus/utils/list_extensions.dart';
 
 import '../utils/database_util.dart';
 
@@ -56,5 +57,35 @@ class ServicesRepository {
         where: 'childId = ?', whereArgs: [childId], orderBy: 'date DESC');
 
     return rows.map((e) => Service.fromMap(e)).toList();
+  }
+
+  Future<double> getPendingTotal() async {
+    var db = await DatabaseUtil.instance;
+
+    var rows =
+        await db.query('services', where: 'invoiced = ?', whereArgs: [0]);
+
+    return rows.fold<double>(
+        0.0, (sum, row) => sum + (row['total']! as double));
+  }
+
+  Future<Map<int, double>> getPendingTotalPerChild() async {
+    var db = await DatabaseUtil.instance;
+
+    var rows =
+        await db.query('services', where: 'invoiced = ?', whereArgs: [0]);
+
+    var groupedRows = rows
+        .map((row) => Service.fromMap(row))
+        .toList()
+        .groupBy<int>((service) => service.childId)
+        .toList();
+    var map = <int, double>{
+      for (var group in groupedRows)
+        group.key: group.value.fold(
+            0.0, (previousValue, service) => previousValue + service.total)
+    };
+
+    return map;
   }
 }

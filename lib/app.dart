@@ -34,7 +34,10 @@ class NannyPlusApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         BlocProvider<ChildListCubit>(
-          create: (context) => ChildListCubit(childrenRepository),
+          create: (context) => ChildListCubit(
+            childrenRepository,
+            servicesRepository,
+          ),
         ),
         BlocProvider<PriceListCubit>(
           create: (context) => PriceListCubit(pricesRepository),
@@ -63,7 +66,6 @@ class NannyPlusApp extends StatelessWidget {
       child: MaterialApp(
         home: const ChildListView(),
         theme: ThemeData(
-          fontFamily: 'SF Pro',
           inputDecorationTheme: Theme.of(context).inputDecorationTheme.copyWith(
                 filled: true,
                 fillColor: const Color.fromARGB(255, 236, 246, 250),
@@ -73,7 +75,6 @@ class NannyPlusApp extends StatelessWidget {
                 fontFamily: 'SF Pro Text',
               ),
         ),
-        darkTheme: ThemeData.dark(),
         supportedLocales: const [Locale('fr')],
         localizationsDelegates: [
           GettextLocalizationsDelegate(defaultLanguage: 'fr'),

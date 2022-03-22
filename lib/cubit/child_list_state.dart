@@ -21,9 +21,19 @@ class ChildListInitial extends ChildListState {
 
 class ChildListLoaded extends ChildListState {
   final List<Child> children;
+  final double pendingTotal;
+  final Map<int, double> pendingTotalPerChild;
   final bool showArchived;
 
-  const ChildListLoaded(this.children, {this.showArchived = false});
+  const ChildListLoaded(
+    this.children,
+    this.pendingTotal,
+    this.pendingTotalPerChild, {
+    this.showArchived = false,
+  });
+
+  @override
+  bool get showArchivedItems => showArchived;
 
   @override
   bool operator ==(Object other) {
@@ -31,14 +41,18 @@ class ChildListLoaded extends ChildListState {
 
     return other is ChildListLoaded &&
         listEquals(other.children, children) &&
+        other.pendingTotal == pendingTotal &&
+        mapEquals(other.pendingTotalPerChild, pendingTotalPerChild) &&
         other.showArchived == showArchived;
   }
 
   @override
-  int get hashCode => children.hashCode ^ showArchived.hashCode;
-
-  @override
-  bool get showArchivedItems => showArchived;
+  int get hashCode {
+    return children.hashCode ^
+        pendingTotal.hashCode ^
+        pendingTotalPerChild.hashCode ^
+        showArchived.hashCode;
+  }
 }
 
 // ---------------------------------------------------------------------------

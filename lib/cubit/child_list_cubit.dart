@@ -2,21 +2,29 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:nannyplus/data/children_repository.dart';
 import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/data/services_repository.dart';
 
 part 'child_list_state.dart';
 
 class ChildListCubit extends Cubit<ChildListState> {
   final ChildrenRepository _childrenRepository;
+  final ServicesRepository _servicesRepository;
 
-  ChildListCubit(this._childrenRepository) : super(const ChildListInitial());
+  ChildListCubit(this._childrenRepository, this._servicesRepository)
+      : super(const ChildListInitial());
 
   Future<void> loadChildList() async {
     try {
       final childList =
           await _childrenRepository.getChildList(state.showArchivedItems);
+      final pendingTotal = await _servicesRepository.getPendingTotal();
+      final pendingTotalPerChild =
+          await _servicesRepository.getPendingTotalPerChild();
       emit(
         ChildListLoaded(
           childList,
+          pendingTotal,
+          pendingTotalPerChild,
           showArchived: state.showArchivedItems,
         ),
       );
@@ -76,7 +84,12 @@ class ChildListCubit extends Cubit<ChildListState> {
     try {
       if (state is ChildListLoaded) {
         final childList = await _childrenRepository.getChildList(true);
-        emit(ChildListLoaded(childList, showArchived: true));
+        final pendingTotal = await _servicesRepository.getPendingTotal();
+        final pendingTotalPerChild =
+            await _servicesRepository.getPendingTotalPerChild();
+
+        emit(ChildListLoaded(childList, pendingTotal, pendingTotalPerChild,
+            showArchived: true));
       }
     } on Exception catch (e) {
       emit(ChildListError(e.toString()));
@@ -87,7 +100,12 @@ class ChildListCubit extends Cubit<ChildListState> {
     try {
       if (state is ChildListLoaded) {
         final childList = await _childrenRepository.getChildList(false);
-        emit(ChildListLoaded(childList, showArchived: false));
+        final pendingTotal = await _servicesRepository.getPendingTotal();
+        final pendingTotalPerChild =
+            await _servicesRepository.getPendingTotalPerChild();
+
+        emit(ChildListLoaded(childList, pendingTotal, pendingTotalPerChild,
+            showArchived: false));
       }
     } on Exception catch (e) {
       emit(ChildListError(e.toString()));

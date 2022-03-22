@@ -77,7 +77,8 @@ class ChildListView extends StatelessWidget {
           } else if (state is ChildListLoaded) {
             return Stack(
               children: [
-                ChildList(state.children),
+                ChildList(state.children, state.pendingTotal,
+                    state.pendingTotalPerChild),
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Padding(
