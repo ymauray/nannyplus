@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gettext_i18n/src/gettext_localizations.dart';
 
 import '../data/model/invoice.dart';
+import '../data/model/service.dart';
 import '../data/services_repository.dart';
 import '../utils/date_format_extension.dart';
 import '../views/app_view.dart';
@@ -40,53 +41,71 @@ class InvoiceView extends StatelessWidget {
           final filePath = '$appDocumentsPath/logo';
           final file = File(filePath);
 
-          var rows = services.map(
-            (service) => pw.TableRow(
-              decoration: const pw.BoxDecoration(
-                border: pw.Border(
-                  bottom: pw.BorderSide(color: PdfColors.grey),
-                ),
-              ),
-              children: [
-                pw.Padding(
-                  padding: const pw.EdgeInsets.symmetric(vertical: 8.0),
-                  child: pw.Text(
-                    service.date.formatDate(),
-                    textAlign: pw.TextAlign.left,
-                    style: const pw.TextStyle(fontSize: 14),
+          var rows = ((List<Service> services) sync* {
+            String previousDate = "";
+            for (var i = 0; i < services.length; i++) {
+              var service = services[i];
+              var newBloc = service.date != previousDate;
+              previousDate = service.date;
+              if (newBloc) {
+                yield pw.TableRow(
+                  decoration: newBloc
+                      ? const pw.BoxDecoration(
+                          border: pw.Border(
+                            bottom: pw.BorderSide(color: PdfColors.grey),
+                          ),
+                        )
+                      : null,
+                  children: [
+                    pw.Padding(
+                      padding: const pw.EdgeInsets.symmetric(vertical: 8.0),
+                      child: pw.Text(
+                        service.date.formatDate(),
+                        textAlign: pw.TextAlign.left,
+                        style: const pw.TextStyle(fontSize: 14),
+                      ),
+                    ),
+                  ],
+                );
+              }
+              yield pw.TableRow(
+                children: [
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.symmetric(vertical: 4.0),
+                    child: pw.Text(""),
                   ),
-                ),
-                pw.Padding(
-                  padding: const pw.EdgeInsets.symmetric(vertical: 8.0),
-                  child: pw.Text(
-                    service.priceLabel!,
-                    textAlign: pw.TextAlign.left,
-                    style: const pw.TextStyle(fontSize: 14),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.symmetric(vertical: 4.0),
+                    child: pw.Text(
+                      service.priceLabel!,
+                      textAlign: pw.TextAlign.left,
+                      style: const pw.TextStyle(fontSize: 14),
+                    ),
                   ),
-                ),
-                pw.Padding(
-                  padding: const pw.EdgeInsets.symmetric(vertical: 8.0),
-                  child: pw.Text(
-                    service.isFixedPrice == 1
-                        ? '-'
-                        : (service.hours.toString() +
-                            ":" +
-                            service.minutes.toString().padLeft(2, '0')),
-                    textAlign: pw.TextAlign.center,
-                    style: const pw.TextStyle(fontSize: 14),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.symmetric(vertical: 4.0),
+                    child: pw.Text(
+                      service.isFixedPrice == 1
+                          ? '-'
+                          : (service.hours.toString() +
+                              ":" +
+                              service.minutes.toString().padLeft(2, '0')),
+                      textAlign: pw.TextAlign.center,
+                      style: const pw.TextStyle(fontSize: 14),
+                    ),
                   ),
-                ),
-                pw.Padding(
-                  padding: const pw.EdgeInsets.symmetric(vertical: 8.0),
-                  child: pw.Text(
-                    service.total.toStringAsFixed(2),
-                    textAlign: pw.TextAlign.right,
-                    style: const pw.TextStyle(fontSize: 14),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.symmetric(vertical: 4.0),
+                    child: pw.Text(
+                      service.total.toStringAsFixed(2),
+                      textAlign: pw.TextAlign.right,
+                      style: const pw.TextStyle(fontSize: 14),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          );
+                ],
+              );
+            }
+          })(services);
 
           //final byteData = await rootBundle.load('assets/fonts/STCaiyun.ttf');
           var line1FontAsset = PrefsUtil.getInstance().line1FontAsset;
@@ -202,53 +221,15 @@ class InvoiceView extends StatelessWidget {
                 ),
               ),
               children: [
-                pw.Padding(
-                  padding: const pw.EdgeInsets.only(bottom: 6),
-                  child: pw.Text(
-                    gettext.t("Date", null),
-                    textAlign: pw.TextAlign.left,
-                    style: pw.TextStyle(
-                      fontWeight: pw.FontWeight.bold,
-                      fontSize: 14,
-                      color: PdfColors.blue,
-                    ),
-                  ),
+                blueText(gettext.t("Date", null)),
+                blueText(gettext.t("Service", null)),
+                blueText(
+                  gettext.t("Hours", null),
+                  textAlign: pw.TextAlign.center,
                 ),
-                pw.Padding(
-                  padding: const pw.EdgeInsets.only(bottom: 6),
-                  child: pw.Text(
-                    gettext.t("Service", null),
-                    textAlign: pw.TextAlign.left,
-                    style: pw.TextStyle(
-                      fontWeight: pw.FontWeight.bold,
-                      fontSize: 14,
-                      color: PdfColors.blue,
-                    ),
-                  ),
-                ),
-                pw.Padding(
-                  padding: const pw.EdgeInsets.only(bottom: 6),
-                  child: pw.Text(
-                    gettext.t("Hours", null),
-                    textAlign: pw.TextAlign.center,
-                    style: pw.TextStyle(
-                      fontWeight: pw.FontWeight.bold,
-                      fontSize: 14,
-                      color: PdfColors.blue,
-                    ),
-                  ),
-                ),
-                pw.Padding(
-                  padding: const pw.EdgeInsets.only(bottom: 6),
-                  child: pw.Text(
-                    gettext.t("Price", null),
-                    textAlign: pw.TextAlign.right,
-                    style: pw.TextStyle(
-                      fontWeight: pw.FontWeight.bold,
-                      fontSize: 14,
-                      color: PdfColors.blue,
-                    ),
-                  ),
+                blueText(
+                  gettext.t("Price", null),
+                  textAlign: pw.TextAlign.right,
                 ),
               ],
             ),
@@ -257,6 +238,21 @@ class InvoiceView extends StatelessWidget {
         ),
         pw.SizedBox(height: 28),
       ],
+    );
+  }
+
+  pw.Padding blueText(String text, {pw.TextAlign? textAlign}) {
+    return pw.Padding(
+      padding: const pw.EdgeInsets.only(bottom: 6),
+      child: pw.Text(
+        text,
+        textAlign: textAlign ?? pw.TextAlign.left,
+        style: pw.TextStyle(
+          fontWeight: pw.FontWeight.bold,
+          fontSize: 14,
+          color: PdfColors.blue,
+        ),
+      ),
     );
   }
 
