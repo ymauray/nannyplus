@@ -14,8 +14,10 @@ class ServiceListCubit extends Cubit<ServiceListState> {
   ChildrenRepository childrenRepository;
 
   ServiceListCubit(
-      this.servicesRepository, this.pricesRepository, this.childrenRepository)
-      : super(const ServiceListInitial());
+    this.servicesRepository,
+    this.pricesRepository,
+    this.childrenRepository,
+  ) : super(const ServiceListInitial());
 
   Future<void> loadServices(int childId) async {
     try {

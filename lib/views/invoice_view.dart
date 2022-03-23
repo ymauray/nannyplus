@@ -175,6 +175,7 @@ class InvoiceView extends StatelessWidget {
               },
             ),
           );
+
           return doc;
         })(),
         builder: (context, snapshot) {
@@ -248,7 +249,7 @@ class InvoiceView extends StatelessWidget {
                 ),
               ],
             ),
-            ...rows
+            ...rows,
           ],
         ),
         pw.SizedBox(height: 28),
@@ -269,9 +270,10 @@ class InvoiceView extends StatelessWidget {
                   pw.Text(
                     gettext.t("Invoice number", null),
                     style: pw.TextStyle(
-                        fontWeight: pw.FontWeight.bold,
-                        color: PdfColors.blue,
-                        fontSize: 14),
+                      fontWeight: pw.FontWeight.bold,
+                      color: PdfColors.blue,
+                      fontSize: 14,
+                    ),
                   ),
                   pw.Text(
                     invoice.number.toString().padLeft(6, '0'),
@@ -288,9 +290,10 @@ class InvoiceView extends StatelessWidget {
                   pw.Text(
                     gettext.t("Invoiced to", null),
                     style: pw.TextStyle(
-                        fontWeight: pw.FontWeight.bold,
-                        color: PdfColors.blue,
-                        fontSize: 14),
+                      fontWeight: pw.FontWeight.bold,
+                      color: PdfColors.blue,
+                      fontSize: 14,
+                    ),
                   ),
                   pw.Text(
                     invoice.parentsName,
@@ -312,9 +315,10 @@ class InvoiceView extends StatelessWidget {
                   pw.Text(
                     gettext.t("Date", null),
                     style: pw.TextStyle(
-                        fontWeight: pw.FontWeight.bold,
-                        color: PdfColors.blue,
-                        fontSize: 14),
+                      fontWeight: pw.FontWeight.bold,
+                      color: PdfColors.blue,
+                      fontSize: 14,
+                    ),
                   ),
                   pw.Text(
                     invoice.date.formatDate(),

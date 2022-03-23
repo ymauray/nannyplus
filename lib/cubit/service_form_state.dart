@@ -16,8 +16,11 @@ class ServiceFormLoaded extends ServiceFormState {
   final List<Service> selectedServices;
 
   const ServiceFormLoaded(
-      this.selectedTab, this.services, this.prices, this.selectedServices)
-      : super();
+    this.selectedTab,
+    this.services,
+    this.prices,
+    this.selectedServices,
+  ) : super();
 
   @override
   bool operator ==(Object other) {
@@ -67,7 +70,8 @@ class ServiceFormLoaded extends ServiceFormState {
       List<Service>.from(map['services']?.map((x) => Service.fromMap(x))),
       List<Price>.from(map['prices']?.map((x) => Price.fromMap(x))),
       List<Service>.from(
-          map['selectedServices']?.map((x) => Service.fromMap(x))),
+        map['selectedServices']?.map((x) => Service.fromMap(x)),
+      ),
     );
   }
 

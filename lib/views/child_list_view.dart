@@ -15,6 +15,7 @@ class ChildListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<ChildListCubit>().loadChildList();
+
     return AppView(
       title: const Text("Nanny+"),
       actions: [
@@ -77,8 +78,11 @@ class ChildListView extends StatelessWidget {
           } else if (state is ChildListLoaded) {
             return Stack(
               children: [
-                ChildList(state.children, state.pendingTotal,
-                    state.pendingTotalPerChild),
+                ChildList(
+                  state.children,
+                  state.pendingTotal,
+                  state.pendingTotalPerChild,
+                ),
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Padding(

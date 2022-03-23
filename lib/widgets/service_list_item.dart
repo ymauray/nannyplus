@@ -44,7 +44,7 @@ class ServiceListItem extends StatelessWidget {
                         .bodyText1
                         ?.copyWith(color: Colors.white),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -64,13 +64,14 @@ class ServiceListItem extends StatelessWidget {
               );
               if (service != null) {
                 context.read<ServiceListCubit>().update(
-                    this.service.copyWith(
-                          date: service.date,
-                          priceId: service.priceId,
-                          hours: service.hours,
-                          minutes: service.minutes,
-                        ),
-                    child.id!);
+                      this.service.copyWith(
+                            date: service.date,
+                            priceId: service.priceId,
+                            hours: service.hours,
+                            minutes: service.minutes,
+                          ),
+                      child.id!,
+                    );
               }
             },
             child: ServiceListItemDetail(service: service),

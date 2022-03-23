@@ -15,6 +15,7 @@ class InvoiceListTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<InvoiceListCubit>().loadInvoiceList(childId);
+
     return BlocConsumer<InvoiceListCubit, InvoiceListState>(
       listener: (context, state) {
         if (state is InvoiceListError) {

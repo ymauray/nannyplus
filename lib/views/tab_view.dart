@@ -15,6 +15,7 @@ class TabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<ChildInfoCubit>().read(childId);
+
     return DefaultTabController(
       length: 3,
       child: AppView(

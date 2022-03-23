@@ -10,13 +10,12 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<SettingsCubit>().loadSettings();
+
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
-        if (state is SettingsLoaded) {
-          return SettingsForm(state);
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
+        return state is SettingsLoaded
+            ? SettingsForm(state)
+            : const Center(child: CircularProgressIndicator());
       },
     );
   }

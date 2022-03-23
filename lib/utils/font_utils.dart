@@ -21,7 +21,9 @@ class FontUtils {
     FontItem("STCaiyun", "assets/fonts/STCaiyun.ttf"),
     FontItem("Butterfly Kids", "assets/fonts/ButterflyKids-Regular.ttf"),
     FontItem(
-        "Fredericka the Great", "assets/fonts/FrederickatheGreat-Regular.ttf"),
+      "Fredericka the Great",
+      "assets/fonts/FrederickatheGreat-Regular.ttf",
+    ),
     FontItem("Gwendolyn", "assets/fonts/Gwendolyn-Bold.ttf"),
     FontItem("Mystery Quest", "assets/fonts/MysteryQuest-Regular.ttf"),
     FontItem("Oswald", "assets/fonts/Oswald-Regular.ttf"),

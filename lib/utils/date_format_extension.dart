@@ -7,6 +7,7 @@ extension DateFormatExtension on String {
     var formatter = format != null
         ? DateFormat(format)
         : DateFormat.yMMMMd(I18nUtils.locale);
+
     return formatter.format(DateFormat('yyyy-MM-dd').parse(this));
   }
 }

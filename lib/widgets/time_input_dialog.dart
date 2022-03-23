@@ -14,6 +14,7 @@ class TimeInputDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormBuilderState>();
+
     return Dialog(
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -24,7 +25,10 @@ class TimeInputDialog extends StatelessWidget {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-                color: Colors.black, offset: Offset(0, 10), blurRadius: 10),
+              color: Colors.black,
+              offset: Offset(0, 10),
+              blurRadius: 10,
+            ),
           ],
         ),
         child: FormBuilder(

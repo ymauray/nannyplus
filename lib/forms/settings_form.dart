@@ -73,8 +73,10 @@ class SettingsForm extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 32.0),
-                  child: Text(context.t('Line 1'),
-                      style: Theme.of(context).textTheme.caption),
+                  child: Text(
+                    context.t('Line 1'),
+                    style: Theme.of(context).textTheme.caption,
+                  ),
                 ),
                 Row(children: [
                   Expanded(
@@ -85,8 +87,10 @@ class SettingsForm extends StatelessWidget {
                 ]),
                 Padding(
                   padding: const EdgeInsets.only(top: 32.0),
-                  child: Text(context.t('Font for line 1'),
-                      style: Theme.of(context).textTheme.caption),
+                  child: Text(
+                    context.t('Font for line 1'),
+                    style: Theme.of(context).textTheme.caption,
+                  ),
                 ),
                 Row(children: [
                   Expanded(
@@ -117,8 +121,10 @@ class SettingsForm extends StatelessWidget {
                 ]),
                 Padding(
                   padding: const EdgeInsets.only(top: 32.0),
-                  child: Text(context.t('Line 2'),
-                      style: Theme.of(context).textTheme.caption),
+                  child: Text(
+                    context.t('Line 2'),
+                    style: Theme.of(context).textTheme.caption,
+                  ),
                 ),
                 Row(
                   children: [
@@ -131,8 +137,10 @@ class SettingsForm extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 32.0),
-                  child: Text(context.t('Font for line 2'),
-                      style: Theme.of(context).textTheme.caption),
+                  child: Text(
+                    context.t('Font for line 2'),
+                    style: Theme.of(context).textTheme.caption,
+                  ),
                 ),
                 Row(children: [
                   Expanded(

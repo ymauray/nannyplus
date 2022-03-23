@@ -61,7 +61,7 @@ class NannyPlusApp extends StatelessWidget {
             servicesRepository,
             pricesRepository,
           ),
-        )
+        ),
       ],
       child: MaterialApp(
         home: const ChildListView(),
@@ -91,12 +91,14 @@ class NannyPlusApp extends StatelessWidget {
                 return supportedLocale.first;
               }
               supportedLocale = supportedLocales.where(
-                  (element) => element.languageCode == locale.languageCode);
+                (element) => element.languageCode == locale.languageCode,
+              );
               if (supportedLocale.isNotEmpty) {
                 return supportedLocale.first;
               }
             }
           }
+
           return null;
         },
       ),

@@ -54,6 +54,7 @@ class ServiceList extends StatelessWidget {
         ...s.map(
           (group) {
             double dailyTotal = 0.0;
+
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -68,6 +69,7 @@ class ServiceList extends StatelessWidget {
                 ...group.value.map(
                   (service) {
                     dailyTotal += service.total;
+
                     return ServiceListItem(
                       service: service,
                       child: child,

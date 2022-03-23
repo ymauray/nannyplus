@@ -16,6 +16,7 @@ class ServiceListTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<ServiceListCubit>().loadServices(childId);
+
     return BlocConsumer<ServiceListCubit, ServiceListState>(
       listener: (context, state) {
         if (state is ServiceListError) {

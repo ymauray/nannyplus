@@ -19,10 +19,8 @@ class ServiceListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<ServiceListCubit>().loadServices(childId);
-    return BlocConsumer<ServiceListCubit, ServiceListState>(
-      listener: (context, state) {
-        if (state is ServiceListError) {}
-      },
+
+    return BlocBuilder<ServiceListCubit, ServiceListState>(
       builder: (context, state) => AppView(
         title: Text(context.t('Services')),
         actions: [

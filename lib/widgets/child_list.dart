@@ -68,9 +68,13 @@ class ChildList extends StatelessWidget {
                       child.displayName,
                       style: child.isArchived
                           ? const TextStyle(
-                              inherit: true, fontStyle: FontStyle.italic)
+                              inherit: true,
+                              fontStyle: FontStyle.italic,
+                            )
                           : const TextStyle(
-                              inherit: true, fontWeight: FontWeight.bold),
+                              inherit: true,
+                              fontWeight: FontWeight.bold,
+                            ),
                     ),
                     child.hasAllergies
                         ? Text(child.allergies!)

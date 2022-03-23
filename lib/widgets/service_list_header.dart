@@ -24,7 +24,7 @@ class ServiceListHeader extends StatelessWidget {
                 ),
                 BoldText(
                   context.t("Service"),
-                )
+                ),
               ],
             ),
           ),

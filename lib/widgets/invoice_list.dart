@@ -49,7 +49,9 @@ class InvoiceList extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => InvoiceView(
-                                  invoice, GettextLocalizations.of(context)),
+                                invoice,
+                                GettextLocalizations.of(context),
+                              ),
                             ),
                           );
                         },

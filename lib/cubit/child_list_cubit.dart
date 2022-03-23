@@ -88,8 +88,12 @@ class ChildListCubit extends Cubit<ChildListState> {
         final pendingTotalPerChild =
             await _servicesRepository.getPendingTotalPerChild();
 
-        emit(ChildListLoaded(childList, pendingTotal, pendingTotalPerChild,
-            showArchived: true));
+        emit(ChildListLoaded(
+          childList,
+          pendingTotal,
+          pendingTotalPerChild,
+          showArchived: true,
+        ));
       }
     } on Exception catch (e) {
       emit(ChildListError(e.toString()));
@@ -104,8 +108,12 @@ class ChildListCubit extends Cubit<ChildListState> {
         final pendingTotalPerChild =
             await _servicesRepository.getPendingTotalPerChild();
 
-        emit(ChildListLoaded(childList, pendingTotal, pendingTotalPerChild,
-            showArchived: false));
+        emit(ChildListLoaded(
+          childList,
+          pendingTotal,
+          pendingTotalPerChild,
+          showArchived: false,
+        ));
       }
     } on Exception catch (e) {
       emit(ChildListError(e.toString()));

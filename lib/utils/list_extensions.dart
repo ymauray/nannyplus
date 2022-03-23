@@ -8,8 +8,10 @@ class Group<G, T> {
 }
 
 extension ListExtensions<T> on List<T> {
-  List<Group<G, T>> groupBy<G extends Comparable>(G Function(T element) groupBy,
-      {int Function(G value1, G value2)? groupComparator}) {
+  List<Group<G, T>> groupBy<G extends Comparable>(
+    G Function(T element) groupBy, {
+    int Function(G value1, G value2)? groupComparator,
+  }) {
     var result = <Group<G, T>>[];
     var map = <G, List<T>>{};
     for (var element in this) {
@@ -24,6 +26,7 @@ extension ListExtensions<T> on List<T> {
     for (var key in keys) {
       result.add(Group<G, T>(key, map[key]!));
     }
+
     return result;
   }
   /*

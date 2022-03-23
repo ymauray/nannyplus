@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:nannyplus/data/model/service.dart';
+
+import '../data/model/service.dart';
 
 class ServiceListItemDetail extends StatelessWidget {
   const ServiceListItemDetail({

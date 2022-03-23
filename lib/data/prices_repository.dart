@@ -15,12 +15,14 @@ class PricesRepository {
   Future<Price> create(Price price) async {
     var database = await DatabaseUtil.instance;
     var id = await database.insert("prices", price.toMap());
+
     return read(id);
   }
 
   Future<Price> read(int id) async {
     var database = await DatabaseUtil.instance;
     var row = await database.query("prices", where: "id = ?", whereArgs: [id]);
+
     return Price.fromMap(row.first);
   }
 }

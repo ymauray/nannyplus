@@ -12,6 +12,7 @@ class PriceListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<PriceListCubit>(context).getPriceList();
+
     return AppView(
       title: Text(context.t('Price list')),
       body: BlocConsumer<PriceListCubit, PriceListState>(

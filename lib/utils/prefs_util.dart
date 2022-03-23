@@ -14,6 +14,7 @@ class PrefsUtil {
 
   static PrefsUtil getInstance() {
     _instance ??= PrefsUtil._internal();
+
     return _instance!;
   }
 

@@ -33,47 +33,36 @@ class ServiceForm extends StatelessWidget {
       title: Text(service != null
           ? context.t('Edit service')
           : context.t('Add service')),
-      body: BlocConsumer<ServiceFormCubit, ServiceFormState>(
-        listener: (context, state) {},
+      body: BlocBuilder<ServiceFormCubit, ServiceFormState>(
         builder: (context, state) {
-          if (state is ServiceFormLoaded) {
-            return FormBuilder(
-              key: _formKey,
-              initialValue: {
-                'date': date,
-              },
-              child: CardScrollView(
-                children: [
-                  FormBuilderDateTimePicker(
-                    name: 'date',
-                    decoration: InputDecoration(
-                      labelText: context.t('Date'),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
+          return state is ServiceFormLoaded
+              ? FormBuilder(
+                  key: _formKey,
+                  initialValue: {'date': date},
+                  child: CardScrollView(children: [
+                    FormBuilderDateTimePicker(
+                      name: 'date',
+                      decoration: InputDecoration(
+                        labelText: context.t('Date'),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                      ),
+                      inputType: InputType.date,
+                      format: DateFormat.yMMMMd(I18nUtils.locale),
                     ),
-                    inputType: InputType.date,
-                    format: DateFormat.yMMMMd(I18nUtils.locale),
-                  ),
-                  DefaultTabController(
-                    initialIndex: state.selectedTab,
-                    length: 3,
-                    child: Column(
-                      children: [
+                    DefaultTabController(
+                      initialIndex: state.selectedTab,
+                      length: 3,
+                      child: Column(children: [
                         TabBar(
                           indicatorColor: Colors.grey,
                           labelColor: Colors.black,
                           unselectedLabelColor: Colors.grey[500],
                           tabs: [
+                            Tab(text: context.t('Recent')),
+                            Tab(text: context.t('All')),
                             Tab(
-                              text: context.t('Recent'),
-                            ),
-                            Tab(
-                              text: context.t('All'),
-                            ),
-                            Tab(
-                              child: Text(
-                                context.t("Added") +
-                                    " (${state.selectedServices.length})",
-                              ),
+                              child: Text(context.t("Added") +
+                                  " (${state.selectedServices.length})"),
                             ),
                           ],
                           onTap: (index) {
@@ -82,133 +71,123 @@ class ServiceForm extends StatelessWidget {
                         ),
                         if (state.selectedTab == 0)
                           ...state.services
-                              .map(
-                                (service) => ListTile(
-                                  contentPadding: EdgeInsets.zero,
-                                  title: Text(
-                                    service.priceLabel!,
-                                    style: const TextStyle(
-                                      inherit: true,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  subtitle: Text(
-                                    service.priceDetail,
-                                  ),
-                                  trailing: IconButton(
-                                    icon: const Icon(Icons.add),
-                                    onPressed: () {
-                                      _formKey.currentState!.save();
-                                      ScaffoldMessenger.of(context).success(
-                                        context.t("Added successfully"),
-                                      );
-                                      var newService = service.copyWith(
-                                        id: null,
-                                        invoiceId: null,
-                                        invoiced: 0,
-                                        date: DateFormat('yyyy-MM-dd').format(
-                                          _formKey.currentState!.value['date'],
-                                        ),
-                                      );
-                                      context
-                                          .read<ServiceFormCubit>()
-                                          .addService(newService);
-                                    },
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                        if (state.selectedTab == 1)
-                          ...state.prices.map(
-                            (price) => ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                price.label,
-                                style: const TextStyle(
-                                  inherit: true,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              subtitle: Text(
-                                price.detail,
-                              ),
-                              trailing: IconButton(
-                                icon: const Icon(Icons.add),
-                                onPressed: () async {
-                                  _formKey.currentState!.save();
-                                  if (price.isFixedPrice) {
-                                    ScaffoldMessenger.of(context).success(
-                                      context.t("Added successfully"),
-                                    );
-                                    var service = Service(
-                                      childId: childId,
-                                      date: DateFormat('yyyy-MM-dd').format(
-                                        _formKey.currentState!.value['date'],
+                              .map((service) => ListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    title: Text(
+                                      service.priceLabel!,
+                                      style: const TextStyle(
+                                        inherit: true,
+                                        fontSize: 16,
                                       ),
-                                      priceId: price.id!,
-                                      priceLabel: price.label,
-                                      priceAmount: price.amount,
-                                      isFixedPrice: 1,
-                                      hours: 0,
-                                      minutes: 0,
-                                      total: price.amount,
-                                      invoiced: 0,
-                                    );
-                                    context
-                                        .read<ServiceFormCubit>()
-                                        .addService(service);
-                                  } else {
-                                    var time = await showDialog<TimeInputData>(
-                                      context: context,
-                                      builder: (context) {
-                                        return const TimeInputDialog();
-                                      },
-                                    );
-                                    if (time != null) {
-                                      if (time.hours == 0 &&
-                                          time.minutes == 0) {
-                                        ScaffoldMessenger.of(context).failure(
-                                          context.t("Input canceled"),
-                                        );
-                                      } else {
+                                    ),
+                                    subtitle: Text(service.priceDetail),
+                                    trailing: IconButton(
+                                      icon: const Icon(Icons.add),
+                                      onPressed: () {
+                                        _formKey.currentState!.save();
                                         ScaffoldMessenger.of(context).success(
                                           context.t("Added successfully"),
                                         );
-                                        var service = Service(
-                                          childId: childId,
+                                        var newService = service.copyWith(
+                                          id: null,
+                                          invoiceId: null,
+                                          invoiced: 0,
                                           date: DateFormat('yyyy-MM-dd').format(
                                             _formKey
                                                 .currentState!.value['date'],
                                           ),
-                                          priceId: price.id!,
-                                          priceLabel: price.label,
-                                          priceAmount: price.amount,
-                                          isFixedPrice: 0,
-                                          hours: time.hours,
-                                          minutes: time.minutes,
-                                          total: price.amount *
-                                              (time.hours + time.minutes / 60),
-                                          invoiced: 0,
                                         );
                                         context
                                             .read<ServiceFormCubit>()
-                                            .addService(service);
+                                            .addService(newService);
+                                      },
+                                    ),
+                                  ))
+                              .toList(),
+                        if (state.selectedTab == 1)
+                          ...state.prices.map((price) => ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                title: Text(
+                                  price.label,
+                                  style: const TextStyle(
+                                    inherit: true,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                subtitle: Text(price.detail),
+                                trailing: IconButton(
+                                  icon: const Icon(Icons.add),
+                                  onPressed: () async {
+                                    _formKey.currentState!.save();
+                                    if (price.isFixedPrice) {
+                                      ScaffoldMessenger.of(context).success(
+                                        context.t("Added successfully"),
+                                      );
+                                      var service = Service(
+                                        childId: childId,
+                                        date: DateFormat('yyyy-MM-dd').format(
+                                          _formKey.currentState!.value['date'],
+                                        ),
+                                        priceId: price.id!,
+                                        priceLabel: price.label,
+                                        priceAmount: price.amount,
+                                        isFixedPrice: 1,
+                                        hours: 0,
+                                        minutes: 0,
+                                        total: price.amount,
+                                        invoiced: 0,
+                                      );
+                                      context
+                                          .read<ServiceFormCubit>()
+                                          .addService(service);
+                                    } else {
+                                      var time =
+                                          await showDialog<TimeInputData>(
+                                        context: context,
+                                        builder: (context) {
+                                          return const TimeInputDialog();
+                                        },
+                                      );
+                                      if (time != null) {
+                                        if (time.hours == 0 &&
+                                            time.minutes == 0) {
+                                          ScaffoldMessenger.of(context).failure(
+                                            context.t("Input canceled"),
+                                          );
+                                        } else {
+                                          ScaffoldMessenger.of(context).success(
+                                            context.t("Added successfully"),
+                                          );
+                                          var service = Service(
+                                            childId: childId,
+                                            date: DateFormat('yyyy-MM-dd')
+                                                .format(_formKey.currentState!
+                                                    .value['date']),
+                                            priceId: price.id!,
+                                            priceLabel: price.label,
+                                            priceAmount: price.amount,
+                                            isFixedPrice: 0,
+                                            hours: time.hours,
+                                            minutes: time.minutes,
+                                            total: price.amount *
+                                                (time.hours +
+                                                    time.minutes / 60),
+                                            invoiced: 0,
+                                          );
+                                          context
+                                              .read<ServiceFormCubit>()
+                                              .addService(service);
+                                        }
                                       }
                                     }
-                                  }
-                                },
-                              ),
-                            ),
-                          ),
-                      ],
+                                  },
+                                ),
+                              )),
+                      ]),
                     ),
-                  ),
-                ],
-              ),
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
+                  ]),
+                )
+              : const Center(child: CircularProgressIndicator());
         },
       ),
     );

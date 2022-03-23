@@ -13,6 +13,7 @@ class PriceList extends StatelessWidget {
       separatorBuilder: (context, index) => const Divider(),
       itemBuilder: (context, index) {
         final price = _prices[index];
+
         return ListTile(
           title: Text(price.label),
           subtitle: Text(

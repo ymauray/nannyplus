@@ -94,5 +94,7 @@ class DatabaseUtil {
       ''');
   }
 
-  static void _upgradeTo(int version, sqlite.Database db) async {}
+  static void _upgradeTo(int version, sqlite.Database db) async {
+    /* Not implemented yet */
+  }
 }

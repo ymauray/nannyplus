@@ -20,6 +20,7 @@ class ChildInfoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<ChildInfoCubit>().read(childId);
+
     return BlocConsumer<ChildInfoCubit, ChildInfoState>(
       listener: (context, state) {
         if (state is ChildInfoError) {

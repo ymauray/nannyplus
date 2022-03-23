@@ -20,6 +20,7 @@ class _LogoPickerState extends State<LogoPicker> {
   @override
   Widget build(BuildContext context) {
     final focusNode = FocusNode();
+
     return Column(
       children: [
         FutureBuilder<Directory>(
@@ -40,6 +41,7 @@ class _LogoPickerState extends State<LogoPicker> {
                 var filePath = '$appDocumentsPath/logo';
                 if (File(filePath).existsSync()) {
                   imageCache?.clearLiveImages();
+
                   return ClipRect(
                     child: Image.file(
                       File(filePath),

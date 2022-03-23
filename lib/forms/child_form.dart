@@ -39,8 +39,6 @@ class _ChildFormState extends State<ChildForm> {
                 }
                 var data = Child.fromMap(map);
                 Navigator.of(context).pop(data);
-              } else {
-                // Validation failed, do something.
               }
             },
             child: Text(
