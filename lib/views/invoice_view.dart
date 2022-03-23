@@ -89,14 +89,17 @@ class InvoiceView extends StatelessWidget {
           );
 
           //final byteData = await rootBundle.load('assets/fonts/STCaiyun.ttf');
-          final byteData1 = await rootBundle.load(
-            PrefsUtil.getInstance().line1FontAsset,
-          );
-          final line1Font = pw.Font.ttf(byteData1);
-          final byteData2 = await rootBundle.load(
-            PrefsUtil.getInstance().line2FontAsset,
-          );
-          final line2Font = pw.Font.ttf(byteData2);
+          var line1FontAsset = PrefsUtil.getInstance().line1FontAsset;
+          final byteData1 = line1FontAsset.isNotEmpty
+              ? await rootBundle.load(line1FontAsset)
+              : null;
+          final line1Font = byteData1 != null ? pw.Font.ttf(byteData1) : null;
+
+          var line2FontAsset = PrefsUtil.getInstance().line2FontAsset;
+          final byteData2 = line2FontAsset.isNotEmpty
+              ? await rootBundle.load(PrefsUtil.getInstance().line2FontAsset)
+              : null;
+          final line2Font = byteData2 != null ? pw.Font.ttf(byteData2) : null;
 
           var doc = pw.Document();
           doc.addPage(
@@ -366,8 +369,8 @@ class InvoiceView extends StatelessWidget {
   pw.Widget invoiceHeader(
     String? title1,
     String? title2,
-    pw.Font line1Font,
-    pw.Font line2Font,
+    pw.Font? line1Font,
+    pw.Font? line2Font,
   ) {
     return pw.Column(
       children: [

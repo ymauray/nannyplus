@@ -96,7 +96,9 @@ class SettingsForm extends StatelessWidget {
                   Expanded(
                     child: DropdownButton<FontItem>(
                       key: UniqueKey(),
-                      value: _state.line1Font,
+                      value: _state.line1Font.family.isNotEmpty
+                          ? _state.line1Font
+                          : FontUtils.fontItems[0],
                       isExpanded: true,
                       items: FontUtils.fontItems
                           .map(
