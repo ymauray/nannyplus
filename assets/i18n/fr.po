@@ -140,8 +140,8 @@ msgstr "Ligne 2"
 msgid "Choose a logo"
 msgstr "Choisir un logo"
 
-msgid "Invoice #{0}"
-msgstr "Facture #{0}"
+msgid "Invoice {0}"
+msgstr "Facture {0}"
 
 msgid "Invoice number"
 msgstr "Numéro de facture"

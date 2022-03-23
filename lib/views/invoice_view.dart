@@ -25,7 +25,7 @@ class InvoiceView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppView(
-      title: Text(context.t('Invoice #{0}', args: [invoice.number])),
+      title: Text(context.t('Invoice {0}', args: [invoice.number])),
       body: FutureBuilder<pw.Document>(
         future: (() async {
           SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -264,6 +264,7 @@ class InvoiceView extends StatelessWidget {
     return pw.Column(
       children: [
         pw.Row(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: [
             pw.Expanded(
               flex: 1,
@@ -301,6 +302,14 @@ class InvoiceView extends StatelessWidget {
                   pw.Text(
                     invoice.parentsName,
                     style: const pw.TextStyle(fontSize: 14),
+                  ),
+                  pw.Text(
+                    invoice.address,
+                    style: const pw.TextStyle(
+                      inherit: true,
+                      fontSize: 14,
+                    ),
+                    textAlign: pw.TextAlign.right,
                   ),
                 ],
               ),
