@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:nannyplus/utils/font_utils.dart';
@@ -16,13 +18,31 @@ class SettingsCubit extends Cubit<SettingsState> {
       PrefsUtil.getInstance().line2,
       PrefsUtil.getInstance().line2FontFamily,
       PrefsUtil.getInstance().line2FontAsset,
+      PrefsUtil.getInstance().conditions,
+      PrefsUtil.getInstance().bankDetails,
+      PrefsUtil.getInstance().address,
     );
     emit(settingsLoaded);
   }
 
-  Future<void> saveSettings(String line1, String line2) async {
-    PrefsUtil.getInstance().line1 = line1;
-    PrefsUtil.getInstance().line2 = line2;
+  Future<void> saveSettings(Map<String, dynamic> values) async {
+    PrefsUtil.getInstance().line1 = values['line1'] ?? '';
+    PrefsUtil.getInstance().line1FontFamily =
+        (values['line1Font'] as FontItem?)?.family ??
+            FontUtils.defaultFontItem.family;
+    PrefsUtil.getInstance().line1FontAsset =
+        (values['line1Font'] as FontItem?)?.asset ??
+            FontUtils.defaultFontItem.asset;
+    PrefsUtil.getInstance().line2 = values['line2'] ?? '';
+    PrefsUtil.getInstance().line2FontFamily =
+        (values['line2Font'] as FontItem?)?.family ??
+            FontUtils.defaultFontItem.family;
+    PrefsUtil.getInstance().line2FontAsset =
+        (values['line2Font'] as FontItem?)?.asset ??
+            FontUtils.defaultFontItem.asset;
+    PrefsUtil.getInstance().conditions = values['conditions'] ?? '';
+    PrefsUtil.getInstance().bankDetails = values['bankDetails'] ?? '';
+    PrefsUtil.getInstance().address = values['address'] ?? '';
     loadSettings();
   }
 
@@ -46,5 +66,11 @@ class SettingsCubit extends Cubit<SettingsState> {
       PrefsUtil.getInstance().line2FontAsset = value.asset;
     }
     loadSettings();
+  }
+
+  void setLine1(String? value) {
+    if (state is SettingsLoaded) {
+      emit((state as SettingsLoaded).copyWith(line1: value));
+    }
   }
 }

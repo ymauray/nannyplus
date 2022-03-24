@@ -40,17 +40,13 @@ class ServiceListTabView extends StatelessWidget {
                       onPressed: () async {
                         await Navigator.of(context).push(
                           MaterialPageRoute<Service>(
-                            builder: (context) =>
-                                ServiceForm(childId: state.child.id!),
+                            builder: (context) => ServiceForm(
+                              childId: state.child.id!,
+                              tab: 0,
+                            ),
                             fullscreenDialog: true,
                           ),
                         );
-                        //if (service != null) {
-                        //  context.read<ServiceListCubit>().create(
-                        //        service,
-                        //        state.child.id!,
-                        //      );
-                        //}
                         context.read<ServiceListCubit>().loadServices(childId);
                       },
                     ),

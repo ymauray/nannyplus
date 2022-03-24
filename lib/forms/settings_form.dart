@@ -2,14 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nannyplus/cubit/settings_cubit.dart';
-import 'package:nannyplus/utils/font_utils.dart';
-import 'package:nannyplus/utils/logo_picker_controller.dart';
-import 'package:nannyplus/widgets/logo_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../cubit/settings_cubit.dart';
+import '../utils/font_utils.dart';
+import '../utils/logo_picker_controller.dart';
+import '../widgets/logo_picker.dart';
 import '../views/app_view.dart';
 
 class SettingsForm extends StatelessWidget {
@@ -24,6 +25,7 @@ class SettingsForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormBuilderState>();
     final logoPickerController = LogoPickerController();
 
     return AppView(
@@ -43,18 +45,34 @@ class SettingsForm extends StatelessWidget {
               XFile file = XFile.fromData(logoPickerController.bytes!);
               await file.saveTo(filePath);
             }
-            context.read<SettingsCubit>().saveSettings(
-                  line1Controller.text,
-                  line2Controller.text,
-                );
-            Navigator.of(context).pop();
+            _formKey.currentState!.save();
+            if (_formKey.currentState!.validate()) {
+              context
+                  .read<SettingsCubit>()
+                  .saveSettings(_formKey.currentState!.value);
+              Navigator.of(context).pop();
+            }
           },
         ),
       ],
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Form(
+          child: FormBuilder(
+            key: _formKey,
+            initialValue: {
+              'line1': _state.line1,
+              'line1Font': _state.line1Font.family.isNotEmpty
+                  ? _state.line1Font
+                  : FontUtils.fontItems[4],
+              'line2': _state.line2,
+              'line2Font': _state.line2Font.family.isNotEmpty
+                  ? _state.line2Font
+                  : FontUtils.fontItems[4],
+              'conditions': _state.conditions,
+              'bankDetails': _state.bankDetails,
+              'address': _state.address,
+            },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -68,109 +86,155 @@ class SettingsForm extends StatelessWidget {
                     ),
                   ),
                 ),
-                LogoPicker(
-                  controller: logoPickerController,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: LogoPicker(
+                    controller: logoPickerController,
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 32.0),
-                  child: Text(
-                    context.t('Line 1'),
-                    style: Theme.of(context).textTheme.caption,
-                  ),
-                ),
-                Row(children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: line1Controller,
-                    ),
-                  ),
-                ]),
-                Padding(
-                  padding: const EdgeInsets.only(top: 32.0),
-                  child: Text(
-                    context.t('Font for line 1'),
-                    style: Theme.of(context).textTheme.caption,
-                  ),
-                ),
-                Row(children: [
-                  Expanded(
-                    child: DropdownButton<FontItem>(
-                      key: UniqueKey(),
-                      value: _state.line1Font.family.isNotEmpty
-                          ? _state.line1Font
-                          : FontUtils.fontItems[0],
-                      isExpanded: true,
-                      items: FontUtils.fontItems
-                          .map(
-                            (item) => DropdownMenuItem(
-                              value: item,
-                              child: Text(
-                                item.family,
-                                style: TextStyle(
-                                  inherit: true,
-                                  fontFamily: item.family,
-                                  fontSize: 24,
-                                ),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                      onChanged: (value) async {
-                        await context.read<SettingsCubit>().setLine1Font(value);
-                      },
-                    ),
-                  ),
-                ]),
-                Padding(
-                  padding: const EdgeInsets.only(top: 32.0),
-                  child: Text(
-                    context.t('Line 2'),
-                    style: Theme.of(context).textTheme.caption,
-                  ),
-                ),
-                Row(
-                  children: [
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Row(children: [
                     Expanded(
-                      child: TextFormField(
-                        controller: line2Controller,
+                      child: FormBuilderTextField(
+                        name: 'line1',
+                        decoration: InputDecoration(
+                          labelText: context.t('Line 1'),
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                        ),
+                        autocorrect: false,
                       ),
                     ),
-                  ],
+                  ]),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 32.0),
-                  child: Text(
-                    context.t('Font for line 2'),
-                    style: Theme.of(context).textTheme.caption,
-                  ),
-                ),
-                Row(children: [
-                  Expanded(
-                    child: DropdownButton<FontItem>(
-                      key: UniqueKey(),
-                      value: _state.line2Font,
-                      isExpanded: true,
-                      items: FontUtils.fontItems
-                          .map(
-                            (item) => DropdownMenuItem(
-                              value: item,
-                              child: Text(
-                                item.family,
-                                style: TextStyle(
-                                  inherit: true,
-                                  fontFamily: item.family,
-                                  fontSize: 24,
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Row(children: [
+                    Expanded(
+                      child: FormBuilderDropdown<FontItem>(
+                        name: 'line1Font',
+                        decoration: InputDecoration(
+                          labelText: context.t('Font for line 1'),
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                        ),
+                        isExpanded: true,
+                        items: FontUtils.fontItems
+                            .map(
+                              (item) => DropdownMenuItem(
+                                value: item,
+                                child: Text(
+                                  item.family,
+                                  style: TextStyle(
+                                    inherit: true,
+                                    fontFamily: item.family,
+                                  ),
                                 ),
                               ),
-                            ),
-                          )
-                          .toList(),
-                      onChanged: (value) async {
-                        await context.read<SettingsCubit>().setLine2Font(value);
-                      },
+                            )
+                            .toList(),
+                      ),
                     ),
+                  ]),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: FormBuilderTextField(
+                          name: 'line2',
+                          decoration: InputDecoration(
+                            labelText: context.t('Line 2'),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ]),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: FormBuilderDropdown<FontItem>(
+                          name: 'line2Font',
+                          decoration: InputDecoration(
+                            labelText: context.t('Font for line 2'),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                          ),
+                          isExpanded: true,
+                          items: FontUtils.fontItems
+                              .map(
+                                (item) => DropdownMenuItem(
+                                  value: item,
+                                  child: Text(
+                                    item.family,
+                                    style: TextStyle(
+                                      inherit: true,
+                                      fontFamily: item.family,
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: FormBuilderTextField(
+                          name: 'conditions',
+                          decoration: InputDecoration(
+                            labelText: context.t('Payment conditions'),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: FormBuilderTextField(
+                          name: 'bankDetails',
+                          minLines: 3,
+                          maxLines: 5,
+                          decoration: InputDecoration(
+                            labelText: context.t('Bank details'),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: FormBuilderTextField(
+                          name: 'address',
+                          minLines: 3,
+                          maxLines: 5,
+                          decoration: InputDecoration(
+                            labelText: context.t('Address'),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

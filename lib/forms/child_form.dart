@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
+import 'package:nannyplus/cubit/settings_cubit.dart';
 
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/utils/i18n_utils.dart';
@@ -83,6 +85,9 @@ class _ChildFormState extends State<ChildForm> {
                           ),
                           autocorrect: false,
                           textCapitalization: TextCapitalization.words,
+                          onChanged: (value) {
+                            context.read<SettingsCubit>().setLine1(value);
+                          },
                         ),
                       ),
                       const SizedBox(

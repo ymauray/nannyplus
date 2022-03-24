@@ -17,7 +17,7 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
   ServiceFormCubit(this._servicesRepository, this._pricesRepository)
       : super(const ServiceFormInitial());
 
-  Future<void> loadRecentServices(int childId) async {
+  Future<void> loadRecentServices(int childId, DateTime? date, int tab) async {
     emit(const ServiceFormInitial());
     try {
       // final pricesMap =
@@ -28,11 +28,16 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
       final groups = services.groupBy((service) => service.priceId);
       final orderedServices = groups.map((group) => group.value.first).toList();
 
+      final selectedServices = await _servicesRepository
+          .getServicesForChildAndDate(childId, date ?? DateTime.now());
+
       // final orderedPrices =
       //     groups.map((group) => pricesMap[group.key]!).toList();
 
       // emit(ServiceFormLoaded(orderedPrices));
-      emit(ServiceFormLoaded(0, orderedServices, prices, const []));
+      emit(
+        ServiceFormLoaded(tab, date, orderedServices, prices, selectedServices),
+      );
     } catch (e) {
       emit(ServiceFormError(e.toString()));
     }
@@ -48,5 +53,9 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
       selectedServices:
           (state as ServiceFormLoaded).selectedServices + [newService],
     ));
+  }
+
+  void deleteService(Service service) {
+    _servicesRepository.delete(service.id!);
   }
 }

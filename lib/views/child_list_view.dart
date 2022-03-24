@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-import 'package:nannyplus/cubit/child_list_cubit.dart';
-import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/forms/child_form.dart';
-import 'package:nannyplus/views/app_view.dart';
-import 'package:nannyplus/widgets/child_list.dart';
-import 'package:nannyplus/widgets/loading_indicator.dart';
-import 'package:nannyplus/widgets/main_drawer.dart';
+
+import '../cubit/child_list_cubit.dart';
+import '../data/model/child.dart';
+import '../forms/child_form.dart';
+import '../widgets/child_list.dart';
+import '../widgets/loading_indicator.dart';
+import '../widgets/main_drawer.dart';
+
+import 'app_view.dart';
 
 class ChildListView extends StatelessWidget {
   const ChildListView({Key? key}) : super(key: key);
@@ -49,19 +51,6 @@ class ChildListView extends StatelessWidget {
         ),
       ],
       drawer: const MainDrawer(),
-      //floatingActionButton: FloatingActionButton(
-      //  child: const Icon(Icons.add),
-      //  onPressed: () async {
-      //    var child = await Navigator.of(context).push<Child>(
-      //      MaterialPageRoute(
-      //        builder: (context) => const ChildForm(),
-      //      ),
-      //    );
-      //    if (child != null) {
-      //      context.read<ChildListCubit>().create(child);
-      //    }
-      //  },
-      //),
       body: BlocConsumer<ChildListCubit, ChildListState>(
         listener: (context, state) {
           if (state is ChildListError) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 extension SnackBarUtil on ScaffoldMessengerState {
   void success(String message) {
+    hideCurrentSnackBar();
     showSnackBar(
       SnackBar(
         backgroundColor: Colors.green,
@@ -11,6 +12,7 @@ extension SnackBarUtil on ScaffoldMessengerState {
   }
 
   void failure(String message) {
+    hideCurrentSnackBar();
     showSnackBar(
       SnackBar(
         backgroundColor: Colors.red,

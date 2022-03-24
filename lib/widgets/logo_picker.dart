@@ -23,75 +23,83 @@ class _LogoPickerState extends State<LogoPicker> {
 
     return Column(
       children: [
+        TextButton(
+          focusNode: focusNode,
+          onPressed: () => openLogoChooser(focusNode),
+          child: Text(context.t('Choose a logo')),
+        ),
         FutureBuilder<Directory>(
           future: getApplicationDocumentsDirectory(),
           builder: (context, value) {
-            if (bytes != null) {
-              return ClipRect(
-                child: Image.memory(
-                  bytes!,
-                  height: 120,
-                  fit: BoxFit.contain,
-                  key: UniqueKey(),
-                ),
-              );
-            } else {
-              if (value.hasData) {
-                var appDocumentsPath = value.data!.path;
-                var filePath = '$appDocumentsPath/logo';
-                if (File(filePath).existsSync()) {
-                  imageCache?.clearLiveImages();
-
-                  return ClipRect(
-                    child: Image.file(
-                      File(filePath),
-                      height: 120,
-                      fit: BoxFit.contain,
-                      key: UniqueKey(),
-                    ),
-                  );
-                } else {
-                  return Container(
-                    width: 120,
-                    height: 120,
-                    color: Colors.grey,
-                  );
-                }
-              } else {
-                return Container(
-                  width: 120,
-                  height: 120,
-                  color: Colors.grey,
-                );
-              }
-            }
+            return GestureDetector(
+              child: buildSquare(value, focusNode),
+              onTap: () => openLogoChooser(focusNode),
+            );
           },
-        ),
-        TextButton(
-          focusNode: focusNode,
-          onPressed: () async {
-            focusNode.requestFocus();
-            XFile? image =
-                await ImagePicker().pickImage(source: ImageSource.gallery);
-            if (image != null) {
-              //Directory appDocumentsDirectory =
-              //    await getApplicationDocumentsDirectory();
-              //var appDocumentsPath = appDocumentsDirectory.path;
-              //var filePath = '$appDocumentsPath/logo';
-              //await image.saveTo(filePath);
-              var b = await image.readAsBytes();
-              widget.controller.setBytes(b);
-              setState(() {
-                bytes = b;
-              });
-              //context
-              //    .read<SettingsScreenCubit>()
-              //    .updateLogo(image.hashCode);
-            }
-          },
-          child: Text(context.t('Choose a logo')),
         ),
       ],
     );
+  }
+
+  Widget buildSquare(AsyncSnapshot value, FocusNode focusNode) {
+    if (bytes != null) {
+      return ClipRect(
+        child: Image.memory(
+          bytes!,
+          height: 120,
+          fit: BoxFit.contain,
+          key: UniqueKey(),
+        ),
+      );
+    } else {
+      if (value.hasData) {
+        var appDocumentsPath = value.data!.path;
+        var filePath = '$appDocumentsPath/logo';
+        if (File(filePath).existsSync()) {
+          imageCache?.clearLiveImages();
+
+          return ClipRect(
+            child: Image.file(
+              File(filePath),
+              height: 120,
+              fit: BoxFit.contain,
+              key: UniqueKey(),
+            ),
+          );
+        } else {
+          return Container(
+            width: 120,
+            height: 120,
+            color: Colors.grey,
+          );
+        }
+      } else {
+        return Container(
+          width: 120,
+          height: 120,
+          color: Colors.grey,
+        );
+      }
+    }
+  }
+
+  void openLogoChooser(FocusNode focusNode) async {
+    focusNode.requestFocus();
+    XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      //Directory appDocumentsDirectory =
+      //    await getApplicationDocumentsDirectory();
+      //var appDocumentsPath = appDocumentsDirectory.path;
+      //var filePath = '$appDocumentsPath/logo';
+      //await image.saveTo(filePath);
+      var b = await image.readAsBytes();
+      widget.controller.setBytes(b);
+      setState(() {
+        bytes = b;
+      });
+      //context
+      //    .read<SettingsScreenCubit>()
+      //    .updateLogo(image.hashCode);
+    }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/data/model/service.dart';
 import 'package:nannyplus/utils/list_extensions.dart';
@@ -62,6 +63,33 @@ class ServicesRepository {
     );
 
     return rows.map((e) => Service.fromMap(e)).toList();
+  }
+
+  Future<List<Service>> getServicesForDate(DateTime date) async {
+    var db = await DatabaseUtil.instance;
+
+    var rows = await db.query(
+      'services',
+      where: 'date = ?',
+      whereArgs: [DateFormat('yyyy-MM-dd').format(date)],
+    );
+
+    return rows.map((row) => Service.fromMap(row)).toList();
+  }
+
+  Future<List<Service>> getServicesForChildAndDate(
+    int childId,
+    DateTime date,
+  ) async {
+    var db = await DatabaseUtil.instance;
+
+    var rows = await db.query(
+      'services',
+      where: 'childId = ? AND date = ?',
+      whereArgs: [childId, DateFormat('yyyy-MM-dd').format(date)],
+    );
+
+    return rows.map((row) => Service.fromMap(row)).toList();
   }
 
   Future<List<Service>> getRecentServices(int childId) async {

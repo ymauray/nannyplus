@@ -23,6 +23,9 @@ msgstr "Pas de numéro de téléphone"
 msgid "No known allergies"
 msgstr "Pas d'allergie connue"
 
+msgid "Allergies : {0}"
+msgstr "Allergies : {0}"
+
 msgid "Settings"
 msgstr "Paramètres"
 
@@ -134,8 +137,20 @@ msgstr "Identité"
 msgid "Line 1"
 msgstr "Ligne 1"
 
+msgid "Font for line 1"
+msgstr "Police pour la ligne 1"
+
 msgid "Line 2"
 msgstr "Ligne 2"
+
+msgid "Font for line 2"
+msgstr "Police pour la ligne 2"
+
+msgid "Payment conditions"
+msgstr "Conditions de paiement"
+
+msgid "Bank details"
+msgstr "Détails bancaires"
 
 msgid "Choose a logo"
 msgstr "Choisir un logo"
@@ -165,10 +180,28 @@ msgid "Added"
 msgstr "Ajoutés"
 
 msgid "Added successfully"
-msgstr "Saisie ajoutée avec succès"
+msgstr "Ajouté avec succès"
+
+msgid "Removed successfully"
+msgstr "Supprimé avec succès"
 
 msgid "Input canceled"
 msgstr "Saisie annulée"
+
+msgid "Input canceled"
+msgstr "Saisie annulée"
+
+msgid "Are you sure you want to delete this entry ?"
+msgstr "Êtes-vous sûr de vouloir supprimer cette entrée ?"
+
+msgid "Yes"
+msgstr "Oui"
+
+msgid "No"
+msgstr "Non"
+
+msgid "Import data"
+msgstr "Importer des données"
 
 # Legacy messages
 

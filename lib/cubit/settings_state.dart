@@ -10,53 +10,123 @@ class SettingsInitial extends SettingsState {
 }
 
 class SettingsLoaded extends SettingsState {
-  final String _invoiceMetaLine1;
-  final String _line1FontFamily;
-  final String _line1FontAsset;
-  final String _invoiceMetaLine2;
-  final String _line2FontFamily;
-  final String _line2FontAsset;
+  final String line1;
+  final String line1FontFamily;
+  final String line1FontAsset;
+  final String line2;
+  final String line2FontFamily;
+  final String line2FontAsset;
+  final String conditions;
+  final String bankDetails;
+  final String address;
 
   const SettingsLoaded(
-    this._invoiceMetaLine1,
-    this._line1FontFamily,
-    this._line1FontAsset,
-    this._invoiceMetaLine2,
-    this._line2FontFamily,
-    this._line2FontAsset,
+    this.line1,
+    this.line1FontFamily,
+    this.line1FontAsset,
+    this.line2,
+    this.line2FontFamily,
+    this.line2FontAsset,
+    this.conditions,
+    this.bankDetails,
+    this.address,
   );
 
-  String get line1 => _invoiceMetaLine1;
-  String get line1FontFamily => _line1FontFamily;
-  String get line1FontAsset => _line1FontAsset;
-  FontItem get line1Font => FontItem(_line1FontFamily, _line1FontAsset);
-  String get line2 => _invoiceMetaLine2;
-  String get line2FontFamily => _line2FontFamily;
-  String get line2FontAsset => _line2FontAsset;
-  FontItem get line2Font => _line2FontFamily.isEmpty
+  FontItem get line1Font => line1FontFamily.isEmpty
       ? FontUtils.defaultFontItem
-      : FontItem(_line2FontFamily, _line2FontAsset);
+      : FontItem(line1FontFamily, line1FontAsset);
+  FontItem get line2Font => line2FontFamily.isEmpty
+      ? FontUtils.defaultFontItem
+      : FontItem(line2FontFamily, line2FontAsset);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is SettingsLoaded &&
-        other._invoiceMetaLine1 == _invoiceMetaLine1 &&
-        other._line1FontFamily == _line1FontFamily &&
-        other._line1FontAsset == _line1FontAsset &&
-        other._invoiceMetaLine2 == _invoiceMetaLine2 &&
-        other._line2FontFamily == _line2FontFamily &&
-        other._line2FontAsset == _line2FontAsset;
+        other.line1 == line1 &&
+        other.line1FontFamily == line1FontFamily &&
+        other.line1FontAsset == line1FontAsset &&
+        other.line2 == line2 &&
+        other.line2FontFamily == line2FontFamily &&
+        other.line2FontAsset == line2FontAsset &&
+        other.conditions == conditions &&
+        other.bankDetails == bankDetails &&
+        other.address == address;
   }
 
   @override
   int get hashCode {
-    return _invoiceMetaLine1.hashCode ^
-        _line1FontFamily.hashCode ^
-        _line1FontAsset.hashCode ^
-        _invoiceMetaLine2.hashCode ^
-        _line2FontFamily.hashCode ^
-        _line2FontAsset.hashCode;
+    return line1.hashCode ^
+        line1FontFamily.hashCode ^
+        line1FontAsset.hashCode ^
+        line2.hashCode ^
+        line2FontFamily.hashCode ^
+        line2FontAsset.hashCode ^
+        conditions.hashCode ^
+        bankDetails.hashCode ^
+        address.hashCode;
+  }
+
+  SettingsLoaded copyWith({
+    String? line1,
+    String? line1FontFamily,
+    String? line1FontAsset,
+    String? line2,
+    String? line2FontFamily,
+    String? line2FontAsset,
+    String? conditions,
+    String? bankDetails,
+    String? address,
+  }) {
+    return SettingsLoaded(
+      line1 ?? this.line1,
+      line1FontFamily ?? this.line1FontFamily,
+      line1FontAsset ?? this.line1FontAsset,
+      line2 ?? this.line2,
+      line2FontFamily ?? this.line2FontFamily,
+      line2FontAsset ?? this.line2FontAsset,
+      conditions ?? this.conditions,
+      bankDetails ?? this.bankDetails,
+      address ?? this.address,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'line1': line1,
+      'line1FontFamily': line1FontFamily,
+      'line1FontAsset': line1FontAsset,
+      'line2': line2,
+      'line2FontFamily': line2FontFamily,
+      'line2FontAsset': line2FontAsset,
+      'conditions': conditions,
+      'bankDetails': bankDetails,
+      'address': address,
+    };
+  }
+
+  factory SettingsLoaded.fromMap(Map<String, dynamic> map) {
+    return SettingsLoaded(
+      map['line1'] ?? '',
+      map['line1FontFamily'] ?? '',
+      map['line1FontAsset'] ?? '',
+      map['line2'] ?? '',
+      map['line2FontFamily'] ?? '',
+      map['line2FontAsset'] ?? '',
+      map['conditions'] ?? '',
+      map['bankDetails'] ?? '',
+      map['address'] ?? '',
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory SettingsLoaded.fromJson(String source) =>
+      SettingsLoaded.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'SettingsLoaded(line1: $line1, line1FontFamily: $line1FontFamily, line1FontAsset: $line1FontAsset, line2: $line2, line2FontFamily: $line2FontFamily, line2FontAsset: $line2FontAsset, conditions: $conditions, bankDetails: $bankDetails, address: $address)';
   }
 }

@@ -11,12 +11,14 @@ class ServiceFormInitial extends ServiceFormState {
 
 class ServiceFormLoaded extends ServiceFormState {
   final int selectedTab;
+  final DateTime? date;
   final List<Service> services;
   final List<Price> prices;
   final List<Service> selectedServices;
 
   const ServiceFormLoaded(
     this.selectedTab,
+    this.date,
     this.services,
     this.prices,
     this.selectedServices,
@@ -28,6 +30,7 @@ class ServiceFormLoaded extends ServiceFormState {
 
     return other is ServiceFormLoaded &&
         other.selectedTab == selectedTab &&
+        other.date == date &&
         listEquals(other.services, services) &&
         listEquals(other.prices, prices) &&
         listEquals(other.selectedServices, selectedServices);
@@ -36,6 +39,7 @@ class ServiceFormLoaded extends ServiceFormState {
   @override
   int get hashCode {
     return selectedTab.hashCode ^
+        date.hashCode ^
         services.hashCode ^
         prices.hashCode ^
         selectedServices.hashCode;
@@ -43,12 +47,14 @@ class ServiceFormLoaded extends ServiceFormState {
 
   ServiceFormLoaded copyWith({
     int? selectedTab,
+    DateTime? date,
     List<Service>? services,
     List<Price>? prices,
     List<Service>? selectedServices,
   }) {
     return ServiceFormLoaded(
       selectedTab ?? this.selectedTab,
+      date ?? this.date,
       services ?? this.services,
       prices ?? this.prices,
       selectedServices ?? this.selectedServices,
@@ -58,6 +64,7 @@ class ServiceFormLoaded extends ServiceFormState {
   Map<String, dynamic> toMap() {
     return {
       'selectedTab': selectedTab,
+      'date': date?.millisecondsSinceEpoch,
       'services': services.map((x) => x.toMap()).toList(),
       'prices': prices.map((x) => x.toMap()).toList(),
       'selectedServices': selectedServices.map((x) => x.toMap()).toList(),
@@ -67,11 +74,13 @@ class ServiceFormLoaded extends ServiceFormState {
   factory ServiceFormLoaded.fromMap(Map<String, dynamic> map) {
     return ServiceFormLoaded(
       map['selectedTab']?.toInt() ?? 0,
+      map['date'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['date'])
+          : null,
       List<Service>.from(map['services']?.map((x) => Service.fromMap(x))),
       List<Price>.from(map['prices']?.map((x) => Price.fromMap(x))),
       List<Service>.from(
-        map['selectedServices']?.map((x) => Service.fromMap(x)),
-      ),
+          map['selectedServices']?.map((x) => Service.fromMap(x))),
     );
   }
 
@@ -82,7 +91,7 @@ class ServiceFormLoaded extends ServiceFormState {
 
   @override
   String toString() {
-    return 'ServiceFormLoaded(selectedTab: $selectedTab, services: $services, prices: $prices, selectedServices: $selectedServices)';
+    return 'ServiceFormLoaded(selectedTab: $selectedTab, date: $date, services: $services, prices: $prices, selectedServices: $selectedServices)';
   }
 }
 

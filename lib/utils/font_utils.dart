@@ -17,8 +17,6 @@ class FontItem {
 
 class FontUtils {
   static const fontItems = [
-    FontItem("SF Pro Text", "assets/fonts/SF-Pro-Text-Regular.otf"),
-    FontItem("STCaiyun", "assets/fonts/STCaiyun.ttf"),
     FontItem("Butterfly Kids", "assets/fonts/ButterflyKids-Regular.ttf"),
     FontItem(
       "Fredericka the Great",
@@ -28,8 +26,8 @@ class FontUtils {
     FontItem("Mystery Quest", "assets/fonts/MysteryQuest-Regular.ttf"),
     FontItem("Oswald", "assets/fonts/Oswald-Regular.ttf"),
     FontItem("Playfair Display", "assets/fonts/PlayfairDisplay-Italic.ttf"),
-    FontItem("Rampart One", "assets/fonts/RampartOne-Regular.ttf"),
+    FontItem("STCaiyun", "assets/fonts/STCaiyun.ttf"),
   ];
 
-  static get defaultFontItem => fontItems[0];
+  static FontItem get defaultFontItem => fontItems[0];
 }
