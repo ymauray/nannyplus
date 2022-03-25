@@ -22,6 +22,17 @@ class AppView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: title,
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              key: const Key('drawer_button'),
+            );
+          },
+        ),
         actions: actions,
         bottom: tabBar,
       ),
