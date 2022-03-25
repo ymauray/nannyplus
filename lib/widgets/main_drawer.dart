@@ -33,7 +33,8 @@ class MainDrawer extends StatelessWidget {
 
     return Drawer(
       child: SafeArea(
-        child: Column(
+        child: ListView(
+          padding: EdgeInsets.zero,
           children: [
             GestureDetector(
               onTap: () async {
@@ -50,24 +51,13 @@ class MainDrawer extends StatelessWidget {
                   _tapCount = 0;
                 });
               },
-              child: ListTile(
-                tileColor: Colors.blue,
-                textColor: Colors.white,
-                iconColor: Colors.white,
-                title: const Text(
-                  'Nanny+',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                leading: Image.asset(
-                  'assets/img/logo-125x100.png',
-                  height: 24,
-                ),
+              child: DrawerHeader(
+                //child: Text('Nanny+'),
+                child: Image.asset('assets/img/banner1500.png'),
               ),
             ),
-            const Divider(),
             ListTile(
+              key: const Key('price_list_menu'),
               title: Text(
                 context.t('Price list'),
                 style: const TextStyle(
