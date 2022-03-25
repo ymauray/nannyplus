@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -8,12 +9,18 @@ void main() {
 
   group('my-first-test', () {
     testWidgets('My first test', (tester) async {
-      app.main();
-      //await tester.pumpWidget(
-      //  const MyApp(),
-      //);
+      await app.main();
       await tester.pumpAndSettle();
-      print("All pumped up !");
+      await tester.pumpAndSettle();
+      var drawerButton = find.byKey(const Key('drawer_button'));
+      expect(drawerButton, findsOneWidget);
+      await tester.tap(drawerButton);
+      await tester.pumpAndSettle();
+      var priceListMenu = find.byKey(const Key('price_list_menu'));
+      expect(priceListMenu, findsOneWidget);
+      await tester.tap(priceListMenu);
+      await tester.pumpAndSettle();
+      await Future.delayed(const Duration(seconds: 5));
     });
   });
 }
