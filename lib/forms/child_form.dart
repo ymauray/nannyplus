@@ -29,7 +29,7 @@ class _ChildFormState extends State<ChildForm> {
       actions: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: TextButton(
+          child: IconButton(
             onPressed: () {
               _formKey.currentState!.save();
               if (_formKey.currentState!.validate()) {
@@ -43,12 +43,7 @@ class _ChildFormState extends State<ChildForm> {
                 Navigator.of(context).pop(data);
               }
             },
-            child: Text(
-              context.t('Save'),
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onBackground,
-              ),
-            ),
+            icon: const Icon(Icons.save, color: Colors.white),
           ),
         ),
       ],

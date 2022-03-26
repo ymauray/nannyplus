@@ -16,9 +16,11 @@ class InvoiceListInitial extends InvoiceListState {
 // ---------------------------------------------------------------------------
 
 class InvoiceListLoaded extends InvoiceListState {
-  final List<Invoice> invoices;
+  const InvoiceListLoaded(
+    this.invoices,
+  );
 
-  const InvoiceListLoaded(this.invoices);
+  final List<Invoice> invoices;
 
   @override
   bool operator ==(Object other) {
@@ -29,6 +31,34 @@ class InvoiceListLoaded extends InvoiceListState {
 
   @override
   int get hashCode => invoices.hashCode;
+
+  InvoiceListLoaded copyWith({
+    List<Invoice>? invoices,
+  }) {
+    return InvoiceListLoaded(
+      invoices ?? this.invoices,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'invoices': invoices.map((x) => x.toMap()).toList(),
+    };
+  }
+
+  factory InvoiceListLoaded.fromMap(Map<String, dynamic> map) {
+    return InvoiceListLoaded(
+      List<Invoice>.from(map['invoices']?.map((x) => Invoice.fromMap(x))),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory InvoiceListLoaded.fromJson(String source) =>
+      InvoiceListLoaded.fromMap(json.decode(source));
+
+  @override
+  String toString() => 'InvoiceListLoaded(invoices: $invoices)';
 }
 
 // ---------------------------------------------------------------------------

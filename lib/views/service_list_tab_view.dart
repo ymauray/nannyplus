@@ -5,6 +5,7 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 import '../cubit/service_list_cubit.dart';
 import '../data/model/service.dart';
 import '../forms/service_form.dart';
+import '../widgets/floating_action_stack.dart';
 import '../widgets/service_list.dart';
 
 class ServiceListTabView extends StatelessWidget {
@@ -29,31 +30,20 @@ class ServiceListTabView extends StatelessWidget {
         }
       },
       builder: (context, state) => state is ServiceListLoaded
-          ? Stack(
-              children: [
-                ServiceList(child: state.child, services: state.services),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: FloatingActionButton(
-                      child: const Icon(Icons.add),
-                      onPressed: () async {
-                        await Navigator.of(context).push(
-                          MaterialPageRoute<Service>(
-                            builder: (context) => ServiceForm(
-                              childId: state.child.id!,
-                              tab: 0,
-                            ),
-                            fullscreenDialog: true,
-                          ),
-                        );
-                        context.read<ServiceListCubit>().loadServices(childId);
-                      },
+          ? FloatingActionStack(
+              child: ServiceList(child: state.child, services: state.services),
+              onPressed: () async {
+                await Navigator.of(context).push(
+                  MaterialPageRoute<Service>(
+                    builder: (context) => ServiceForm(
+                      childId: state.child.id!,
+                      tab: 0,
                     ),
+                    fullscreenDialog: true,
                   ),
-                ),
-              ],
+                );
+                context.read<ServiceListCubit>().loadServices(childId);
+              },
             )
           : const Center(child: CircularProgressIndicator()),
     );

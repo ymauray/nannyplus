@@ -26,8 +26,32 @@ class InvoicesRepository {
 
   Future<Invoice> read(int id) async {
     var db = await DatabaseUtil.instance;
-    var invoice = await db.query('invoices', where: 'id = ?', whereArgs: [id]);
+    var invoice = await db.query(
+      'invoices',
+      where: 'id = ?',
+      whereArgs: [id],
+      orderBy: 'childId',
+    );
 
     return Invoice.fromMap(invoice.first);
+  }
+
+  Future<Invoice> update(Invoice invoice) async {
+    var db = await DatabaseUtil.instance;
+    await db.update(
+      'invoices',
+      invoice.toMap(),
+      where: 'id = ?',
+      whereArgs: [invoice.id!],
+    );
+
+    return await read(invoice.id!);
+  }
+
+  Future<int> getNextNumber() async {
+    var db = await DatabaseUtil.instance;
+    var rows = await db.query('invoices', orderBy: 'number desc');
+
+    return rows.isNotEmpty ? (rows.first['number'] as int) + 1 : 1;
   }
 }

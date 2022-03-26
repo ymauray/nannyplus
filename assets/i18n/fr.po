@@ -171,19 +171,22 @@ msgid "Privacy settings"
 msgstr "Politique de confidentialité"
 
 msgid "Recent"
-msgstr "Récents"
+msgstr "Récentes"
 
 msgid "All"
-msgstr "Tous"
+msgstr "Toutes"
 
 msgid "Added"
-msgstr "Ajoutés"
+msgstr "Ajoutées"
 
 msgid "Added successfully"
 msgstr "Ajouté avec succès"
 
 msgid "Removed successfully"
 msgstr "Supprimé avec succès"
+
+msgid "Edited successfully"
+msgstr "Modifié avec succès"
 
 msgid "Input canceled"
 msgstr "Saisie annulée"
@@ -202,6 +205,12 @@ msgstr "Non"
 
 msgid "Import data"
 msgstr "Importer des données"
+
+msgid "Invoice for"
+msgstr "Facture pour"
+
+msgid "and"
+msgstr "et"
 
 # Legacy messages
 

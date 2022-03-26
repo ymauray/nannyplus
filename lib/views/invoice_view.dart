@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 import 'package:pdf/pdf.dart';
@@ -11,199 +11,290 @@ import 'package:pdf/widgets.dart' as pw;
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
 
-import '../data/children_repository.dart';
+import '../cubit/invoice_view_cubit.dart';
+import '../data/model/child.dart';
 import '../data/model/invoice.dart';
 import '../data/model/service.dart';
 import '../data/services_repository.dart';
 import '../utils/date_format_extension.dart';
+import '../utils/prefs_util.dart';
 import '../views/app_view.dart';
+import '../widgets/loading_indicator.dart';
 
 class InvoiceView extends StatelessWidget {
+  const InvoiceView(
+    this.invoice,
+    this.gettext, {
+    Key? key,
+  }) : super(key: key);
+
   final Invoice invoice;
   final GettextLocalizations gettext;
-  const InvoiceView(this.invoice, this.gettext, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AppView(
-      title: Text(context.t('Invoice {0}', args: [invoice.number])),
-      body: FutureBuilder<pw.Document>(
-        future: (() async {
-          var conditions = PrefsUtil.getInstance().conditions;
+    context.read<InvoiceViewCubit>().init(invoice);
 
-          var servicesRepository = const ServicesRepository();
-          var services =
-              await servicesRepository.getServicesForInvoice(invoice.id);
+    return BlocBuilder<InvoiceViewCubit, InvoiceViewState>(
+      builder: (context, state) => AppView(
+        title: Text(context.t('Invoice {0}', args: [invoice.number])),
+        body: state is InvoiceViewLoaded
+            ? FutureBuilder<pw.Document>(
+                future: (() async {
+                  var line1FontAsset = PrefsUtil.getInstance().line1FontAsset;
+                  final byteData1 = line1FontAsset.isNotEmpty
+                      ? await rootBundle.load(line1FontAsset)
+                      : null;
+                  final line1Font =
+                      byteData1 != null ? pw.Font.ttf(byteData1) : null;
 
-          var childrenRepository = const ChildrenRepository();
-          var child = await childrenRepository.read(invoice.childId);
+                  var line2FontAsset = PrefsUtil.getInstance().line2FontAsset;
+                  final byteData2 = line2FontAsset.isNotEmpty
+                      ? await rootBundle
+                          .load(PrefsUtil.getInstance().line2FontAsset)
+                      : null;
+                  final line2Font =
+                      byteData2 != null ? pw.Font.ttf(byteData2) : null;
 
-          final applicationDirectory = await getApplicationDocumentsDirectory();
-          final appDocumentsPath = applicationDirectory.path;
-          final filePath = '$appDocumentsPath/logo';
-          final file = File(filePath);
+                  var conditions = PrefsUtil.getInstance().conditions;
 
-          var rows = ((List<Service> services) sync* {
-            String previousDate = "";
-            for (var i = 0; i < services.length; i++) {
-              var service = services[i];
-              var newBloc = service.date != previousDate;
-              previousDate = service.date;
-              if (newBloc) {
-                yield pw.TableRow(
-                  decoration: const pw.BoxDecoration(
-                    border: pw.Border(
-                      bottom: pw.BorderSide(color: PdfColors.grey),
-                    ),
-                  ),
-                  children: [
-                    pw.Padding(
-                      padding: const pw.EdgeInsets.symmetric(vertical: 8.0),
-                      child: pw.Text(
-                        service.date.formatDate(),
-                        textAlign: pw.TextAlign.left,
-                        style: const pw.TextStyle(fontSize: 14),
-                      ),
-                    ),
-                  ],
-                );
-              }
-              yield pw.TableRow(
-                children: [
-                  pw.Padding(
-                    padding: const pw.EdgeInsets.symmetric(vertical: 4.0),
-                    child: pw.Text(""),
-                  ),
-                  pw.Padding(
-                    padding: const pw.EdgeInsets.symmetric(vertical: 4.0),
-                    child: pw.Text(
-                      service.priceLabel!,
-                      textAlign: pw.TextAlign.left,
-                      style: const pw.TextStyle(fontSize: 14),
-                    ),
-                  ),
-                  pw.Padding(
-                    padding: const pw.EdgeInsets.symmetric(vertical: 4.0),
-                    child: pw.Text(
-                      service.isFixedPrice == 1
-                          ? '-'
-                          : (service.hours.toString() +
-                              "h" +
-                              service.minutes.toString().padLeft(2, '0') +
-                              ' x ' +
-                              service.priceAmount!.toStringAsFixed(2)),
-                      textAlign: pw.TextAlign.center,
-                      style: const pw.TextStyle(fontSize: 14),
-                    ),
-                  ),
-                  pw.Padding(
-                    padding: const pw.EdgeInsets.symmetric(vertical: 4.0),
-                    child: pw.Text(
-                      service.total.toStringAsFixed(2),
-                      textAlign: pw.TextAlign.right,
-                      style: const pw.TextStyle(fontSize: 14),
-                    ),
-                  ),
-                ],
-              );
-            }
-          })(services);
+                  var servicesRepository = const ServicesRepository();
+                  var services = await servicesRepository
+                      .getServicesForInvoice(invoice.id!);
 
-          //final byteData = await rootBundle.load('assets/fonts/STCaiyun.ttf');
-          var line1FontAsset = PrefsUtil.getInstance().line1FontAsset;
-          final byteData1 = line1FontAsset.isNotEmpty
-              ? await rootBundle.load(line1FontAsset)
-              : null;
-          final line1Font = byteData1 != null ? pw.Font.ttf(byteData1) : null;
+                  final applicationDirectory =
+                      await getApplicationDocumentsDirectory();
+                  final appDocumentsPath = applicationDirectory.path;
+                  final filePath = '$appDocumentsPath/logo';
+                  final file = File(filePath);
 
-          var line2FontAsset = PrefsUtil.getInstance().line2FontAsset;
-          final byteData2 = line2FontAsset.isNotEmpty
-              ? await rootBundle.load(PrefsUtil.getInstance().line2FontAsset)
-              : null;
-          final line2Font = byteData2 != null ? pw.Font.ttf(byteData2) : null;
+                  var packs = <List<Service>>[];
+                  var currentPack = <Service>[];
+                  String previousDate = "";
+                  var count = 0.0;
+                  for (var service in services) {
+                    if (previousDate != service.date) {
+                      if (count >= 15.5) {
+                        packs.add(currentPack);
+                        currentPack = <Service>[];
+                        count = 0;
+                        previousDate = "";
+                      }
+                      count += 1.5;
+                      previousDate = service.date;
+                    }
+                    currentPack.add(service);
+                    if (count == 17) {
+                      packs.add(currentPack);
+                      currentPack = <Service>[];
+                      count = 0;
+                      previousDate = "";
+                    }
+                    count += 1;
+                  }
+                  if (currentPack.isNotEmpty) {
+                    packs.add(currentPack);
+                  }
+                  if ((count == 0) || (count > 12)) {
+                    packs.add([]);
+                  }
 
-          var doc = pw.Document();
-          doc.addPage(
-            pw.Page(
-              pageFormat: PdfPageFormat.a4,
-              margin: const pw.EdgeInsets.all(20),
-              build: (pw.Context context) {
-                return pw.Stack(
-                  children: [
-                    pw.Column(
-                      crossAxisAlignment: pw.CrossAxisAlignment.start,
-                      children: [
-                        invoiceHeader(
-                          PrefsUtil.getInstance().line1,
-                          PrefsUtil.getInstance().line2,
-                          line1Font,
-                          line2Font,
-                        ),
-                        invoiceTitle(child.displayName),
-                        invoiceMeta(),
-                        invoiceTable(rows),
-                        invoiceTotal(conditions),
-                        pw.Column(
+                  var doc = pw.Document();
+                  var childrenMap = Map<int, Child>.fromIterable(
+                    state.children,
+                    key: (child) => child.id,
+                  );
+
+                  for (var i = 0; i < packs.length; i++) {
+                    var pack = packs[i];
+                    var rows = ((List<Service> services) sync* {
+                      String previousDate = "";
+                      int previousChildId = -1;
+                      for (var i = 0; i < services.length; i++) {
+                        var service = services[i];
+                        var newBloc = service.date != previousDate;
+                        var newChild =
+                            newBloc || (service.childId != previousChildId);
+                        previousDate = service.date;
+                        previousChildId = service.childId;
+                        if (newBloc) {
+                          yield pw.TableRow(
+                            decoration: const pw.BoxDecoration(
+                              border: pw.Border(
+                                bottom: pw.BorderSide(color: PdfColors.grey),
+                              ),
+                            ),
+                            children: [
+                              pw.Padding(
+                                padding: const pw.EdgeInsets.symmetric(
+                                  vertical: 8.0,
+                                ),
+                                child: pw.Text(
+                                  service.date.formatDate(),
+                                  textAlign: pw.TextAlign.left,
+                                  style: const pw.TextStyle(fontSize: 14),
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                        yield pw.TableRow(
                           children: [
-                            pw.Row(
-                              crossAxisAlignment: pw.CrossAxisAlignment.start,
-                              children: [
-                                pw.Expanded(
-                                  child: pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.start,
-                                    children: [
-                                      blueText(
-                                        gettext.t('Bank details', null),
-                                      ),
-                                      pw.Text(
-                                        PrefsUtil.getInstance().bankDetails,
-                                      ),
-                                    ],
-                                  ),
+                            pw.Padding(
+                              padding:
+                                  const pw.EdgeInsets.symmetric(vertical: 4.0),
+                              child: pw.Text(
+                                state.children.length == 1
+                                    ? ""
+                                    : newChild
+                                        ? childrenMap[service.childId]!
+                                            .firstName
+                                        : "",
+                                style: pw.TextStyle(
+                                  inherit: true,
+                                  fontStyle: pw.FontStyle.italic,
                                 ),
-                                pw.Expanded(
-                                  child: pw.Column(
-                                    crossAxisAlignment:
-                                        pw.CrossAxisAlignment.end,
-                                    children: [
-                                      blueText(gettext.t('Addresse', null)),
-                                      pw.Text(
-                                        PrefsUtil.getInstance().address,
-                                        textAlign: pw.TextAlign.right,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                              ),
+                            ),
+                            pw.Padding(
+                              padding:
+                                  const pw.EdgeInsets.symmetric(vertical: 4.0),
+                              child: pw.Text(
+                                service.priceLabel!,
+                                textAlign: pw.TextAlign.left,
+                                style: const pw.TextStyle(fontSize: 14),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding:
+                                  const pw.EdgeInsets.symmetric(vertical: 4.0),
+                              child: pw.Text(
+                                service.isFixedPrice == 1
+                                    ? '-'
+                                    : (service.hours.toString() +
+                                        "h" +
+                                        service.minutes
+                                            .toString()
+                                            .padLeft(2, '0') +
+                                        ' x ' +
+                                        service.priceAmount!
+                                            .toStringAsFixed(2)),
+                                textAlign: pw.TextAlign.center,
+                                style: const pw.TextStyle(fontSize: 14),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding:
+                                  const pw.EdgeInsets.symmetric(vertical: 4.0),
+                              child: pw.Text(
+                                service.total.toStringAsFixed(2),
+                                textAlign: pw.TextAlign.right,
+                                style: const pw.TextStyle(fontSize: 14),
+                              ),
                             ),
                           ],
-                        ),
-                      ],
-                    ),
-                    if (file.existsSync())
-                      pw.Positioned(
-                        right: 0,
-                        top: 0,
-                        child: pw.Image(
-                          pw.MemoryImage(
-                            file.readAsBytesSync(),
-                          ),
-                          height: 120,
-                          fit: pw.BoxFit.contain,
-                        ),
-                      ),
-                  ],
-                );
-              },
-            ),
-          );
+                        );
+                      }
+                    })(pack.toList());
 
-          return doc;
-        })(),
-        builder: (context, snapshot) {
-          return PdfPreview(build: (pageFormat) => snapshot.data!.save());
-        },
+                    doc.addPage(
+                      pw.Page(
+                        pageFormat: PdfPageFormat.a4,
+                        margin: const pw.EdgeInsets.all(20),
+                        build: (pw.Context context) {
+                          return pw.Stack(
+                            children: [
+                              pw.Column(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                children: [
+                                  invoiceHeader(
+                                    PrefsUtil.getInstance().line1,
+                                    PrefsUtil.getInstance().line2,
+                                    line1Font,
+                                    line2Font,
+                                  ),
+                                  invoiceTitle(state.children),
+                                  invoiceMeta(),
+                                  invoiceTable(rows),
+                                  if (i == packs.length - 1)
+                                    invoiceTotal(conditions),
+                                  if (i == packs.length - 1)
+                                    pw.Column(
+                                      children: [
+                                        pw.Row(
+                                          crossAxisAlignment:
+                                              pw.CrossAxisAlignment.start,
+                                          children: [
+                                            pw.Expanded(
+                                              child: pw.Column(
+                                                crossAxisAlignment:
+                                                    pw.CrossAxisAlignment.start,
+                                                children: [
+                                                  blueText(
+                                                    gettext.t(
+                                                      'Bank details',
+                                                      null,
+                                                    ),
+                                                  ),
+                                                  pw.Text(
+                                                    PrefsUtil.getInstance()
+                                                        .bankDetails,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            pw.Expanded(
+                                              child: pw.Column(
+                                                crossAxisAlignment:
+                                                    pw.CrossAxisAlignment.end,
+                                                children: [
+                                                  blueText(gettext.t(
+                                                    'Address',
+                                                    null,
+                                                  )),
+                                                  pw.Text(
+                                                    PrefsUtil.getInstance()
+                                                        .address,
+                                                    textAlign:
+                                                        pw.TextAlign.right,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                ],
+                              ),
+                              if (file.existsSync())
+                                pw.Positioned(
+                                  right: 0,
+                                  top: 0,
+                                  child: pw.Image(
+                                    pw.MemoryImage(
+                                      file.readAsBytesSync(),
+                                    ),
+                                    height: 120,
+                                    fit: pw.BoxFit.contain,
+                                  ),
+                                ),
+                            ],
+                          );
+                        },
+                      ),
+                    );
+                  }
+
+                  return doc;
+                })(),
+                builder: (context, snapshot) {
+                  return PdfPreview(
+                    build: (pageFormat) => snapshot.data!.save(),
+                  );
+                },
+              )
+            : const LoadingIndicator(),
       ),
     );
   }
@@ -381,7 +472,19 @@ class InvoiceView extends StatelessWidget {
     );
   }
 
-  pw.Widget invoiceTitle(String childName) {
+  pw.Widget invoiceTitle(List<Child> children) {
+    String childName = children[0].displayName;
+    if (children.length > 1) {
+      childName = children
+              .take(children.length - 1)
+              .map((child) => child.firstName)
+              .join(", ") +
+          " " +
+          gettext.t("and", null) +
+          " " +
+          children.last.firstName;
+    }
+
     return pw.Column(
       children: [
         pw.Row(

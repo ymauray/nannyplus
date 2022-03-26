@@ -56,79 +56,98 @@ class ServiceList extends StatelessWidget {
           ],
         ),
         ...s.map(
-          (group) {
-            double dailyTotal = 0.0;
-
-            return GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () async {
-                await Navigator.of(context).push(
-                  MaterialPageRoute<Service>(
-                    builder: (context) => ServiceForm(
-                      childId: child.id!,
-                      date: DateFormat('yyyy-MM-dd').parse(group.value[0].date),
-                      tab: 2,
-                    ),
-                    fullscreenDialog: true,
-                  ),
-                );
-                context.read<ServiceListCubit>().loadServices(child.id!);
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    DateFormat.yMMMMd(I18nUtils.locale).format(group.key),
-                    style: const TextStyle(
-                      inherit: true,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Divider(),
-                  ...group.value.map(
-                    (service) {
-                      dailyTotal += service.total;
-
-                      return ServiceListItemDetail(service: service);
-                    },
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 5,
-                        child: Container(),
-                      ),
-                      const Expanded(
-                        flex: 1,
-                        child: Divider(),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 5,
-                        child: Container(),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Text(
-                          dailyTotal.toStringAsFixed(2),
-                          textAlign: TextAlign.end,
-                          style: const TextStyle(
-                            inherit: true,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          },
+          (group) => _GroupCard(child: child, group: group),
         ),
       ],
     );
+  }
+}
+
+class _GroupCard extends StatelessWidget {
+  const _GroupCard({
+    required this.child,
+    required this.group,
+    Key? key,
+  }) : super(key: key);
+
+  final Child child;
+  final Group<DateTime, Service> group;
+
+  @override
+  Widget build(BuildContext context) {
+    {
+      double dailyTotal = 0.0;
+
+      return GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () async {
+          await Navigator.of(context).push(
+            MaterialPageRoute<Service>(
+              builder: (context) => ServiceForm(
+                childId: child.id!,
+                date: DateFormat('yyyy-MM-dd').parse(group.value[0].date),
+                tab: 2,
+              ),
+              fullscreenDialog: true,
+            ),
+          );
+          context.read<ServiceListCubit>().loadServices(child.id!);
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              DateFormat.yMMMMd(I18nUtils.locale).format(group.key),
+              style: const TextStyle(
+                inherit: true,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Divider(),
+            ...group.value.map(
+              (service) {
+                dailyTotal += service.total;
+
+                return ServiceListItemDetail(service: service);
+              },
+            ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Container(),
+                ),
+                const Expanded(
+                  flex: 1,
+                  child: Divider(),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: Container(),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Text(
+                      dailyTotal.toStringAsFixed(2),
+                      textAlign: TextAlign.end,
+                      style: const TextStyle(
+                        inherit: true,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
   }
 }

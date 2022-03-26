@@ -9,7 +9,14 @@ class TimeInputData {
 }
 
 class TimeInputDialog extends StatelessWidget {
-  const TimeInputDialog({Key? key}) : super(key: key);
+  const TimeInputDialog({
+    this.hours,
+    this.minutes,
+    Key? key,
+  }) : super(key: key);
+
+  final int? hours;
+  final int? minutes;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +40,10 @@ class TimeInputDialog extends StatelessWidget {
         ),
         child: FormBuilder(
           key: _formKey,
+          initialValue: {
+            'hours': hours,
+            'minutes': minutes,
+          },
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

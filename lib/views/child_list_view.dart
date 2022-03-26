@@ -6,6 +6,7 @@ import '../cubit/child_list_cubit.dart';
 import '../data/model/child.dart';
 import '../forms/child_form.dart';
 import '../widgets/child_list.dart';
+import '../widgets/floating_action_stack.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/main_drawer.dart';
 
@@ -55,9 +56,7 @@ class ChildListView extends StatelessWidget {
         listener: (context, state) {
           if (state is ChildListError) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-              ),
+              SnackBar(content: Text(state.message)),
             );
           }
         },
@@ -65,33 +64,20 @@ class ChildListView extends StatelessWidget {
           if (state is ChildListInitial) {
             return const LoadingIndicator();
           } else if (state is ChildListLoaded) {
-            return Stack(
-              children: [
-                ChildList(
-                  state.children,
-                  state.pendingTotal,
-                  state.pendingTotalPerChild,
-                ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: FloatingActionButton(
-                      child: const Icon(Icons.add),
-                      onPressed: () async {
-                        var child = await Navigator.of(context).push<Child>(
-                          MaterialPageRoute(
-                            builder: (context) => const ChildForm(),
-                          ),
-                        );
-                        if (child != null) {
-                          context.read<ChildListCubit>().create(child);
-                        }
-                      },
-                    ),
-                  ),
-                ),
-              ],
+            return FloatingActionStack(
+              child: ChildList(
+                state.children,
+                state.pendingTotal,
+                state.pendingTotalPerChild,
+              ),
+              onPressed: () async {
+                var child = await Navigator.of(context).push<Child>(
+                  MaterialPageRoute(builder: (context) => const ChildForm()),
+                );
+                if (child != null) {
+                  context.read<ChildListCubit>().create(child);
+                }
+              },
             );
           } else {
             return Container();

@@ -20,9 +20,6 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
   Future<void> loadRecentServices(int childId, DateTime? date, int tab) async {
     emit(const ServiceFormInitial());
     try {
-      // final pricesMap =
-      //     Map<int, Price>.fromIterable(prices, key: (prices) => prices.id);
-
       final prices = await _pricesRepository.getPriceList();
       final services = await _servicesRepository.getRecentServices(childId);
       final groups = services.groupBy((service) => service.priceId);
@@ -31,10 +28,6 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
       final selectedServices = await _servicesRepository
           .getServicesForChildAndDate(childId, date ?? DateTime.now());
 
-      // final orderedPrices =
-      //     groups.map((group) => pricesMap[group.key]!).toList();
-
-      // emit(ServiceFormLoaded(orderedPrices));
       emit(
         ServiceFormLoaded(tab, date, orderedServices, prices, selectedServices),
       );
@@ -52,6 +45,19 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
     emit((state as ServiceFormLoaded).copyWith(
       selectedServices:
           (state as ServiceFormLoaded).selectedServices + [newService],
+    ));
+  }
+
+  Future<void> updateService(Service service) async {
+    var newService = await _servicesRepository.update(service);
+    var updatedServices = ((services) sync* {
+      for (service in services) {
+        yield service.id == newService.id ? newService : service;
+      }
+    })((state as ServiceFormLoaded).selectedServices);
+
+    emit((state as ServiceFormLoaded).copyWith(
+      selectedServices: updatedServices.toList(),
     ));
   }
 

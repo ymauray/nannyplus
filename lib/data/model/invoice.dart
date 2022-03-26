@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Invoice {
-  final int id;
+  final int? id;
   final int number;
   final int childId;
   final String date;
@@ -10,7 +10,7 @@ class Invoice {
   final String address;
 
   Invoice({
-    required this.id,
+    this.id,
     required this.number,
     required this.childId,
     required this.date,
@@ -53,7 +53,7 @@ class Invoice {
 
   factory Invoice.fromMap(Map<String, dynamic> map) {
     return Invoice(
-      id: map['id']?.toInt() ?? 0,
+      id: map['id']?.toInt(),
       number: map['number']?.toInt() ?? 0,
       childId: map['childId']?.toInt() ?? 0,
       date: map['date'] ?? '',

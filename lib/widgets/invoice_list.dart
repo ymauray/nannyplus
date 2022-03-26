@@ -10,8 +10,12 @@ import '../views/invoice_view.dart';
 import '../widgets/card_scroll_view.dart';
 
 class InvoiceList extends StatelessWidget {
+  const InvoiceList(
+    this.invoices, {
+    Key? key,
+  }) : super(key: key);
+
   final List<Invoice> invoices;
-  const InvoiceList(this.invoices, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +25,7 @@ class InvoiceList extends StatelessWidget {
     );
 
     return CardScrollView(
+      bottomPadding: 80,
       children: i
           .map(
             (group) => Column(
@@ -35,34 +40,51 @@ class InvoiceList extends StatelessWidget {
                 ),
                 const Divider(),
                 ...group.value.map(
-                  (invoice) => Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Expanded(
-                        child: Text(invoice.date.formatDate()),
-                      ),
-                      Text(invoice.total.toStringAsFixed(2)),
-                      IconButton(
-                        visualDensity: VisualDensity.compact,
-                        icon: const Icon(Icons.file_download),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => InvoiceView(
-                                invoice,
-                                GettextLocalizations.of(context),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
+                  (invoice) => _InvoiceCard(
+                    invoice: invoice,
                   ),
                 ),
               ],
             ),
           )
           .toList(),
+    );
+  }
+}
+
+class _InvoiceCard extends StatelessWidget {
+  const _InvoiceCard({
+    required this.invoice,
+    Key? key,
+  }) : super(key: key);
+
+  final Invoice invoice;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(child: Text(invoice.date.formatDate())),
+          Text(invoice.total.toStringAsFixed(2)),
+          IconButton(
+            visualDensity: VisualDensity.compact,
+            icon: const Icon(Icons.file_download, color: Colors.grey),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => InvoiceView(
+                    invoice,
+                    GettextLocalizations.of(context),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
