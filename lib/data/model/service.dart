@@ -31,7 +31,7 @@ class Service {
 
   String get priceDetail => ((isFixedPrice == 1)
       ? ""
-      : "${hours}h$minutes x ${priceAmount?.toStringAsFixed(2)}");
+      : "${hours}h${minutes!.toString().padLeft(2, "0")} x ${priceAmount?.toStringAsFixed(2)}");
 
   Service copyWith({
     int? id,

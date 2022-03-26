@@ -80,7 +80,8 @@ class ServiceFormLoaded extends ServiceFormState {
       List<Service>.from(map['services']?.map((x) => Service.fromMap(x))),
       List<Price>.from(map['prices']?.map((x) => Price.fromMap(x))),
       List<Service>.from(
-          map['selectedServices']?.map((x) => Service.fromMap(x))),
+        map['selectedServices']?.map((x) => Service.fromMap(x)),
+      ),
     );
   }
 

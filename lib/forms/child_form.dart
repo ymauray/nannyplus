@@ -23,9 +23,9 @@ class _ChildFormState extends State<ChildForm> {
   @override
   Widget build(BuildContext context) {
     return AppView(
-      title: Text(widget.child != null
-          ? context.t('Edit Child')
-          : context.t('Add Child')),
+      title: Text(
+        widget.child != null ? context.t('Edit Child') : context.t('Add Child'),
+      ),
       actions: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),

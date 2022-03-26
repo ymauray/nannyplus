@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-import 'package:nannyplus/cubit/service_list_cubit.dart';
-import 'package:nannyplus/data/model/service.dart';
-import 'package:nannyplus/forms/service_form.dart';
-import 'package:nannyplus/widgets/service_list.dart';
+
+import '../cubit/service_list_cubit.dart';
+import '../data/model/service.dart';
+import '../forms/service_form.dart';
+import '../widgets/service_list.dart';
 
 class ServiceListTabView extends StatelessWidget {
   final int childId;

@@ -26,7 +26,15 @@ class AppView extends StatelessWidget {
         bottom: tabBar,
       ),
       drawer: drawer,
-      body: body,
+      body: Theme(
+        data: Theme.of(context).copyWith(
+          textTheme: Theme.of(context).textTheme.apply(
+                fontSizeFactor: 1.125,
+                fontFamily: 'SF Pro Text',
+              ),
+        ),
+        child: body,
+      ),
       floatingActionButton: floatingActionButton,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

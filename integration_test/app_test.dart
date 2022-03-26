@@ -12,7 +12,7 @@ void main() {
       await app.main();
       await tester.pumpAndSettle();
       await tester.pumpAndSettle();
-      var drawerButton = find.byKey(const Key('drawer_button'));
+      var drawerButton = find.byIcon(Icons.menu);
       expect(drawerButton, findsOneWidget);
       await tester.tap(drawerButton);
       await tester.pumpAndSettle();

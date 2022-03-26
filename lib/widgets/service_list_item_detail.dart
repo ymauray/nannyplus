@@ -29,7 +29,7 @@ class ServiceListItemDetail extends StatelessWidget {
             child: Text(
               service.isFixedPrice! == 0 ? service.priceDetail : "",
               textAlign: TextAlign.end,
-              style: const TextStyle(inherit: true, fontSize: 12),
+              style: const TextStyle(inherit: true),
             ),
           ),
           const SizedBox(
@@ -40,6 +40,7 @@ class ServiceListItemDetail extends StatelessWidget {
             child: Text(
               service.total.toStringAsFixed(2),
               textAlign: TextAlign.end,
+              textScaleFactor: 1.125,
             ),
           ),
         ],

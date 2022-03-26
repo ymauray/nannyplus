@@ -49,16 +49,19 @@ class ChildList extends StatelessWidget {
           (child) => Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(
-                icon: Icon(
-                  Icons.phone,
-                  color: child.hasPhoneNumber ? Colors.green : null,
+              Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.phone,
+                    color: child.hasPhoneNumber ? Colors.green : null,
+                  ),
+                  onPressed: () => child.hasPhoneNumber
+                      ? launch('tel://${child.phoneNumber}')
+                      : ScaffoldMessenger.of(context).failure(
+                          context.t('No phone number'),
+                        ),
                 ),
-                onPressed: () => child.hasPhoneNumber
-                    ? launch('tel://${child.phoneNumber}')
-                    : ScaffoldMessenger.of(context).failure(
-                        context.t('No phone number'),
-                      ),
               ),
               Expanded(
                 child: GestureDetector(
