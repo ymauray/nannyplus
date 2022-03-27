@@ -32,11 +32,23 @@ msgstr "Paramètres"
 msgid "Price list"
 msgstr "Tarifs"
 
+msgid "Hourly price"
+msgstr "Tarif horaire"
+
 msgid "Hourly price of {0}"
 msgstr "Tarif horaire de {0}"
 
+msgid "Fixed price"
+msgstr "Tarif fixe"
+
 msgid "Fixed price of {0}"
 msgstr "Tarif fixe de {0}"
+
+msgid "Price type"
+msgstr "Type de tarif"
+
+msgid "Are you sure you want to delete this price ?"
+msgstr "Êtes-vous sûr de vouloir supprimer ce tarif ?"
 
 msgid "Edit"
 msgstr "Modifier"
@@ -211,6 +223,12 @@ msgstr "Facture pour"
 
 msgid "and"
 msgstr "et"
+
+msgid "Create new price"
+msgstr "Créer un nouveau tarif"
+
+msgid "Label"
+msgstr "Libellé"
 
 # Legacy messages
 

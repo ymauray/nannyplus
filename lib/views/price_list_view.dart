@@ -11,7 +11,7 @@ class PriceListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<PriceListCubit>(context).getPriceList();
+    context.read<PriceListCubit>().getPriceList();
 
     return AppView(
       title: Text(context.t('Price list')),
@@ -29,7 +29,7 @@ class PriceListView extends StatelessWidget {
           if (state is PriceListInitial) {
             return const LoadingIndicator();
           } else if (state is PriceListLoaded) {
-            return PriceList(state.priceList);
+            return PriceList(state.priceList, state.inUse);
           } else {
             return Container();
           }

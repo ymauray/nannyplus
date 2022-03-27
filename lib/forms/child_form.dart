@@ -9,22 +9,18 @@ import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/utils/i18n_utils.dart';
 import 'package:nannyplus/views/app_view.dart';
 
-class ChildForm extends StatefulWidget {
-  final Child? child;
-
+class ChildForm extends StatelessWidget {
   const ChildForm({this.child, Key? key}) : super(key: key);
 
-  @override
-  State<ChildForm> createState() => _ChildFormState();
-}
+  final Child? child;
 
-class _ChildFormState extends State<ChildForm> {
-  final _formKey = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormBuilderState>();
+
     return AppView(
       title: Text(
-        widget.child != null ? context.t('Edit Child') : context.t('Add Child'),
+        child != null ? context.t('Edit Child') : context.t('Add Child'),
       ),
       actions: [
         Padding(
@@ -53,15 +49,15 @@ class _ChildFormState extends State<ChildForm> {
           child: FormBuilder(
             key: _formKey,
             initialValue: {
-              'firstName': widget.child?.firstName,
-              'lastName': widget.child?.lastName,
-              'birthdate': widget.child?.birthdate != null
-                  ? DateFormat('yyyy-MM-dd').parse(widget.child!.birthdate!)
+              'firstName': child?.firstName,
+              'lastName': child?.lastName,
+              'birthdate': child?.birthdate != null
+                  ? DateFormat('yyyy-MM-dd').parse(child!.birthdate!)
                   : null,
-              'phoneNumber': widget.child?.phoneNumber,
-              'parentsName': widget.child?.parentsName,
-              'address': widget.child?.address,
-              'allergies': widget.child?.allergies,
+              'phoneNumber': child?.phoneNumber,
+              'parentsName': child?.parentsName,
+              'address': child?.address,
+              'allergies': child?.allergies,
             },
             autovalidateMode: AutovalidateMode.always,
             child: Column(

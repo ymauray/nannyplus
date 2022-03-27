@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:nannyplus/widgets/card_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -24,6 +25,7 @@ class ChildList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardScrollView(
+      bottomPadding: 80,
       children: [
         Row(
           children: [
@@ -46,70 +48,73 @@ class ChildList extends StatelessWidget {
           ],
         ),
         ..._children.map(
-          (child) => Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.phone,
-                    color: child.hasPhoneNumber ? Colors.green : null,
-                  ),
-                  onPressed: () => child.hasPhoneNumber
-                      ? launch('tel://${child.phoneNumber}')
-                      : ScaffoldMessenger.of(context).failure(
-                          context.t('No phone number'),
-                        ),
-                ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        child.displayName,
-                        style: child.isArchived
-                            ? const TextStyle(
-                                inherit: true,
-                                fontStyle: FontStyle.italic,
-                              )
-                            : const TextStyle(
-                                inherit: true,
-                                fontWeight: FontWeight.bold,
-                              ),
-                      ),
-                      child.hasAllergies
-                          ? Text(
-                              context.t(
-                                "Allergies : {0}",
-                                args: [child.allergies!],
-                              ),
-                            )
-                          : Text(
-                              context.t("No known allergies"),
-                            ),
-                    ],
-                  ),
-                  onTap: () async {
-                    await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => TabView(child.id!),
-                      ),
-                    );
-                    context.read<ChildListCubit>().loadChildList();
-                  },
-                ),
-              ),
-              Text(
-                pendingTotalPerChild[child.id]?.toStringAsFixed(2) ?? '0.00',
-              ),
-            ],
+          (child) => _ChildCard(
+            child: child,
+            pendingTotal: pendingTotalPerChild[child.id],
           ),
         ),
       ],
+    );
+  }
+}
+
+class _ChildCard extends StatelessWidget {
+  const _ChildCard({
+    required this.child,
+    required this.pendingTotal,
+    Key? key,
+  }) : super(key: key);
+
+  final Child child;
+  final double? pendingTotal;
+
+  @override
+  Widget build(BuildContext context) {
+    return CardTile(
+      onTap: () async {
+        await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => TabView(child.id!),
+          ),
+        );
+        context.read<ChildListCubit>().loadChildList();
+      },
+      leading: IconButton(
+        icon: Icon(
+          Icons.phone,
+          color: child.hasPhoneNumber ? Colors.green : null,
+        ),
+        onPressed: () => child.hasPhoneNumber
+            ? launch('tel://${child.phoneNumber}')
+            : ScaffoldMessenger.of(context).failure(
+                context.t('No phone number'),
+              ),
+      ),
+      title: Text(
+        child.displayName,
+        style: child.isArchived
+            ? const TextStyle(
+                inherit: true,
+                fontStyle: FontStyle.italic,
+              )
+            : const TextStyle(
+                inherit: true,
+                fontWeight: FontWeight.bold,
+              ),
+      ),
+      subtitle: child.hasAllergies
+          ? Text(
+              context.t(
+                "Allergies : {0}",
+                args: [child.allergies!],
+              ),
+            )
+          : Text(
+              context.t("No known allergies"),
+            ),
+      trailing: Text(
+        pendingTotal?.toStringAsFixed(2) ?? '0.00',
+      ),
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:bloc/bloc.dart';
 import 'package:nannyplus/data/model/price.dart';
@@ -11,6 +13,23 @@ class PriceListCubit extends Cubit<PriceListState> {
 
   Future<void> getPriceList() async {
     final priceList = await _pricesRepository.getPriceList();
-    emit(PriceListLoaded(priceList));
+    final inUse = await _pricesRepository.getPricesInUse();
+
+    emit(PriceListLoaded(priceList, inUse));
+  }
+
+  Future<void> create(Price price) async {
+    await _pricesRepository.create(price);
+    await getPriceList();
+  }
+
+  Future<void> update(Price price) async {
+    await _pricesRepository.update(price);
+    await getPriceList();
+  }
+
+  Future<void> delete(int priceId) async {
+    await _pricesRepository.delete(priceId);
+    await getPriceList();
   }
 }

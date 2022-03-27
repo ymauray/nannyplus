@@ -25,27 +25,22 @@ class CardScrollView extends StatelessWidget {
           Container(
             color: const Color.fromARGB(0xff, 0xf0, 0xf0, 0xf0),
           ),
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 4,
-                ),
-                ...children.map(
-                  (e) => Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: e,
-                    ),
+          ListView.builder(
+            itemCount: children.length + 1 + ((bottomPadding != null) ? 1 : 0),
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return const SizedBox(height: 4);
+              } else if (index - 1 < children.length) {
+                return Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: children[index - 1],
                   ),
-                ),
-                if (bottomPadding != null)
-                  SizedBox(
-                    height: bottomPadding,
-                  ),
-              ],
-            ),
+                );
+              } else {
+                return SizedBox(height: bottomPadding!);
+              }
+            },
           ),
         ],
       ),
