@@ -144,19 +144,6 @@ class ChildForm extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: FormBuilderTextField(
-                    name: 'phoneNumber',
-                    decoration: InputDecoration(
-                      labelText: context.t('Phone number'),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                    ),
-                    autocorrect: false,
-                    textCapitalization: TextCapitalization.words,
-                    keyboardType: TextInputType.phone,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: FormBuilderTextField(
                     minLines: 2,
                     maxLines: 2,
                     name: 'address',
@@ -165,6 +152,19 @@ class ChildForm extends StatelessWidget {
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                     ),
                     textCapitalization: TextCapitalization.words,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: FormBuilderTextField(
+                    name: 'phoneNumber',
+                    decoration: InputDecoration(
+                      labelText: context.t('Phone number'),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                    ),
+                    autocorrect: false,
+                    textCapitalization: TextCapitalization.words,
+                    keyboardType: TextInputType.phone,
                   ),
                 ),
               ],
