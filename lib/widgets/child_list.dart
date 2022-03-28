@@ -40,6 +40,7 @@ class ChildList extends StatelessWidget {
             ),
             Text(
               _pendingTotal.toStringAsFixed(2),
+              key: const ValueKey("pending_total"),
               style: const TextStyle(
                 inherit: true,
                 fontWeight: FontWeight.bold,
