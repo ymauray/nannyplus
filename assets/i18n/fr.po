@@ -251,6 +251,15 @@ msgstr "Banque : {0}"
 msgid "IBAN : {0}"
 msgstr "IBAN : {0}"
 
+msgid "Since this is the first time you run this app, we inserted some sample data."
+msgstr "Comme c'est la première fois que vous utilisez cette application, nous avons inséré quelques données d'exemple."
+
+msgid "Thanks for using Nanny+ !"
+msgstr "Merci d'utiliser Nanny+ !"
+
+msgid "Close"
+msgstr "Fermer"
+
 # Legacy messages
 
 # msgid "Settings"

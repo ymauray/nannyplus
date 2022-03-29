@@ -27,6 +27,13 @@ class DatabaseUtil {
     _database = null;
   }
 
+  static Future<void> clear() async {
+    await _database?.delete('children');
+    await _database?.delete('prices');
+    await _database?.delete('services');
+    await _database?.delete('invoices');
+  }
+
   static Future<sqlite.Database> get instance async {
     if (_database != null) return _database!;
 

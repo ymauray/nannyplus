@@ -5,6 +5,7 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 import '../cubit/child_list_cubit.dart';
 import '../data/model/child.dart';
 import '../forms/child_form.dart';
+import '../utils/prefs_util.dart';
 import '../widgets/child_list.dart';
 import '../widgets/floating_action_stack.dart';
 import '../widgets/loading_indicator.dart';
@@ -22,7 +23,14 @@ class ChildListView extends StatelessWidget {
     return AppView(
       title: const Text("Nanny+"),
       actions: [
-        BlocBuilder<ChildListCubit, ChildListState>(
+        BlocConsumer<ChildListCubit, ChildListState>(
+          listener: (context, state) async {
+            if (state is ChildListLoaded) {
+              if (state.showOnboarding) {
+                await _showOnboardingDialog(context);
+              }
+            }
+          },
           builder: (context, state) {
             return Padding(
               padding: const EdgeInsets.only(right: 16.0),
@@ -84,6 +92,47 @@ class ChildListView extends StatelessWidget {
           }
         },
       ),
+    );
+  }
+
+  Future<void> _showOnboardingDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(context.t('Welcome !')),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                context.t(
+                  "Since this is the first time you run this app, we inserted some sample data.",
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Text(
+                  context.t(
+                    "Thanks for using Nanny+ !",
+                  ),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              child: Text(context.t('Close')),
+              onPressed: () async {
+                var prefs = await PrefsUtil.getInstance();
+                prefs.showOnboarding = false;
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

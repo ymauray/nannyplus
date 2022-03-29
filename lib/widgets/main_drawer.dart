@@ -20,6 +20,7 @@ import '../data/model/service.dart';
 import '../data/model/price.dart';
 import '../data/services_repository.dart';
 import '../data/prices_repository.dart';
+import '../utils/prefs_util.dart';
 import '../views/price_list_view.dart';
 import '../views/privacy_settings_view.dart';
 import '../views/settings_view.dart';
@@ -138,7 +139,6 @@ class MainDrawer extends StatelessWidget {
                 leading: const Icon(Icons.delete),
                 onTap: () async {
                   await DatabaseUtil.deleteDatabase();
-                  //var db = await DatabaseUtil.instance;
                   (await SharedPreferences.getInstance()).clear();
                   await context.read<ChildListCubit>().loadChildList();
                   Navigator.of(context).pop();
@@ -220,6 +220,16 @@ class MainDrawer extends StatelessWidget {
 
   Future<void> importData(bool anonymize) async {
     await DatabaseUtil.deleteDatabase();
+
+    /* This will create create the database and insert the sample data. */
+    await DatabaseUtil.instance;
+
+    /* Now we can remove the sample date */
+    await DatabaseUtil.clear();
+
+    /* We also clear the showOnboarding flag */
+    (await PrefsUtil.getInstance()).showOnboarding = false;
+
     var pricesRepository = const PricesRepository();
 
     pricesRepository.create(semaine);

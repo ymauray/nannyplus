@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:nannyplus/data/children_repository.dart';
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/data/services_repository.dart';
+import 'package:nannyplus/utils/prefs_util.dart';
 
 part 'child_list_state.dart';
 
@@ -20,12 +21,14 @@ class ChildListCubit extends Cubit<ChildListState> {
       final pendingTotal = await _servicesRepository.getPendingTotal();
       final pendingTotalPerChild =
           await _servicesRepository.getPendingTotalPerChild();
+
       emit(
         ChildListLoaded(
           childList,
           pendingTotal,
           pendingTotalPerChild,
           showArchived: state.showArchivedItems,
+          showOnboarding: (await PrefsUtil.getInstance()).showOnboarding,
         ),
       );
     } on Exception catch (e) {

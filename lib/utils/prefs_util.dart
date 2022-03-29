@@ -10,6 +10,7 @@ class PrefsUtil {
   static const String keyConditions = 'conditions';
   static const String keyBankDetails = 'bankDetails';
   static const String keyAddress = 'address';
+  static const String keyShowOnboarding = 'showOnboarding';
 
   static PrefsUtil? _instance;
 
@@ -56,4 +57,7 @@ class PrefsUtil {
 
   String get address => _prefs?.getString(keyAddress) ?? "";
   set address(String value) => _prefs?.setString(keyAddress, value);
+
+  bool get showOnboarding => _prefs?.getBool(keyShowOnboarding) ?? true;
+  set showOnboarding(bool value) => _prefs?.setBool('showOnboarding', value);
 }
