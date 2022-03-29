@@ -85,7 +85,7 @@ class NannyPlusApp extends StatelessWidget {
                 fillColor: const Color.fromARGB(255, 236, 246, 250),
               ),
         ),
-        supportedLocales: const [Locale('fr')],
+        supportedLocales: const [Locale('en'), Locale('fr')],
         localizationsDelegates: [
           GettextLocalizationsDelegate(defaultLanguage: 'fr'),
           ...GlobalMaterialLocalizations.delegates,
