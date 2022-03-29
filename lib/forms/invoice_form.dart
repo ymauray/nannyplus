@@ -67,16 +67,17 @@ class _InvoiceForm extends StatelessWidget {
             Row(children: [Expanded(child: Text(child.displayName))]),
           ],
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              context.t("Combined with"),
-              style: Theme.of(context).textTheme.caption,
-            ),
-            ...children.map((child) => _Child(child)),
-          ],
-        ),
+        if (children.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                context.t("Combined with"),
+                style: Theme.of(context).textTheme.caption,
+              ),
+              ...children.map((child) => _Child(child)),
+            ],
+          ),
       ]),
     );
   }

@@ -138,4 +138,18 @@ class ServicesRepository {
 
     return map;
   }
+
+  Future<void> unlinkInvoice(int invoiceId) async {
+    var db = await DatabaseUtil.instance;
+
+    await db.update(
+      'services',
+      {
+        'invoiceId': null,
+        'invoiced': 0,
+      },
+      where: 'invoiceId = ?',
+      whereArgs: [invoiceId],
+    );
+  }
 }

@@ -48,6 +48,15 @@ class InvoicesRepository {
     return await read(invoice.id!);
   }
 
+  Future<void> delete(int invoiceId) async {
+    var db = await DatabaseUtil.instance;
+    await db.delete(
+      'invoices',
+      where: 'id = ?',
+      whereArgs: [invoiceId],
+    );
+  }
+
   Future<int> getNextNumber() async {
     var db = await DatabaseUtil.instance;
     var rows = await db.query('invoices', orderBy: 'number desc');

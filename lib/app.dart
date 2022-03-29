@@ -50,6 +50,7 @@ class NannyPlusApp extends StatelessWidget {
         BlocProvider<InvoiceListCubit>(
           create: (context) => InvoiceListCubit(
             invoicesRepository,
+            servicesRepository,
           ),
         ),
         BlocProvider<ChildInfoCubit>(
