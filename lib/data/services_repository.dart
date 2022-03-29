@@ -77,6 +77,15 @@ class ServicesRepository {
     return rows.map((row) => Service.fromMap(row)).toList();
   }
 
+  Future<void> deleteForChildAndDate(int childId, String date) async {
+    var db = await DatabaseUtil.instance;
+    db.delete(
+      'services',
+      where: 'childId = ? AND date = ?',
+      whereArgs: [childId, date],
+    );
+  }
+
   Future<List<Service>> getServicesForChildAndDate(
     int childId,
     DateTime date,

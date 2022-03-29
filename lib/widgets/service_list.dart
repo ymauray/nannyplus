@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
+import 'package:nannyplus/utils/snack_bar_util.dart';
 
 import '../cubit/service_list_cubit.dart';
 import '../data/model/child.dart';
@@ -96,12 +97,36 @@ class _GroupCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              DateFormat.yMMMMd(I18nUtils.locale).format(group.key),
-              style: const TextStyle(
-                inherit: true,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    DateFormat.yMMMMd(I18nUtils.locale).format(group.key),
+                    style: const TextStyle(
+                      inherit: true,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () async {
+                    var delete = await _showConfirmationDialog(context);
+                    if (delete ?? false) {
+                      context
+                          .read<ServiceListCubit>()
+                          .deleteDay(child.id!, group.value[0].date);
+                      ScaffoldMessenger.of(context).success(
+                        context.t("Removed successfully"),
+                      );
+                    }
+                  },
+                  visualDensity: VisualDensity.compact,
+                  icon: const Icon(
+                    Icons.close,
+                    color: Colors.red,
+                  ),
+                ),
+              ],
             ),
             const Divider(),
             ...group.value.map(
@@ -149,5 +174,33 @@ class _GroupCard extends StatelessWidget {
         ),
       );
     }
+  }
+
+  Future<bool?> _showConfirmationDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(context.t('Delete')),
+          content: Text(
+              context.t('Are you sure you want to delete this entire day ?')),
+          actions: [
+            TextButton(
+              child: Text(context.t('Yes')),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+            TextButton(
+              child: Text(context.t('No')),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

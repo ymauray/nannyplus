@@ -77,6 +77,9 @@ msgstr "Ajouter une prestation"
 msgid "Edit service"
 msgstr "Modifier une prestation"
 
+msgid "Are you sure you want to delete this entire day ?"
+msgstr "Êtes-vous sûr de vouloir supprimer cette entière journée ?"
+
 msgid "Date"
 msgstr "Date"
 

@@ -72,4 +72,13 @@ class ServiceListCubit extends Cubit<ServiceListState> {
       emit(ServiceListError(e.toString()));
     }
   }
+
+  Future<void> deleteDay(int childId, String date) async {
+    try {
+      await servicesRepository.deleteForChildAndDate(childId, date);
+      loadServices(childId);
+    } catch (e) {
+      emit(ServiceListError(e.toString()));
+    }
+  }
 }
