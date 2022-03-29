@@ -15,14 +15,15 @@ class PrefsUtil {
 
   SharedPreferences? _prefs;
 
-  static PrefsUtil getInstance() {
-    _instance ??= PrefsUtil._internal();
+  static Future<PrefsUtil> getInstance() async {
+    if (_instance != null) return _instance!;
+    _instance = PrefsUtil().._prefs = await SharedPreferences.getInstance();
 
     return _instance!;
   }
 
-  PrefsUtil._internal() {
-    SharedPreferences.getInstance().then((value) => _prefs = value);
+  Future<void> clear() async {
+    await _prefs?.clear();
   }
 
   String get line1 => _prefs?.getString(keyLine1) ?? "";

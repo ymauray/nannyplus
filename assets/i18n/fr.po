@@ -230,6 +230,24 @@ msgstr "Créer un nouveau tarif"
 msgid "Label"
 msgstr "Libellé"
 
+msgid "Example {0}"
+msgstr "Exemple {0}"
+
+msgid "Peanuts"
+msgstr "Cacahuètes"
+
+msgid "Your name"
+msgstr "Votre nom"
+
+msgid "Payment within 10 day via bank transfert"
+msgstr "Paiement sous 10 jours par virement bancaire"
+
+msgid "Bank : {0}"
+msgstr "Banque : {0}"
+
+msgid "IBAN : {0}"
+msgstr "IBAN : {0}"
+
 # Legacy messages
 
 # msgid "Settings"

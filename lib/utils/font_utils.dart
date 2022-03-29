@@ -29,5 +29,5 @@ class FontUtils {
     FontItem("STCaiyun", "assets/fonts/STCaiyun.ttf"),
   ];
 
-  static FontItem get defaultFontItem => fontItems[0];
+  static FontItem get defaultFontItem => fontItems[4];
 }

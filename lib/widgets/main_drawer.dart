@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:nannyplus/cubit/child_list_cubit.dart';
 import 'package:nannyplus/utils/encode_utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/children_repository.dart';
 import '../data/invoices_repository.dart';
@@ -126,6 +127,21 @@ class MainDrawer extends StatelessWidget {
                   await importData(true);
                   Navigator.of(context).pop();
                   context.read<ChildListCubit>().loadChildList();
+                },
+              ),
+            if (kDebugMode)
+              ListTile(
+                title: Text(
+                  context.t('Reset database'),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                leading: const Icon(Icons.delete),
+                onTap: () async {
+                  await DatabaseUtil.deleteDatabase();
+                  //var db = await DatabaseUtil.instance;
+                  (await SharedPreferences.getInstance()).clear();
+                  await context.read<ChildListCubit>().loadChildList();
+                  Navigator.of(context).pop();
                 },
               ),
           ],

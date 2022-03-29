@@ -11,59 +11,59 @@ class SettingsCubit extends Cubit<SettingsState> {
   SettingsCubit() : super(const SettingsInitial());
 
   Future<void> loadSettings() async {
+    var prefs = await PrefsUtil.getInstance();
     var settingsLoaded = SettingsLoaded(
-      PrefsUtil.getInstance().line1,
-      PrefsUtil.getInstance().line1FontFamily,
-      PrefsUtil.getInstance().line1FontAsset,
-      PrefsUtil.getInstance().line2,
-      PrefsUtil.getInstance().line2FontFamily,
-      PrefsUtil.getInstance().line2FontAsset,
-      PrefsUtil.getInstance().conditions,
-      PrefsUtil.getInstance().bankDetails,
-      PrefsUtil.getInstance().address,
+      prefs.line1,
+      prefs.line1FontFamily,
+      prefs.line1FontAsset,
+      prefs.line2,
+      prefs.line2FontFamily,
+      prefs.line2FontAsset,
+      prefs.conditions,
+      prefs.bankDetails,
+      prefs.address,
     );
     emit(settingsLoaded);
   }
 
   Future<void> saveSettings(Map<String, dynamic> values) async {
-    PrefsUtil.getInstance().line1 = values['line1'] ?? '';
-    PrefsUtil.getInstance().line1FontFamily =
-        (values['line1Font'] as FontItem?)?.family ??
-            FontUtils.defaultFontItem.family;
-    PrefsUtil.getInstance().line1FontAsset =
-        (values['line1Font'] as FontItem?)?.asset ??
-            FontUtils.defaultFontItem.asset;
-    PrefsUtil.getInstance().line2 = values['line2'] ?? '';
-    PrefsUtil.getInstance().line2FontFamily =
-        (values['line2Font'] as FontItem?)?.family ??
-            FontUtils.defaultFontItem.family;
-    PrefsUtil.getInstance().line2FontAsset =
-        (values['line2Font'] as FontItem?)?.asset ??
-            FontUtils.defaultFontItem.asset;
-    PrefsUtil.getInstance().conditions = values['conditions'] ?? '';
-    PrefsUtil.getInstance().bankDetails = values['bankDetails'] ?? '';
-    PrefsUtil.getInstance().address = values['address'] ?? '';
+    var prefs = await PrefsUtil.getInstance();
+    prefs.line1 = values['line1'] ?? '';
+    prefs.line1FontFamily = (values['line1Font'] as FontItem?)?.family ??
+        FontUtils.defaultFontItem.family;
+    prefs.line1FontAsset = (values['line1Font'] as FontItem?)?.asset ??
+        FontUtils.defaultFontItem.asset;
+    prefs.line2 = values['line2'] ?? '';
+    prefs.line2FontFamily = (values['line2Font'] as FontItem?)?.family ??
+        FontUtils.defaultFontItem.family;
+    prefs.line2FontAsset = (values['line2Font'] as FontItem?)?.asset ??
+        FontUtils.defaultFontItem.asset;
+    prefs.conditions = values['conditions'] ?? '';
+    prefs.bankDetails = values['bankDetails'] ?? '';
+    prefs.address = values['address'] ?? '';
     loadSettings();
   }
 
   Future<void> setLine1Font(FontItem? value) async {
+    var prefs = await PrefsUtil.getInstance();
     if (value == null) {
-      PrefsUtil.getInstance().line1FontFamily = "";
-      PrefsUtil.getInstance().line1FontAsset = "";
+      prefs.line1FontFamily = "";
+      prefs.line1FontAsset = "";
     } else {
-      PrefsUtil.getInstance().line1FontFamily = value.family;
-      PrefsUtil.getInstance().line1FontAsset = value.asset;
+      prefs.line1FontFamily = value.family;
+      prefs.line1FontAsset = value.asset;
     }
     loadSettings();
   }
 
   Future<void> setLine2Font(FontItem? value) async {
+    var prefs = await PrefsUtil.getInstance();
     if (value == null) {
-      PrefsUtil.getInstance().line2FontFamily = "";
-      PrefsUtil.getInstance().line2FontAsset = "";
+      prefs.line2FontFamily = "";
+      prefs.line2FontAsset = "";
     } else {
-      PrefsUtil.getInstance().line2FontFamily = value.family;
-      PrefsUtil.getInstance().line2FontAsset = value.asset;
+      prefs.line2FontFamily = value.family;
+      prefs.line2FontAsset = value.asset;
     }
     loadSettings();
   }

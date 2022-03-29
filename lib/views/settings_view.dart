@@ -12,7 +12,8 @@ class SettingsView extends StatelessWidget {
     context.read<SettingsCubit>().loadSettings();
 
     return BlocBuilder<SettingsCubit, SettingsState>(
-      buildWhen: (previous, current) => false,
+      buildWhen: (previous, current) =>
+          previous is SettingsInitial && current is SettingsLoaded,
       builder: (context, state) {
         return state is SettingsLoaded
             ? SettingsForm(state)

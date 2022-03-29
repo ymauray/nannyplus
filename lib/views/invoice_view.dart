@@ -41,22 +41,22 @@ class InvoiceView extends StatelessWidget {
         body: state is InvoiceViewLoaded
             ? FutureBuilder<pw.Document>(
                 future: (() async {
-                  var line1FontAsset = PrefsUtil.getInstance().line1FontAsset;
+                  var prefs = await PrefsUtil.getInstance();
+                  var line1FontAsset = prefs.line1FontAsset;
                   final byteData1 = line1FontAsset.isNotEmpty
                       ? await rootBundle.load(line1FontAsset)
                       : null;
                   final line1Font =
                       byteData1 != null ? pw.Font.ttf(byteData1) : null;
 
-                  var line2FontAsset = PrefsUtil.getInstance().line2FontAsset;
+                  var line2FontAsset = prefs.line2FontAsset;
                   final byteData2 = line2FontAsset.isNotEmpty
-                      ? await rootBundle
-                          .load(PrefsUtil.getInstance().line2FontAsset)
+                      ? await rootBundle.load(prefs.line2FontAsset)
                       : null;
                   final line2Font =
                       byteData2 != null ? pw.Font.ttf(byteData2) : null;
 
-                  var conditions = PrefsUtil.getInstance().conditions;
+                  var conditions = prefs.conditions;
 
                   var servicesRepository = const ServicesRepository();
                   var services = await servicesRepository
@@ -208,8 +208,8 @@ class InvoiceView extends StatelessWidget {
                                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                                 children: [
                                   invoiceHeader(
-                                    PrefsUtil.getInstance().line1,
-                                    PrefsUtil.getInstance().line2,
+                                    prefs.line1,
+                                    prefs.line2,
                                     line1Font,
                                     line2Font,
                                   ),
@@ -230,16 +230,19 @@ class InvoiceView extends StatelessWidget {
                                                 crossAxisAlignment:
                                                     pw.CrossAxisAlignment.start,
                                                 children: [
-                                                  blueText(
-                                                    gettext.t(
-                                                      'Bank details',
-                                                      null,
+                                                  if (prefs
+                                                      .bankDetails.isNotEmpty)
+                                                    blueText(
+                                                      gettext.t(
+                                                        'Bank details',
+                                                        null,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  pw.Text(
-                                                    PrefsUtil.getInstance()
-                                                        .bankDetails,
-                                                  ),
+                                                  if (prefs
+                                                      .bankDetails.isNotEmpty)
+                                                    pw.Text(
+                                                      prefs.bankDetails,
+                                                    ),
                                                 ],
                                               ),
                                             ),
@@ -248,16 +251,17 @@ class InvoiceView extends StatelessWidget {
                                                 crossAxisAlignment:
                                                     pw.CrossAxisAlignment.end,
                                                 children: [
-                                                  blueText(gettext.t(
-                                                    'Address',
-                                                    null,
-                                                  )),
-                                                  pw.Text(
-                                                    PrefsUtil.getInstance()
-                                                        .address,
-                                                    textAlign:
-                                                        pw.TextAlign.right,
-                                                  ),
+                                                  if (prefs.address.isNotEmpty)
+                                                    blueText(gettext.t(
+                                                      'Address',
+                                                      null,
+                                                    )),
+                                                  if (prefs.address.isNotEmpty)
+                                                    pw.Text(
+                                                      prefs.address,
+                                                      textAlign:
+                                                          pw.TextAlign.right,
+                                                    ),
                                                 ],
                                               ),
                                             ),
@@ -328,12 +332,7 @@ class InvoiceView extends StatelessWidget {
         pw.Row(
           mainAxisAlignment: pw.MainAxisAlignment.end,
           children: [
-            pw.Text(
-              conditions.isNotEmpty ? conditions : 'Payment conditions not set',
-              style: const pw.TextStyle(
-                fontSize: 12,
-              ),
-            ),
+            pw.Text(conditions, style: const pw.TextStyle(fontSize: 12)),
           ],
         ),
         pw.SizedBox(height: 42),

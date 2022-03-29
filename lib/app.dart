@@ -17,7 +17,6 @@ import 'data/children_repository.dart';
 import 'data/invoices_repository.dart';
 import 'data/prices_repository.dart';
 import 'data/services_repository.dart';
-import 'utils/prefs_util.dart';
 import 'views/child_list_view.dart';
 
 class NannyPlusApp extends StatelessWidget {
@@ -29,9 +28,6 @@ class NannyPlusApp extends StatelessWidget {
     var pricesRepository = const PricesRepository();
     var servicesRepository = const ServicesRepository();
     var invoicesRepository = const InvoicesRepository();
-
-    // Warmup prefs
-    PrefsUtil.getInstance();
 
     return MultiProvider(
       providers: [
