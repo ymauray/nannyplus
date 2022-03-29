@@ -30,7 +30,7 @@ msgid "Settings"
 msgstr "Paramètres"
 
 msgid "Price list"
-msgstr "Tarifs"
+msgstr "Prestations"
 
 msgid "Hourly price"
 msgstr "Tarif horaire"
