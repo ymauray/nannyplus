@@ -184,7 +184,8 @@ class _GroupCard extends StatelessWidget {
         return AlertDialog(
           title: Text(context.t('Delete')),
           content: Text(
-              context.t('Are you sure you want to delete this entire day ?')),
+            context.t('Are you sure you want to delete this entire day ?'),
+          ),
           actions: [
             TextButton(
               child: Text(context.t('Yes')),
