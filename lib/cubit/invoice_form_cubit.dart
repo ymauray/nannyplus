@@ -53,7 +53,7 @@ class InvoiceFormCubit extends Cubit<InvoiceFormState> {
     ));
   }
 
-  Future<void> createInvoice() async {
+  Future<bool> createInvoice() async {
     final child = (state as InvoiceFormLoaded).child;
     final children = [child] +
         (state as InvoiceFormLoaded)
@@ -62,32 +62,42 @@ class InvoiceFormCubit extends Cubit<InvoiceFormState> {
             .map((formChild) => formChild.child)
             .toList();
 
-    var invoiceNumber = await invoicesRepository.getNextNumber();
+    var services = await Future.wait(
+      children.map((child) => servicesRepository.getServices(child)),
+    );
 
-    var invoice = await invoicesRepository.create(Invoice(
-      number: invoiceNumber,
-      childId: child.id!,
-      date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
-      total: 0.0,
-      parentsName: child.parentsName!,
-      address: child.address!,
-    ));
+    if (services.expand((list) => list).isEmpty) {
+      return false;
+    } else {
+      var invoiceNumber = await invoicesRepository.getNextNumber();
 
-    var total = 0.0;
+      var invoice = await invoicesRepository.create(Invoice(
+        number: invoiceNumber,
+        childId: child.id!,
+        date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        total: 0.0,
+        parentsName: child.parentsName!,
+        address: child.address!,
+      ));
 
-    for (var child in children) {
-      var services = await servicesRepository.getServices(child);
-      for (var service in services) {
-        await servicesRepository.update(
-          service.copyWith(
-            invoiced: 1,
-            invoiceId: invoice.id,
-          ),
-        );
-        total += service.total;
+      var total = 0.0;
+
+      for (var child in children) {
+        var services = await servicesRepository.getServices(child);
+        for (var service in services) {
+          await servicesRepository.update(
+            service.copyWith(
+              invoiced: 1,
+              invoiceId: invoice.id,
+            ),
+          );
+          total += service.total;
+        }
       }
-    }
 
-    await invoicesRepository.update(invoice.copyWith(total: total));
+      await invoicesRepository.update(invoice.copyWith(total: total));
+
+      return true;
+    }
   }
 }
