@@ -45,6 +45,8 @@ class ChildrenRepository {
 
   Future<void> delete(Child child) async {
     var db = await DatabaseUtil.instance;
+    await db.delete('invoices', where: 'childId = ?', whereArgs: [child.id]);
+    await db.delete('services', where: 'childId = ?', whereArgs: [child.id]);
     await db.delete('children', where: 'id = ?', whereArgs: [child.id]);
   }
 }
