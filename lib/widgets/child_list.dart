@@ -119,7 +119,7 @@ class _ChildCard extends StatelessWidget {
           : Text(
               context.t("No known allergies"),
             ),
-      trailing: Text(
+      expandGestureDetector: false,
       trailing: Row(
         children: [
           Text(

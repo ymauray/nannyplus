@@ -7,6 +7,7 @@ class CardTile extends StatelessWidget {
     this.leading,
     this.trailing,
     this.onTap,
+    this.expandGestureDetector = true,
     Key? key,
   }) : super(key: key);
 
@@ -15,6 +16,7 @@ class CardTile extends StatelessWidget {
   final Widget? leading;
   final Widget? trailing;
   final VoidCallback? onTap;
+  final bool expandGestureDetector;
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +37,13 @@ class CardTile extends StatelessWidget {
               ),
             ),
             if (trailing != null)
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                child: trailing!,
-                onTap: onTap,
-              ),
+              expandGestureDetector
+                  ? GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      child: trailing!,
+                      onTap: onTap,
+                    )
+                  : trailing!,
           ],
         ),
       ],
