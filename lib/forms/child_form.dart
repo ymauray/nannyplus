@@ -69,6 +69,10 @@ class ChildForm extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: FormBuilderTextField(
+                          validator: ((value) =>
+                              (value == null) || (value.isEmpty)
+                                  ? context.t('Please entrer the first name')
+                                  : null),
                           name: 'firstName',
                           decoration: InputDecoration(
                             labelText: context.t('First name'),
@@ -88,6 +92,10 @@ class ChildForm extends StatelessWidget {
                         flex: 1,
                         child: FormBuilderTextField(
                           name: 'lastName',
+                          validator: (value) =>
+                              (value == null) || (value.isEmpty)
+                                  ? context.t('Please entrer the last name')
+                                  : null,
                           decoration: InputDecoration(
                             labelText: context.t('Last name'),
                             floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -132,6 +140,9 @@ class ChildForm extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: FormBuilderTextField(
+                    validator: (value) => (value == null) || (value.isEmpty)
+                        ? context.t('Please enter the parents name')
+                        : null,
                     name: 'parentsName',
                     decoration: InputDecoration(
                       labelText: context.t('Parents name'),
@@ -144,6 +155,9 @@ class ChildForm extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: FormBuilderTextField(
+                    validator: ((value) => (value == null) || (value.isEmpty)
+                        ? context.t('Please enter the parents address')
+                        : null),
                     minLines: 2,
                     maxLines: 2,
                     name: 'address',
