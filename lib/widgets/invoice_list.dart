@@ -71,27 +71,23 @@ class _InvoiceCard extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(child: Text(invoice.date.formatDate())),
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Text(invoice.total.toStringAsFixed(2)),
+          Expanded(
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              child: Text(invoice.date.formatDate()),
+              onTap: () => openPDF(context),
+            ),
+          ),
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Text(invoice.total.toStringAsFixed(2)),
+            ),
+            onTap: () => openPDF(context),
           ),
           Row(
             children: [
-              IconButton(
-                visualDensity: VisualDensity.compact,
-                icon: const Icon(Icons.file_download, color: Colors.grey),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => InvoiceView(
-                        invoice,
-                        GettextLocalizations.of(context),
-                      ),
-                    ),
-                  );
-                },
-              ),
               IconButton(
                 visualDensity: VisualDensity.compact,
                 icon: const Icon(
@@ -113,6 +109,17 @@ class _InvoiceCard extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  void openPDF(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => InvoiceView(
+          invoice,
+          GettextLocalizations.of(context),
+        ),
       ),
     );
   }
