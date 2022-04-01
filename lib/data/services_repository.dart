@@ -94,8 +94,8 @@ class ServicesRepository {
 
     var rows = await db.query(
       'services',
-      where: 'childId = ? AND date = ?',
-      whereArgs: [childId, DateFormat('yyyy-MM-dd').format(date)],
+      where: 'childId = ? AND date = ? AND invoiced = ?',
+      whereArgs: [childId, DateFormat('yyyy-MM-dd').format(date), 0],
     );
 
     return rows.map((row) => Service.fromMap(row)).toList();
