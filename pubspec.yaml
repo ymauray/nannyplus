@@ -41,7 +41,7 @@ dependencies:
   font_awesome_flutter: ^9.2.0
   sqflite: ^2.0.0+4
   logger: ^1.1.0
-  gettext_i18n: ^1.0.2
+  gettext_i18n: ^1.0.5
   shared_preferences: ^2.0.9
   url_launcher: ^6.0.17
   http: ^0.13.4
