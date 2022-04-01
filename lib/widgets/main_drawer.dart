@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:nannyplus/cubit/child_list_cubit.dart';
 import 'package:nannyplus/utils/encode_utils.dart';
+import 'package:nannyplus/views/backup_resore_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/children_repository.dart';
@@ -71,6 +72,25 @@ class MainDrawer extends StatelessWidget {
                   MaterialPageRoute(
                     fullscreenDialog: true,
                     builder: (context) => const SettingsView(),
+                  ),
+                );
+              },
+            ),
+            const Divider(),
+            ListTile(
+              title: Text(
+                context.t('Backup') + ' / ' + context.t('Restore'),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              leading: const Icon(Icons.backup),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    fullscreenDialog: true,
+                    builder: (context) => const BackupRestoreView(),
                   ),
                 );
               },

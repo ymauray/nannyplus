@@ -293,6 +293,21 @@ msgstr "Merci d'utiliser Nanny+ !"
 msgid "Close"
 msgstr "Fermer"
 
+msgid "Backup"
+msgstr "Sauvegarder"
+
+msgid "Restore"
+msgstr "Restaurer"
+
+msgid "Select a backup file"
+msgstr "Sélectionner une sauvegarde"
+
+msgid "Database successfully restored"
+msgstr "Base de données restaurée avec succès"
+
+msgid "Error restoring database"
+msgstr "Erreur lors de la restauration de la base de données"
+
 # Legacy messages
 
 # msgid "Settings"

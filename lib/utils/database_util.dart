@@ -21,10 +21,14 @@ class DatabaseUtil {
   static Future<String> get _databasePath async =>
       join(await sqlite.getDatabasesPath(), 'childcare.db');
 
-  static Future<void> deleteDatabase() async {
-    await sqlite.deleteDatabase(await _databasePath);
-    _database?.close();
+  static closeDatabase() async {
+    await _database?.close();
     _database = null;
+  }
+
+  static Future<void> deleteDatabase() async {
+    await closeDatabase();
+    await sqlite.deleteDatabase(await _databasePath);
   }
 
   static Future<void> clear() async {
@@ -33,6 +37,8 @@ class DatabaseUtil {
     await _database?.delete('services');
     await _database?.delete('invoices');
   }
+
+  static Future<String> get databasePath async => await _databasePath;
 
   static Future<sqlite.Database> get instance async {
     if (_database != null) return _database!;

@@ -53,5 +53,12 @@
         <key>NSMicrophoneUsageDescription</key>
         <string>Allow access to microphone</string>        
         -->
+        <key>UIBackgroundModes</key>
+        <array>
+            <string>Pour télécharger une sauvegarde à restorer.</string>
+            <string>Pour télécharger une sauvegarde à restorer.</string>
+        </array>
+        <key>LSSupportsOpeningDocumentsInPlace</key>
+        <true/>
 	</dict>
 </plist>
