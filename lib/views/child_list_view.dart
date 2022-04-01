@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:nannyplus/utils/device_utils.dart';
 
 import '../cubit/child_list_cubit.dart';
 import '../data/model/child.dart';
@@ -19,6 +21,10 @@ class ChildListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<ChildListCubit>().loadChildList();
+
+    if (context.useMobileLayout) {
+      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    }
 
     return AppView(
       title: const Text("Nanny+"),

@@ -26,11 +26,20 @@ class BackupRestoreView extends StatelessWidget {
           CardTile(
             title: Text(context.t('Restore')),
             onTap: () async {
-              await _restore(context);
-              Navigator.of(context).popUntil((route) => false);
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const ChildListView()),
-              );
+              var success = await _restore(context);
+              if (success) {
+                ScaffoldMessenger.of(context).success(
+                  context.t('Database successfully restored'),
+                );
+                Navigator.of(context).popUntil((route) => false);
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const ChildListView()),
+                );
+              } else {
+                ScaffoldMessenger.of(context).failure(
+                  context.t('Error restoring database'),
+                );
+              }
             },
           ),
         ],
@@ -43,7 +52,7 @@ class BackupRestoreView extends StatelessWidget {
     await Share.shareFiles([await DatabaseUtil.databasePath]);
   }
 
-  Future<void> _restore(BuildContext context) async {
+  Future<bool> _restore(BuildContext context) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       dialogTitle: context.t('Select a backup file'),
       type: FileType.any,
@@ -56,16 +65,11 @@ class BackupRestoreView extends StatelessWidget {
         XFile file = XFile.fromData(fileBytes);
         await DatabaseUtil.closeDatabase();
         await file.saveTo(await DatabaseUtil.databasePath);
-        ScaffoldMessenger.of(context).success(
-          context.t('Database successfully restored'),
-        );
 
-        return;
+        return true;
       }
     }
 
-    ScaffoldMessenger.of(context).failure(
-      context.t('Error restoring database'),
-    );
+    return false;
   }
 }
