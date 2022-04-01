@@ -55,8 +55,8 @@
         -->
         <key>UIBackgroundModes</key>
         <array>
-            <string>Pour télécharger une sauvegarde à restorer.</string>
-            <string>Pour télécharger une sauvegarde à restorer.</string>
+            <string>fetch</string>
+            <string>remote-notification</string>
         </array>
         <key>LSSupportsOpeningDocumentsInPlace</key>
         <true/>
