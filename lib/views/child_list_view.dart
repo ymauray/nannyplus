@@ -22,6 +22,17 @@ class ChildListView extends StatelessWidget {
 
     return AppView(
       title: const Text("Nanny+"),
+      actions: [
+        BlocListener<ChildListCubit, ChildListState>(
+          listener: (context, state) async {
+            if (state is ChildListLoaded) {
+              if (state.showOnboarding) {
+                await _showOnboardingDialog(context);
+              }
+            }
+          },
+        ),
+      ],
       drawer: const MainDrawer(),
       body: BlocConsumer<ChildListCubit, ChildListState>(
         listener: (context, state) {
