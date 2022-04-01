@@ -46,7 +46,7 @@
 		<key>UIStatusBarHidden</key>
 		<false/>
         <key>NSPhotoLibraryUsageDescription</key>
-        <string>Allow access to photo library</string>
+        <string>Pour sélectionner le logo qui apparaitra sur vos factures.</string>
         <!--
         <key>NSCameraUsageDescription</key>
         <string>Allow access to camera to capture photos</string>

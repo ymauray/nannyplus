@@ -523,6 +523,7 @@ class InvoiceView extends StatelessWidget {
         pw.Row(
           children: [
             pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.Text(
                   title1 ?? 'Title 1 not set',

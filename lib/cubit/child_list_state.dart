@@ -23,7 +23,8 @@ class ChildListLoaded extends ChildListState {
   const ChildListLoaded(
     this.children,
     this.pendingTotal,
-    this.pendingTotalPerChild, {
+    this.pendingTotalPerChild,
+    this.undeletableChildren, {
     this.showArchived = false,
     this.showOnboarding = false,
   });
@@ -31,6 +32,7 @@ class ChildListLoaded extends ChildListState {
   final List<Child> children;
   final double pendingTotal;
   final Map<int, double> pendingTotalPerChild;
+  final List<int> undeletableChildren;
   final bool showArchived;
   final bool showOnboarding;
 
@@ -45,6 +47,7 @@ class ChildListLoaded extends ChildListState {
         listEquals(other.children, children) &&
         other.pendingTotal == pendingTotal &&
         mapEquals(other.pendingTotalPerChild, pendingTotalPerChild) &&
+        listEquals(other.undeletableChildren, undeletableChildren) &&
         other.showArchived == showArchived &&
         other.showOnboarding == showOnboarding;
   }
@@ -54,6 +57,7 @@ class ChildListLoaded extends ChildListState {
     return children.hashCode ^
         pendingTotal.hashCode ^
         pendingTotalPerChild.hashCode ^
+        undeletableChildren.hashCode ^
         showArchived.hashCode ^
         showOnboarding.hashCode;
   }

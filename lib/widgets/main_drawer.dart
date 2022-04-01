@@ -30,33 +30,13 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int _tapCount = 0;
-    Timer? _timer;
-
     return Drawer(
       child: SafeArea(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            GestureDetector(
-              onTap: () async {
-                _tapCount += 1;
-                if (_tapCount == 7) {
-                  await importData(false);
-                  Navigator.of(context).pop();
-                  context.read<ChildListCubit>().loadChildList();
-                }
-                if (_timer != null) {
-                  _timer!.cancel();
-                }
-                _timer = Timer(const Duration(milliseconds: 200), () {
-                  _tapCount = 0;
-                });
-              },
-              child: DrawerHeader(
-                //child: Text('Nanny+'),
-                child: Image.asset('assets/img/banner1500.png'),
-              ),
+            DrawerHeader(
+              child: Image.asset('assets/img/banner1500.png'),
             ),
             ListTile(
               key: const Key('price_list_menu'),

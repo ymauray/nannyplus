@@ -21,12 +21,15 @@ class ChildListCubit extends Cubit<ChildListState> {
       final pendingTotal = await _servicesRepository.getPendingTotal();
       final pendingTotalPerChild =
           await _servicesRepository.getPendingTotalPerChild();
+      final undeletableChildren =
+          await _servicesRepository.getUndeletableChildren();
 
       emit(
         ChildListLoaded(
           childList,
           pendingTotal,
           pendingTotalPerChild,
+          undeletableChildren,
           showArchived: state.showArchivedItems,
           showOnboarding: (await PrefsUtil.getInstance()).showOnboarding,
         ),
@@ -90,11 +93,14 @@ class ChildListCubit extends Cubit<ChildListState> {
         final pendingTotal = await _servicesRepository.getPendingTotal();
         final pendingTotalPerChild =
             await _servicesRepository.getPendingTotalPerChild();
+        final undeletableChildren =
+            await _servicesRepository.getUndeletableChildren();
 
         emit(ChildListLoaded(
           childList,
           pendingTotal,
           pendingTotalPerChild,
+          undeletableChildren,
           showArchived: true,
         ));
       }
@@ -110,11 +116,14 @@ class ChildListCubit extends Cubit<ChildListState> {
         final pendingTotal = await _servicesRepository.getPendingTotal();
         final pendingTotalPerChild =
             await _servicesRepository.getPendingTotalPerChild();
+        final undeletableChildren =
+            await _servicesRepository.getUndeletableChildren();
 
         emit(ChildListLoaded(
           childList,
           pendingTotal,
           pendingTotalPerChild,
+          undeletableChildren,
           showArchived: false,
         ));
       }

@@ -12,15 +12,18 @@ import '../views/tab_view.dart';
 import 'card_scroll_view.dart';
 
 class ChildList extends StatelessWidget {
-  final List<Child> _children;
-  final double _pendingTotal;
-  final Map<int, double> pendingTotalPerChild;
   const ChildList(
     this._children,
     this._pendingTotal,
-    this.pendingTotalPerChild, {
+    this.pendingTotalPerChild,
+    this.undeletableChildren, {
     Key? key,
   }) : super(key: key);
+
+  final List<Child> _children;
+  final double _pendingTotal;
+  final Map<int, double> pendingTotalPerChild;
+  final List<int> undeletableChildren;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +55,7 @@ class ChildList extends StatelessWidget {
           (child) => _ChildCard(
             child: child,
             pendingTotal: pendingTotalPerChild[child.id],
+            isUndeletable: undeletableChildren.contains(child.id),
           ),
         ),
       ],
@@ -63,11 +67,13 @@ class _ChildCard extends StatelessWidget {
   const _ChildCard({
     required this.child,
     required this.pendingTotal,
+    required this.isUndeletable,
     Key? key,
   }) : super(key: key);
 
   final Child child;
   final double? pendingTotal;
+  final bool isUndeletable;
 
   @override
   Widget build(BuildContext context) {
@@ -113,9 +119,64 @@ class _ChildCard extends StatelessWidget {
           : Text(
               context.t("No known allergies"),
             ),
-      trailing: Text(
-        pendingTotal?.toStringAsFixed(2) ?? '0.00',
+      expandGestureDetector: false,
+      trailing: Row(
+        children: [
+          Text(
+            pendingTotal?.toStringAsFixed(2) ?? '0.00',
+          ),
+          IconButton(
+            onPressed: isUndeletable
+                ? () {
+                    ScaffoldMessenger.of(context).failure(
+                      context.t("There are existing services for this child"),
+                    );
+                  }
+                : () async {
+                    var delete = await _showConfirmationDialog(context);
+                    if (delete ?? false) {
+                      context.read<ChildListCubit>().delete(child);
+                      ScaffoldMessenger.of(context).success(
+                        context.t("Removed successfully"),
+                      );
+                    }
+                  },
+            icon: Icon(
+              Icons.close,
+              color: isUndeletable ? Colors.grey : Colors.red,
+            ),
+          ),
+        ],
       ),
+    );
+  }
+
+  Future<bool?> _showConfirmationDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(context.t('Delete')),
+          content: Text(
+            context.t('Are you sure you want to delete this child\'s folder ?'),
+          ),
+          actions: [
+            TextButton(
+              child: Text(context.t('Yes')),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+            TextButton(
+              child: Text(context.t('No')),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

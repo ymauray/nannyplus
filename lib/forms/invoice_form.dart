@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/cubit/invoice_form_cubit.dart';
+import 'package:nannyplus/utils/snack_bar_util.dart';
 import 'package:nannyplus/views/app_view.dart';
 import 'package:nannyplus/widgets/card_scroll_view.dart';
 import 'package:nannyplus/widgets/loading_indicator.dart';
@@ -51,8 +52,13 @@ class _InvoiceForm extends StatelessWidget {
             color: Colors.white,
           ),
           onPressed: () async {
-            await context.read<InvoiceFormCubit>().createInvoice();
-            Navigator.of(context).pop();
+            var ok = await context.read<InvoiceFormCubit>().createInvoice();
+            if (ok) {
+              Navigator.of(context).pop();
+            } else {
+              ScaffoldMessenger.of(context)
+                  .failure(context.t("There is no service to invoice"));
+            }
           },
         ),
       ],

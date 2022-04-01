@@ -22,43 +22,6 @@ class ChildListView extends StatelessWidget {
 
     return AppView(
       title: const Text("Nanny+"),
-      actions: [
-        BlocConsumer<ChildListCubit, ChildListState>(
-          listener: (context, state) async {
-            if (state is ChildListLoaded) {
-              if (state.showOnboarding) {
-                await _showOnboardingDialog(context);
-              }
-            }
-          },
-          builder: (context, state) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: PopupMenuButton(
-                itemBuilder: (context) => [
-                  if (!state.showArchivedItems)
-                    PopupMenuItem(
-                      value: 'show_archived_items',
-                      child: Text(context.t('Show archived items')),
-                    ),
-                  if (state.showArchivedItems)
-                    PopupMenuItem(
-                      value: 'hide_archived_items',
-                      child: Text(context.t('Hide archived items')),
-                    ),
-                ],
-                onSelected: (value) async {
-                  if (value == 'show_archived_items') {
-                    context.read<ChildListCubit>().showArchivedItems();
-                  } else if (value == 'hide_archived_items') {
-                    context.read<ChildListCubit>().hideArchivedItems();
-                  }
-                },
-              ),
-            );
-          },
-        ),
-      ],
       drawer: const MainDrawer(),
       body: BlocConsumer<ChildListCubit, ChildListState>(
         listener: (context, state) {
@@ -77,6 +40,7 @@ class ChildListView extends StatelessWidget {
                 state.children,
                 state.pendingTotal,
                 state.pendingTotalPerChild,
+                state.undeletableChildren,
               ),
               onPressed: () async {
                 var child = await Navigator.of(context).push<Child>(

@@ -148,6 +148,16 @@ class ServicesRepository {
     return map;
   }
 
+  Future<List<int>> getUndeletableChildren() async {
+    var db = await DatabaseUtil.instance;
+
+    var rows = await db.query('services', groupBy: 'childId');
+
+    var undeletables = rows.map((row) => row['childId'] as int).toList();
+
+    return undeletables;
+  }
+
   Future<void> unlinkInvoice(int invoiceId) async {
     var db = await DatabaseUtil.instance;
 
