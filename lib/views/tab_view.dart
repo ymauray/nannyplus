@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-import 'package:nannyplus/forms/child_form.dart';
 
 import '../cubit/child_info_cubit.dart';
 import '../data/model/child.dart';
+import '../forms/child_form.dart';
 import '../views/app_view.dart';
 import 'child_info_tab_view.dart';
 import 'invoice_list_tab_view.dart';
@@ -30,9 +30,9 @@ class TabView extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () async {
-              var child =
-                  (context.read<ChildInfoCubit>().state as ChildInfoLoaded)
-                      .child;
+              var state =
+                  context.read<ChildInfoCubit>().state as ChildInfoLoaded;
+              var child = state.child;
               var updatedChild = await Navigator.of(context).push<Child>(
                 MaterialPageRoute(
                   fullscreenDialog: true,

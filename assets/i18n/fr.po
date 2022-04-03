@@ -122,6 +122,9 @@ msgstr "Date de naissance"
 msgid "Phone number"
 msgstr "Numéro de téléphone"
 
+msgid "Please enter the phone number"
+msgstr "Veuillez entrer le numéro de téléphone"
+
 msgid "Parents name"
 msgstr "Nom des parents"
 

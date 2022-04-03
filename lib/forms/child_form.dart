@@ -36,6 +36,7 @@ class ChildForm extends StatelessWidget {
                       .format(map['birthdate'] as DateTime);
                 }
                 var data = Child.fromMap(map);
+
                 Navigator.of(context).pop(data);
               }
             },
@@ -179,8 +180,46 @@ class ChildForm extends StatelessWidget {
                     autocorrect: false,
                     textCapitalization: TextCapitalization.words,
                     keyboardType: TextInputType.phone,
+                    validator: (value) => (value == null) || (value.isEmpty)
+                        ? context.t('Please enter the phone number')
+                        : null,
                   ),
                 ),
+
+                ///* Extra phonenumber 1 */
+
+                //Padding(
+                //  padding: const EdgeInsets.only(bottom: 16.0),
+                //  child: FormBuilderTextField(
+                //    name: 'labelExtraPhoneNumber1',
+                //    decoration: InputDecoration(
+                //      labelText: context.t('Supplemental phone number 1 label'),
+                //      floatingLabelBehavior: FloatingLabelBehavior.always,
+                //    ),
+                //    autocorrect: false,
+                //    textCapitalization: TextCapitalization.words,
+                //    keyboardType: TextInputType.text,
+                //    validator: (value) => (value == null) || (value.isEmpty)
+                //        ? context.t('Please enter the phone number')
+                //        : null,
+                //  ),
+                //),
+                //Padding(
+                //  padding: const EdgeInsets.only(bottom: 16.0),
+                //  child: FormBuilderTextField(
+                //    name: 'phoneNumber',
+                //    decoration: InputDecoration(
+                //      labelText: context.t('Phone number'),
+                //      floatingLabelBehavior: FloatingLabelBehavior.always,
+                //    ),
+                //    autocorrect: false,
+                //    textCapitalization: TextCapitalization.words,
+                //    keyboardType: TextInputType.phone,
+                //    validator: (value) => (value == null) || (value.isEmpty)
+                //        ? context.t('Please enter the phone number')
+                //        : null,
+                //  ),
+                //),
               ],
             ),
           ),

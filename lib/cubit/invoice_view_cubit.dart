@@ -28,6 +28,8 @@ class InvoiceViewCubit extends Cubit<InvoiceViewState> {
         .map((service) => service.childId)
         .toSet()
         .map((childId) => _childrenRepository.read(childId)));
-    emit(InvoiceViewLoaded(services, children));
+    emit(
+      InvoiceViewLoaded(services, children),
+    );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:nannyplus/utils/database_util.dart';
+import '../utils/database_util.dart';
 
 import 'model/child.dart';
 
@@ -40,7 +40,7 @@ class ChildrenRepository {
       whereArgs: [child.id],
     );
 
-    return read(child.id!);
+    return await read(child.id!);
   }
 
   Future<void> delete(Child child) async {

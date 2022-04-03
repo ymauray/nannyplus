@@ -346,13 +346,8 @@ class _PriceTile extends StatelessWidget {
               ],
             ),
           ),
-          //IconButton(
-          //  icon: trailing ?? const Icon(Icons.add),
-          //  onPressed: onPressed,
-          //),
           IconButton(
             icon: const Icon(Icons.add),
-            color: Colors.grey,
             onPressed: onPressed,
           ),
         ],
@@ -397,7 +392,6 @@ class _ServiceTile extends StatelessWidget {
           if (trailing == null && onPressed != null)
             IconButton(
               icon: const Icon(Icons.add),
-              color: Colors.grey,
               onPressed: onPressed,
             ),
         ],

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 
-import 'package:nannyplus/cubit/child_info_cubit.dart';
-import 'package:nannyplus/cubit/invoice_list_cubit.dart';
-import 'package:nannyplus/widgets/child_info.dart';
+import '../cubit/child_info_cubit.dart';
+import '../cubit/invoice_list_cubit.dart';
+import '../widgets/child_info.dart';
 
 class ChildInfoTabView extends StatelessWidget {
   final int childId;

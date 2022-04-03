@@ -45,20 +45,21 @@ class DatabaseUtil {
 
     _database = await sqlite.openDatabase(
       await _databasePath,
-      version: 1,
+      version: 2,
       onCreate: (db, version) async {
         await _create(db);
         for (var i = 2; i <= version; i++) {
           _upgradeTo(i, db);
         }
       },
-      onUpgrade: (db, oldVersion, newVersion) {
+      onUpgrade: (db, oldVersion, newVersion) async {
         for (var i = oldVersion + 1; i <= newVersion; i++) {
           _upgradeTo(i, db);
         }
       },
-      onDowngrade: (db, oldVersion, newVersion) =>
-          throw Exception('Downgrade not supported'),
+      onDowngrade: (db, oldVersion, newVersion) async {
+        throw Exception('Downgrade not supported');
+      },
     );
 
     return _database!;
@@ -289,8 +290,28 @@ class DatabaseUtil {
     });
   }
 
-  // ignore: no-empty-block
   static void _upgradeTo(int version, sqlite.Database db) async {
-    /* Not implemented yet */
+    if (version == 2) {
+      await db.execute('''
+      ALTER TABLE children
+      ADD labelExtraPhoneNumber1 TEXT
+      ''');
+      await db.execute('''
+      ALTER TABLE children
+      ADD extraPhoneNumber1 TEXT
+      ''');
+      await db.execute('''
+      ALTER TABLE children
+      ADD labelExtraPhoneNumber2 TEXT
+      ''');
+      await db.execute('''
+      ALTER TABLE children
+      ADD extraPhoneNumber2 TEXT
+      ''');
+      await db.execute('''
+      ALTER TABLE children
+      ADD freeText TEXT
+      ''');
+    }
   }
 }
