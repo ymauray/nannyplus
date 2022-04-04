@@ -12,9 +12,9 @@ class Child {
   final int preschool;
   final int archived;
   final String? labelForPhoneNumber2;
-  final String? phonNumber2;
+  final String? phoneNumber2;
   final String? labelForPhoneNumber3;
-  final String? phonNumber3;
+  final String? phoneNumber3;
   final String? freeText;
 
   Child({
@@ -29,9 +29,9 @@ class Child {
     this.preschool = 1,
     this.archived = 0,
     this.labelForPhoneNumber2,
-    this.phonNumber2,
+    this.phoneNumber2,
     this.labelForPhoneNumber3,
-    this.phonNumber3,
+    this.phoneNumber3,
     this.freeText,
   });
 
@@ -57,9 +57,9 @@ class Child {
     int? preschool,
     int? archived,
     String? labelForPhoneNumber2,
-    String? phonNumber2,
+    String? phoneNumber2,
     String? labelForPhoneNumber3,
-    String? phonNumber3,
+    String? phoneNumber3,
     String? freeText,
   }) {
     return Child(
@@ -74,9 +74,9 @@ class Child {
       preschool: preschool ?? this.preschool,
       archived: archived ?? this.archived,
       labelForPhoneNumber2: labelForPhoneNumber2 ?? this.labelForPhoneNumber2,
-      phonNumber2: phonNumber2 ?? this.phonNumber2,
+      phoneNumber2: phoneNumber2 ?? this.phoneNumber2,
       labelForPhoneNumber3: labelForPhoneNumber3 ?? this.labelForPhoneNumber3,
-      phonNumber3: phonNumber3 ?? this.phonNumber3,
+      phoneNumber3: phoneNumber3 ?? this.phoneNumber3,
       freeText: freeText ?? this.freeText,
     );
   }
@@ -94,9 +94,9 @@ class Child {
       'preschool': preschool,
       'archived': archived,
       'labelForPhoneNumber2': labelForPhoneNumber2,
-      'phonNumber2': phonNumber2,
+      'phoneNumber2': phoneNumber2,
       'labelForPhoneNumber3': labelForPhoneNumber3,
-      'phonNumber3': phonNumber3,
+      'phoneNumber3': phoneNumber3,
       'freeText': freeText,
     };
   }
@@ -114,9 +114,9 @@ class Child {
       preschool: map['preschool']?.toInt() ?? 0,
       archived: map['archived']?.toInt() ?? 0,
       labelForPhoneNumber2: map['labelForPhoneNumber2'],
-      phonNumber2: map['phonNumber2'],
+      phoneNumber2: map['phoneNumber2'],
       labelForPhoneNumber3: map['labelForPhoneNumber3'],
-      phonNumber3: map['phonNumber3'],
+      phoneNumber3: map['phoneNumber3'],
       freeText: map['freeText'],
     );
   }
@@ -127,7 +127,7 @@ class Child {
 
   @override
   String toString() {
-    return 'Child(id: $id, firstName: $firstName, lastName: $lastName, birthdate: $birthdate, phoneNumber: $phoneNumber, allergies: $allergies, parentsName: $parentsName, address: $address, preschool: $preschool, archived: $archived, labelForPhoneNumber2: $labelForPhoneNumber2, phonNumber2: $phonNumber2, labelForPhoneNumber3: $labelForPhoneNumber3, phonNumber3: $phonNumber3, freeText: $freeText)';
+    return 'Child(id: $id, firstName: $firstName, lastName: $lastName, birthdate: $birthdate, phoneNumber: $phoneNumber, allergies: $allergies, parentsName: $parentsName, address: $address, preschool: $preschool, archived: $archived, labelForPhoneNumber2: $labelForPhoneNumber2, phoneNumber2: $phoneNumber2, labelForPhoneNumber3: $labelForPhoneNumber3, phoneNumber3: $phoneNumber3, freeText: $freeText)';
   }
 
   @override
@@ -146,9 +146,9 @@ class Child {
         other.preschool == preschool &&
         other.archived == archived &&
         other.labelForPhoneNumber2 == labelForPhoneNumber2 &&
-        other.phonNumber2 == phonNumber2 &&
+        other.phoneNumber2 == phoneNumber2 &&
         other.labelForPhoneNumber3 == labelForPhoneNumber3 &&
-        other.phonNumber3 == phonNumber3 &&
+        other.phoneNumber3 == phoneNumber3 &&
         other.freeText == freeText;
   }
 
@@ -165,9 +165,9 @@ class Child {
         preschool.hashCode ^
         archived.hashCode ^
         labelForPhoneNumber2.hashCode ^
-        phonNumber2.hashCode ^
+        phoneNumber2.hashCode ^
         labelForPhoneNumber3.hashCode ^
-        phonNumber3.hashCode ^
+        phoneNumber3.hashCode ^
         freeText.hashCode;
   }
 }
