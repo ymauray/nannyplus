@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:nannyplus/cubit/child_list_cubit.dart';
 import 'package:nannyplus/utils/encode_utils.dart';
 import 'package:nannyplus/views/backup_resore_view.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/children_repository.dart';
@@ -31,13 +32,22 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var packageInfo = context.read<PackageInfo>();
+
     return Drawer(
       child: SafeArea(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              child: Image.asset('assets/img/banner1500.png'),
+              child: Column(
+                children: [
+                  Image.asset('assets/img/banner1500.png'),
+                  Text(
+                    "Version ${packageInfo.version}-${packageInfo.buildNumber}",
+                  ),
+                ],
+              ),
             ),
             ListTile(
               key: const Key('price_list_menu'),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:provider/provider.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'cubit/child_info_cubit.dart';
 import 'cubit/child_list_cubit.dart';
@@ -74,6 +75,16 @@ class NannyPlusApp extends StatelessWidget {
           create: (context) => InvoiceViewCubit(
             servicesRepository,
             childrenRepository,
+          ),
+        ),
+        FutureProvider(
+          lazy: false,
+          create: (_) => PackageInfo.fromPlatform(),
+          initialData: PackageInfo(
+            appName: 'Not Available',
+            version: '0.0.0',
+            buildNumber: '0',
+            packageName: 'Not Available',
           ),
         ),
       ],
