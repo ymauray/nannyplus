@@ -294,19 +294,19 @@ class DatabaseUtil {
     if (version == 2) {
       await db.execute('''
       ALTER TABLE children
-      ADD labelExtraPhoneNumber1 TEXT
+      ADD labelForPhoneNumber2 TEXT
       ''');
       await db.execute('''
       ALTER TABLE children
-      ADD extraPhoneNumber1 TEXT
+      ADD phoneNumber2 TEXT
       ''');
       await db.execute('''
       ALTER TABLE children
-      ADD labelExtraPhoneNumber2 TEXT
+      ADD labelForPhoneNumber3 TEXT
       ''');
       await db.execute('''
       ALTER TABLE children
-      ADD extraPhoneNumber2 TEXT
+      ADD phoneNumber3 TEXT
       ''');
       await db.execute('''
       ALTER TABLE children

@@ -11,10 +11,10 @@ class Child {
   final String? address;
   final int preschool;
   final int archived;
-  final String? labelExtraPhoneNumber1;
-  final String? extraPhoneNumber1;
-  final String? labelExtraPhoneNumber2;
-  final String? extraPhoneNumber2;
+  final String? labelForPhoneNumber2;
+  final String? phonNumber2;
+  final String? labelForPhoneNumber3;
+  final String? phonNumber3;
   final String? freeText;
 
   Child({
@@ -28,10 +28,10 @@ class Child {
     this.address,
     this.preschool = 1,
     this.archived = 0,
-    this.labelExtraPhoneNumber1,
-    this.extraPhoneNumber1,
-    this.labelExtraPhoneNumber2,
-    this.extraPhoneNumber2,
+    this.labelForPhoneNumber2,
+    this.phonNumber2,
+    this.labelForPhoneNumber3,
+    this.phonNumber3,
     this.freeText,
   });
 
@@ -56,10 +56,10 @@ class Child {
     String? address,
     int? preschool,
     int? archived,
-    String? labelExtraPhoneNumber1,
-    String? extraPhoneNumber1,
-    String? labelExtraPhoneNumber2,
-    String? extraPhoneNumber2,
+    String? labelForPhoneNumber2,
+    String? phonNumber2,
+    String? labelForPhoneNumber3,
+    String? phonNumber3,
     String? freeText,
   }) {
     return Child(
@@ -73,12 +73,10 @@ class Child {
       address: address ?? this.address,
       preschool: preschool ?? this.preschool,
       archived: archived ?? this.archived,
-      labelExtraPhoneNumber1:
-          labelExtraPhoneNumber1 ?? this.labelExtraPhoneNumber1,
-      extraPhoneNumber1: extraPhoneNumber1 ?? this.extraPhoneNumber1,
-      labelExtraPhoneNumber2:
-          labelExtraPhoneNumber2 ?? this.labelExtraPhoneNumber2,
-      extraPhoneNumber2: extraPhoneNumber2 ?? this.extraPhoneNumber2,
+      labelForPhoneNumber2: labelForPhoneNumber2 ?? this.labelForPhoneNumber2,
+      phonNumber2: phonNumber2 ?? this.phonNumber2,
+      labelForPhoneNumber3: labelForPhoneNumber3 ?? this.labelForPhoneNumber3,
+      phonNumber3: phonNumber3 ?? this.phonNumber3,
       freeText: freeText ?? this.freeText,
     );
   }
@@ -95,10 +93,10 @@ class Child {
       'address': address,
       'preschool': preschool,
       'archived': archived,
-      'labelExtraPhoneNumber1': labelExtraPhoneNumber1,
-      'extraPhoneNumber1': extraPhoneNumber1,
-      'labelExtraPhoneNumber2': labelExtraPhoneNumber2,
-      'extraPhoneNumber2': extraPhoneNumber2,
+      'labelForPhoneNumber2': labelForPhoneNumber2,
+      'phonNumber2': phonNumber2,
+      'labelForPhoneNumber3': labelForPhoneNumber3,
+      'phonNumber3': phonNumber3,
       'freeText': freeText,
     };
   }
@@ -115,10 +113,10 @@ class Child {
       address: map['address'],
       preschool: map['preschool']?.toInt() ?? 0,
       archived: map['archived']?.toInt() ?? 0,
-      labelExtraPhoneNumber1: map['labelExtraPhoneNumber1'],
-      extraPhoneNumber1: map['extraPhoneNumber1'],
-      labelExtraPhoneNumber2: map['labelExtraPhoneNumber2'],
-      extraPhoneNumber2: map['extraPhoneNumber2'],
+      labelForPhoneNumber2: map['labelForPhoneNumber2'],
+      phonNumber2: map['phonNumber2'],
+      labelForPhoneNumber3: map['labelForPhoneNumber3'],
+      phonNumber3: map['phonNumber3'],
       freeText: map['freeText'],
     );
   }
@@ -129,7 +127,7 @@ class Child {
 
   @override
   String toString() {
-    return 'Child(id: $id, firstName: $firstName, lastName: $lastName, birthdate: $birthdate, phoneNumber: $phoneNumber, allergies: $allergies, parentsName: $parentsName, address: $address, preschool: $preschool, archived: $archived, labelExtraPhoneNumber1: $labelExtraPhoneNumber1, extraPhoneNumber1: $extraPhoneNumber1, labelExtraPhoneNumber2: $labelExtraPhoneNumber2, extraPhoneNumber2: $extraPhoneNumber2, freeText: $freeText)';
+    return 'Child(id: $id, firstName: $firstName, lastName: $lastName, birthdate: $birthdate, phoneNumber: $phoneNumber, allergies: $allergies, parentsName: $parentsName, address: $address, preschool: $preschool, archived: $archived, labelForPhoneNumber2: $labelForPhoneNumber2, phonNumber2: $phonNumber2, labelForPhoneNumber3: $labelForPhoneNumber3, phonNumber3: $phonNumber3, freeText: $freeText)';
   }
 
   @override
@@ -147,10 +145,10 @@ class Child {
         other.address == address &&
         other.preschool == preschool &&
         other.archived == archived &&
-        other.labelExtraPhoneNumber1 == labelExtraPhoneNumber1 &&
-        other.extraPhoneNumber1 == extraPhoneNumber1 &&
-        other.labelExtraPhoneNumber2 == labelExtraPhoneNumber2 &&
-        other.extraPhoneNumber2 == extraPhoneNumber2 &&
+        other.labelForPhoneNumber2 == labelForPhoneNumber2 &&
+        other.phonNumber2 == phonNumber2 &&
+        other.labelForPhoneNumber3 == labelForPhoneNumber3 &&
+        other.phonNumber3 == phonNumber3 &&
         other.freeText == freeText;
   }
 
@@ -166,10 +164,10 @@ class Child {
         address.hashCode ^
         preschool.hashCode ^
         archived.hashCode ^
-        labelExtraPhoneNumber1.hashCode ^
-        extraPhoneNumber1.hashCode ^
-        labelExtraPhoneNumber2.hashCode ^
-        extraPhoneNumber2.hashCode ^
+        labelForPhoneNumber2.hashCode ^
+        phonNumber2.hashCode ^
+        labelForPhoneNumber3.hashCode ^
+        phonNumber3.hashCode ^
         freeText.hashCode;
   }
 }
