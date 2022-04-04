@@ -205,7 +205,19 @@ class ChildForm extends StatelessWidget {
                     autocorrect: false,
                     textCapitalization: TextCapitalization.sentences,
                     keyboardType: TextInputType.text,
-                    validator: (value) => null,
+                    validator: (value) {
+                      var labelIsEmpty = value?.isEmpty ?? true;
+                      var valueIsEmpty = _formKey.currentState!
+                              .fields['phoneNumber2']!.value.isEmpty ??
+                          true;
+
+                      return labelIsEmpty && !valueIsEmpty
+                          ? context.t(
+                              'Please enter the label for phone number {0}',
+                              args: [2],
+                            )
+                          : null;
+                    },
                   ),
                 ),
                 Padding(
@@ -218,7 +230,19 @@ class ChildForm extends StatelessWidget {
                     ),
                     autocorrect: false,
                     keyboardType: TextInputType.phone,
-                    validator: (value) => null,
+                    validator: (value) {
+                      var labelEmpty = _formKey.currentState!
+                              .fields['labelForPhoneNumber2']!.value.isEmpty ??
+                          true;
+                      var valueEmpty = value?.isEmpty ?? true;
+
+                      return (!labelEmpty && valueEmpty)
+                          ? context.t(
+                              'Please enter the phone number {0}',
+                              args: [2],
+                            )
+                          : null;
+                    },
                   ),
                 ),
 
@@ -236,7 +260,19 @@ class ChildForm extends StatelessWidget {
                     autocorrect: false,
                     textCapitalization: TextCapitalization.sentences,
                     keyboardType: TextInputType.text,
-                    validator: (value) => null,
+                    validator: (value) {
+                      var labelIsEmpty = value?.isEmpty ?? true;
+                      var valueIsEmpty = _formKey.currentState!
+                              .fields['phoneNumber3']!.value.isEmpty ??
+                          true;
+
+                      return labelIsEmpty && !valueIsEmpty
+                          ? context.t(
+                              'Please enter the label for phone number {0}',
+                              args: [3],
+                            )
+                          : null;
+                    },
                   ),
                 ),
                 Padding(
@@ -249,7 +285,19 @@ class ChildForm extends StatelessWidget {
                     ),
                     autocorrect: false,
                     keyboardType: TextInputType.phone,
-                    validator: (value) => null,
+                    validator: (value) {
+                      var labelEmpty = _formKey.currentState!
+                              .fields['labelForPhoneNumber3']!.value.isEmpty ??
+                          true;
+                      var valueEmpty = value?.isEmpty ?? true;
+
+                      return (!labelEmpty && valueEmpty)
+                          ? context.t(
+                              'Please enter the phone number {0}',
+                              args: [3],
+                            )
+                          : null;
+                    },
                   ),
                 ),
                 Padding(
