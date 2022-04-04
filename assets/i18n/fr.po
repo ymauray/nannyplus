@@ -140,6 +140,15 @@ msgstr "Veuillez entrer l'adresse des parents"
 msgid "Allergies"
 msgstr "Allergies"
 
+msgid "Label for phone number {0}"
+msgstr "Label pour le numéro de téléphone {0}"
+
+msgid "Phone number {0}"
+msgstr "Numéro de téléphone {0}"
+
+msgid "Free text"
+msgstr "Texte libre"
+
 msgid "Archive"
 msgstr "Archiver"
 

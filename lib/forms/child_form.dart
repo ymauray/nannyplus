@@ -59,6 +59,11 @@ class ChildForm extends StatelessWidget {
               'parentsName': child?.parentsName,
               'address': child?.address,
               'allergies': child?.allergies,
+              'labelForPhoneNumber2': child?.labelForPhoneNumber2,
+              'phoneNumber2': child?.phoneNumber2,
+              'labelForPhoneNumber3': child?.labelForPhoneNumber3,
+              'phoneNumber3': child?.phoneNumber3,
+              'freeText': child?.freeText,
             },
             autovalidateMode: AutovalidateMode.always,
             child: Column(
@@ -186,40 +191,80 @@ class ChildForm extends StatelessWidget {
                   ),
                 ),
 
-                ///* Extra phonenumber 1 */
+                ///* Phonenumber 2 */
 
-                //Padding(
-                //  padding: const EdgeInsets.only(bottom: 16.0),
-                //  child: FormBuilderTextField(
-                //    name: 'labelExtraPhoneNumber1',
-                //    decoration: InputDecoration(
-                //      labelText: context.t('Supplemental phone number 1 label'),
-                //      floatingLabelBehavior: FloatingLabelBehavior.always,
-                //    ),
-                //    autocorrect: false,
-                //    textCapitalization: TextCapitalization.words,
-                //    keyboardType: TextInputType.text,
-                //    validator: (value) => (value == null) || (value.isEmpty)
-                //        ? context.t('Please enter the phone number')
-                //        : null,
-                //  ),
-                //),
-                //Padding(
-                //  padding: const EdgeInsets.only(bottom: 16.0),
-                //  child: FormBuilderTextField(
-                //    name: 'phoneNumber',
-                //    decoration: InputDecoration(
-                //      labelText: context.t('Phone number'),
-                //      floatingLabelBehavior: FloatingLabelBehavior.always,
-                //    ),
-                //    autocorrect: false,
-                //    textCapitalization: TextCapitalization.words,
-                //    keyboardType: TextInputType.phone,
-                //    validator: (value) => (value == null) || (value.isEmpty)
-                //        ? context.t('Please enter the phone number')
-                //        : null,
-                //  ),
-                //),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: FormBuilderTextField(
+                    name: 'labelForPhoneNumber2',
+                    decoration: InputDecoration(
+                      labelText:
+                          context.t('Label for phone number {0}', args: [2]),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                    ),
+                    autocorrect: false,
+                    textCapitalization: TextCapitalization.sentences,
+                    keyboardType: TextInputType.text,
+                    validator: (value) => null,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: FormBuilderTextField(
+                    name: 'phoneNumber2',
+                    decoration: InputDecoration(
+                      labelText: context.t('Phone number {0}', args: [2]),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                    ),
+                    autocorrect: false,
+                    keyboardType: TextInputType.phone,
+                    validator: (value) => null,
+                  ),
+                ),
+
+                ///* Phonenumber 3 */
+
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: FormBuilderTextField(
+                    name: 'labelForPhoneNumber3',
+                    decoration: InputDecoration(
+                      labelText:
+                          context.t('Label for phone number {0}', args: [3]),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                    ),
+                    autocorrect: false,
+                    textCapitalization: TextCapitalization.sentences,
+                    keyboardType: TextInputType.text,
+                    validator: (value) => null,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: FormBuilderTextField(
+                    name: 'phoneNumber3',
+                    decoration: InputDecoration(
+                      labelText: context.t('Phone number {0}', args: [3]),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                    ),
+                    autocorrect: false,
+                    keyboardType: TextInputType.phone,
+                    validator: (value) => null,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: FormBuilderTextField(
+                    minLines: 3,
+                    maxLines: 3,
+                    name: 'freeText',
+                    decoration: InputDecoration(
+                      labelText: context.t('Free text'),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                    ),
+                    textCapitalization: TextCapitalization.sentences,
+                  ),
+                ),
               ],
             ),
           ),
