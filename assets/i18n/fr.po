@@ -141,7 +141,7 @@ msgid "Allergies"
 msgstr "Allergies"
 
 msgid "Label for phone number {0}"
-msgstr "Label pour le numéro de téléphone {0}"
+msgstr "Libellé pour le numéro de téléphone {0}"
 
 msgid "Phone number {0}"
 msgstr "Numéro de téléphone {0}"
