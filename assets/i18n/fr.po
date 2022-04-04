@@ -143,8 +143,14 @@ msgstr "Allergies"
 msgid "Label for phone number {0}"
 msgstr "Libellé pour le numéro de téléphone {0}"
 
+msgid "Please enter the label for phone number {0}"
+msgstr "Veuillez entrer le libellé pour le numéro de téléphone {0}"
+
 msgid "Phone number {0}"
 msgstr "Numéro de téléphone {0}"
+
+msgid "Please enter the phone number {0}"
+msgstr "Veuillez entrer le numéro de téléphone {0}"
 
 msgid "Free text"
 msgstr "Texte libre"
