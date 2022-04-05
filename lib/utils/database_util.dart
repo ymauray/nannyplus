@@ -45,7 +45,7 @@ class DatabaseUtil {
 
     _database = await sqlite.openDatabase(
       await _databasePath,
-      version: 2,
+      version: 3,
       onCreate: (db, version) async {
         await _create(db);
         for (var i = 2; i <= version; i++) {
@@ -312,6 +312,29 @@ class DatabaseUtil {
       ALTER TABLE children
       ADD freeText TEXT
       ''');
+    }
+
+    if (version == 3) {
+      await db.execute('''
+    ALTER TABLE prices
+    ADD sortOrder INTEGER NOT NULL DEFAULT 0
+    ''');
+
+      var rows = await db.query('prices', orderBy: 'label ASC');
+      var sortOrder = 1;
+      for (var row in rows) {
+        await db.update(
+          'prices',
+          {
+            'sortOrder': sortOrder,
+          },
+          where: 'id = ?',
+          whereArgs: [
+            row['id'],
+          ],
+        );
+        sortOrder += 1;
+      }
     }
   }
 }

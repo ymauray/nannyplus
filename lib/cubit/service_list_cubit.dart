@@ -22,7 +22,11 @@ class ServiceListCubit extends Cubit<ServiceListState> {
   Future<void> loadServices(int childId) async {
     try {
       final child = await childrenRepository.read(childId);
-      final services = await servicesRepository.getServices(child);
+      final prices = await pricesRepository.getPriceList();
+      var services = await servicesRepository.getServices(child);
+      services.sort((a, b) =>
+          prices.firstWhere((price) => price.id == a.priceId).sortOrder -
+          prices.firstWhere((price) => price.id == b.priceId).sortOrder);
       emit(ServiceListLoaded(child, services));
     } catch (e) {
       emit(ServiceListError(e.toString()));

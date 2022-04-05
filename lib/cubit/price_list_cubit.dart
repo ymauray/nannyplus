@@ -18,6 +18,12 @@ class PriceListCubit extends Cubit<PriceListState> {
     emit(PriceListLoaded(priceList, inUse));
   }
 
+  Future<void> reorder(int oldIndex, int newIndex) async {
+    await _pricesRepository.reorder(oldIndex, newIndex);
+
+    return getPriceList();
+  }
+
   Future<void> create(Price price) async {
     await _pricesRepository.create(price);
     await getPriceList();

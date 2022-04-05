@@ -19,6 +19,10 @@ class PriceList extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionStack(
       child: CardScrollView(
+        onReorder: (oldIndex, newIndex) {
+          context.read<PriceListCubit>().reorder(oldIndex, newIndex);
+        },
+        bottomPadding: 80,
         children: _prices
             .map((price) => _PriceCard(price, _inUse.contains(price.id)))
             .toList(),

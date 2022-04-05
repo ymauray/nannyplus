@@ -23,10 +23,16 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
       final prices = await _pricesRepository.getPriceList();
       final services = await _servicesRepository.getRecentServices(childId);
       final groups = services.groupBy((service) => service.priceId);
-      final orderedServices = groups.map((group) => group.value.first).toList();
+      var orderedServices = groups.map((group) => group.value.first).toList();
+      orderedServices.sort((a, b) =>
+          prices.firstWhere((price) => price.id == a.priceId).sortOrder -
+          prices.firstWhere((price) => price.id == b.priceId).sortOrder);
 
-      final selectedServices = await _servicesRepository
+      var selectedServices = await _servicesRepository
           .getServicesForChildAndDate(childId, date ?? DateTime.now());
+      selectedServices.sort((a, b) =>
+          prices.firstWhere((price) => price.id == a.priceId).sortOrder -
+          prices.firstWhere((price) => price.id == b.priceId).sortOrder);
 
       emit(
         ServiceFormLoaded(tab, date, orderedServices, prices, selectedServices),
@@ -40,12 +46,10 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
     emit((state as ServiceFormLoaded).copyWith(selectedTab: index));
   }
 
-  Future<void> addService(Service service) async {
-    var newService = await _servicesRepository.create(service);
-    emit((state as ServiceFormLoaded).copyWith(
-      selectedServices:
-          (state as ServiceFormLoaded).selectedServices + [newService],
-    ));
+  Future<void> addService(Service service, int childId, DateTime? date) async {
+    await _servicesRepository.create(service);
+
+    return loadRecentServices(childId, date, 0);
   }
 
   Future<void> updateService(Service service) async {

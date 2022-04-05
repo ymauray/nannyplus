@@ -6,7 +6,7 @@ class PricesRepository {
 
   Future<List<Price>> getPriceList() async {
     var database = await DatabaseUtil.instance;
-    var rows = await database.query("prices", orderBy: "label asc");
+    var rows = await database.query("prices", orderBy: "sortOrder asc");
     var priceList = rows.map((row) => Price.fromMap(row)).toList();
 
     return priceList;
@@ -24,9 +24,40 @@ class PricesRepository {
     return prices;
   }
 
+  Future<void> reorder(int oldIndex, int newIndex) async {
+    var database = await DatabaseUtil.instance;
+    var rows = await database.query("prices", orderBy: "sortOrder asc");
+    var priceList = rows.map((row) => Price.fromMap(row)).toList();
+
+    var price = priceList.removeAt(oldIndex);
+    if (newIndex > oldIndex) {
+      newIndex--;
+    }
+    priceList.insert(newIndex, price);
+
+    for (var i = 0; i < priceList.length; i++) {
+      var price = priceList[i];
+      await database.update(
+        "prices",
+        price.copyWith(sortOrder: i).toMap(),
+        where: "id = ?",
+        whereArgs: [price.id],
+      );
+    }
+  }
+
   Future<Price> create(Price price) async {
     var database = await DatabaseUtil.instance;
-    var id = await database.insert("prices", price.toMap());
+    var rows = await database
+        .rawQuery('SELECT MAX(sortOrder) AS maxSortOrder FROM prices');
+    var maxSortOrder = 0;
+    if (rows.isNotEmpty) {
+      maxSortOrder = (rows.first)['maxSortOrder'] as int;
+    }
+    var id = await database.insert(
+      "prices",
+      price.copyWith(sortOrder: 1 + maxSortOrder).toMap(),
+    );
 
     return read(id);
   }

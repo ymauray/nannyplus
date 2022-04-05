@@ -87,7 +87,7 @@ class _GroupCard extends StatelessWidget {
               builder: (context) => ServiceForm(
                 childId: child.id!,
                 date: DateFormat('yyyy-MM-dd').parse(group.value[0].date),
-                tab: 2,
+                tab: 1,
               ),
               fullscreenDialog: true,
             ),

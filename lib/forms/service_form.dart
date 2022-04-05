@@ -236,7 +236,11 @@ class _ServiceFormTabController extends StatelessWidget {
           total: price.amount * (time.hours + time.minutes / 60),
           invoiced: 0,
         );
-        await context.read<ServiceFormCubit>().addService(service);
+        await context.read<ServiceFormCubit>().addService(
+              service,
+              childId,
+              _formKey.currentState!.value['date'],
+            );
       }
     }
   }
@@ -288,7 +292,11 @@ class _ServiceFormTabController extends StatelessWidget {
       total: price.amount,
       invoiced: 0,
     );
-    await context.read<ServiceFormCubit>().addService(service);
+    await context.read<ServiceFormCubit>().addService(
+          service,
+          childId,
+          _formKey.currentState!.value['date'],
+        );
   }
 
   Future<bool?> _showConfirmationDialog(BuildContext context) async {

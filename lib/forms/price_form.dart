@@ -24,7 +24,7 @@ class PriceForm extends StatelessWidget {
       title: Text(context.t("Create new price")),
       actions: [
         IconButton(
-          onPressed: () => save(_formKey, context, price?.id),
+          onPressed: () => save(_formKey, context, price?.id, price?.sortOrder),
           icon: const Icon(Icons.save),
         ),
       ],
@@ -82,15 +82,19 @@ class PriceForm extends StatelessWidget {
     GlobalKey<FormBuilderState> formKey,
     BuildContext context,
     int? id,
+    int? sortOrder,
   ) async {
     formKey.currentState!.save();
     var price = Price(
       label: formKey.currentState!.value['label'],
       amount: double.parse(formKey.currentState!.value['amount']),
       fixedPrice: formKey.currentState!.value['fixed'] ? 1 : 0,
+      sortOrder: -1,
     );
     if (id != null) {
-      await context.read<PriceListCubit>().update(price.copyWith(id: id));
+      await context.read<PriceListCubit>().update(
+            price.copyWith(id: id, sortOrder: sortOrder),
+          );
     } else {
       await context.read<PriceListCubit>().create(price);
     }

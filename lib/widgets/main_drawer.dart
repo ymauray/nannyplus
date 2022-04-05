@@ -160,14 +160,34 @@ class MainDrawer extends StatelessWidget {
     );
   }
 
-  final semaine =
-      const Price(id: 1, label: 'Heures semaine', amount: 7.0, fixedPrice: 0);
-  final weekend =
-      const Price(id: 2, label: 'Heures weekend', amount: 8.0, fixedPrice: 0);
-  final petitRepas =
-      const Price(id: 3, label: 'Petit repas', amount: 5.0, fixedPrice: 1);
-  final grandRepas =
-      const Price(id: 4, label: 'Grand repas', amount: 7.0, fixedPrice: 1);
+  final semaine = const Price(
+    id: 1,
+    label: 'Heures semaine',
+    amount: 7.0,
+    fixedPrice: 0,
+    sortOrder: 1,
+  );
+  final weekend = const Price(
+    id: 2,
+    label: 'Heures weekend',
+    amount: 8.0,
+    fixedPrice: 0,
+    sortOrder: 2,
+  );
+  final petitRepas = const Price(
+    id: 3,
+    label: 'Petit repas',
+    amount: 5.0,
+    fixedPrice: 1,
+    sortOrder: 3,
+  );
+  final grandRepas = const Price(
+    id: 4,
+    label: 'Grand repas',
+    amount: 7.0,
+    fixedPrice: 1,
+    sortOrder: 4,
+  );
 
   final fakeNames = const [
     {

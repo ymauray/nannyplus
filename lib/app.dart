@@ -75,6 +75,7 @@ class NannyPlusApp extends StatelessWidget {
           create: (context) => InvoiceViewCubit(
             servicesRepository,
             childrenRepository,
+            pricesRepository,
           ),
         ),
         FutureProvider(
