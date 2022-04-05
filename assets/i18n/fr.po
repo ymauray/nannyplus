@@ -38,6 +38,9 @@ msgstr "Tarif horaire"
 msgid "Hourly price of {0}"
 msgstr "Tarif horaire de {0}"
 
+msgid "Hourly price of {0} x {1}:{2}"
+msgstr "Tarif horaire de {0} x {1}:{2}"
+
 msgid "Fixed price"
 msgstr "Tarif fixe"
 

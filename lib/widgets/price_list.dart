@@ -55,7 +55,13 @@ class _PriceCard extends StatelessWidget {
           fullscreenDialog: true,
         ));
       },
-      title: Text(price.label),
+      title: Text(
+        price.label,
+        style: const TextStyle(
+          inherit: true,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       subtitle: Text(
         context.t(
           price.isFixedPrice ? "Fixed price of {0}" : "Hourly price of {0}",

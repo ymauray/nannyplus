@@ -349,8 +349,28 @@ class _PriceTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(price.label),
-                Text(price.detail),
+                Text(
+                  price.label,
+                  style: const TextStyle(
+                    inherit: true,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  price.isFixedPrice
+                      ? context.t(
+                          "Fixed price of {0}",
+                          args: [
+                            price.amount.toStringAsFixed(2),
+                          ],
+                        )
+                      : context.t(
+                          "Hourly price of {0}",
+                          args: [
+                            price.amount.toStringAsFixed(2),
+                          ],
+                        ),
+                ),
               ],
             ),
           ),
@@ -385,17 +405,33 @@ class _ServiceTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(service.priceLabel!),
-                Text(service.isFixedPrice == 1
-                    ? service.priceAmount!.toStringAsFixed(2)
-                    : service.priceDetail),
+                Text(
+                  service.priceLabel!,
+                  style: const TextStyle(
+                    inherit: true,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  service.isFixedPrice == 1
+                      ? context.t(
+                          "Fixed price of {0}",
+                          args: [
+                            service.priceAmount!.toStringAsFixed(2),
+                          ],
+                        )
+                      : context.t(
+                            "Hourly price of {0}",
+                            args: [
+                              service.priceAmount!.toStringAsFixed(2),
+                            ],
+                          ) +
+                          " x ${service.hours!}h"
+                              "${service.minutes!.toString().padLeft(2, '0')}",
+                ),
               ],
             ),
           ),
-          //IconButton(
-          //  icon: trailing ?? const Icon(Icons.add),
-          //  onPressed: onPressed,
-          //),
           if (trailing != null) trailing!,
           if (trailing == null && onPressed != null)
             IconButton(
