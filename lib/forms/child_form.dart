@@ -208,7 +208,7 @@ class ChildForm extends StatelessWidget {
                     validator: (value) {
                       var labelIsEmpty = value?.isEmpty ?? true;
                       var valueIsEmpty = _formKey.currentState!
-                              .fields['phoneNumber2']!.value.isEmpty ??
+                              .fields['phoneNumber2']!.value?.isEmpty ??
                           true;
 
                       return labelIsEmpty && !valueIsEmpty
@@ -232,7 +232,7 @@ class ChildForm extends StatelessWidget {
                     keyboardType: TextInputType.phone,
                     validator: (value) {
                       var labelEmpty = _formKey.currentState!
-                              .fields['labelForPhoneNumber2']!.value.isEmpty ??
+                              .fields['labelForPhoneNumber2']!.value?.isEmpty ??
                           true;
                       var valueEmpty = value?.isEmpty ?? true;
 
@@ -263,7 +263,7 @@ class ChildForm extends StatelessWidget {
                     validator: (value) {
                       var labelIsEmpty = value?.isEmpty ?? true;
                       var valueIsEmpty = _formKey.currentState!
-                              .fields['phoneNumber3']!.value.isEmpty ??
+                              .fields['phoneNumber3']!.value?.isEmpty ??
                           true;
 
                       return labelIsEmpty && !valueIsEmpty
@@ -287,7 +287,7 @@ class ChildForm extends StatelessWidget {
                     keyboardType: TextInputType.phone,
                     validator: (value) {
                       var labelEmpty = _formKey.currentState!
-                              .fields['labelForPhoneNumber3']!.value.isEmpty ??
+                              .fields['labelForPhoneNumber3']!.value?.isEmpty ??
                           true;
                       var valueEmpty = value?.isEmpty ?? true;
 
