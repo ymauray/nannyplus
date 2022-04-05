@@ -50,6 +50,7 @@
 		AC9FA71E27FCF21100C2A677 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		AC9FA71F27FCF23B00C2A677 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = fr; path = fr.lproj/Info.plist; sourceTree = "<group>"; };
 		AC9FA72127FCF24600C2A677 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/Info.plist; sourceTree = "<group>"; };
+		AC9FA72227FCF5CF00C2A677 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/Info.plist; sourceTree = "<group>"; };
 		E4265CC2011783ADB8BA9AD0 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -308,6 +309,7 @@
 			children = (
 				AC9FA71F27FCF23B00C2A677 /* fr */,
 				AC9FA72127FCF24600C2A677 /* Base */,
+				AC9FA72227FCF5CF00C2A677 /* en */,
 			);
 			name = Info.plist;
 			sourceTree = "<group>";
