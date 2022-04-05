@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  Runner
+
+  Created by Yannick Mauray on 06.04.22.
+  
+*/
+NSPhotoLibraryUsageDescription = "Pour sélectionner le logo qui apparaitra sur vos factures.";
+

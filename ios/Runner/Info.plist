@@ -51,7 +51,7 @@
 	<key>UIStatusBarHidden</key>
 	<false/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Pour sélectionner le logo qui apparaitra sur vos factures.</string>
+	<string>To select the logo that will appear on the invoices.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
