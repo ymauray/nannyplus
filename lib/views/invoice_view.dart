@@ -15,7 +15,6 @@ import '../cubit/invoice_view_cubit.dart';
 import '../data/model/child.dart';
 import '../data/model/invoice.dart';
 import '../data/model/service.dart';
-import '../data/services_repository.dart';
 import '../utils/date_format_extension.dart';
 import '../utils/prefs_util.dart';
 import '../views/app_view.dart';
@@ -57,10 +56,7 @@ class InvoiceView extends StatelessWidget {
                       byteData2 != null ? pw.Font.ttf(byteData2) : null;
 
                   var conditions = prefs.conditions;
-
-                  var servicesRepository = const ServicesRepository();
-                  var services = await servicesRepository
-                      .getServicesForInvoice(invoice.id!);
+                  var services = state.services;
 
                   final applicationDirectory =
                       await getApplicationDocumentsDirectory();
