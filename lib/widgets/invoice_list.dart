@@ -30,28 +30,34 @@ class InvoiceList extends StatelessWidget {
 
     return CardScrollView(
       bottomPadding: 80,
-      children: i
-          .map(
-            (group) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  group.key.toString(),
-                  style: const TextStyle(
-                    inherit: true,
-                    fontWeight: FontWeight.bold,
-                  ),
+      children: i.isNotEmpty
+          ? i
+              .map(
+                (group) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      group.key.toString(),
+                      style: const TextStyle(
+                        inherit: true,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Divider(),
+                    ...group.value.map(
+                      (invoice) => _InvoiceCard(
+                        invoice: invoice,
+                      ),
+                    ),
+                  ],
                 ),
-                const Divider(),
-                ...group.value.map(
-                  (invoice) => _InvoiceCard(
-                    invoice: invoice,
-                  ),
-                ),
-              ],
-            ),
-          )
-          .toList(),
+              )
+              .toList()
+          : [
+              Text(
+                context.t('No invoice found'),
+              ),
+            ],
     );
   }
 }

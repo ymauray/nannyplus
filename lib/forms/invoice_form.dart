@@ -84,6 +84,8 @@ class _InvoiceForm extends StatelessWidget {
               ...children.map((child) => _Child(child)),
             ],
           ),
+        if (children.isEmpty)
+          Text(context.t('No other child to add to the invoice')),
       ]),
     );
   }
