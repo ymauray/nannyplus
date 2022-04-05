@@ -104,7 +104,7 @@ class _ServiceFormTabController extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       initialIndex: state.selectedTab,
-      length: 3,
+      length: 2,
       child: Column(
         children: [
           TabBar(
@@ -112,8 +112,7 @@ class _ServiceFormTabController extends StatelessWidget {
             labelColor: Colors.black,
             unselectedLabelColor: Colors.grey[500],
             tabs: [
-              Tab(text: context.t('Recent')),
-              Tab(text: context.t('All')),
+              Tab(text: context.t('Services')),
               Tab(
                 child: Text(
                   context.t("Added") + " (${state.selectedServices.length})",
@@ -125,29 +124,6 @@ class _ServiceFormTabController extends StatelessWidget {
             },
           ),
           if (state.selectedTab == 0)
-            ...state.services
-                .map(
-                  (service) => _ServiceTile(
-                    service: service,
-                    onPressed: () {
-                      _formKey.currentState!.save();
-                      ScaffoldMessenger.of(context).success(
-                        context.t("Added successfully"),
-                      );
-                      var newService = service.copyWith(
-                        id: null,
-                        invoiceId: null,
-                        invoiced: 0,
-                        date: DateFormat('yyyy-MM-dd').format(
-                          _formKey.currentState!.value['date'],
-                        ),
-                      );
-                      context.read<ServiceFormCubit>().addService(newService);
-                    },
-                  ),
-                )
-                .toList(),
-          if (state.selectedTab == 1)
             ...state.prices.map(
               (price) => _PriceTile(
                 price: price,
@@ -162,7 +138,7 @@ class _ServiceFormTabController extends StatelessWidget {
                 },
               ),
             ),
-          if (state.selectedTab == 2)
+          if (state.selectedTab == 1)
             ...state.selectedServices
                 .map(
                   (service) => _ServiceTile(
@@ -193,7 +169,7 @@ class _ServiceFormTabController extends StatelessWidget {
                               );
                               context
                                   .read<ServiceFormCubit>()
-                                  .loadRecentServices(childId, state.date, 2);
+                                  .loadRecentServices(childId, state.date, 1);
                             }
                           },
                         ),
