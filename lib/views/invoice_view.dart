@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:nannyplus/utils/list_extensions.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 import 'package:pdf/pdf.dart';
@@ -56,7 +57,13 @@ class InvoiceView extends StatelessWidget {
                       byteData2 != null ? pw.Font.ttf(byteData2) : null;
 
                   var conditions = prefs.conditions;
-                  var services = state.services;
+                  var groupedServices =
+                      state.services.groupBy((service) => service.date);
+                  var services = groupedServices.fold<List<Service>>(
+                    [],
+                    (previousValue, group) =>
+                        previousValue..addAll(group.value),
+                  );
 
                   final applicationDirectory =
                       await getApplicationDocumentsDirectory();
