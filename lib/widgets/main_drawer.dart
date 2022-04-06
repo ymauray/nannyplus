@@ -44,7 +44,7 @@ class MainDrawer extends StatelessWidget {
                 children: [
                   Image.asset('assets/img/banner1500.png'),
                   Text(
-                    "Version ${packageInfo.version}-${packageInfo.buildNumber}",
+                    "Version ${packageInfo.version} (${packageInfo.buildNumber})",
                   ),
                 ],
               ),
