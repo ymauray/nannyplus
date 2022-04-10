@@ -2,14 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-import 'package:nannyplus/utils/font_utils.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart' as sqlite;
-import 'package:path/path.dart';
+import 'package:gettext_i18n/gettext_i18n.dart';
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
-import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:intl/intl.dart';
+import 'package:nannyplus/utils/font_utils.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart' as sqlite;
 
 import 'prefs_util.dart';
 
@@ -250,7 +250,7 @@ class DatabaseUtil {
   ) async {
     await db.insert("children", {
       "firstName": "Fabienne",
-      "lastName": "Simon (Example)",
+      "lastName": "Simon",
       "birthdate": "2014-08-01",
       "phoneNumber": "+41329866242",
       "allergies": gettext.t("Peanuts", null),

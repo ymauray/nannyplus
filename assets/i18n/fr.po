@@ -23,6 +23,12 @@ msgstr "Pas de numéro de téléphone"
 msgid "No known allergies"
 msgstr "Pas d'allergie connue"
 
+msgid "Allergies"
+msgstr "Allergies"
+
+msgid "Last entry"
+msgstr "Dernière saisie"
+
 msgid "Allergies : {0}"
 msgstr "Allergies : {0}"
 

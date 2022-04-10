@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/data/model/service.dart';
+import 'package:nannyplus/data/model/service_info.dart';
 import 'package:nannyplus/utils/list_extensions.dart';
 
 import '../utils/database_util.dart';
@@ -114,6 +115,7 @@ class ServicesRepository {
     return rows.map((e) => Service.fromMap(e)).toList();
   }
 
+  @Deprecated("Use getServiceInfoPerChild instead")
   Future<double> getPendingTotal() async {
     var db = await DatabaseUtil.instance;
 
@@ -126,6 +128,7 @@ class ServicesRepository {
     );
   }
 
+  @Deprecated("Use getServiceInfoPerChild instead")
   Future<Map<int, double>> getPendingTotalPerChild() async {
     var db = await DatabaseUtil.instance;
 
@@ -144,6 +147,56 @@ class ServicesRepository {
           (previousValue, service) => previousValue + service.total,
         ),
     };
+
+    return map;
+  }
+
+  Future<Map<int, ServiceInfo>> getServiceInfoPerChild() async {
+    var db = await DatabaseUtil.instance;
+
+    var rows =
+        await db.query('services', where: 'invoiced = ?', whereArgs: [0]);
+
+    var groupedRows = rows
+        .map((row) => Service.fromMap(row))
+        .toList()
+        .groupBy<int>((service) => service.childId)
+        .toList();
+
+    var map = <int, ServiceInfo>{
+      for (var group in groupedRows)
+        group.key: ServiceInfo(
+          pendingTotal: group.value.fold(
+            0.0,
+            (previousValue, service) => previousValue + service.total,
+          ),
+        ),
+    };
+
+    rows = await db.rawQuery(
+      'SELECT childId, MAX(date) FROM services, children '
+      'WHERE children.id = services.childId AND children.archived = ? '
+      'GROUP BY childId',
+      [0],
+    );
+    var map2 = <int, String>{
+      for (var row in rows) row['childId'] as int: row['MAX(date)'] as String,
+    };
+
+    for (var childId in map.keys) {
+      if (map2.containsKey(childId)) {
+        map[childId]!.lastEnty =
+            DateFormat('yyyy-MM-dd').parse(map2[childId] as String);
+      }
+    }
+    for (var row in rows) {
+      if (!map.containsKey(row['childId'] as int)) {
+        map[row['childId'] as int] = ServiceInfo(
+          pendingTotal: 0.0,
+          lastEnty: DateFormat('yyyy-MM-dd').parse(row['MAX(date)'] as String),
+        );
+      }
+    }
 
     return map;
   }

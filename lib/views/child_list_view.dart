@@ -12,7 +12,6 @@ import '../widgets/child_list.dart';
 import '../widgets/floating_action_stack.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/main_drawer.dart';
-
 import 'app_view.dart';
 
 class ChildListView extends StatelessWidget {

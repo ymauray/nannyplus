@@ -47,19 +47,24 @@ class PricesRepository {
   }
 
   Future<Price> create(Price price) async {
-    var database = await DatabaseUtil.instance;
-    var rows = await database
-        .rawQuery('SELECT MAX(sortOrder) AS maxSortOrder FROM prices');
-    var maxSortOrder = 0;
-    if (rows.isNotEmpty) {
-      maxSortOrder = (rows.first)['maxSortOrder'] as int;
-    }
-    var id = await database.insert(
-      "prices",
-      price.copyWith(sortOrder: 1 + maxSortOrder).toMap(),
-    );
+    try {
+      var database = await DatabaseUtil.instance;
+      var rows = await database
+          .rawQuery('SELECT MAX(sortOrder) AS maxSortOrder FROM prices');
+      var maxSortOrder = 0;
+      if (rows.isNotEmpty) {
+        maxSortOrder = ((rows.first)['maxSortOrder'] ?? 0) as int;
+      }
+      var id = await database.insert(
+        "prices",
+        price.copyWith(sortOrder: 1 + maxSortOrder).toMap(),
+      );
 
-    return read(id);
+      return read(id);
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
   }
 
   Future<Price> read(int id) async {

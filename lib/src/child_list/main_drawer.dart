@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -7,28 +6,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:nannyplus/cubit/child_list_cubit.dart';
-import 'package:nannyplus/utils/encode_utils.dart';
-import 'package:nannyplus/views/backup_resore_view.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../data/children_repository.dart';
-import '../data/invoices_repository.dart';
-import '../data/model/child.dart';
-import '../data/model/invoice.dart';
-import '../data/model/price.dart';
-import '../data/model/service.dart';
-import '../data/prices_repository.dart';
-import '../data/services_repository.dart';
-import '../utils/database_util.dart';
-import '../utils/prefs_util.dart';
-import '../views/price_list_view.dart';
-import '../views/privacy_settings_view.dart';
-import '../views/settings_view.dart';
+import '../../cubit/child_list_cubit.dart';
+import '../../data/children_repository.dart';
+import '../../data/invoices_repository.dart';
+import '../../data/model/child.dart';
+import '../../data/model/invoice.dart';
+import '../../data/model/price.dart';
+import '../../data/model/service.dart';
+import '../../data/prices_repository.dart';
+import '../../data/services_repository.dart';
+import '../../utils/database_util.dart';
+import '../../utils/encode_utils.dart';
+import '../../utils/prefs_util.dart';
+import '../../views/backup_resore_view.dart';
+import '../../views/price_list_view.dart';
+import '../../views/privacy_settings_view.dart';
+import '../../views/settings_view.dart';
 
-class MainDrawer extends StatelessWidget {
-  const MainDrawer({Key? key}) : super(key: key);
+class NPMainDrawer extends StatelessWidget {
+  const NPMainDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +134,7 @@ class MainDrawer extends StatelessWidget {
                 ),
                 leading: const Icon(Icons.question_mark),
                 onTap: () async {
-                  await importData(false);
+                  await importData(true);
                   Navigator.of(context).pop();
                   context.read<ChildListCubit>().loadChildList();
                 },

@@ -23,16 +23,23 @@ class ChildListLoaded extends ChildListState {
   const ChildListLoaded(
     this.children,
     this.pendingTotal,
-    this.pendingTotalPerChild,
-    this.undeletableChildren, {
+    @Deprecated("Use servicesInfo instead") this.pendingTotalPerChild,
+    @Deprecated("Use servicesInfo instead") this.undeletableChildren,
+    this.servicesInfo, {
     this.showArchived = false,
     this.showOnboarding = false,
   });
 
   final List<Child> children;
   final double pendingTotal;
+
+  @Deprecated("Use servicesInfo instead")
   final Map<int, double> pendingTotalPerChild;
+
+  @Deprecated("Use servicesInfo instead")
   final List<int> undeletableChildren;
+
+  final Map<int, ServiceInfo> servicesInfo;
   final bool showArchived;
   final bool showOnboarding;
 
@@ -48,6 +55,7 @@ class ChildListLoaded extends ChildListState {
         other.pendingTotal == pendingTotal &&
         mapEquals(other.pendingTotalPerChild, pendingTotalPerChild) &&
         listEquals(other.undeletableChildren, undeletableChildren) &&
+        mapEquals(other.servicesInfo, servicesInfo) &&
         other.showArchived == showArchived &&
         other.showOnboarding == showOnboarding;
   }
@@ -58,6 +66,7 @@ class ChildListLoaded extends ChildListState {
         pendingTotal.hashCode ^
         pendingTotalPerChild.hashCode ^
         undeletableChildren.hashCode ^
+        servicesInfo.hashCode ^
         showArchived.hashCode ^
         showOnboarding.hashCode;
   }
