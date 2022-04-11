@@ -41,7 +41,7 @@ class AppTheme {
       ),
       toolbarTextStyle: GoogleFonts.poppins(
         textStyle: const TextStyle(
-          fontSize: 14,
+          fontSize: 18,
           color: kcOnPrimaryColor,
         ),
       ),

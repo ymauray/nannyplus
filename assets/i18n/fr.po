@@ -335,6 +335,9 @@ msgstr "Restaurer"
 msgid "Select a backup file"
 msgstr "Sélectionner une sauvegarde"
 
+msgid "Database successfully backed up"
+msgstr "Base de données sauvegardée avec succès"
+
 msgid "Database successfully restored"
 msgstr "Base de données restaurée avec succès"
 

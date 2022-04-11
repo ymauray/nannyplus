@@ -21,13 +21,13 @@ import '../../data/services_repository.dart';
 import '../../utils/database_util.dart';
 import '../../utils/encode_utils.dart';
 import '../../utils/prefs_util.dart';
-import '../../views/backup_resore_view.dart';
 import '../../views/price_list_view.dart';
 import '../../views/privacy_settings_view.dart';
 import '../../views/settings_view.dart';
+import '../backup_restore/backup_restore_view.dart';
 
-class NPMainDrawer extends StatelessWidget {
-  const NPMainDrawer({Key? key}) : super(key: key);
+class NewMainDrawer extends StatelessWidget {
+  const NewMainDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +99,7 @@ class NPMainDrawer extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     fullscreenDialog: true,
-                    builder: (context) => const BackupRestoreView(),
+                    builder: (context) => const NewBackupRestoreView(),
                   ),
                 );
               },

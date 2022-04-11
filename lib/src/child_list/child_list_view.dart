@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
-import 'package:nannyplus/src/ui/list_view.dart';
-import 'package:nannyplus/widgets/loading_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../cubit/child_list_cubit.dart';
 import '../../data/model/child.dart';
 import '../../forms/child_form.dart';
+import '../../src/child_list/main_drawer.dart';
 import '../../src/constants.dart';
+import '../../src/ui/list_view.dart';
 import '../../utils/i18n_utils.dart';
 import '../../utils/prefs_util.dart';
 import '../../utils/snack_bar_util.dart';
-import '../../widgets/main_drawer.dart';
+import '../../widgets/loading_indicator.dart';
 import '../tab_view/tab_view.dart';
 import '../ui/sliver_curved_persistent_header.dart';
 import '../ui/view.dart';
@@ -38,15 +38,7 @@ class NewChildListView extends StatelessWidget {
       },
       builder: (context, state) {
         return UIView(
-          drawer: const MainDrawer(),
-          //onFloatingActionPressed: () async {
-          //  var child = await Navigator.of(context).push<Child>(
-          //    MaterialPageRoute(builder: (context) => const ChildForm()),
-          //  );
-          //  if (child != null) {
-          //    context.read<ChildListCubit>().create(child);
-          //  }
-          //},
+          drawer: const NewMainDrawer(),
           title: const Text(ksAppName),
           persistentHeader: UISliverCurvedPersistenHeader(
             child: Text(
@@ -58,40 +50,6 @@ class NewChildListView extends StatelessWidget {
             ),
           ),
           body: (state is ChildListLoaded)
-              //? Stack(
-              //    children: [
-              //      ListView.builder(
-              //        padding: const EdgeInsets.only(top: 0, bottom: 88),
-              //        itemBuilder: (context, index) {
-              //          return _ChildListTile(
-              //            index: index,
-              //            state: state,
-              //            onTap: () async {
-              //              await Navigator.of(context).push(
-              //                MaterialPageRoute(
-              //                  builder: (context) =>
-              //                      NewTabView(state.children[index].id!),
-              //                ),
-              //              );
-              //              var cubit = context.read<ChildListCubit>();
-              //              cubit.loadChildList();
-              //            },
-              //          );
-              //        },
-              //        itemCount: state.children.length,
-              //      ),
-              //      Align(
-              //        alignment: Alignment.bottomRight,
-              //        child: Padding(
-              //          padding: const EdgeInsets.all(16.0),
-              //          child: FloatingActionButton(
-              //            child: const Icon(Icons.add),
-              //            onPressed: () {},
-              //          ),
-              //        ),
-              //      ),
-              //    ],
-              //  )
               ? UIListView(
                   itemBuilder: (context, index) {
                     return _ChildListTile(
