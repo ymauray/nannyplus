@@ -8,6 +8,8 @@ import 'package:nannyplus/src/ui/sliver_tab_bar_peristant_header.dart';
 
 import '../../cubit/child_info_cubit.dart';
 import '../../src/ui/view.dart';
+import 'child_info_tab_view.dart';
+import 'invoice_list_tab_view.dart';
 
 class NewTabView extends StatelessWidget {
   const NewTabView(
@@ -72,9 +74,9 @@ class NewTabView extends StatelessWidget {
             //    title: Text("Tab 1, Child $index"),
             //  ),
             //),
-            NewServiceListTabView(childId),
-            Text("Tab 2 content"),
-            Text("Tab 3 content"),
+            NewServiceListTabView(childId: childId),
+            NewInvoiceListTabView(childId: childId),
+            NewChildInfoTabView(childId: childId),
           ],
         ),
       ),

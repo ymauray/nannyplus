@@ -170,7 +170,7 @@ class _ChildListTile extends StatelessWidget {
                   icon: Icon(
                     Icons.phone,
                     color: child.hasPhoneNumber
-                        ? Theme.of(context).colorScheme.primary
+                        ? Theme.of(context).colorScheme.secondary
                         : null,
                   ),
                   onPressed: () {

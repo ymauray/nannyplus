@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
+import 'package:nannyplus/src/ui/ui_card.dart';
 
 import '../../cubit/service_list_cubit.dart';
 import '../../data/model/child.dart';
@@ -13,9 +14,9 @@ import '../../utils/list_extensions.dart';
 import '../../utils/snack_bar_util.dart';
 
 class NewServiceListTabView extends StatelessWidget {
-  const NewServiceListTabView(
-    this.childId, {
+  const NewServiceListTabView({
     Key? key,
+    required this.childId,
   }) : super(key: key);
 
   final int childId;
@@ -103,106 +104,89 @@ class _GroupCard extends StatelessWidget {
           );
           context.read<ServiceListCubit>().loadServices(child.id!);
         },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Material(
-            elevation: 4,
-            shape: Theme.of(context).listTileTheme.shape,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                borderRadius: (Theme.of(context).listTileTheme.shape!
-                        as RoundedRectangleBorder)
-                    .borderRadius,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: UICard(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 12.0),
+              child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            DateFormat.yMMMMd(I18nUtils.locale)
-                                .format(group.key),
-                            style: Theme.of(context).textTheme.subtitle1,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () async {
-                            var delete = await _showConfirmationDialog(context);
-                            if (delete ?? false) {
-                              context
-                                  .read<ServiceListCubit>()
-                                  .deleteDay(child.id!, group.value[0].date);
-                              ScaffoldMessenger.of(context).success(
-                                context.t("Removed successfully"),
-                              );
-                            }
-                          },
-                          visualDensity: VisualDensity.compact,
-                          icon: const Icon(
-                            Icons.close,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ],
+                  Expanded(
+                    child: Text(
+                      DateFormat.yMMMMd(I18nUtils.locale).format(group.key),
+                      style: Theme.of(context).textTheme.subtitle1,
                     ),
                   ),
-                  const Divider(
-                    height: 2,
-                  ),
-                  ...group.value.map(
-                    (service) {
-                      dailyTotal += service.total;
-
-                      return _Detail(service: service);
+                  IconButton(
+                    onPressed: () async {
+                      var delete = await _showConfirmationDialog(context);
+                      if (delete ?? false) {
+                        context
+                            .read<ServiceListCubit>()
+                            .deleteDay(child.id!, group.value[0].date);
+                        ScaffoldMessenger.of(context).success(
+                          context.t("Removed successfully"),
+                        );
+                      }
                     },
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 5,
-                        child: Container(),
-                      ),
-                      const Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 8.0),
-                          child: Divider(
-                            height: 2,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 5,
-                          child: Container(),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 12.0),
-                            child: Text(
-                              dailyTotal.toStringAsFixed(2),
-                              textAlign: TextAlign.end,
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                          ),
-                        ),
-                      ],
+                    visualDensity: VisualDensity.compact,
+                    icon: const Icon(
+                      Icons.close,
+                      color: Colors.red,
                     ),
                   ),
                 ],
               ),
             ),
-          ),
+            const Divider(
+              height: 2,
+            ),
+            ...group.value.map(
+              (service) {
+                dailyTotal += service.total;
+
+                return _Detail(service: service);
+              },
+            ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Container(),
+                ),
+                const Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                    child: Divider(
+                      height: 2,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: Container(),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 12.0),
+                      child: Text(
+                        dailyTotal.toStringAsFixed(2),
+                        textAlign: TextAlign.end,
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       );
     }

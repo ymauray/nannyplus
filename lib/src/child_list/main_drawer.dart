@@ -127,21 +127,6 @@ class NewMainDrawer extends StatelessWidget {
             if (kDebugMode)
               ListTile(
                 title: Text(
-                  context.t('Import data'),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                leading: const Icon(Icons.question_mark),
-                onTap: () async {
-                  await importData(true);
-                  Navigator.of(context).pop();
-                  context.read<ChildListCubit>().loadChildList();
-                },
-              ),
-            if (kDebugMode)
-              ListTile(
-                title: Text(
                   context.t('Reset database'),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),

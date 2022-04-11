@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/cubit/invoice_form_cubit.dart';
+import 'package:nannyplus/cubit/invoice_view_cubit.dart';
 import 'package:nannyplus/cubit/service_form_cubit.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -84,6 +85,13 @@ class NannyPlusApp extends StatelessWidget {
             context.read<ChildrenRepository>(),
             context.read<ServicesRepository>(),
             context.read<InvoicesRepository>(),
+          ),
+        ),
+        BlocProvider<InvoiceViewCubit>(
+          create: (context) => InvoiceViewCubit(
+            context.read<ServicesRepository>(),
+            context.read<ChildrenRepository>(),
+            context.read<PricesRepository>(),
           ),
         ),
       ],
