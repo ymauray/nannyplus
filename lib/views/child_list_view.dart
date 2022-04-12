@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-import 'package:nannyplus/utils/device_utils.dart';
 
 import '../cubit/child_list_cubit.dart';
 import '../data/model/child.dart';
 import '../forms/child_form.dart';
+import '../utils/device_utils.dart';
 import '../utils/prefs_util.dart';
 import '../widgets/child_list.dart';
 import '../widgets/floating_action_stack.dart';

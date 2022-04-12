@@ -2,13 +2,14 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nannyplus/utils/database_util.dart';
-import 'package:nannyplus/utils/snack_bar_util.dart';
-import 'package:nannyplus/views/app_view.dart';
-import 'package:nannyplus/views/child_list_view.dart';
-import 'package:nannyplus/widgets/card_scroll_view.dart';
-import 'package:nannyplus/widgets/card_tile.dart';
 import 'package:share_plus/share_plus.dart';
+
+import '../utils/database_util.dart';
+import '../utils/snack_bar_util.dart';
+import '../views/app_view.dart';
+import '../views/child_list_view.dart';
+import '../widgets/card_scroll_view.dart';
+import '../widgets/card_tile.dart';
 
 class BackupRestoreView extends StatelessWidget {
   const BackupRestoreView({Key? key}) : super(key: key);

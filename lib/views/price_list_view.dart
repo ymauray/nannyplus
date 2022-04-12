@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-import 'package:nannyplus/cubit/price_list_cubit.dart';
-import 'package:nannyplus/views/app_view.dart';
-import 'package:nannyplus/widgets/loading_indicator.dart';
-import 'package:nannyplus/widgets/price_list.dart';
+
+import '../cubit/price_list_cubit.dart';
+import '../views/app_view.dart';
+import '../widgets/loading_indicator.dart';
+import '../widgets/price_list.dart';
 
 class PriceListView extends StatelessWidget {
   const PriceListView({Key? key}) : super(key: key);

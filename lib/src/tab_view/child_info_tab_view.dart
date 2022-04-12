@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-import 'package:nannyplus/src/ui/list_view.dart';
-import 'package:nannyplus/widgets/loading_indicator.dart';
 
 import '../../cubit/child_info_cubit.dart';
 import '../../data/model/child.dart';
+import '../../src/constants.dart';
+import '../../src/ui/list_view.dart';
+import '../../src/ui/ui_card.dart';
 import '../../utils/date_format_extension.dart';
+import '../../widgets/loading_indicator.dart';
 
 class NewChildInfoTabView extends StatelessWidget {
   const NewChildInfoTabView({
@@ -47,26 +49,98 @@ class _ChildInfo extends StatelessWidget {
 
   final Child child;
 
+  final labelPadding = const EdgeInsets.only(
+    left: kdSmallPadding,
+    top: kdSmallPadding,
+    right: kdSmallPadding,
+  );
+
+  final fieldPadding = const EdgeInsets.all(kdSmallPadding);
+
   @override
   Widget build(BuildContext context) {
     return UIListView.fromChildren(
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                context.t('Birthdate'),
-                style: Theme.of(context).textTheme.caption,
+        _InfoCard(
+          label: context.t('Birthdate'),
+          value: child.birthdate?.formatDate() ?? '',
+        ),
+        _InfoCard(
+          label: context.t('Allergies'),
+          value: child.allergies ?? context.t('No known allergies'),
+        ),
+        _InfoCard(
+          label: context.t('Parents name'),
+          value: child.parentsName ?? '',
+        ),
+        _InfoCard(
+          label: context.t('Address'),
+          value: child.address ?? '',
+        ),
+        _InfoCard(
+          label: context.t('Phone number'),
+          value: child.phoneNumber ?? '',
+        ),
+        if ((child.labelForPhoneNumber2?.isNotEmpty ?? false) &&
+            (child.phoneNumber2?.isNotEmpty ?? false))
+          _InfoCard(
+            label: child.labelForPhoneNumber2!,
+            value: child.phoneNumber2!,
+          ),
+        if ((child.labelForPhoneNumber3?.isNotEmpty ?? false) &&
+            (child.phoneNumber3?.isNotEmpty ?? false))
+          _InfoCard(
+            label: child.labelForPhoneNumber3!,
+            value: child.phoneNumber3!,
+          ),
+        if (child.freeText?.isNotEmpty ?? false)
+          _InfoCard(
+            label: context.t("Free text"),
+            value: child.freeText!,
+          ),
+      ],
+    );
+  }
+}
+
+class _InfoCard extends StatelessWidget {
+  const _InfoCard({
+    Key? key,
+    required this.label,
+    required this.value,
+  }) : super(key: key);
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return UICard(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(kdMediumPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style:
+                    Theme.of(context).inputDecorationTheme.labelStyle!.copyWith(
+                          fontSize: 12,
+                        ),
               ),
-            ),
-            Row(
-              children: [
-                Expanded(child: Text(child.birthdate?.formatDate() ?? '')),
-              ],
-            ),
-          ],
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      value,
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ],
     );

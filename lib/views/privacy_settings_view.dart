@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-import 'package:nannyplus/views/app_view.dart';
+
+import '../views/app_view.dart';
 
 class PrivacySettingsView extends StatelessWidget {
   const PrivacySettingsView({Key? key}) : super(key: key);

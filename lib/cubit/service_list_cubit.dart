@@ -1,10 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:nannyplus/data/children_repository.dart';
-import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/data/model/service.dart';
-import 'package:nannyplus/data/services_repository.dart';
-import 'package:nannyplus/data/prices_repository.dart';
+
+import '../data/children_repository.dart';
+import '../data/model/child.dart';
+import '../data/model/service.dart';
+import '../data/prices_repository.dart';
+import '../data/services_repository.dart';
 
 part 'service_list_state.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nannyplus/cubit/settings_cubit.dart';
 
+import '../cubit/settings_cubit.dart';
 import '../forms/settings_form.dart';
 
 class SettingsView extends StatelessWidget {

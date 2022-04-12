@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
-import 'package:nannyplus/src/ui/ui_card.dart';
 
 import '../../cubit/service_list_cubit.dart';
 import '../../data/model/child.dart';
 import '../../data/model/service.dart';
-import '../../forms/service_form.dart';
+import '../../src/common/loading_indicator_list_view.dart';
 import '../../src/ui/list_view.dart';
+import '../../src/ui/ui_card.dart';
 import '../../utils/i18n_utils.dart';
 import '../../utils/list_extensions.dart';
 import '../../utils/snack_bar_util.dart';
+import '../service_form/service_form.dart';
 
 class NewServiceListTabView extends StatelessWidget {
   const NewServiceListTabView({
@@ -37,9 +38,7 @@ class NewServiceListTabView extends StatelessWidget {
       },
       builder: (context, state) => state is ServiceListLoaded
           ? _List(child: state.child, services: state.services)
-          : ListView(
-              children: const [Center(child: CircularProgressIndicator())],
-            ),
+          : const LoadingIndicatorListView(),
     );
   }
 }
@@ -69,7 +68,15 @@ class _List extends StatelessWidget {
         );
       },
       itemCount: s.length,
-      onFloatingActionPressed: () {},
+      onFloatingActionPressed: () async {
+        await Navigator.of(context).push(
+          MaterialPageRoute<Service>(
+            builder: (context) => NewServiceForm(child: child, tab: 0),
+            fullscreenDialog: true,
+          ),
+        );
+        context.read<ServiceListCubit>().loadServices(child.id!);
+      },
     );
   }
 }
@@ -94,8 +101,8 @@ class _GroupCard extends StatelessWidget {
         onTap: () async {
           await Navigator.of(context).push(
             MaterialPageRoute<Service>(
-              builder: (context) => ServiceForm(
-                childId: child.id!,
+              builder: (context) => NewServiceForm(
+                child: child,
                 date: DateFormat('yyyy-MM-dd').parse(group.value[0].date),
                 tab: 1,
               ),

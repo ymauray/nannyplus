@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
-import 'package:nannyplus/utils/snack_bar_util.dart';
 
 import '../cubit/service_list_cubit.dart';
 import '../data/model/child.dart';
@@ -10,7 +9,7 @@ import '../data/model/service.dart';
 import '../forms/service_form.dart';
 import '../utils/i18n_utils.dart';
 import '../utils/list_extensions.dart';
-
+import '../utils/snack_bar_util.dart';
 import 'card_scroll_view.dart';
 import 'service_list_item_detail.dart';
 

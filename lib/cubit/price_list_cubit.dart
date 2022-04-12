@@ -1,9 +1,10 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:bloc/bloc.dart';
-import 'package:nannyplus/data/model/price.dart';
-import 'package:nannyplus/data/prices_repository.dart';
+import 'package:flutter/foundation.dart';
+
+import '../data/model/price.dart';
+import '../data/prices_repository.dart';
 
 part 'price_list_state.dart';
 

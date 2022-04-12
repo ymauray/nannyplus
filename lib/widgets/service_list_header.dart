@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-import 'package:nannyplus/widgets/bold_text.dart';
+
+import '../widgets/bold_text.dart';
 
 class ServiceListHeader extends StatelessWidget {
   const ServiceListHeader({

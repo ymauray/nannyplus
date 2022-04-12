@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/data/model/service.dart';
 
 import '../data/children_repository.dart';
+import '../data/model/child.dart';
 import '../data/model/invoice.dart';
+import '../data/model/service.dart';
 import '../data/prices_repository.dart';
 import '../data/services_repository.dart';
 

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-import 'package:nannyplus/views/app_view.dart';
-import 'package:nannyplus/widgets/card_scroll_view.dart';
 
 import '../cubit/price_list_cubit.dart';
 import '../data/model/price.dart';
+import '../views/app_view.dart';
+import '../widgets/card_scroll_view.dart';
 
 class PriceForm extends StatelessWidget {
   const PriceForm({

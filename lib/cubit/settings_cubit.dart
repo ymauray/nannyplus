@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:nannyplus/utils/font_utils.dart';
-import 'package:nannyplus/utils/prefs_util.dart';
+
+import '../utils/font_utils.dart';
+import '../utils/prefs_util.dart';
 
 part 'settings_state.dart';
 

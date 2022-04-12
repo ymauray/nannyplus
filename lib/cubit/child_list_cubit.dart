@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:nannyplus/data/children_repository.dart';
-import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/data/services_repository.dart';
-import 'package:nannyplus/utils/prefs_util.dart';
 
+import '../data/children_repository.dart';
+import '../data/model/child.dart';
 import '../data/model/service_info.dart';
+import '../data/services_repository.dart';
+import '../utils/prefs_util.dart';
 
 part 'child_list_state.dart';
 

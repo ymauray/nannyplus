@@ -1,5 +1,4 @@
-import 'package:nannyplus/utils/database_util.dart';
-
+import '../utils/database_util.dart';
 import 'model/invoice.dart';
 
 class InvoicesRepository {

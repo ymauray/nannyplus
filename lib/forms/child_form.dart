@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
-import 'package:nannyplus/cubit/settings_cubit.dart';
 
-import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/utils/i18n_utils.dart';
-import 'package:nannyplus/views/app_view.dart';
+import '../cubit/settings_cubit.dart';
+import '../data/model/child.dart';
+import '../utils/i18n_utils.dart';
+import '../views/app_view.dart';
 
 class ChildForm extends StatelessWidget {
   const ChildForm({this.child, Key? key}) : super(key: key);

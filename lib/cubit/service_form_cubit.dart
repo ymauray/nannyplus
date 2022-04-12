@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:nannyplus/utils/list_extensions.dart';
 
+import '../../utils/list_extensions.dart';
 import '../data/model/price.dart';
 import '../data/model/service.dart';
 import '../data/prices_repository.dart';
@@ -18,7 +18,6 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
       : super(const ServiceFormInitial());
 
   Future<void> loadRecentServices(int childId, DateTime? date, int tab) async {
-    emit(const ServiceFormInitial());
     try {
       final prices = await _pricesRepository.getPriceList();
       final services = await _servicesRepository.getRecentServices(childId);
@@ -35,7 +34,13 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
           prices.firstWhere((price) => price.id == b.priceId).sortOrder);
 
       emit(
-        ServiceFormLoaded(tab, date, orderedServices, prices, selectedServices),
+        ServiceFormLoaded(
+          tab,
+          date ?? DateTime.now(),
+          orderedServices,
+          prices,
+          selectedServices,
+        ),
       );
     } catch (e) {
       emit(ServiceFormError(e.toString()));

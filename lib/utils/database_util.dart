@@ -6,11 +6,11 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
 import 'package:intl/intl.dart';
-import 'package:nannyplus/utils/font_utils.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart' as sqlite;
 
+import '../utils/font_utils.dart';
 import 'prefs_util.dart';
 
 class DatabaseUtil {

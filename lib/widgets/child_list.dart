@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-import 'package:nannyplus/widgets/card_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -8,7 +7,7 @@ import '../cubit/child_list_cubit.dart';
 import '../data/model/child.dart';
 import '../utils/snack_bar_util.dart';
 import '../views/tab_view.dart';
-
+import '../widgets/card_tile.dart';
 import 'card_scroll_view.dart';
 
 class ChildList extends StatelessWidget {

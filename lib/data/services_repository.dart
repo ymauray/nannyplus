@@ -1,10 +1,10 @@
 import 'package:intl/intl.dart';
-import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/data/model/service.dart';
-import 'package:nannyplus/data/model/service_info.dart';
-import 'package:nannyplus/utils/list_extensions.dart';
 
+import '../data/model/child.dart';
+import '../data/model/service.dart';
+import '../data/model/service_info.dart';
 import '../utils/database_util.dart';
+import '../utils/list_extensions.dart';
 
 class ServicesRepository {
   const ServicesRepository();
