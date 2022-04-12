@@ -12,11 +12,11 @@ class AppTheme {
         secondary: kcSecondaryColor,
         onSecondary: kcOnSecondaryColor,
         background: kcBackgroundColor,
+        onSurface: kcAlmostBlack,
         onBackground: Colors.brown,
         brightness: Brightness.light,
         error: Colors.yellow,
         onError: Colors.blue,
-        onSurface: Colors.orange,
         surface: Colors.lime,
       ),
       appBarTheme: appBarTheme(),
@@ -24,6 +24,11 @@ class AppTheme {
       primaryTextTheme: primaryTextTheme(),
       textTheme: textTheme(),
       listTileTheme: listTitleThemeData(),
+      inputDecorationTheme: InputDecorationTheme(
+        labelStyle: GoogleFonts.poppins(
+          fontWeight: FontWeight.normal,
+        ),
+      ),
       scaffoldBackgroundColor: kcBackgroundColor,
       indicatorColor: kcPrimaryColor,
     );

@@ -6,7 +6,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../cubit/child_list_cubit.dart';
 import '../../data/model/child.dart';
-import '../../forms/child_form.dart';
 import '../../src/child_list/main_drawer.dart';
 import '../../src/constants.dart';
 import '../../src/ui/list_view.dart';
@@ -14,6 +13,7 @@ import '../../utils/i18n_utils.dart';
 import '../../utils/prefs_util.dart';
 import '../../utils/snack_bar_util.dart';
 import '../../widgets/loading_indicator.dart';
+import '../child_form/child_form.dart';
 import '../tab_view/tab_view.dart';
 import '../ui/sliver_curved_persistent_header.dart';
 import '../ui/view.dart';
@@ -71,7 +71,7 @@ class NewChildListView extends StatelessWidget {
                   onFloatingActionPressed: () async {
                     var child = await Navigator.of(context).push<Child>(
                       MaterialPageRoute(
-                        builder: (context) => const ChildForm(),
+                        builder: (context) => const NewChildForm(),
                       ),
                     );
                     if (child != null) {

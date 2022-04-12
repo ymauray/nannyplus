@@ -11,6 +11,7 @@ class UIView extends StatelessWidget {
     this.persistentTabBar,
     required this.body,
     this.onFloatingActionPressed,
+    this.actions,
     Key? key,
   }) : super(key: key);
 
@@ -19,6 +20,7 @@ class UIView extends StatelessWidget {
   final UISliverCurvedPersistenHeader? persistentHeader;
   final UISliverTabBarPeristantHeader? persistentTabBar;
   final VoidCallback? onFloatingActionPressed;
+  final List<Widget>? actions;
   final Widget body;
 
   @override
@@ -32,6 +34,7 @@ class UIView extends StatelessWidget {
               pinned: true,
               title: title,
               centerTitle: true,
+              actions: actions,
             ),
             if (persistentHeader != null)
               SliverOverlapAbsorber(
