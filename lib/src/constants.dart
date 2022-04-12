@@ -7,7 +7,7 @@ const Color kcAlmostWhite = Color(0xF2FFFFFF);
 
 const Color kcPrimaryColor = Color(0xFF03a5aa);
 const Color kcOnPrimaryColor = kcAlmostWhite;
-const Color kcSecondaryColor = Color(0xFFD6E865);
+const Color kcSecondaryColor = Color(0xFFf0bc00);
 const Color kcOnSecondaryColor = kcAlmostWhite;
 
 const Color kcAccentColor = Color(0xFF48A0F9);

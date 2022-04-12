@@ -62,7 +62,7 @@ class AppTheme {
     return TextTheme(
       bodyText2: GoogleFonts.poppins(
         textStyle: const TextStyle(
-          fontSize: 12,
+          fontSize: 14,
         ),
       ),
       subtitle1: GoogleFonts.poppins(
@@ -79,7 +79,12 @@ class AppTheme {
       labelStyle: GoogleFonts.poppins(
         textStyle: const TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 14,
+          fontSize: 16,
+        ),
+      ),
+      unselectedLabelStyle: GoogleFonts.poppins(
+        textStyle: const TextStyle(
+          fontSize: 16,
         ),
       ),
     );

@@ -148,7 +148,14 @@ class _ChildListTile extends StatelessWidget {
     final child = state.children[index];
     final serviceInfo = state.servicesInfo[child.id];
     final lastEntry = serviceInfo != null
-        ? DateFormat.yMMMMd(I18nUtils.locale).format(serviceInfo.lastEnty!)
+        ? (serviceInfo.lastEnty!.isBefore(
+            DateTime.now().subtract(
+              const Duration(days: 7),
+            ),
+          )
+            ? DateFormat.yMd(I18nUtils.locale).format(serviceInfo.lastEnty!)
+            : DateFormat(DateFormat.WEEKDAY, I18nUtils.locale)
+                .format(serviceInfo.lastEnty!))
         : '...';
     final pendingTotal = serviceInfo != null
         ? serviceInfo.pendingTotal.toStringAsFixed(2)
@@ -194,6 +201,10 @@ class _ChildListTile extends StatelessWidget {
                 ),
                 Text(
                   context.t('Last entry') + ' : ' + lastEntry,
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      ),
                 ),
               ],
             ),
