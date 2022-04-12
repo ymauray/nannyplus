@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
-import 'package:nannyplus/src/constants.dart';
-import 'package:nannyplus/src/ui/list_view.dart';
-import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
-import 'package:nannyplus/src/ui/view.dart';
 
 import '../../cubit/settings_cubit.dart';
 import '../../data/model/child.dart';
+import '../../src/constants.dart';
+import '../../src/ui/list_view.dart';
+import '../../src/ui/sliver_curved_persistent_header.dart';
+import '../../src/ui/view.dart';
 import '../../utils/i18n_utils.dart';
 
 class NewChildForm extends StatelessWidget {
@@ -55,7 +55,17 @@ class NewChildForm extends StatelessWidget {
             child: IconButton(
               onPressed: () {
                 _formKey.currentState!.save();
-                if (_formKey.currentState!.validate()) {}
+                if (_formKey.currentState!.validate()) {
+                  var map =
+                      Map<String, dynamic>.from(_formKey.currentState!.value);
+                  if (map['birthdate'] != null) {
+                    map['birthdate'] = DateFormat('yyyy-MM-dd')
+                        .format(map['birthdate'] as DateTime);
+                  }
+                  var data = Child.fromMap(map);
+
+                  Navigator.of(context).pop(data);
+                }
               },
               icon: const Icon(Icons.save, color: kcOnPrimaryColor),
             ),
