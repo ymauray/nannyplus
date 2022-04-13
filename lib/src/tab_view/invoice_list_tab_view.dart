@@ -6,13 +6,16 @@ import 'package:gettext_i18n/src/gettext_localizations.dart';
 import 'package:intl/intl.dart';
 
 import '../../cubit/invoice_list_cubit.dart';
+import '../../cubit/service_list_cubit.dart';
 import '../../data/model/invoice.dart';
+import '../../src/constants.dart';
 import '../../src/ui/ui_card.dart';
 import '../../utils/date_format_extension.dart';
 import '../../utils/list_extensions.dart';
 import '../../utils/snack_bar_util.dart';
 import '../../views/invoice_view.dart';
 import '../common/loading_indicator_list_view.dart';
+import '../invoice_form/invoice_form.dart';
 import '../ui/list_view.dart';
 
 class NewInvoiceListTabView extends StatelessWidget {
@@ -39,7 +42,7 @@ class NewInvoiceListTabView extends StatelessWidget {
       },
       builder: (context, state) {
         return state is InvoiceListLoaded
-            ? _List(invoices: state.invoices)
+            ? _List(invoices: state.invoices, childId: childId)
             : const LoadingIndicatorListView();
       },
     );
@@ -50,9 +53,11 @@ class _List extends StatelessWidget {
   const _List({
     Key? key,
     required this.invoices,
+    required this.childId,
   }) : super(key: key);
 
   final List<Invoice> invoices;
+  final int childId;
 
   @override
   Widget build(BuildContext context) {
@@ -61,15 +66,37 @@ class _List extends StatelessWidget {
       groupComparator: (a, b) => b.compareTo(a),
     );
 
-    return UIListView(
-      itemBuilder: (context, index) {
-        return _GroupCard(
-          group: i[index],
-        );
-      },
-      itemCount: i.length,
-      onFloatingActionPressed: () {},
-    );
+    return invoices.isNotEmpty
+        ? UIListView(
+            itemBuilder: (context, index) {
+              return _GroupCard(
+                group: i[index],
+              );
+            },
+            itemCount: i.length,
+            onFloatingActionPressed: () async {
+              await Navigator.of(context).push(
+                MaterialPageRoute<Invoice>(
+                  builder: (context) => NewInvoiceForm(childId: childId),
+                  fullscreenDialog: true,
+                ),
+              );
+              context.read<InvoiceListCubit>().loadInvoiceList(childId);
+              context.read<ServiceListCubit>().loadServices(childId);
+            },
+          )
+        : UIListView.fromChildren(
+            children: [
+              UICard(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(kdMediumPadding),
+                    child: Text(context.t('No invoice found')),
+                  ),
+                ],
+              ),
+            ],
+          );
   }
 }
 
@@ -156,6 +183,9 @@ class _InvoiceCard extends StatelessWidget {
                   if (delete ?? false) {
                     //var childId = invoice.childId;
                     context.read<InvoiceListCubit>().deleteInvoice(invoice);
+                    context
+                        .read<ServiceListCubit>()
+                        .loadServices(invoice.childId);
                     ScaffoldMessenger.of(context).success(
                       context.t("Removed successfully"),
                     );
