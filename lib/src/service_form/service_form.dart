@@ -170,7 +170,7 @@ class _List extends StatelessWidget {
                         ),
                       IconButton(
                         icon: const Icon(
-                          Icons.close,
+                          Icons.delete_forever_outlined,
                           color: Colors.red,
                         ),
                         onPressed: () async {

@@ -97,7 +97,7 @@ class _InvoiceCard extends StatelessWidget {
               IconButton(
                 visualDensity: VisualDensity.compact,
                 icon: const Icon(
-                  Icons.close,
+                  Icons.delete_forever_outlined,
                   color: Colors.red,
                 ),
                 onPressed: () async {

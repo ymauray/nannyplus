@@ -130,7 +130,7 @@ class NewMainDrawer extends StatelessWidget {
                   context.t('Reset database'),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                leading: const Icon(Icons.delete),
+                leading: const Icon(Icons.delete_forever_outlined),
                 onTap: () async {
                   await DatabaseUtil.deleteDatabase();
                   (await SharedPreferences.getInstance()).clear();

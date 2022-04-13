@@ -121,7 +121,7 @@ class _GroupCard extends StatelessWidget {
                   },
                   visualDensity: VisualDensity.compact,
                   icon: const Icon(
-                    Icons.close,
+                    Icons.delete_forever_outlined,
                     color: Colors.red,
                   ),
                 ),

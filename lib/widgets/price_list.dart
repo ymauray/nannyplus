@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 
-import '../data/model/price.dart';
 import '../cubit/price_list_cubit.dart';
+import '../data/model/price.dart';
 import '../forms/price_form.dart';
 import '../widgets/card_scroll_view.dart';
 import '../widgets/floating_action_stack.dart';
@@ -73,7 +73,8 @@ class _PriceCard extends StatelessWidget {
         children: [
           if (!inUse)
             IconButton(
-              icon: const Icon(Icons.close, color: Colors.red),
+              icon:
+                  const Icon(Icons.delete_forever_outlined, color: Colors.red),
               onPressed: () async {
                 var delete = await _showConfirmationDialog(context);
                 if (delete ?? false) {

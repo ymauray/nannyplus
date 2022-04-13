@@ -154,7 +154,7 @@ class _ServiceFormTabController extends StatelessWidget {
                           ),
                         IconButton(
                           icon: const Icon(
-                            Icons.close,
+                            Icons.delete,
                             color: Colors.red,
                           ),
                           onPressed: () async {

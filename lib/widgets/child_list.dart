@@ -141,7 +141,7 @@ class _ChildCard extends StatelessWidget {
                     }
                   },
             icon: Icon(
-              Icons.close,
+              Icons.delete_forever_outlined,
               color: isUndeletable ? Colors.grey : Colors.red,
             ),
           ),
