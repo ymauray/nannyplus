@@ -95,7 +95,17 @@ class NewInvoiceForm extends StatelessWidget {
                           ],
                         ),
                       if (state.children.isEmpty)
-                        Text(context.t('No other child to add to the invoice')),
+                        UICard(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(kdMediumPadding),
+                              child: Text(
+                                context
+                                    .t('No other child to add to the invoice'),
+                              ),
+                            ),
+                          ],
+                        ),
                     ],
                   )
                 : const LoadingIndicatorListView();

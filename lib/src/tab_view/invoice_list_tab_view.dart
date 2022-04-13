@@ -66,6 +66,17 @@ class _List extends StatelessWidget {
       groupComparator: (a, b) => b.compareTo(a),
     );
 
+    void action() async {
+      await Navigator.of(context).push(
+        MaterialPageRoute<Invoice>(
+          builder: (context) => NewInvoiceForm(childId: childId),
+          fullscreenDialog: true,
+        ),
+      );
+      context.read<InvoiceListCubit>().loadInvoiceList(childId);
+      context.read<ServiceListCubit>().loadServices(childId);
+    }
+
     return invoices.isNotEmpty
         ? UIListView(
             itemBuilder: (context, index) {
@@ -74,16 +85,7 @@ class _List extends StatelessWidget {
               );
             },
             itemCount: i.length,
-            onFloatingActionPressed: () async {
-              await Navigator.of(context).push(
-                MaterialPageRoute<Invoice>(
-                  builder: (context) => NewInvoiceForm(childId: childId),
-                  fullscreenDialog: true,
-                ),
-              );
-              context.read<InvoiceListCubit>().loadInvoiceList(childId);
-              context.read<ServiceListCubit>().loadServices(childId);
-            },
+            onFloatingActionPressed: action,
           )
         : UIListView.fromChildren(
             children: [
@@ -96,6 +98,7 @@ class _List extends StatelessWidget {
                 ],
               ),
             ],
+            onFloatingActionPressed: action,
           );
   }
 }
