@@ -2,39 +2,60 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 
-import '../cubit/price_list_cubit.dart';
-import '../data/model/price.dart';
-import '../forms/price_form.dart';
-import '../widgets/card_scroll_view.dart';
-import '../widgets/floating_action_stack.dart';
-import 'card_tile.dart';
+import '../../cubit/price_list_cubit.dart';
+import '../../data/model/price.dart';
+import '../../forms/price_form.dart';
+import '../../utils/snack_bar_util.dart';
+import '../../widgets/card_scroll_view.dart';
+import '../../widgets/card_tile.dart';
+import '../../widgets/floating_action_stack.dart';
+import '../../widgets/loading_indicator.dart';
+import '../ui/sliver_curved_persistent_header.dart';
+import '../ui/view.dart';
 
-class PriceList extends StatelessWidget {
-  const PriceList(this._prices, this._inUse, {Key? key}) : super(key: key);
-
-  final List<Price> _prices;
-  final Set<int> _inUse;
+class NewPriceListView extends StatelessWidget {
+  const NewPriceListView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionStack(
-      child: CardScrollView(
-        onReorder: (oldIndex, newIndex) {
-          context.read<PriceListCubit>().reorder(oldIndex, newIndex);
-        },
-        bottomPadding: 80,
-        children: _prices
-            .map((price) => _PriceCard(price, _inUse.contains(price.id)))
-            .toList(),
-      ),
-      onPressed: () async {
-        await Navigator.of(context).push(
-          MaterialPageRoute<Price>(
-            builder: (context) => const PriceForm(),
-            fullscreenDialog: true,
-          ),
+    context.read<PriceListCubit>().getPriceList();
+
+    return BlocConsumer<PriceListCubit, PriceListState>(
+      listener: (context, state) async {
+        if (state is PriceListError) {
+          ScaffoldMessenger.of(context).failure(state.message);
+        }
+      },
+      builder: (context, state) {
+        return UIView(
+          title: Text(context.t('Price list')),
+          persistentHeader: const UISliverCurvedPersistenHeader(),
+          body: (state is PriceListLoaded)
+              ? FloatingActionStack(
+                  child: CardScrollView(
+                    onReorder: (oldIndex, newIndex) {
+                      context
+                          .read<PriceListCubit>()
+                          .reorder(oldIndex, newIndex);
+                    },
+                    bottomPadding: 80,
+                    children: state.priceList
+                        .map((price) =>
+                            _PriceCard(price, state.inUse.contains(price.id)))
+                        .toList(),
+                  ),
+                  onPressed: () async {
+                    await Navigator.of(context).push(
+                      MaterialPageRoute<Price>(
+                        builder: (context) => const PriceForm(),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                    context.read<PriceListCubit>().getPriceList();
+                  },
+                )
+              : const LoadingIndicator(),
         );
-        context.read<PriceListCubit>().getPriceList();
       },
     );
   }

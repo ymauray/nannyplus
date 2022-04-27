@@ -26,7 +26,7 @@ class CardScrollView extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            color: const Color.fromARGB(0xff, 0xf0, 0xf0, 0xf0),
+            color: Theme.of(context).colorScheme.background,
           ),
           if (onReorder == null)
             ListView.builder(

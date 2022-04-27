@@ -21,10 +21,10 @@ import '../../data/services_repository.dart';
 import '../../utils/database_util.dart';
 import '../../utils/encode_utils.dart';
 import '../../utils/prefs_util.dart';
-import '../../views/price_list_view.dart';
 import '../../views/privacy_settings_view.dart';
 import '../../views/settings_view.dart';
 import '../backup_restore/backup_restore_view.dart';
+import '../price_list/price_list_view.dart';
 
 class NewMainDrawer extends StatelessWidget {
   const NewMainDrawer({Key? key}) : super(key: key);
@@ -61,7 +61,7 @@ class NewMainDrawer extends StatelessWidget {
                 Navigator.of(context).pop();
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const PriceListView(),
+                    builder: (context) => const NewPriceListView(),
                   ),
                 );
               },
