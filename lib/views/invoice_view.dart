@@ -87,7 +87,7 @@ class InvoiceView extends StatelessWidget {
                       previousDate = service.date;
                     }
                     currentPack.add(service);
-                    if (count == 17) {
+                    if (count >= 17) {
                       packs.add(currentPack);
                       currentPack = <Service>[];
                       count = 0;
@@ -98,7 +98,7 @@ class InvoiceView extends StatelessWidget {
                   if (currentPack.isNotEmpty) {
                     packs.add(currentPack);
                   }
-                  if ((count == 0) || (count > 12)) {
+                  if ((count == 1) || (count >= 12)) {
                     packs.add([]);
                   }
 
