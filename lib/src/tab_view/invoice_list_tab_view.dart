@@ -4,6 +4,7 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:nannyplus/utils/snack_bar_util.dart';
 
 import '../../cubit/invoice_list_cubit.dart';
 import '../../cubit/service_list_cubit.dart';
@@ -12,7 +13,6 @@ import '../../src/constants.dart';
 import '../../src/ui/ui_card.dart';
 import '../../utils/date_format_extension.dart';
 import '../../utils/list_extensions.dart';
-import '../../utils/snack_bar_util.dart';
 import '../../views/invoice_view.dart';
 import '../common/loading_indicator_list_view.dart';
 import '../invoice_form/invoice_form.dart';
@@ -163,6 +163,14 @@ class _InvoiceCard extends StatelessWidget {
               behavior: HitTestBehavior.opaque,
               child: Text(invoice.date.formatDate()),
               onTap: () => openPDF(context),
+              // onLongPress: () async {
+              //   var mark = await _showMarkPaidDialog(context);
+              //   if (mark ?? false) {
+              //     ScaffoldMessenger.of(context).success(
+              //       context.t("Invoice marked as paid"),
+              //     );
+              //   }
+              // },
             ),
           ),
           GestureDetector(
@@ -175,26 +183,79 @@ class _InvoiceCard extends StatelessWidget {
           ),
           Row(
             children: [
-              IconButton(
-                visualDensity: VisualDensity.compact,
-                icon: const Icon(
-                  Icons.delete_forever_outlined,
-                  color: Colors.red,
-                ),
-                onPressed: () async {
-                  var delete = await _showConfirmationDialog(context);
-                  if (delete ?? false) {
-                    //var childId = invoice.childId;
-                    context.read<InvoiceListCubit>().deleteInvoice(invoice);
-                    context
-                        .read<ServiceListCubit>()
-                        .loadServices(invoice.childId);
-                    ScaffoldMessenger.of(context).success(
-                      context.t("Removed successfully"),
-                    );
+              PopupMenuButton(
+                onSelected: (value) async {
+                  switch (value) {
+                    case 1:
+                      debugPrint("Mark as paid");
+                      break;
+                    case 2:
+                      var delete = await _showConfirmationDialog(context);
+                      if (delete ?? false) {
+                        context.read<InvoiceListCubit>().deleteInvoice(
+                              invoice,
+                            );
+                        context
+                            .read<ServiceListCubit>()
+                            .loadServices(invoice.childId);
+                        ScaffoldMessenger.of(context).success(
+                          context.t("Removed successfully"),
+                        );
+                      }
                   }
                 },
+                padding: EdgeInsets.zero,
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      value: 1,
+                      child: ListTile(
+                        leading: const Icon(
+                          Icons.savings_outlined,
+                          color: kcAlmostBlack,
+                        ),
+                        title: Text(
+                          context.t('Mark as paid'),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 2,
+                      child: ListTile(
+                        leading: const Icon(
+                          Icons.delete_forever_outlined,
+                          color: Colors.red,
+                        ),
+                        title: Text(
+                          context.t('Delete'),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                    ),
+                  ];
+                },
               ),
+              // IconButton(
+              //   visualDensity: VisualDensity.compact,
+              //   icon: const Icon(
+              //     Icons.delete_forever_outlined,
+              //     color: Colors.red,
+              //   ),
+              //   onPressed: () async {
+              //     var delete = await _showConfirmationDialog(context);
+              //     if (delete ?? false) {
+              //       //var childId = invoice.childId;
+              //       context.read<InvoiceListCubit>().deleteInvoice(invoice);
+              //       context
+              //           .read<ServiceListCubit>()
+              //           .loadServices(invoice.childId);
+              //       ScaffoldMessenger.of(context).success(
+              //         context.t("Removed successfully"),
+              //       );
+              //     }
+              //   },
+              // ),
             ],
           ),
         ],
@@ -222,6 +283,34 @@ class _InvoiceCard extends StatelessWidget {
           title: Text(context.t('Delete')),
           content:
               Text(context.t('Are you sure you want to delete this invoice ?')),
+          actions: [
+            TextButton(
+              child: Text(context.t('Yes')),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+            TextButton(
+              child: Text(context.t('No')),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<bool?> _showMarkPaidDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(context.t('Mark as paid')),
+          content: Text(context
+              .t('Are you sure you want to mark this invoice as paid ?')),
           actions: [
             TextButton(
               child: Text(context.t('Yes')),
