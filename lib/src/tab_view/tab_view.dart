@@ -88,7 +88,7 @@ class NewTabView extends StatelessWidget {
           //  Tab(text: context.t('Info')),
           //],
           onTap: (index) {
-            print(index);
+            debugPrint(index.toString());
           },
         ),
         body: TabBarView(
