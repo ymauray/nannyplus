@@ -68,43 +68,8 @@ class _DocumentBuilder extends StatelessWidget {
 
         var conditions = prefs.conditions;
         var groupedServices = state.services.groupBy((service) => service.date);
-        var services = groupedServices.fold<List<Service>>(
-          [],
-          (previousValue, group) => previousValue..addAll(group.value),
-        );
 
         File logoFile = await _getLogoFile();
-
-        var packs = <List<Service>>[];
-        var currentPack = <Service>[];
-        String previousDate = "";
-        var count = 0.0;
-        for (var service in services) {
-          if (previousDate != service.date) {
-            if (count >= 15.5) {
-              packs.add(currentPack);
-              currentPack = <Service>[];
-              count = 0;
-              previousDate = "";
-            }
-            count += 1.5;
-            previousDate = service.date;
-          }
-          currentPack.add(service);
-          if (count >= 17) {
-            packs.add(currentPack);
-            currentPack = <Service>[];
-            count = 0;
-            previousDate = "";
-          }
-          count += 1;
-        }
-        if (currentPack.isNotEmpty) {
-          packs.add(currentPack);
-        }
-        if ((count == 1) || (count >= 12)) {
-          packs.add([]);
-        }
 
         var doc = pw.Document();
         var childrenMap = Map<int, Child>.fromIterable(
@@ -112,159 +77,58 @@ class _DocumentBuilder extends StatelessWidget {
           key: (child) => child.id,
         );
 
-        for (var i = 0; i < packs.length; i++) {
-          var pack = packs[i];
-          var rows = ((List<Service> services) sync* {
-            String previousDate = "";
-            int previousChildId = -1;
-            for (var i = 0; i < services.length; i++) {
-              var service = services[i];
-              var newBloc = service.date != previousDate;
-              var newChild = newBloc || (service.childId != previousChildId);
-              previousDate = service.date;
-              previousChildId = service.childId;
-              if (newBloc) {
-                yield pw.TableRow(
-                  decoration: const pw.BoxDecoration(
-                    border: pw.Border(
-                      bottom: pw.BorderSide(color: PdfColors.grey),
-                    ),
-                  ),
-                  children: [
-                    pw.Padding(
-                      padding: const pw.EdgeInsets.symmetric(
-                        vertical: 8.0,
-                      ),
-                      child: pw.Text(
-                        service.date.formatDate(),
-                        textAlign: pw.TextAlign.left,
-                        style: const pw.TextStyle(fontSize: 14),
-                      ),
-                    ),
-                  ],
-                );
-              }
-              yield pw.TableRow(
-                children: [
-                  pw.Padding(
-                    padding: const pw.EdgeInsets.symmetric(vertical: 4.0),
-                    child: pw.Text(
-                      state.children.length == 1
-                          ? ""
-                          : newChild
-                              ? childrenMap[service.childId]!.firstName
-                              : "",
-                      style: pw.TextStyle(
-                        inherit: true,
-                        fontStyle: pw.FontStyle.italic,
-                      ),
-                    ),
-                  ),
-                  pw.Padding(
-                    padding: const pw.EdgeInsets.symmetric(vertical: 4.0),
-                    child: pw.Text(
-                      service.priceLabel!,
-                      textAlign: pw.TextAlign.left,
-                      style: const pw.TextStyle(fontSize: 14),
-                    ),
-                  ),
-                  pw.Padding(
-                    padding: const pw.EdgeInsets.symmetric(vertical: 4.0),
-                    child: pw.Text(
-                      service.isFixedPrice == 1
-                          ? '-'
-                          : (service.hours.toString() +
-                              "h" +
-                              service.minutes.toString().padLeft(2, '0') +
-                              ' x ' +
-                              service.priceAmount!.toStringAsFixed(2)),
-                      textAlign: pw.TextAlign.center,
-                      style: const pw.TextStyle(fontSize: 14),
-                    ),
-                  ),
-                  pw.Padding(
-                    padding: const pw.EdgeInsets.symmetric(vertical: 4.0),
-                    child: pw.Text(
-                      service.total.toStringAsFixed(2),
-                      textAlign: pw.TextAlign.right,
-                      style: const pw.TextStyle(fontSize: 14),
-                    ),
-                  ),
-                ],
-              );
-            }
-          })(pack.toList());
+        var maxHeight = 15.0;
+        var currentHeight = 0.0;
+        var page = 1;
+        var pages = <List<Group<String, Service>>>[];
+        pages.add([]);
+        for (var group in groupedServices) {
+          var groupHeight = 1.5 + group.value.length;
+          if (groupHeight + currentHeight > maxHeight) {
+            pages.add([]);
+            page += 1;
+            maxHeight = 30.0;
+            currentHeight = 0;
+          }
+          currentHeight += groupHeight;
+          pages[page - 1].add(group);
+        }
 
+        // We need space to add the bank account number.
+        // If we are too close to the bottom of the page,
+        // we need to start a new page.
+        if (currentHeight > 11.0) {
+          pages.add([]);
+        }
+
+        for (var page = 0; page < pages.length; page++) {
           doc.addPage(
             pw.Page(
               pageFormat: PdfPageFormat.a4,
-              margin: const pw.EdgeInsets.all(20),
-              build: (pw.Context context) {
+              margin: const pw.EdgeInsets.all(50),
+              build: ((context) {
                 return pw.Stack(
                   children: [
+                    // Page 1 has the header
                     pw.Column(
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: [
-                        invoiceHeader(
-                          prefs.line1,
-                          prefs.line2,
-                          line1Font,
-                          line2Font,
-                        ),
-                        invoiceTitle(state.children),
-                        invoiceMeta(),
-                        invoiceTable(rows),
-                        if (i == packs.length - 1) invoiceTotal(conditions),
-                        if (i == packs.length - 1)
-                          pw.Column(
-                            children: [
-                              pw.Row(
-                                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                                children: [
-                                  pw.Expanded(
-                                    child: pw.Column(
-                                      crossAxisAlignment:
-                                          pw.CrossAxisAlignment.start,
-                                      children: [
-                                        if (prefs.bankDetails.isNotEmpty)
-                                          blueText(
-                                            gettext.t(
-                                              'Bank details',
-                                              null,
-                                            ),
-                                          ),
-                                        if (prefs.bankDetails.isNotEmpty)
-                                          pw.Text(
-                                            prefs.bankDetails,
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-                                  pw.Expanded(
-                                    child: pw.Column(
-                                      crossAxisAlignment:
-                                          pw.CrossAxisAlignment.end,
-                                      children: [
-                                        if (prefs.address.isNotEmpty)
-                                          blueText(gettext.t(
-                                            'Address',
-                                            null,
-                                          )),
-                                        if (prefs.address.isNotEmpty)
-                                          pw.Text(
-                                            prefs.address,
-                                            textAlign: pw.TextAlign.right,
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                        if (page == 0)
+                          invoiceHeader(
+                            prefs.line1,
+                            prefs.line2,
+                            line1Font,
+                            line2Font,
                           ),
+                        if (page == 0) invoiceTitle(state.children),
+                        if (page == 0) invoiceMeta(),
+                        if (page == 0) invoiceTotal(conditions),
+                        if (pages[page].isEmpty) pw.Container(),
+                        if (pages[page].isNotEmpty)
+                          invoiceTable(_buildTable(pages, page, childrenMap)),
                       ],
                     ),
-                    if (logoFile.existsSync())
+                    if (page == 0 && logoFile.existsSync())
                       pw.Positioned(
                         right: 0,
                         top: 0,
@@ -276,9 +140,50 @@ class _DocumentBuilder extends StatelessWidget {
                           fit: pw.BoxFit.contain,
                         ),
                       ),
+                    if (page == pages.length - 1)
+                      pw.Positioned(
+                        left: 0,
+                        bottom: pages[page].isNotEmpty ? 0 : null,
+                        child: pw.Column(
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          children: [
+                            if (prefs.bankDetails.isNotEmpty)
+                              blueText(
+                                gettext.t(
+                                  'Bank details',
+                                  null,
+                                ),
+                              ),
+                            if (prefs.bankDetails.isNotEmpty)
+                              pw.Text(
+                                prefs.bankDetails,
+                              ),
+                          ],
+                        ),
+                      ),
+                    if (page == pages.length - 1)
+                      pw.Positioned(
+                        right: 0,
+                        bottom: pages[page].isNotEmpty ? 0 : null,
+                        child: pw.Column(
+                          crossAxisAlignment: pw.CrossAxisAlignment.end,
+                          children: [
+                            if (prefs.address.isNotEmpty)
+                              blueText(gettext.t(
+                                'Address',
+                                null,
+                              )),
+                            if (prefs.address.isNotEmpty)
+                              pw.Text(
+                                prefs.address,
+                                textAlign: pw.TextAlign.right,
+                              ),
+                          ],
+                        ),
+                      ),
                   ],
                 );
-              },
+              }),
             ),
           );
         }
@@ -293,11 +198,101 @@ class _DocumentBuilder extends StatelessWidget {
     );
   }
 
+  // ignore: long-method
+  Iterable<pw.TableRow> _buildTable(
+    List<List<Group<String, Service>>> pages,
+    int page,
+    Map<int, Child> childrenMap,
+  ) sync* {
+    var previousChildId = -1;
+    for (var group in pages[page]) {
+      yield pw.TableRow(
+        decoration: const pw.BoxDecoration(
+          border: pw.Border(
+            bottom: pw.BorderSide(color: PdfColors.grey),
+          ),
+        ),
+        children: [
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(
+              vertical: 8.0,
+            ),
+            child: pw.Text(
+              group.key.formatDate(),
+              textAlign: pw.TextAlign.left,
+              style: const pw.TextStyle(fontSize: 14),
+            ),
+          ),
+        ],
+      );
+      for (var service in group.value) {
+        bool newChild = service.childId != previousChildId;
+        yield pw.TableRow(
+          children: [
+            pw.Padding(
+              padding: const pw.EdgeInsets.symmetric(
+                vertical: 4.0,
+              ),
+              child: pw.Text(
+                state.children.length == 1
+                    ? ""
+                    : newChild
+                        ? childrenMap[service.childId]!.firstName
+                        : "",
+                style: pw.TextStyle(
+                  inherit: true,
+                  fontStyle: pw.FontStyle.italic,
+                ),
+              ),
+            ),
+            pw.Padding(
+              padding: const pw.EdgeInsets.symmetric(
+                vertical: 4.0,
+              ),
+              child: pw.Text(
+                service.priceLabel!,
+                textAlign: pw.TextAlign.left,
+                style: const pw.TextStyle(fontSize: 14),
+              ),
+            ),
+            pw.Padding(
+              padding: const pw.EdgeInsets.symmetric(
+                vertical: 4.0,
+              ),
+              child: pw.Text(
+                service.isFixedPrice == 1
+                    ? '-'
+                    : (service.hours.toString() +
+                        "h" +
+                        service.minutes.toString().padLeft(2, '0') +
+                        ' x ' +
+                        service.priceAmount!.toStringAsFixed(2)),
+                textAlign: pw.TextAlign.center,
+                style: const pw.TextStyle(fontSize: 14),
+              ),
+            ),
+            pw.Padding(
+              padding: const pw.EdgeInsets.symmetric(
+                vertical: 4.0,
+              ),
+              child: pw.Text(
+                service.total.toStringAsFixed(2),
+                textAlign: pw.TextAlign.right,
+                style: const pw.TextStyle(fontSize: 14),
+              ),
+            ),
+          ],
+        );
+      }
+    }
+  }
+
   Future<File> _getLogoFile() async {
     final applicationDirectory = await getApplicationDocumentsDirectory();
     final appDocumentsPath = applicationDirectory.path;
     final filePath = '$appDocumentsPath/logo';
     final file = File(filePath);
+
     return file;
   }
 
@@ -307,6 +302,7 @@ class _DocumentBuilder extends StatelessWidget {
         ? await rootBundle.load(prefs.line2FontAsset)
         : null;
     final line2Font = byteData2 != null ? pw.Font.ttf(byteData2) : null;
+
     return line2Font;
   }
 
