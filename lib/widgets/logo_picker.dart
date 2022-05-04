@@ -23,6 +23,7 @@ class _LogoPickerState extends State<LogoPicker> {
     final focusNode = FocusNode();
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextButton(
           focusNode: focusNode,
