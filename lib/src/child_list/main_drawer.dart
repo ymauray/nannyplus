@@ -21,9 +21,9 @@ import '../../data/services_repository.dart';
 import '../../utils/database_util.dart';
 import '../../utils/encode_utils.dart';
 import '../../utils/prefs_util.dart';
-import '../../views/privacy_settings_view.dart';
 import '../backup_restore/backup_restore_view.dart';
 import '../price_list/price_list_view.dart';
+import '../privacy_settings_view/privacy_settings_view.dart';
 import '../settings_view/settings_view.dart';
 
 class NewMainDrawer extends StatelessWidget {

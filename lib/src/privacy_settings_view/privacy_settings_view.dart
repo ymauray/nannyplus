@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 
-import '../views/app_view.dart';
+import '../ui/sliver_curved_persistent_header.dart';
+import '../ui/view.dart';
 
 class PrivacySettingsView extends StatelessWidget {
   const PrivacySettingsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AppView(
+    return UIView(
       title: Text(context.t('Privacy settings')),
+      persistentHeader: const UISliverCurvedPersistenHeader(child: Text('')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
