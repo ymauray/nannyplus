@@ -12,14 +12,16 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-import '../cubit/invoice_view_cubit.dart';
-import '../data/model/child.dart';
-import '../data/model/invoice.dart';
-import '../data/model/service.dart';
-import '../utils/date_format_extension.dart';
-import '../utils/prefs_util.dart';
-import '../views/app_view.dart';
-import '../widgets/loading_indicator.dart';
+import '../../cubit/child_info_cubit.dart';
+import '../../cubit/invoice_view_cubit.dart';
+import '../../data/model/child.dart';
+import '../../data/model/invoice.dart';
+import '../../data/model/service.dart';
+import '../../utils/date_format_extension.dart';
+import '../../utils/prefs_util.dart';
+import '../../widgets/loading_indicator.dart';
+import '../ui/sliver_curved_persistent_header.dart';
+import '../ui/view.dart';
 
 class InvoiceView extends StatelessWidget {
   const InvoiceView(
@@ -36,8 +38,22 @@ class InvoiceView extends StatelessWidget {
     context.read<InvoiceViewCubit>().init(invoice);
 
     return BlocBuilder<InvoiceViewCubit, InvoiceViewState>(
-      builder: (context, state) => AppView(
-        title: Text(context.t('Invoice {0}', args: [invoice.number])),
+      builder: (context, state) => UIView(
+        title: BlocBuilder<ChildInfoCubit, ChildInfoState>(
+          builder: (context, state) => state is ChildInfoLoaded
+              ? Text(state.child.displayName)
+              : Text(context.t('Loading...')),
+        ),
+        persistentHeader: UISliverCurvedPersistenHeader(
+          child: Text(
+            context.t(
+              'Invoice of {0}',
+              args: [
+                invoice.date.formatDate(),
+              ],
+            ),
+          ),
+        ),
         body: state is InvoiceViewLoaded
             ? _DocumentBuilder(state, invoice, gettext)
             : const LoadingIndicator(),
@@ -192,6 +208,18 @@ class _DocumentBuilder extends StatelessWidget {
       })(),
       builder: (context, snapshot) {
         return PdfPreview(
+          canChangePageFormat: false,
+          canChangeOrientation: false,
+          canDebug: false,
+          padding: EdgeInsets.zero,
+          scrollViewDecoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+          ),
+          pdfFileName: context
+                  .t('Invoice {0}', args: [invoice.number])
+                  .toLowerCase()
+                  .replaceAll(' ', '_') +
+              ".pdf",
           build: (pageFormat) => snapshot.data!.save(),
         );
       },

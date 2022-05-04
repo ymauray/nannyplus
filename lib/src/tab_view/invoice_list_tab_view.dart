@@ -13,9 +13,9 @@ import '../../src/constants.dart';
 import '../../src/ui/ui_card.dart';
 import '../../utils/date_format_extension.dart';
 import '../../utils/list_extensions.dart';
-import '../../views/invoice_view.dart';
 import '../common/loading_indicator_list_view.dart';
 import '../invoice_form/invoice_form.dart';
+import '../invoice_view/invoice_view.dart';
 import '../ui/list_view.dart';
 
 class NewInvoiceListTabView extends StatelessWidget {

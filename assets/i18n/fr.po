@@ -344,55 +344,5 @@ msgstr "Base de données restaurée avec succès"
 msgid "Error restoring database"
 msgstr "Erreur lors de la restauration de la base de données"
 
-# Legacy messages
-
-# msgid "Settings"
-# msgstr "Paramètres"
-
-# msgid "Use dark mode"
-# msgstr "Utiliser le mode sombre"
-
-# msgid "Reset database"
-# msgstr "Réinitialiser la base de données"
-
-# msgid "Insert test data"
-# msgstr "Insérer des données de test"
-
-# msgid "Meals"
-# msgstr "Repas"
-
-# msgid "Preschool"
-# msgstr "Pré-scolaire"
-
-# msgid "Kindergarden"
-# msgstr "Parascolaire"
-
-# msgid "Misc"
-# msgstr "Divers"
-
-# msgid "Night"
-# msgstr "Nuit"
-
-# msgid "Save"
-# msgstr "Enregistrer"
-
-# msgid "Tarifs"
-# msgstr "Tarifs"
-
-# msgid "Delete"
-# msgstr "Supprimer"
-
-# msgid "Duration"
-# msgstr "Durée"
-
-# msgid "Rates"
-# msgstr ""
-
-# msgid "Hours"
-# msgstr ""
-
-# msgid "Week"
-# msgstr ""
-
-# msgid "Weekend"
-# msgstr ""
+msgid "Invoice of {0}"
+msgstr "Facture du {0}"

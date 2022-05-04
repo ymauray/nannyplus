@@ -63,3 +63,6 @@ msgstr "Week"
 
 msgid "Weekend"
 msgstr "Weekend"
+
+msgid "Invoice of {0}"
+msgstr "Invoice of {0}"
