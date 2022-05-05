@@ -10,11 +10,11 @@ import 'package:path_provider/path_provider.dart';
 import '../../cubit/settings_cubit.dart';
 import '../../utils/font_utils.dart';
 import '../../utils/logo_picker_controller.dart';
-import '../../widgets/logo_picker.dart';
 import '../constants.dart';
 import '../ui/list_view.dart';
 import '../ui/sliver_curved_persistent_header.dart';
 import '../ui/view.dart';
+import 'logo_picker.dart';
 
 class SettingsForm extends StatelessWidget {
   final SettingsLoaded _state;
