@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 import '../utils/database_util.dart';
 import 'model/price.dart';
 
@@ -62,7 +64,7 @@ class PricesRepository {
 
       return read(id);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       rethrow;
     }
   }

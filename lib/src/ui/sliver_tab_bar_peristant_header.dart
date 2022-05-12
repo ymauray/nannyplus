@@ -5,25 +5,19 @@ const _kDefaultSpacing = 12.0;
 class UISliverTabBarPeristantHeader extends StatelessWidget {
   const UISliverTabBarPeristantHeader({
     this.padding,
-    //this.children,
     required this.tabBar,
     this.onTap,
     Key? key,
   }) : super(key: key);
 
   final double? padding;
-  //final List<Widget>? children;
   final TabBar tabBar;
   final ValueChanged<int>? onTap;
 
   @override
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
-      delegate: _Delegate(
-        //children: children,
-        tabBar: tabBar,
-        onTap: onTap,
-      ),
+      delegate: _Delegate(tabBar: tabBar, onTap: onTap, padding: padding),
       pinned: true,
     );
   }
@@ -32,13 +26,11 @@ class UISliverTabBarPeristantHeader extends StatelessWidget {
 class _Delegate extends SliverPersistentHeaderDelegate {
   _Delegate({
     this.padding,
-    //this.children,
     required this.tabBar,
     this.onTap,
   });
 
   final double? padding;
-  //final List<Widget>? children;
   final TabBar tabBar;
   final ValueChanged<int>? onTap;
 

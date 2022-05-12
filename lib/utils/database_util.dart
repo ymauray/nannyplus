@@ -66,7 +66,7 @@ class DatabaseUtil {
   }
 
   static Future<void> _create(sqlite.Database db) async {
-    final locale = WidgetsBinding.instance!.window.locale;
+    final locale = WidgetsBinding.instance.window.locale;
     final GettextLocalizations gettext =
         await GettextLocalizationsDelegate().load(locale);
 

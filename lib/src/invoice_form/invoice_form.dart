@@ -28,7 +28,7 @@ class NewInvoiceForm extends StatelessWidget {
 
     return FormBuilder(
       key: _formKey,
-      initialValue: {},
+      initialValue: const {},
       child: UIView(
         title: Text(context.t("Create invoice")),
         actions: [

@@ -58,7 +58,7 @@ class _LogoPickerState extends State<LogoPicker> {
         var appDocumentsPath = value.data!.path;
         var filePath = '$appDocumentsPath/logo';
         if (File(filePath).existsSync()) {
-          imageCache?.clearLiveImages();
+          imageCache.clearLiveImages();
 
           return ClipRect(
             child: Image.file(
