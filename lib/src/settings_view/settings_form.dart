@@ -28,11 +28,11 @@ class SettingsForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormBuilderState>();
+    final formKey = GlobalKey<FormBuilderState>();
     final logoPickerController = LogoPickerController();
 
     return FormBuilder(
-      key: _formKey,
+      key: formKey,
       initialValue: {
         'line1': _state.line1,
         'line1Font': _state.line1Font.family.isNotEmpty
@@ -63,11 +63,11 @@ class SettingsForm extends StatelessWidget {
                 XFile file = XFile.fromData(logoPickerController.bytes!);
                 await file.saveTo(filePath);
               }
-              _formKey.currentState!.save();
-              if (_formKey.currentState!.validate()) {
+              formKey.currentState!.save();
+              if (formKey.currentState!.validate()) {
                 context
                     .read<SettingsCubit>()
-                    .saveSettings(_formKey.currentState!.value);
+                    .saveSettings(formKey.currentState!.value);
                 Navigator.of(context).pop();
               }
             },

@@ -150,9 +150,9 @@ class DatabaseUtil {
     prefsUtil.line2FontAsset = FontUtils.defaultFontItem.asset;
     prefsUtil.conditions =
         gettext.t("Payment within 10 day via bank transfert", null);
-    prefsUtil.bankDetails = gettext.t("Bank : {0}", ["Monopoly"]) +
-        "\n" +
-        gettext.t("IBAN : {0}", ["XY7900123456789"]);
+    prefsUtil.bankDetails = "${gettext.t("Bank : {0}", [
+          "Monopoly",
+        ])}\n${gettext.t("IBAN : {0}", ["XY7900123456789"])}";
     prefsUtil.address = "Boldistrasse 97\n2560 Nidau";
 
     var image = await rootBundle.load("assets/img/logo.png");

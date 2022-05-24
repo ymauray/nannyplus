@@ -88,6 +88,7 @@ class _List extends StatelessWidget {
             onFloatingActionPressed: action,
           )
         : UIListView.fromChildren(
+            onFloatingActionPressed: action,
             children: [
               UICard(
                 children: [
@@ -98,7 +99,6 @@ class _List extends StatelessWidget {
                 ],
               ),
             ],
-            onFloatingActionPressed: action,
           );
   }
 }

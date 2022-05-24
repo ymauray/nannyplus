@@ -61,15 +61,11 @@ class NewTabView extends StatelessWidget {
           child: BlocBuilder<ServiceListCubit, ServiceListState>(
             builder: (context, state) => state is ServiceListLoaded
                 ? Text(
-                    context.t('Pending total') +
-                        ' : ' +
-                        state.services
-                            .fold<double>(
-                              0.0,
-                              (previousValue, service) =>
-                                  previousValue + service.total,
-                            )
-                            .toStringAsFixed(2),
+                    '${context.t('Pending total')} : ${state.services.fold<double>(
+                          0.0,
+                          (previousValue, service) =>
+                              previousValue + service.total,
+                        ).toStringAsFixed(2)}',
                   )
                 : Text(context.t("Loading...")),
           ),

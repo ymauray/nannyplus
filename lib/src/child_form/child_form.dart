@@ -22,10 +22,10 @@ class NewChildForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormBuilderState>();
+    final formKey = GlobalKey<FormBuilderState>();
 
     return FormBuilder(
-      key: _formKey,
+      key: formKey,
       initialValue: {
         'firstName': child?.firstName,
         'lastName': child?.lastName,
@@ -54,10 +54,10 @@ class NewChildForm extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: IconButton(
               onPressed: () {
-                _formKey.currentState!.save();
-                if (_formKey.currentState!.validate()) {
+                formKey.currentState!.save();
+                if (formKey.currentState!.validate()) {
                   var map =
-                      Map<String, dynamic>.from(_formKey.currentState!.value);
+                      Map<String, dynamic>.from(formKey.currentState!.value);
                   if (map['birthdate'] != null) {
                     map['birthdate'] = DateFormat('yyyy-MM-dd')
                         .format(map['birthdate'] as DateTime);
@@ -210,7 +210,7 @@ class NewChildForm extends StatelessWidget {
                 keyboardType: TextInputType.text,
                 validator: (value) {
                   var labelIsEmpty = value?.isEmpty ?? true;
-                  var valueIsEmpty = _formKey.currentState!
+                  var valueIsEmpty = formKey.currentState!
                           .fields['phoneNumber2']!.value?.isEmpty ??
                       true;
 
@@ -234,7 +234,7 @@ class NewChildForm extends StatelessWidget {
                 autocorrect: false,
                 keyboardType: TextInputType.phone,
                 validator: (value) {
-                  var labelEmpty = _formKey.currentState!
+                  var labelEmpty = formKey.currentState!
                           .fields['labelForPhoneNumber2']!.value?.isEmpty ??
                       true;
                   var valueEmpty = value?.isEmpty ?? true;
@@ -264,7 +264,7 @@ class NewChildForm extends StatelessWidget {
                 keyboardType: TextInputType.text,
                 validator: (value) {
                   var labelIsEmpty = value?.isEmpty ?? true;
-                  var valueIsEmpty = _formKey.currentState!
+                  var valueIsEmpty = formKey.currentState!
                           .fields['phoneNumber3']!.value?.isEmpty ??
                       true;
 
@@ -288,7 +288,7 @@ class NewChildForm extends StatelessWidget {
                 autocorrect: false,
                 keyboardType: TextInputType.phone,
                 validator: (value) {
-                  var labelEmpty = _formKey.currentState!
+                  var labelEmpty = formKey.currentState!
                           .fields['labelForPhoneNumber3']!.value?.isEmpty ??
                       true;
                   var valueEmpty = value?.isEmpty ?? true;

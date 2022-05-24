@@ -66,10 +66,9 @@ class NewServiceForm extends StatelessWidget {
                   builder: (context, state) {
                     return state is ServiceFormLoaded
                         ? Text(
-                            context.t("Added") +
-                                " (${state.selectedServices.length})",
+                            "${context.t("Added")} (${state.selectedServices.length})",
                           )
-                        : Text(context.t("Added") + " 0");
+                        : Text("${context.t("Added")} 0");
                   },
                 ),
               ),
@@ -435,14 +434,12 @@ class _ServiceTile extends StatelessWidget {
                                 service.priceAmount!.toStringAsFixed(2),
                               ],
                             )
-                          : context.t(
-                                "Hourly price of {0}",
-                                args: [
-                                  service.priceAmount!.toStringAsFixed(2),
-                                ],
-                              ) +
-                              " x ${service.hours!}h"
-                                  "${service.minutes!.toString().padLeft(2, '0')}",
+                          : "${context.t(
+                              "Hourly price of {0}",
+                              args: [
+                                service.priceAmount!.toStringAsFixed(2),
+                              ],
+                            )} x ${service.hours!}h${service.minutes!.toString().padLeft(2, '0')}",
                     ),
                   ),
                 ],

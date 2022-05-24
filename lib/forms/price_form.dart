@@ -18,18 +18,18 @@ class PriceForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormBuilderState>();
+    final formKey = GlobalKey<FormBuilderState>();
 
     return AppView(
       title: Text(context.t("Create new price")),
       actions: [
         IconButton(
-          onPressed: () => save(_formKey, context, price?.id, price?.sortOrder),
+          onPressed: () => save(formKey, context, price?.id, price?.sortOrder),
           icon: const Icon(Icons.save),
         ),
       ],
       body: FormBuilder(
-        key: _formKey,
+        key: formKey,
         initialValue: {
           'label': price?.label,
           'amount': price?.amount.toStringAsFixed(2),
@@ -63,12 +63,12 @@ class PriceForm extends StatelessWidget {
               ),
               items: [
                 DropdownMenuItem(
-                  child: Text(context.t('Fixed price')),
                   value: true,
+                  child: Text(context.t('Fixed price')),
                 ),
                 DropdownMenuItem(
-                  child: Text(context.t('Hourly price')),
                   value: false,
+                  child: Text(context.t('Hourly price')),
                 ),
               ],
             ),

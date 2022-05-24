@@ -215,11 +215,9 @@ class _DocumentBuilder extends StatelessWidget {
           scrollViewDecoration: BoxDecoration(
             color: Theme.of(context).colorScheme.background,
           ),
-          pdfFileName: context
-                  .t('Invoice {0}', args: [invoice.number])
-                  .toLowerCase()
-                  .replaceAll(' ', '_') +
-              ".pdf",
+          pdfFileName: "${context.t('Invoice {0}', args: [
+                    invoice.number,
+                  ]).toLowerCase().replaceAll(' ', '_')}.pdf",
           build: (pageFormat) => snapshot.data!.save(),
         );
       },
@@ -290,11 +288,7 @@ class _DocumentBuilder extends StatelessWidget {
               child: pw.Text(
                 service.isFixedPrice == 1
                     ? '-'
-                    : (service.hours.toString() +
-                        "h" +
-                        service.minutes.toString().padLeft(2, '0') +
-                        ' x ' +
-                        service.priceAmount!.toStringAsFixed(2)),
+                    : "${service.hours.toString()}h${service.minutes.toString().padLeft(2, '0')} x ${service.priceAmount!.toStringAsFixed(2)}",
                 textAlign: pw.TextAlign.center,
                 style: const pw.TextStyle(fontSize: 14),
               ),
@@ -383,14 +377,8 @@ class _DocumentBuilder extends StatelessWidget {
   pw.Widget invoiceTitle(List<Child> children) {
     String childName = children[0].displayName;
     if (children.length > 1) {
-      childName = children
-              .take(children.length - 1)
-              .map((child) => child.firstName)
-              .join(", ") +
-          " " +
-          gettext.t("and", null) +
-          " " +
-          children.last.firstName;
+      childName =
+          "${children.take(children.length - 1).map((child) => child.firstName).join(", ")} ${gettext.t("and", null)} ${children.last.firstName}";
     }
 
     return pw.Column(
@@ -559,7 +547,7 @@ class _DocumentBuilder extends StatelessWidget {
           children: [
             pw.Expanded(
               child: pw.Text(
-                gettext.t('Total incl. VAT', null) + " : ",
+                "${gettext.t('Total incl. VAT', null)} : ",
                 style: pw.TextStyle(
                   fontSize: 16,
                   fontWeight: pw.FontWeight.bold,

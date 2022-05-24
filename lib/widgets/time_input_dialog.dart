@@ -20,7 +20,7 @@ class TimeInputDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormBuilderState>();
+    final formKey = GlobalKey<FormBuilderState>();
 
     return Dialog(
       elevation: 0,
@@ -39,7 +39,7 @@ class TimeInputDialog extends StatelessWidget {
           ],
         ),
         child: FormBuilder(
-          key: _formKey,
+          key: formKey,
           initialValue: {
             'hours': hours,
             'minutes': minutes,
@@ -89,12 +89,12 @@ class TimeInputDialog extends StatelessWidget {
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () {
-                  _formKey.currentState!.save();
-                  if (_formKey.currentState!.validate()) {
+                  formKey.currentState!.save();
+                  if (formKey.currentState!.validate()) {
                     Navigator.of(context).pop(
                       TimeInputData(
-                        hours: _formKey.currentState!.value['hours'] ?? 0,
-                        minutes: _formKey.currentState!.value['minutes'] ?? 0,
+                        hours: formKey.currentState!.value['hours'] ?? 0,
+                        minutes: formKey.currentState!.value['minutes'] ?? 0,
                       ),
                     );
                   } else {

@@ -24,10 +24,10 @@ class NewInvoiceForm extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<InvoiceFormCubit>().init(childId);
 
-    final _formKey = GlobalKey<FormBuilderState>();
+    final formKey = GlobalKey<FormBuilderState>();
 
     return FormBuilder(
-      key: _formKey,
+      key: formKey,
       initialValue: const {},
       child: UIView(
         title: Text(context.t("Create invoice")),

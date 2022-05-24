@@ -71,8 +71,8 @@ class UIView extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: FloatingActionButton(
-                    child: const Icon(Icons.add),
                     onPressed: onFloatingActionPressed,
+                    child: const Icon(Icons.add),
                   ),
                 ),
               ),

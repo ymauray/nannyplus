@@ -42,11 +42,7 @@ class NewChildListView extends StatelessWidget {
           title: const Text(ksAppName),
           persistentHeader: UISliverCurvedPersistenHeader(
             child: Text(
-              context.t('Pending total') +
-                  ' : ' +
-                  (state is ChildListLoaded
-                      ? state.pendingTotal.toStringAsFixed(2)
-                      : '...'),
+              '${context.t('Pending total')} : ${state is ChildListLoaded ? state.pendingTotal.toStringAsFixed(2) : '...'}',
             ),
           ),
           body: (state is ChildListLoaded)
@@ -182,7 +178,7 @@ class _ChildListTile extends StatelessWidget {
                   ),
                   onPressed: () {
                     child.hasPhoneNumber
-                        ? launch('tel://${child.phoneNumber}')
+                        ? launchUrl(Uri.parse('tel://${child.phoneNumber}'))
                         : ScaffoldMessenger.of(context).failure(
                             context.t('No phone number'),
                           );
@@ -196,11 +192,11 @@ class _ChildListTile extends StatelessWidget {
               children: [
                 Text(
                   child.hasAllergies
-                      ? context.t('Allergies') + ' : ' + child.allergies!
+                      ? '${context.t('Allergies')} : ${child.allergies!}'
                       : context.t('No known allergies'),
                 ),
                 Text(
-                  context.t('Last entry') + ' : ' + lastEntry,
+                  '${context.t('Last entry')} : $lastEntry',
                   style: Theme.of(context).textTheme.bodyText2!.copyWith(
                         fontSize: 12,
                         color: Colors.grey,

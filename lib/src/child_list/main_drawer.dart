@@ -88,7 +88,7 @@ class NewMainDrawer extends StatelessWidget {
             const Divider(),
             ListTile(
               title: Text(
-                context.t('Backup') + ' / ' + context.t('Restore'),
+                '${context.t('Backup')} / ${context.t('Restore')}',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),

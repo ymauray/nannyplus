@@ -16,7 +16,7 @@ class NewBackupRestoreView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return UIView(
-      title: Text(context.t('Backup') + ' / ' + context.t('Restore')),
+      title: Text('${context.t('Backup')} / ${context.t('Restore')}'),
       persistentHeader: const UISliverCurvedPersistenHeader(
         child: Text(''),
       ),
