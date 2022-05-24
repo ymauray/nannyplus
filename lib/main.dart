@@ -17,7 +17,7 @@ Future<void> main() async {
   tz.initializeTimeZones();
   final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
   tz.setLocalLocation(tz.getLocation(currentTimeZone));
-  NotificationUtil().scheduleNotification();
+  //NotificationUtil().scheduleNotification();
 
   LicenseRegistry.addLicense(() async* {
     final license = await rootBundle.loadString('google_fonts/Poppins-OFL.txt');
