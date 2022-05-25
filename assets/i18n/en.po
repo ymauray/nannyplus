@@ -84,3 +84,27 @@ msgstr "Show paid invoices"
 
 msgid "Hide paid invoices"
 msgstr "Hide paid invoices"
+
+msgid "Archive folder"
+msgstr "Archive folder"
+
+msgid "Unarchive folder"
+msgstr "Unarchive folder"
+
+msgid "Show archived folders"
+msgstr "Show archived folders"
+
+msgid "Hide archived folders"
+msgstr "Hide archived folders"
+
+msgid "Are you sure you want to archive this folder ?"
+msgstr "Are you sure you want to archive this folder ?"
+
+msgid "Are you sure you want to unarchive this folder ?"
+msgstr "Are you sure you want to unarchive this folder ?"
+
+msgid "Archived successfully"
+msgstr "Archived successfully"
+
+msgid "Unarchived successfully"
+msgstr "Unarchived successfully"

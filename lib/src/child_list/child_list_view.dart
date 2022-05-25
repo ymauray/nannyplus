@@ -18,12 +18,21 @@ import '../tab_view/tab_view.dart';
 import '../ui/sliver_curved_persistent_header.dart';
 import '../ui/view.dart';
 
-class NewChildListView extends StatelessWidget {
+class NewChildListView extends StatefulWidget {
   const NewChildListView({Key? key}) : super(key: key);
 
   @override
+  State<NewChildListView> createState() => _NewChildListViewState();
+}
+
+class _NewChildListViewState extends State<NewChildListView> {
+  bool showArchivedFolders = false;
+
+  @override
   Widget build(BuildContext context) {
-    context.read<ChildListCubit>().loadChildList();
+    context
+        .read<ChildListCubit>()
+        .loadChildList(loadArchivedFolders: showArchivedFolders);
 
     return BlocConsumer<ChildListCubit, ChildListState>(
       listener: (context, state) async {
@@ -59,11 +68,40 @@ class NewChildListView extends StatelessWidget {
                           ),
                         );
                         var cubit = context.read<ChildListCubit>();
-                        cubit.loadChildList();
+                        cubit.loadChildList(
+                          loadArchivedFolders: showArchivedFolders,
+                        );
+                      },
+                      onToggleShowArchivedFolders: () {
+                        var child = state.children[index];
+                        if (!child.isArchived) {
+                          context.read<ChildListCubit>().archive(child);
+                          ScaffoldMessenger.of(context)
+                              .success(context.t("Archived successfully"));
+                        } else {
+                          context.read<ChildListCubit>().unarchive(child);
+                          ScaffoldMessenger.of(context)
+                              .success(context.t("Unarchived successfully"));
+                        }
+                        context.read<ChildListCubit>().loadChildList(
+                              loadArchivedFolders: showArchivedFolders,
+                            );
                       },
                     );
                   },
                   itemCount: state.children.length,
+                  extraWidget: TextButton(
+                    onPressed: () {
+                      setState(() {
+                        showArchivedFolders = !showArchivedFolders;
+                      });
+                    },
+                    child: Text(
+                      context.t(showArchivedFolders
+                          ? 'Hide archived folders'
+                          : 'Show archived folders'),
+                    ),
+                  ),
                   onFloatingActionPressed: () async {
                     var child = await Navigator.of(context).push<Child>(
                       MaterialPageRoute(
@@ -131,6 +169,7 @@ class _ChildListTile extends StatelessWidget {
   const _ChildListTile({
     required this.index,
     required this.state,
+    required this.onToggleShowArchivedFolders,
     this.onTap,
     Key? key,
   }) : super(key: key);
@@ -138,6 +177,7 @@ class _ChildListTile extends StatelessWidget {
   final ChildListLoaded state;
   final int index;
   final void Function()? onTap;
+  final Function() onToggleShowArchivedFolders;
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +203,7 @@ class _ChildListTile extends StatelessWidget {
         elevation: 4,
         shape: Theme.of(context).listTileTheme.shape,
         child: GestureDetector(
-          onTap: onTap,
+          onTap: child.isArchived ? null : onTap,
           behavior: HitTestBehavior.opaque,
           child: ListTile(
             leading: Column(
@@ -186,7 +226,14 @@ class _ChildListTile extends StatelessWidget {
                 ),
               ],
             ),
-            title: Text(child.displayName),
+            title: Text(
+              child.displayName,
+              style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                    fontStyle:
+                        child.isArchived ? FontStyle.italic : FontStyle.normal,
+                    color: child.isArchived ? Colors.grey : null,
+                  ),
+            ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -211,30 +258,94 @@ class _ChildListTile extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Text(pendingTotal),
                 ),
-                IconButton(
-                  icon: Icon(
-                    Icons.delete_forever_outlined,
-                    color: !state.servicesInfo.containsKey(child.id)
-                        ? kcDangerColor
-                        : null,
-                  ),
-                  onPressed: serviceInfo != null
-                      ? () {
+                PopupMenuButton(
+                  onSelected: (value) async {
+                    switch (value) {
+                      case 1:
+                        if (!child.isArchived &&
+                            serviceInfo?.pendingTotal != 0) {
                           ScaffoldMessenger.of(context).failure(
                             context.t(
                               "There are existing services for this child",
                             ),
                           );
+                        } else {
+                          var archive = await _showConfirmationDialog(
+                            context,
+                            child.isArchived
+                                ? context.t(
+                                    'Are you sure you want to unarchive this folder ?',
+                                  )
+                                : context.t(
+                                    'Are you sure you want to archive this folder ?',
+                                  ),
+                          );
+                          if (archive ?? false) {
+                            onToggleShowArchivedFolders();
+                          }
                         }
-                      : () async {
-                          var delete = await _showConfirmationDialog(context);
+                        break;
+                      case 2:
+                        if (serviceInfo != null) {
+                          ScaffoldMessenger.of(context).failure(
+                            context.t(
+                              "There are existing services for this child",
+                            ),
+                          );
+                        } else {
+                          var delete = await _showConfirmationDialog(
+                            context,
+                            context.t(
+                              'Are you sure you want to delete this child\'s folder ?',
+                            ),
+                          );
                           if (delete ?? false) {
                             context.read<ChildListCubit>().delete(child);
                             ScaffoldMessenger.of(context).success(
                               context.t("Removed successfully"),
                             );
                           }
-                        },
+                        }
+                        break;
+                    }
+                  },
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context) {
+                    return [
+                      PopupMenuItem(
+                        value: 1,
+                        child: ListTile(
+                          leading: const Icon(
+                            Icons.hide_source_outlined,
+                            color: kcAlmostBlack,
+                          ),
+                          title: Text(
+                            child.isArchived
+                                ? context.t('Unarchive folder')
+                                : context.t('Archive folder'),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ),
+                      PopupMenuItem(
+                        value: 2,
+                        enabled: !child.isArchived,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.delete_forever_outlined,
+                            color: !child.isArchived &&
+                                    !state.servicesInfo.containsKey(child.id)
+                                ? kcDangerColor
+                                : null,
+                          ),
+                          title: Text(
+                            context.t('Delete'),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ),
+                    ];
+                  },
                 ),
               ],
             ),
@@ -244,16 +355,17 @@ class _ChildListTile extends StatelessWidget {
     );
   }
 
-  Future<bool?> _showConfirmationDialog(BuildContext context) async {
+  Future<bool?> _showConfirmationDialog(
+    BuildContext context,
+    String message,
+  ) async {
     return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
           title: Text(context.t('Delete')),
-          content: Text(
-            context.t('Are you sure you want to delete this child\'s folder ?'),
-          ),
+          content: Text(message),
           actions: [
             TextButton(
               child: Text(context.t('Yes')),

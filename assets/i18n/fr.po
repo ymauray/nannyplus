@@ -361,3 +361,27 @@ msgstr "Afficher les factures payées"
 
 msgid "Hide paid invoices"
 msgstr "Masquer les factures payées"
+
+msgid "Archive folder"
+msgstr "Archiver le dossier"
+
+msgid "Unarchive folder"
+msgstr "Désarchiver le dossier"
+
+msgid "Show archived folders"
+msgstr "Afficher les dossiers archivés"
+
+msgid "Hide archived folders"
+msgstr "Masquer les dossiers archivés"
+
+msgid "Are you sure you want to archive this folder ?"
+msgstr "Êtes-vous sûr de vouloir archiver ce dossier ?"
+
+msgid "Are you sure you want to unarchive this folder ?"
+msgstr "Êtes-vous sûr de vouloir désarchiver ce dossier ?"
+
+msgid "Archived successfully"
+msgstr "Archivé avec succès"
+
+msgid "Unarchived successfully"
+msgstr "Désarchivé avec succès"
