@@ -8,6 +8,7 @@ class UIListView extends StatelessWidget {
     this.horizontalPadding = 0,
   })  : itemBuilder = null,
         itemCount = 0,
+        extraWidget = null,
         super(key: key);
 
   const UIListView({
@@ -16,6 +17,7 @@ class UIListView extends StatelessWidget {
     this.itemCount,
     this.onFloatingActionPressed,
     this.horizontalPadding = 0,
+    this.extraWidget,
   })  : children = null,
         super(key: key);
 
@@ -24,6 +26,7 @@ class UIListView extends StatelessWidget {
   final VoidCallback? onFloatingActionPressed;
   final List<Widget>? children;
   final double? horizontalPadding;
+  final Widget? extraWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +39,14 @@ class UIListView extends StatelessWidget {
             right: horizontalPadding!,
             bottom: onFloatingActionPressed != null ? 80 : 0,
           ),
-          itemBuilder: itemBuilder ?? _itemBuilder,
-          itemCount: itemBuilder == null ? children!.length : itemCount,
+          itemBuilder: extraWidget != null
+              ? _extraItemBuilder
+              : itemBuilder ?? _itemBuilder,
+          itemCount: itemBuilder == null
+              ? children!.length
+              : extraWidget != null
+                  ? (itemCount! + 1)
+                  : itemCount,
         ),
         if (onFloatingActionPressed != null)
           Align(
@@ -56,5 +65,11 @@ class UIListView extends StatelessWidget {
 
   Widget _itemBuilder(BuildContext context, int index) {
     return children![index];
+  }
+
+  Widget _extraItemBuilder(BuildContext context, int index) {
+    return index < itemCount!
+        ? itemBuilder!.call(context, index)
+        : extraWidget!;
   }
 }

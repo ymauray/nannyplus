@@ -182,8 +182,8 @@ msgstr "Créer une facture"
 msgid "Invoices"
 msgstr "Factures"
 
-msgid "No invoice found"
-msgstr "Aucune facture trouvée"
+msgid "No open invoice found"
+msgstr "Aucune facture ouverte trouvée"
 
 msgid "Invoice for {0}"
 msgstr "Facture pour {0}"
@@ -346,3 +346,18 @@ msgstr "Erreur lors de la restauration de la base de données"
 
 msgid "Invoice of {0}"
 msgstr "Facture du {0}"
+
+msgid "Mark as paid"
+msgstr "Marquer comme payée"
+
+msgid "Are you sure you want to mark this invoice as paid ?"
+msgstr "Êtes-vous sûr de vouloir marquer cette facture comme payée ?"
+
+msgid "Invoice marked as paid"
+msgstr "Facture marquée comme payée"
+
+msgid "Show paid invoices"
+msgstr "Afficher les factures payées"
+
+msgid "Hide paid invoices"
+msgstr "Masquer les factures payées"

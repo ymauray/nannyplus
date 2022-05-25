@@ -45,7 +45,7 @@ class DatabaseUtil {
 
     _database = await sqlite.openDatabase(
       await _databasePath,
-      version: 3,
+      version: 4,
       onCreate: (db, version) async {
         await _create(db);
         for (var i = 2; i <= version; i++) {
@@ -335,6 +335,13 @@ class DatabaseUtil {
         );
         sortOrder += 1;
       }
+    }
+
+    if (version == 4) {
+      await db.execute('''
+    ALTER TABLE invoices
+    ADD paid INTEGER NOT NULL DEFAULT 0
+    ''');
     }
   }
 }

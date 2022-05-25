@@ -64,5 +64,23 @@ msgstr "Week"
 msgid "Weekend"
 msgstr "Weekend"
 
+msgid "No open invoice found"
+msgstr "No open invoice found"
+
 msgid "Invoice of {0}"
 msgstr "Invoice of {0}"
+
+msgid "Mark as paid"
+msgstr "Mark as paid"
+
+msgid "Are you sure you want to mark this invoice as paid ?"
+msgstr "Are you sure you want to mark this invoice as paid ?"
+
+msgid "Invoice marked as paid"
+msgstr "Invoice marked as paid"
+
+msgid "Show paid invoices"
+msgstr "Show paid invoices"
+
+msgid "Hide paid invoices"
+msgstr "Hide paid invoices"

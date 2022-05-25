@@ -4,7 +4,10 @@ import 'model/invoice.dart';
 class InvoicesRepository {
   const InvoicesRepository();
 
-  Future<List<Invoice>> getInvoiceList(int childId) async {
+  Future<List<Invoice>> getInvoiceList(
+    int childId, {
+    required bool loadPaidInvoices,
+  }) async {
     var db = await DatabaseUtil.instance;
     var rows = await db.query(
       'invoices',
@@ -12,6 +15,10 @@ class InvoicesRepository {
       whereArgs: [childId],
       orderBy: 'date desc',
     );
+
+    if (!loadPaidInvoices) {
+      rows = rows.where((row) => row['paid'] == 0).toList();
+    }
 
     return rows.map((row) => Invoice.fromMap(row)).toList();
   }
@@ -61,5 +68,15 @@ class InvoicesRepository {
     var rows = await db.query('invoices', orderBy: 'number desc');
 
     return rows.isNotEmpty ? (rows.first['number'] as int) + 1 : 1;
+  }
+
+  Future<void> markAsPaid(int invoiceId) async {
+    var db = await DatabaseUtil.instance;
+    await db.update(
+      'invoices',
+      {'paid': 1},
+      where: 'id = ?',
+      whereArgs: [invoiceId],
+    );
   }
 }

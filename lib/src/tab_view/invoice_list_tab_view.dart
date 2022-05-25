@@ -4,7 +4,6 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
 import 'package:intl/intl.dart';
-import 'package:nannyplus/utils/snack_bar_util.dart';
 
 import '../../cubit/invoice_list_cubit.dart';
 import '../../cubit/service_list_cubit.dart';
@@ -13,12 +12,13 @@ import '../../src/constants.dart';
 import '../../src/ui/ui_card.dart';
 import '../../utils/date_format_extension.dart';
 import '../../utils/list_extensions.dart';
+import '../../utils/snack_bar_util.dart';
 import '../common/loading_indicator_list_view.dart';
 import '../invoice_form/invoice_form.dart';
 import '../invoice_view/invoice_view.dart';
 import '../ui/list_view.dart';
 
-class NewInvoiceListTabView extends StatelessWidget {
+class NewInvoiceListTabView extends StatefulWidget {
   const NewInvoiceListTabView({
     Key? key,
     required this.childId,
@@ -27,8 +27,17 @@ class NewInvoiceListTabView extends StatelessWidget {
   final int childId;
 
   @override
+  State<NewInvoiceListTabView> createState() => _NewInvoiceListTabViewState();
+}
+
+class _NewInvoiceListTabViewState extends State<NewInvoiceListTabView> {
+  bool showPaidInvoices = false;
+
+  @override
   Widget build(BuildContext context) {
-    context.read<InvoiceListCubit>().loadInvoiceList(childId);
+    context
+        .read<InvoiceListCubit>()
+        .loadInvoiceList(widget.childId, loadPaidInvoices: showPaidInvoices);
 
     return BlocConsumer<InvoiceListCubit, InvoiceListState>(
       listener: (context, state) {
@@ -42,7 +51,16 @@ class NewInvoiceListTabView extends StatelessWidget {
       },
       builder: (context, state) {
         return state is InvoiceListLoaded
-            ? _List(invoices: state.invoices, childId: childId)
+            ? _List(
+                invoices: state.invoices,
+                childId: widget.childId,
+                showPaidInvoices: showPaidInvoices,
+                onToggleShowPaidInvoices: (showHiddenInvoices) {
+                  setState(() {
+                    showPaidInvoices = showHiddenInvoices;
+                  });
+                },
+              )
             : const LoadingIndicatorListView();
       },
     );
@@ -54,10 +72,14 @@ class _List extends StatelessWidget {
     Key? key,
     required this.invoices,
     required this.childId,
+    required this.showPaidInvoices,
+    required this.onToggleShowPaidInvoices,
   }) : super(key: key);
 
   final List<Invoice> invoices;
   final int childId;
+  final bool showPaidInvoices;
+  final Function(bool) onToggleShowPaidInvoices;
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +99,16 @@ class _List extends StatelessWidget {
       context.read<ServiceListCubit>().loadServices(childId);
     }
 
+    final extraWidget = TextButton(
+      onPressed: () {
+        onToggleShowPaidInvoices(!showPaidInvoices);
+      },
+      child: Text(
+        context
+            .t(showPaidInvoices ? 'Hide paid invoices' : 'Show paid invoices'),
+      ),
+    );
+
     return invoices.isNotEmpty
         ? UIListView(
             itemBuilder: (context, index) {
@@ -85,6 +117,7 @@ class _List extends StatelessWidget {
               );
             },
             itemCount: i.length,
+            extraWidget: extraWidget,
             onFloatingActionPressed: action,
           )
         : UIListView.fromChildren(
@@ -94,10 +127,11 @@ class _List extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(kdMediumPadding),
-                    child: Text(context.t('No invoice found')),
+                    child: Text(context.t('No open invoice found')),
                   ),
                 ],
               ),
+              extraWidget,
             ],
           );
   }
@@ -161,23 +195,29 @@ class _InvoiceCard extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              child: Text(invoice.date.formatDate()),
+              child: Text(
+                invoice.date.formatDate(),
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      fontStyle: invoice.paid == 1
+                          ? FontStyle.italic
+                          : FontStyle.normal,
+                    ),
+              ),
               onTap: () => openPDF(context),
-              // onLongPress: () async {
-              //   var mark = await _showMarkPaidDialog(context);
-              //   if (mark ?? false) {
-              //     ScaffoldMessenger.of(context).success(
-              //       context.t("Invoice marked as paid"),
-              //     );
-              //   }
-              // },
             ),
           ),
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             child: Padding(
               padding: const EdgeInsets.only(right: 8.0),
-              child: Text(invoice.total.toStringAsFixed(2)),
+              child: Text(
+                invoice.total.toStringAsFixed(2),
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      fontStyle: invoice.paid == 1
+                          ? FontStyle.italic
+                          : FontStyle.normal,
+                    ),
+              ),
             ),
             onTap: () => openPDF(context),
           ),
@@ -187,7 +227,18 @@ class _InvoiceCard extends StatelessWidget {
                 onSelected: (value) async {
                   switch (value) {
                     case 1:
-                      debugPrint("Mark as paid");
+                      var mark = await _showMarkPaidDialog(context);
+                      if (mark ?? false) {
+                        context.read<InvoiceListCubit>().markInvoiceAsPaid(
+                              invoice,
+                            );
+                        context
+                            .read<ServiceListCubit>()
+                            .loadServices(invoice.childId);
+                        ScaffoldMessenger.of(context).success(
+                          context.t("Invoice marked as paid"),
+                        );
+                      }
                       break;
                     case 2:
                       var delete = await _showConfirmationDialog(context);
@@ -209,6 +260,7 @@ class _InvoiceCard extends StatelessWidget {
                   return [
                     PopupMenuItem(
                       value: 1,
+                      enabled: invoice.paid == 0,
                       child: ListTile(
                         leading: const Icon(
                           Icons.savings_outlined,
@@ -222,6 +274,7 @@ class _InvoiceCard extends StatelessWidget {
                     ),
                     PopupMenuItem(
                       value: 2,
+                      enabled: invoice.paid == 0,
                       child: ListTile(
                         leading: const Icon(
                           Icons.delete_forever_outlined,
@@ -236,26 +289,6 @@ class _InvoiceCard extends StatelessWidget {
                   ];
                 },
               ),
-              // IconButton(
-              //   visualDensity: VisualDensity.compact,
-              //   icon: const Icon(
-              //     Icons.delete_forever_outlined,
-              //     color: Colors.red,
-              //   ),
-              //   onPressed: () async {
-              //     var delete = await _showConfirmationDialog(context);
-              //     if (delete ?? false) {
-              //       //var childId = invoice.childId;
-              //       context.read<InvoiceListCubit>().deleteInvoice(invoice);
-              //       context
-              //           .read<ServiceListCubit>()
-              //           .loadServices(invoice.childId);
-              //       ScaffoldMessenger.of(context).success(
-              //         context.t("Removed successfully"),
-              //       );
-              //     }
-              //   },
-              // ),
             ],
           ),
         ],

@@ -4,9 +4,9 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
-import '../data/model/child.dart';
 import '../data/children_repository.dart';
 import '../data/invoices_repository.dart';
+import '../data/model/child.dart';
 import '../data/model/invoice.dart';
 import '../data/services_repository.dart';
 
@@ -78,6 +78,7 @@ class InvoiceFormCubit extends Cubit<InvoiceFormState> {
         total: 0.0,
         parentsName: child.parentsName!,
         address: child.address!,
+        paid: 0,
       ));
 
       var total = 0.0;
