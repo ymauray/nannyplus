@@ -390,7 +390,7 @@ class _DocumentBuilder extends StatelessWidget {
                 child: pw.Padding(
                   padding: const pw.EdgeInsets.symmetric(vertical: 8),
                   child: pw.Text(
-                    gettext.t("Invoice for {0}", [childName]),
+                    childName,
                     textAlign: pw.TextAlign.center,
                     style: const pw.TextStyle(
                       fontSize: 17,
