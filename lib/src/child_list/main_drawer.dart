@@ -22,12 +22,10 @@ import '../../utils/database_util.dart';
 import '../../utils/encode_utils.dart';
 import '../../utils/prefs_util.dart';
 import '../backup_restore/backup_restore_view.dart';
-import '../price_list/price_list_view.dart';
 import '../privacy_settings_view/privacy_settings_view.dart';
-import '../settings_view/settings_view.dart';
 
-class NewMainDrawer extends StatelessWidget {
-  const NewMainDrawer({Key? key}) : super(key: key);
+class MainDrawer extends StatelessWidget {
+  const MainDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,44 +46,6 @@ class NewMainDrawer extends StatelessWidget {
                 ],
               ),
             ),
-            ListTile(
-              key: const Key('price_list_menu'),
-              title: Text(
-                context.t('Price list'),
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              leading: const Icon(Icons.payment),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const NewPriceListView(),
-                  ),
-                );
-              },
-            ),
-            const Divider(),
-            ListTile(
-              title: Text(
-                context.t('Settings'),
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              leading: const Icon(Icons.settings),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    fullscreenDialog: true,
-                    builder: (context) => const SettingsView(),
-                  ),
-                );
-              },
-            ),
-            const Divider(),
             ListTile(
               title: Text(
                 '${context.t('Backup')} / ${context.t('Restore')}',

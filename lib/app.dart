@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:nannyplus/cubit/yearly_statements_cubit.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
@@ -94,12 +95,18 @@ class NannyPlusApp extends StatelessWidget {
             context.read<PricesRepository>(),
           ),
         ),
+        BlocProvider<YearlyStatementsCubit>(
+          create: (context) => YearlyStatementsCubit(
+            context.read<ChildrenRepository>(),
+            context.read<InvoicesRepository>(),
+          ),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: ksAppName,
         theme: AppTheme.create(),
-        home: const NewChildListView(),
+        home: const ChildListView(),
         supportedLocales: const [Locale('en'), Locale('fr')],
         localizationsDelegates: [
           GettextLocalizationsDelegate(defaultLanguage: 'fr'),

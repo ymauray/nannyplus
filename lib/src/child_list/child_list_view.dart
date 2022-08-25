@@ -8,25 +8,29 @@ import '../../cubit/child_list_cubit.dart';
 import '../../data/model/child.dart';
 import '../../src/child_list/main_drawer.dart';
 import '../../src/constants.dart';
-import '../../src/ui/list_view.dart';
 import '../../utils/i18n_utils.dart';
 import '../../utils/prefs_util.dart';
 import '../../utils/snack_bar_util.dart';
 import '../../widgets/loading_indicator.dart';
 import '../child_form/child_form.dart';
+import '../price_list/price_list_view.dart';
+import '../settings_view/settings_view.dart';
 import '../tab_view/tab_view.dart';
+import '../ui/list_view.dart';
 import '../ui/sliver_curved_persistent_header.dart';
 import '../ui/view.dart';
+import '../yearly_statements_view/yearly_statements_view.dart';
 
-class NewChildListView extends StatefulWidget {
-  const NewChildListView({Key? key}) : super(key: key);
+class ChildListView extends StatefulWidget {
+  const ChildListView({Key? key}) : super(key: key);
 
   @override
-  State<NewChildListView> createState() => _NewChildListViewState();
+  State<ChildListView> createState() => _ChildListViewState();
 }
 
-class _NewChildListViewState extends State<NewChildListView> {
+class _ChildListViewState extends State<ChildListView> {
   bool showArchivedFolders = false;
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -47,73 +51,36 @@ class _NewChildListViewState extends State<NewChildListView> {
       },
       builder: (context, state) {
         return UIView(
-          drawer: const NewMainDrawer(),
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: (index) {
+              setState(() => _currentIndex = index);
+            },
+            items: [
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.folder),
+                label: context.t('Folders'),
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.settings),
+                label: context.t('Options'),
+              ),
+            ],
+          ),
+          drawer: const MainDrawer(),
           title: const Text(ksAppName),
           persistentHeader: UISliverCurvedPersistenHeader(
-            child: Text(
-              '${context.t('Pending total')} : ${state is ChildListLoaded ? state.pendingTotal.toStringAsFixed(2) : '...'}',
-            ),
-          ),
-          body: (state is ChildListLoaded)
-              ? UIListView(
-                  itemBuilder: (context, index) {
-                    return _ChildListTile(
-                      index: index,
-                      state: state,
-                      onTap: () async {
-                        await Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                NewTabView(state.children[index].id!),
-                          ),
-                        );
-                        var cubit = context.read<ChildListCubit>();
-                        cubit.loadChildList(
-                          loadArchivedFolders: showArchivedFolders,
-                        );
-                      },
-                      onToggleShowArchivedFolders: () {
-                        var child = state.children[index];
-                        if (!child.isArchived) {
-                          context.read<ChildListCubit>().archive(child);
-                          ScaffoldMessenger.of(context)
-                              .success(context.t("Archived successfully"));
-                        } else {
-                          context.read<ChildListCubit>().unarchive(child);
-                          ScaffoldMessenger.of(context)
-                              .success(context.t("Unarchived successfully"));
-                        }
-                        context.read<ChildListCubit>().loadChildList(
-                              loadArchivedFolders: showArchivedFolders,
-                            );
-                      },
-                    );
-                  },
-                  itemCount: state.children.length,
-                  extraWidget: TextButton(
-                    onPressed: () {
-                      setState(() {
-                        showArchivedFolders = !showArchivedFolders;
-                      });
-                    },
-                    child: Text(
-                      context.t(showArchivedFolders
-                          ? 'Hide archived folders'
-                          : 'Show archived folders'),
-                    ),
+            child: _currentIndex == 0
+                ? Text(
+                    '${context.t('Pending total')} : ${state is ChildListLoaded ? state.pendingTotal.toStringAsFixed(2) : '...'}',
+                  )
+                : Text(
+                    context.t('Options'),
                   ),
-                  onFloatingActionPressed: () async {
-                    var child = await Navigator.of(context).push<Child>(
-                      MaterialPageRoute(
-                        builder: (context) => const NewChildForm(),
-                      ),
-                    );
-                    if (child != null) {
-                      context.read<ChildListCubit>().create(child);
-                    }
-                  },
-                )
-              : const LoadingIndicator(),
+          ),
+          body: _currentIndex == 0
+              ? _buildChildList(context, state)
+              : _buildTabView(context, state),
         );
       },
     );
@@ -162,6 +129,148 @@ class _NewChildListViewState extends State<NewChildListView> {
         );
       },
     );
+  }
+
+  // ignore: long-method
+  Widget _buildChildList(BuildContext context, ChildListState state) {
+    return (state is ChildListLoaded)
+        ? UIListView(
+            itemBuilder: (context, index) {
+              return _ChildListTile(
+                index: index,
+                state: state,
+                onTap: () async {
+                  await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          NewTabView(state.children[index].id!),
+                    ),
+                  );
+                  var cubit = context.read<ChildListCubit>();
+                  cubit.loadChildList(
+                    loadArchivedFolders: showArchivedFolders,
+                  );
+                },
+                onToggleShowArchivedFolders: () {
+                  var child = state.children[index];
+                  if (!child.isArchived) {
+                    context.read<ChildListCubit>().archive(child);
+                    ScaffoldMessenger.of(context)
+                        .success(context.t("Archived successfully"));
+                  } else {
+                    context.read<ChildListCubit>().unarchive(child);
+                    ScaffoldMessenger.of(context)
+                        .success(context.t("Unarchived successfully"));
+                  }
+                  context.read<ChildListCubit>().loadChildList(
+                        loadArchivedFolders: showArchivedFolders,
+                      );
+                },
+              );
+            },
+            itemCount: state.children.length,
+            extraWidget: TextButton(
+              onPressed: () {
+                setState(() {
+                  showArchivedFolders = !showArchivedFolders;
+                });
+              },
+              child: Text(
+                context.t(showArchivedFolders
+                    ? 'Hide archived folders'
+                    : 'Show archived folders'),
+              ),
+            ),
+            onFloatingActionPressed: () async {
+              var child = await Navigator.of(context).push<Child>(
+                MaterialPageRoute(
+                  builder: (context) => const NewChildForm(),
+                ),
+              );
+              if (child != null) {
+                context.read<ChildListCubit>().create(child);
+              }
+            },
+          )
+        : const LoadingIndicator();
+  }
+
+  // ignore: long-method
+  Widget _buildTabView(BuildContext context, ChildListState state) {
+    return UIListView.fromChildren(children: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Material(
+          elevation: 4,
+          shape: Theme.of(context).listTileTheme.shape,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const PriceListView(),
+                ),
+              );
+            },
+            behavior: HitTestBehavior.opaque,
+            child: ListTile(
+              leading: const Icon(Icons.payment),
+              title: Text(
+                context.t('Price list'),
+              ),
+              trailing: const Icon(Icons.chevron_right),
+            ),
+          ),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Material(
+          elevation: 4,
+          shape: Theme.of(context).listTileTheme.shape,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const SettingsView(),
+                ),
+              );
+            },
+            behavior: HitTestBehavior.opaque,
+            child: ListTile(
+              leading: const Icon(Icons.settings),
+              title: Text(
+                context.t('Settings'),
+              ),
+              trailing: const Icon(Icons.chevron_right),
+            ),
+          ),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Material(
+          elevation: 4,
+          shape: Theme.of(context).listTileTheme.shape,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const YearlyStatementsView(),
+                ),
+              );
+            },
+            behavior: HitTestBehavior.opaque,
+            child: ListTile(
+              leading: const Icon(Icons.description),
+              title: Text(
+                context.t('Statements'),
+              ),
+              trailing: const Icon(Icons.chevron_right),
+            ),
+          ),
+        ),
+      ),
+    ]);
   }
 }
 

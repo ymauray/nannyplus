@@ -13,8 +13,8 @@ import '../../widgets/loading_indicator.dart';
 import '../ui/sliver_curved_persistent_header.dart';
 import '../ui/view.dart';
 
-class NewPriceListView extends StatelessWidget {
-  const NewPriceListView({Key? key}) : super(key: key);
+class PriceListView extends StatelessWidget {
+  const PriceListView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

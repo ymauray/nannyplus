@@ -12,6 +12,7 @@ class UIView extends StatelessWidget {
     required this.body,
     this.onFloatingActionPressed,
     this.actions,
+    this.bottomNavigationBar,
     Key? key,
   }) : super(key: key);
 
@@ -22,6 +23,7 @@ class UIView extends StatelessWidget {
   final VoidCallback? onFloatingActionPressed;
   final List<Widget>? actions;
   final Widget body;
+  final Widget? bottomNavigationBar;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,7 @@ class UIView extends StatelessWidget {
           },
         ),
       ),
+      bottomNavigationBar: bottomNavigationBar,
     );
 
     return onFloatingActionPressed == null

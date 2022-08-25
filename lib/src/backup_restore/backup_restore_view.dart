@@ -59,7 +59,7 @@ class NewBackupRestoreView extends StatelessWidget {
                       Navigator.of(context).popUntil((route) => false);
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => const NewChildListView(),
+                          builder: (_) => const ChildListView(),
                         ),
                       );
                     } else {

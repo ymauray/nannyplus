@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl_standalone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -24,5 +25,8 @@ Future<void> main() async {
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
 
-  runApp(const NannyPlusApp());
+  await findSystemLocale();
+  runApp(
+    const NannyPlusApp(),
+  );
 }
