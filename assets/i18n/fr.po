@@ -385,3 +385,21 @@ msgstr "Archivé avec succès"
 
 msgid "Unarchived successfully"
 msgstr "Désarchivé avec succès"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Yearly statements"
+msgstr "Relevés annuels"
+
+msgid "Statements"
+msgstr "Relevés"
+
+msgid "(Re)generate yearly statements"
+msgstr "(Re)générer les relevés annuels"
+
+msgid "Please wait..."
+msgstr "Veuillez patienter..."
+
+msgid "Folders"
+msgstr "Dossiers"

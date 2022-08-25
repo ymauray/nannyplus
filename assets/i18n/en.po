@@ -108,3 +108,22 @@ msgstr "Archived successfully"
 
 msgid "Unarchived successfully"
 msgstr "Unarchived successfully"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Yearly statements"
+msgstr "Yearly statements"
+
+msgid "Statements"
+msgstr "Statements"
+
+msgid "(Re)generate yearly statements"
+msgstr "(Re)generate yearly statements"
+
+msgid "Please wait..."
+msgstr "Please wait..."
+
+msgid "Folders"
+msgstr "Folders"
+
