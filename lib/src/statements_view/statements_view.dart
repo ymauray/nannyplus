@@ -12,8 +12,8 @@ import '../ui/sliver_curved_persistent_header.dart';
 import '../ui/ui_card.dart';
 import '../ui/view.dart';
 
-class YearlyStatementsView extends StatelessWidget {
-  const YearlyStatementsView({Key? key}) : super(key: key);
+class StatementsView extends StatelessWidget {
+  const StatementsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,34 +30,10 @@ class YearlyStatementsView extends StatelessWidget {
           body: UIListView.fromChildren(
             horizontalPadding: kdDefaultPadding,
             children: [
-              //TextButton(
-              //  onPressed: state is YearlyStatementsLoaded
-              //      ? () => context
-              //          .read<YearlyStatementsCubit>()
-              //          .generateStatements()
-              //      : null,
-              //  child: state is YearlyStatementsLoaded
-              //      ? Text(context.t('(Re)generate yearly statements'))
-              //      : Text(context.t('Please wait...')),
-              //),
               if (state is YearlyStatementsLoaded)
-                //...state.statements.map(
-                //  (statement) => Text("${statement.year}"),
-                //),
                 ...(() sync* {
                   for (final statement in state.statements) {
                     yield _YearlyStatementCard(statement: statement);
-                    //yield Text("${statement.year} (${statement.amount})");
-                    //for (final monthlyStatement
-                    //    in statement.monthlyStatements) {
-                    //  yield Text(
-                    //    "${DateFormat('MMMM').format(monthlyStatement.date).capitalize()} (${monthlyStatement.amount})",
-                    //  );
-                    //}
-                    //yield const Divider(
-                    //  thickness: 1,
-                    //  color: Colors.black,
-                    //);
                   }
                 })(),
             ],
@@ -100,9 +76,6 @@ class _YearlyStatementCard extends StatelessWidget {
                 ),
                 onTap: () => openPDF(context),
               ),
-              //const SizedBox(
-              //  height: 40.0,
-              //),
               IconButton(
                 icon: const Icon(Icons.picture_as_pdf),
                 onPressed: () {},
