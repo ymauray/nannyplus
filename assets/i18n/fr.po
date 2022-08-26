@@ -392,6 +392,12 @@ msgstr "Options"
 msgid "Yearly statements"
 msgstr "Relevés annuels"
 
+msgid "Yearly statement"
+msgstr "Relevé annuel"
+
+msgid "Monthly statement"
+msgstr "Relevé mensuel"
+
 msgid "Statements"
 msgstr "Relevés"
 

@@ -115,6 +115,12 @@ msgstr "Options"
 msgid "Yearly statements"
 msgstr "Yearly statements"
 
+msgid "Yearly statement"
+msgstr "Yearly statement"
+
+msgid "Monthly statement"
+msgstr "Monthly statement"
+
 msgid "Statements"
 msgstr "Statements"
 

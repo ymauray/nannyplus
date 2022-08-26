@@ -15,7 +15,7 @@ import '../../widgets/loading_indicator.dart';
 import '../child_form/child_form.dart';
 import '../price_list/price_list_view.dart';
 import '../settings_view/settings_view.dart';
-import '../statements_view/statements_view.dart';
+import '../statement_list_view/statement_list_view.dart';
 import '../tab_view/tab_view.dart';
 import '../ui/list_view.dart';
 import '../ui/sliver_curved_persistent_header.dart';
@@ -255,7 +255,7 @@ class _ChildListViewState extends State<ChildListView> {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => const StatementsView(),
+                  builder: (context) => const StatementListView(),
                 ),
               );
             },
