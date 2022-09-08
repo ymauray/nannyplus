@@ -22,6 +22,7 @@ class SettingsCubit extends Cubit<SettingsState> {
       prefs.line2FontAsset,
       prefs.conditions,
       prefs.bankDetails,
+      prefs.name,
       prefs.address,
     );
     emit(settingsLoaded);
@@ -41,6 +42,7 @@ class SettingsCubit extends Cubit<SettingsState> {
         FontUtils.defaultFontItem.asset;
     prefs.conditions = values['conditions'] ?? '';
     prefs.bankDetails = values['bankDetails'] ?? '';
+    prefs.name = values['name'] ?? '';
     prefs.address = values['address'] ?? '';
     loadSettings();
   }

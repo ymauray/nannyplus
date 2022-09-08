@@ -133,3 +133,17 @@ msgstr "Please wait..."
 msgid "Folders"
 msgstr "Folders"
 
+msgid "Child"
+msgstr "Child"
+
+msgid "Service type"
+msgstr "Service type"
+
+msgid "Amount"
+msgstr "Amount"
+
+msgid "Quantity"
+msgstr "Quantity"
+
+msgid "Total : {0}"
+msgstr "Total : {0}"

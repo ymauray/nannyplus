@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+// ignore: implementation_imports
+import 'package:gettext_i18n/src/gettext_localizations.dart';
 import 'package:intl/intl.dart';
 
-import '../../cubit/yearly_statements_cubit.dart';
+import '../../cubit/statement_list_cubit.dart';
 import '../../data/model/monthly_statement.dart';
 import '../../data/model/yearly_statement.dart';
 import '../../utils/text_extension.dart';
@@ -19,9 +21,9 @@ class StatementListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<YearlyStatementsCubit>().loadStatements();
+    context.read<StatementListCubit>().loadStatements();
 
-    return BlocBuilder<YearlyStatementsCubit, YearlyStatementsState>(
+    return BlocBuilder<StatementListCubit, StatementListState>(
       builder: (context, state) {
         return UIView(
           title: Text(
@@ -32,7 +34,7 @@ class StatementListView extends StatelessWidget {
           body: UIListView.fromChildren(
             horizontalPadding: kdDefaultPadding,
             children: [
-              if (state is YearlyStatementsLoaded)
+              if (state is StatementListLoaded)
                 ...(() sync* {
                   for (final statement in state.statements) {
                     yield _YearlyStatementCard(statement: statement);
@@ -99,6 +101,7 @@ class _YearlyStatementCard extends StatelessWidget {
         builder: (context) => StatementView(
           type: StatementViewType.yearly,
           date: date,
+          gettext: GettextLocalizations.of(context),
           //  invoice,
           //  GettextLocalizations.of(context),
         ),
@@ -150,6 +153,7 @@ class _MonthlyStatementCard extends StatelessWidget {
         builder: (context) => StatementView(
           type: StatementViewType.monthly,
           date: date,
+          gettext: GettextLocalizations.of(context),
           //  invoice,
           //  GettextLocalizations.of(context),
         ),

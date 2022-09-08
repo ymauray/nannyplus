@@ -46,7 +46,8 @@ class YearlyStatement {
       year: map['year']?.toInt() ?? 0,
       amount: map['amount']?.toDouble() ?? 0.0,
       monthlyStatements: List<MonthlyStatement>.from(
-          map['monthlyStatements']?.map((x) => MonthlyStatement.fromMap(x)),),
+        map['monthlyStatements']?.map((x) => MonthlyStatement.fromMap(x)),
+      ),
     );
   }
 

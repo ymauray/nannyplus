@@ -1,10 +1,13 @@
 import 'package:intl/intl.dart';
+import 'package:nannyplus/data/model/statement_line.dart';
+import 'package:nannyplus/src/statement_view/statement_view.dart';
 
 import '../data/model/child.dart';
 import '../data/model/service.dart';
 import '../data/model/service_info.dart';
 import '../utils/database_util.dart';
 import '../utils/list_extensions.dart';
+import 'model/statement_summary.dart';
 
 class ServicesRepository {
   const ServicesRepository();
@@ -223,5 +226,68 @@ class ServicesRepository {
       where: 'invoiceId = ?',
       whereArgs: [invoiceId],
     );
+  }
+
+  Future<List<StatementLine>> getStatementLines(
+    StatementViewType type,
+    DateTime date,
+  ) async {
+    assert(date.day == 1);
+    assert(type == StatementViewType.monthly || date.month == 1);
+
+    final db = await DatabaseUtil.instance;
+
+    final endDate = (type == StatementViewType.monthly)
+        ? DateTime(date.year, date.month + 1, 1)
+        : DateTime(date.year + 1, 1, 1);
+
+    final rows = await db.rawQuery(
+      'SELECT '
+      ' s.priceLabel, '
+      ' s.priceAmount, '
+      ' s.isFixedPrice, '
+      ' SUM(s.hours) + CAST(SUM(s.minutes) / 60 as int) hours, '
+      ' SUM(s.minutes) - 60 * CAST(SUM(s.minutes) / 60 as int) minutes, '
+      ' COUNT(1) count, '
+      ' SUM(s.total) total '
+      'FROM '
+      ' services s '
+      'WHERE '
+      ' s.date >= ? '
+      ' AND s.date < ? '
+      'GROUP BY '
+      ' s.priceLabel '
+      'ORDER BY '
+      ' s.isFixedPrice, '
+      ' s.priceLabel',
+      [
+        DateFormat('yyyy-MM-dd').format(date),
+        DateFormat('yyyy-MM-dd').format(endDate),
+      ],
+    );
+
+    final list = rows.map((row) => StatementLine.fromMap(row)).toList();
+
+    return list;
+  }
+
+  Future<List<StatementSummary>> getStatementsSummary() async {
+    final db = await DatabaseUtil.instance;
+
+    final rows = await db.rawQuery(
+      'SELECT '
+      ' STRFTIME("%Y-%m", date) month, '
+      ' SUM(s.total) total '
+      'FROM '
+      ' services s '
+      'GROUP BY '
+      ' month '
+      'ORDER BY '
+      ' month DESC',
+    );
+
+    final list = rows.map((row) => StatementSummary.fromMap(row)).toList();
+
+    return list;
   }
 }

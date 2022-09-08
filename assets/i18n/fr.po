@@ -409,3 +409,18 @@ msgstr "Veuillez patienter..."
 
 msgid "Folders"
 msgstr "Dossiers"
+
+msgid "Child"
+msgstr "Enfant"
+
+msgid "Service type"
+msgstr "Type de prestation"
+
+msgid "Amount"
+msgstr "Montant"
+
+msgid "Quantity"
+msgstr "Quantité"
+
+msgid "Total : {0}"
+msgstr "Total : {0}"

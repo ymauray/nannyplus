@@ -44,6 +44,7 @@ class SettingsForm extends StatelessWidget {
             : FontUtils.fontItems[4],
         'conditions': _state.conditions,
         'bankDetails': _state.bankDetails,
+        'name': _state.name,
         'address': _state.address,
       },
       child: UIView(
@@ -216,6 +217,22 @@ class SettingsForm extends StatelessWidget {
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                       ),
                       textCapitalization: TextCapitalization.sentences,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: FormBuilderTextField(
+                      name: 'name',
+                      decoration: InputDecoration(
+                        labelText: context.t('Name'),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                      ),
                     ),
                   ),
                 ],
