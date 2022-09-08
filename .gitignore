@@ -47,3 +47,5 @@ app.*.map.json
 
 lib/src/widgets/basic_auth.dart
 key.properties
+
+childcare.db
