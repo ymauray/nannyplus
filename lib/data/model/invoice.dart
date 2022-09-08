@@ -8,6 +8,7 @@ class Invoice {
   final double total;
   final String parentsName;
   final String address;
+  final int paid;
 
   Invoice({
     this.id,
@@ -17,6 +18,7 @@ class Invoice {
     required this.total,
     required this.parentsName,
     required this.address,
+    required this.paid,
   });
 
   Invoice copyWith({
@@ -27,6 +29,7 @@ class Invoice {
     double? total,
     String? parentsName,
     String? address,
+    int? paid,
   }) {
     return Invoice(
       id: id ?? this.id,
@@ -36,6 +39,7 @@ class Invoice {
       total: total ?? this.total,
       parentsName: parentsName ?? this.parentsName,
       address: address ?? this.address,
+      paid: paid ?? this.paid,
     );
   }
 
@@ -48,6 +52,7 @@ class Invoice {
       'total': total,
       'parentsName': parentsName,
       'address': address,
+      'paid': paid,
     };
   }
 
@@ -60,6 +65,7 @@ class Invoice {
       total: map['total']?.toDouble() ?? 0.0,
       parentsName: map['parentsName'] ?? '',
       address: map['address'] ?? '',
+      paid: map['paid']?.toInt() ?? 0,
     );
   }
 
@@ -70,7 +76,7 @@ class Invoice {
 
   @override
   String toString() {
-    return 'Invoice(id: $id, number: $number, childId: $childId, date: $date, total: $total, parentsName: $parentsName, address: $address)';
+    return 'Invoice(id: $id, number: $number, childId: $childId, date: $date, total: $total, parentsName: $parentsName, address: $address, paid: $paid)';
   }
 
   @override
@@ -84,7 +90,8 @@ class Invoice {
         other.date == date &&
         other.total == total &&
         other.parentsName == parentsName &&
-        other.address == address;
+        other.address == address &&
+        other.paid == paid;
   }
 
   @override
@@ -95,6 +102,7 @@ class Invoice {
         date.hashCode ^
         total.hashCode ^
         parentsName.hashCode ^
-        address.hashCode;
+        address.hashCode ^
+        paid.hashCode;
   }
 }

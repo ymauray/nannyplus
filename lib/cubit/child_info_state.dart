@@ -14,8 +14,9 @@ class ChildInfoLoading extends ChildInfoState {
 }
 
 class ChildInfoLoaded extends ChildInfoState {
-  final Child child;
   const ChildInfoLoaded(this.child);
+
+  final Child child;
 
   @override
   bool operator ==(Object other) {

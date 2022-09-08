@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
-import 'package:nannyplus/utils/font_utils.dart';
-import 'package:nannyplus/utils/prefs_util.dart';
+import 'package:flutter/material.dart';
+
+import '../utils/font_utils.dart';
+import '../utils/prefs_util.dart';
 
 part 'settings_state.dart';
 
@@ -21,6 +22,7 @@ class SettingsCubit extends Cubit<SettingsState> {
       prefs.line2FontAsset,
       prefs.conditions,
       prefs.bankDetails,
+      prefs.name,
       prefs.address,
     );
     emit(settingsLoaded);
@@ -40,6 +42,7 @@ class SettingsCubit extends Cubit<SettingsState> {
         FontUtils.defaultFontItem.asset;
     prefs.conditions = values['conditions'] ?? '';
     prefs.bankDetails = values['bankDetails'] ?? '';
+    prefs.name = values['name'] ?? '';
     prefs.address = values['address'] ?? '';
     loadSettings();
   }

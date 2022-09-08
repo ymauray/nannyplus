@@ -29,18 +29,4 @@ extension ListExtensions<T> on List<T> {
 
     return result;
   }
-  /*
-    var result = <List<T>>[];
-    var current = <T>[];
-    for (var i = 0; i < length; i++) {
-      if (this[i] == e) {
-        result.add(current);
-        current = <T>[];
-      } else {
-        current.add(this[i]);
-      }
-    }
-    result.add(current);
-    return result;
-    */
 }

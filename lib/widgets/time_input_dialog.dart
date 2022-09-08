@@ -20,7 +20,7 @@ class TimeInputDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormBuilderState>();
+    final formKey = GlobalKey<FormBuilderState>();
 
     return Dialog(
       elevation: 0,
@@ -39,7 +39,7 @@ class TimeInputDialog extends StatelessWidget {
           ],
         ),
         child: FormBuilder(
-          key: _formKey,
+          key: formKey,
           initialValue: {
             'hours': hours,
             'minutes': minutes,
@@ -56,12 +56,11 @@ class TimeInputDialog extends StatelessWidget {
                         labelText: context.t('Hours'),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                       ),
-                      items: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                      items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                           .map((e) => DropdownMenuItem(
                                 value: e,
-                                child: Text(
-                                  e.toString(),
-                                ),
+                                alignment: Alignment.center,
+                                child: Text(e.toString()),
                               ))
                           .toList(),
                     ),
@@ -78,9 +77,8 @@ class TimeInputDialog extends StatelessWidget {
                           .map(
                             (e) => DropdownMenuItem(
                               value: e,
-                              child: Text(
-                                e.toString().padLeft(2, '0'),
-                              ),
+                              alignment: Alignment.center,
+                              child: Text(e.toString().padLeft(2, '0')),
                             ),
                           )
                           .toList(),
@@ -91,12 +89,12 @@ class TimeInputDialog extends StatelessWidget {
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () {
-                  _formKey.currentState!.save();
-                  if (_formKey.currentState!.validate()) {
+                  formKey.currentState!.save();
+                  if (formKey.currentState!.validate()) {
                     Navigator.of(context).pop(
                       TimeInputData(
-                        hours: _formKey.currentState!.value['hours'] ?? 0,
-                        minutes: _formKey.currentState!.value['minutes'] ?? 0,
+                        hours: formKey.currentState!.value['hours'] ?? 0,
+                        minutes: formKey.currentState!.value['minutes'] ?? 0,
                       ),
                     );
                   } else {

@@ -18,9 +18,15 @@ class InvoiceListCubit extends Cubit<InvoiceListState> {
   final InvoicesRepository _invoicesRepository;
   final ServicesRepository _servicesRepository;
 
-  Future<void> loadInvoiceList(int childId) async {
+  Future<void> loadInvoiceList(
+    int childId, {
+    bool loadPaidInvoices = false,
+  }) async {
     try {
-      final invoices = await _invoicesRepository.getInvoiceList(childId);
+      final invoices = await _invoicesRepository.getInvoiceList(
+        childId,
+        loadPaidInvoices: loadPaidInvoices,
+      );
 
       emit(InvoiceListLoaded(invoices));
     } catch (e) {
@@ -34,6 +40,17 @@ class InvoiceListCubit extends Cubit<InvoiceListState> {
       var invoiceId = invoice.id!;
       await _servicesRepository.unlinkInvoice(invoiceId);
       await _invoicesRepository.delete(invoiceId);
+      await loadInvoiceList(childId);
+    } catch (e) {
+      emit(InvoiceListError(e.toString()));
+    }
+  }
+
+  Future<void> markInvoiceAsPaid(Invoice invoice) async {
+    try {
+      var childId = invoice.childId;
+      var invoiceId = invoice.id!;
+      await _invoicesRepository.markAsPaid(invoiceId);
       await loadInvoiceList(childId);
     } catch (e) {
       emit(InvoiceListError(e.toString()));
