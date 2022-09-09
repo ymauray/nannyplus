@@ -8,23 +8,29 @@ class PricesRepository {
 
   Future<List<Price>> getPriceList() async {
     var database = await DatabaseUtil.instance;
-    var rows = await database.query("prices", orderBy: "sortOrder asc");
+    var rows = await database.query(
+      "prices",
+      orderBy: "sortOrder asc",
+      where: "deleted = ?",
+      whereArgs: [0],
+    );
     var priceList = rows.map((row) => Price.fromMap(row)).toList();
 
     return priceList;
   }
 
-  Future<Set<int>> getPricesInUse() async {
-    var database = await DatabaseUtil.instance;
-    var rows = await database.query(
-      "services",
-      where: "invoiced = ?",
-      whereArgs: [0],
-    );
-    var prices = rows.map((row) => row['priceId'] as int).toSet();
+  //Future<Set<int>> getPricesInUse() async {
+  //  var database = await DatabaseUtil.instance;
+  //  //var rows = await database.query(
+  //  //  "services",
+  //  //  where: "invoiced = ?",
+  //  //  whereArgs: [0],
+  //  //);
+  //  var rows = await database.query("services");
+  //  var prices = rows.map((row) => row['priceId'] as int).toSet();
 
-    return prices;
-  }
+  //  return prices;
+  //}
 
   Future<void> reorder(int oldIndex, int newIndex) async {
     var database = await DatabaseUtil.instance;

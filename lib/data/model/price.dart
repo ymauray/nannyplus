@@ -7,6 +7,7 @@ class Price {
     required this.amount,
     required this.fixedPrice,
     required this.sortOrder,
+    required this.deleted,
   });
 
   final int? id;
@@ -14,6 +15,7 @@ class Price {
   final double amount;
   final int fixedPrice;
   final int sortOrder;
+  final int deleted;
 
   bool get isFixedPrice => fixedPrice == 1;
 
@@ -27,6 +29,7 @@ class Price {
     double? amount,
     int? fixedPrice,
     int? sortOrder,
+    int? deleted,
   }) {
     return Price(
       id: id ?? this.id,
@@ -34,6 +37,7 @@ class Price {
       amount: amount ?? this.amount,
       fixedPrice: fixedPrice ?? this.fixedPrice,
       sortOrder: sortOrder ?? this.sortOrder,
+      deleted: deleted ?? this.deleted,
     );
   }
 
@@ -44,6 +48,7 @@ class Price {
       'amount': amount,
       'fixedPrice': fixedPrice,
       'sortOrder': sortOrder,
+      'deleted': deleted,
     };
   }
 
@@ -54,6 +59,7 @@ class Price {
       amount: map['amount']?.toDouble() ?? 0.0,
       fixedPrice: map['fixedPrice']?.toInt() ?? 0,
       sortOrder: map['sortOrder']?.toInt() ?? 0,
+      deleted: map['deleted']?.toInt() ?? 0,
     );
   }
 
@@ -63,7 +69,7 @@ class Price {
 
   @override
   String toString() {
-    return 'Price(id: $id, label: $label, amount: $amount, fixedPrice: $fixedPrice, sortOrder: $sortOrder)';
+    return 'Price(id: $id, label: $label, amount: $amount, fixedPrice: $fixedPrice, sortOrder: $sortOrder, deleted: $deleted)';
   }
 
   @override
@@ -75,7 +81,8 @@ class Price {
         other.label == label &&
         other.amount == amount &&
         other.fixedPrice == fixedPrice &&
-        other.sortOrder == sortOrder;
+        other.sortOrder == sortOrder &&
+        other.deleted == deleted;
   }
 
   @override
@@ -84,6 +91,7 @@ class Price {
         label.hashCode ^
         amount.hashCode ^
         fixedPrice.hashCode ^
-        sortOrder.hashCode;
+        sortOrder.hashCode ^
+        deleted.hashCode;
   }
 }

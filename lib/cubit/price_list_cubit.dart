@@ -14,9 +14,9 @@ class PriceListCubit extends Cubit<PriceListState> {
 
   Future<void> getPriceList() async {
     final priceList = await _pricesRepository.getPriceList();
-    final inUse = await _pricesRepository.getPricesInUse();
+    //final inUse = await _pricesRepository.getPricesInUse();
 
-    emit(PriceListLoaded(priceList, inUse));
+    emit(PriceListLoaded(priceList /*, inUse*/));
   }
 
   Future<void> reorder(int oldIndex, int newIndex) async {

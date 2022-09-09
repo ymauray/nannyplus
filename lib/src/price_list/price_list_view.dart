@@ -40,8 +40,7 @@ class PriceListView extends StatelessWidget {
                     },
                     bottomPadding: 80,
                     children: state.priceList
-                        .map((price) =>
-                            _PriceCard(price, state.inUse.contains(price.id)))
+                        .map((price) => _PriceCard(price))
                         .toList(),
                   ),
                   onPressed: () async {
@@ -62,10 +61,9 @@ class PriceListView extends StatelessWidget {
 }
 
 class _PriceCard extends StatelessWidget {
-  const _PriceCard(this.price, this.inUse, {Key? key}) : super(key: key);
+  const _PriceCard(this.price, {Key? key}) : super(key: key);
 
   final Price price;
-  final bool inUse;
 
   @override
   Widget build(BuildContext context) {
@@ -92,17 +90,15 @@ class _PriceCard extends StatelessWidget {
       ),
       trailing: Row(
         children: [
-          if (!inUse)
-            IconButton(
-              icon:
-                  const Icon(Icons.delete_forever_outlined, color: Colors.red),
-              onPressed: () async {
-                var delete = await _showConfirmationDialog(context);
-                if (delete ?? false) {
-                  await context.read<PriceListCubit>().delete(price.id!);
-                }
-              },
-            ),
+          IconButton(
+            icon: const Icon(Icons.delete_forever_outlined, color: Colors.red),
+            onPressed: () async {
+              var delete = await _showConfirmationDialog(context);
+              if (delete ?? false) {
+                await context.read<PriceListCubit>().delete(price.id!);
+              }
+            },
+          ),
         ],
       ),
     );

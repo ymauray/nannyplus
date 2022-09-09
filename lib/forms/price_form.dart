@@ -90,6 +90,7 @@ class PriceForm extends StatelessWidget {
       amount: double.parse(formKey.currentState!.value['amount']),
       fixedPrice: formKey.currentState!.value['fixed'] ? 1 : 0,
       sortOrder: -1,
+      deleted: 0,
     );
     if (id != null) {
       await context.read<PriceListCubit>().update(

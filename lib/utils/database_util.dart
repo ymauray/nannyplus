@@ -45,7 +45,7 @@ class DatabaseUtil {
 
     _database = await sqlite.openDatabase(
       await _databasePath,
-      version: 4,
+      version: 5,
       onCreate: (db, version) async {
         await _create(db);
         for (var i = 2; i <= version; i++) {
@@ -341,6 +341,13 @@ class DatabaseUtil {
       await db.execute('''
     ALTER TABLE invoices
     ADD paid INTEGER NOT NULL DEFAULT 0
+    ''');
+    }
+
+    if (version == 5) {
+      await db.execute('''
+    ALTER TABLE prices 
+    ADD COLUMN deleted INTEGER NOT NULL DEFAULT 0
     ''');
     }
   }

@@ -110,6 +110,7 @@ class MainDrawer extends StatelessWidget {
     amount: 7.0,
     fixedPrice: 0,
     sortOrder: 1,
+    deleted: 0,
   );
   final weekend = const Price(
     id: 2,
@@ -117,6 +118,7 @@ class MainDrawer extends StatelessWidget {
     amount: 8.0,
     fixedPrice: 0,
     sortOrder: 2,
+    deleted: 0,
   );
   final petitRepas = const Price(
     id: 3,
@@ -124,6 +126,7 @@ class MainDrawer extends StatelessWidget {
     amount: 5.0,
     fixedPrice: 1,
     sortOrder: 3,
+    deleted: 0,
   );
   final grandRepas = const Price(
     id: 4,
@@ -131,6 +134,7 @@ class MainDrawer extends StatelessWidget {
     amount: 7.0,
     fixedPrice: 1,
     sortOrder: 4,
+    deleted: 0,
   );
 
   final fakeNames = const [
