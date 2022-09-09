@@ -424,3 +424,6 @@ msgstr "Quantité"
 
 msgid "Total : {0}"
 msgstr "Total : {0}"
+
+msgid "Name"
+msgstr "Nom"
