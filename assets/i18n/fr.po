@@ -23,6 +23,12 @@ msgstr "Pas de numéro de téléphone"
 msgid "No known allergies"
 msgstr "Pas d'allergie connue"
 
+msgid "Allergies"
+msgstr "Allergies"
+
+msgid "Last entry"
+msgstr "Dernière saisie"
+
 msgid "Allergies : {0}"
 msgstr "Allergies : {0}"
 
@@ -37,6 +43,9 @@ msgstr "Tarif horaire"
 
 msgid "Hourly price of {0}"
 msgstr "Tarif horaire de {0}"
+
+msgid "Hourly price of {0} x {1}:{2}"
+msgstr "Tarif horaire de {0} x {1}:{2}"
 
 msgid "Fixed price"
 msgstr "Tarif fixe"
@@ -98,11 +107,23 @@ msgstr "Modifier un dossier"
 msgid "Add Child"
 msgstr "Ajouter un dossier"
 
+msgid "Are you sure you want to delete this child's folder ?"
+msgstr "Êtes-vous sûr de vouloir supprimer ce dossier ?"
+
+msgid "There are existing services for this child"
+msgstr "Il existe des prestations pour ce dossier"
+
 msgid "First name"
 msgstr "Prénom"
 
+msgid "Please entrer the first name"
+msgstr "Veuillez entrer le prénom"
+
 msgid "Last name"
 msgstr "Nom"
+
+msgid "Please entrer the last name"
+msgstr "Veuillez entrer le nom"
 
 msgid "Birthdate"
 msgstr "Date de naissance"
@@ -110,14 +131,38 @@ msgstr "Date de naissance"
 msgid "Phone number"
 msgstr "Numéro de téléphone"
 
+msgid "Please enter the phone number"
+msgstr "Veuillez entrer le numéro de téléphone"
+
 msgid "Parents name"
 msgstr "Nom des parents"
+
+msgid "Please enter the parents name"
+msgstr "Veuillez entrer le nom des parents"
 
 msgid "Address"
 msgstr "Adresse"
 
+msgid "Please enter the parents address"
+msgstr "Veuillez entrer l'adresse des parents"
+
 msgid "Allergies"
 msgstr "Allergies"
+
+msgid "Label for phone number {0}"
+msgstr "Libellé pour le numéro de téléphone {0}"
+
+msgid "Please enter the label for phone number {0}"
+msgstr "Veuillez entrer le libellé pour le numéro de téléphone {0}"
+
+msgid "Phone number {0}"
+msgstr "Numéro de téléphone {0}"
+
+msgid "Please enter the phone number {0}"
+msgstr "Veuillez entrer le numéro de téléphone {0}"
+
+msgid "Free text"
+msgstr "Texte libre"
 
 msgid "Archive"
 msgstr "Archiver"
@@ -137,11 +182,23 @@ msgstr "Créer une facture"
 msgid "Invoices"
 msgstr "Factures"
 
+msgid "No open invoice found"
+msgstr "Aucune facture ouverte trouvée"
+
 msgid "Invoice for {0}"
 msgstr "Facture pour {0}"
 
+msgid "Combined with"
+msgstr "Combiné avec"
+
+msgid "No other child to add to the invoice"
+msgstr "Pas d'autre enfant à ajouter à la facture"
+
 msgid "Are you sure you want to delete this invoice ?"
 msgstr "Êtes-vous sûr de vouloir supprimer cette facture ?"
+
+msgid "There is no service to invoice"
+msgstr "Il n'y a pas de prestation à facturer"
 
 msgid "Info"
 msgstr "Information"
@@ -269,55 +326,104 @@ msgstr "Merci d'utiliser Nanny+ !"
 msgid "Close"
 msgstr "Fermer"
 
-# Legacy messages
+msgid "Backup"
+msgstr "Sauvegarder"
 
-# msgid "Settings"
-# msgstr "Paramètres"
+msgid "Restore"
+msgstr "Restaurer"
 
-# msgid "Use dark mode"
-# msgstr "Utiliser le mode sombre"
+msgid "Select a backup file"
+msgstr "Sélectionner une sauvegarde"
 
-# msgid "Reset database"
-# msgstr "Réinitialiser la base de données"
+msgid "Database successfully backed up"
+msgstr "Base de données sauvegardée avec succès"
 
-# msgid "Insert test data"
-# msgstr "Insérer des données de test"
+msgid "Database successfully restored"
+msgstr "Base de données restaurée avec succès"
 
-# msgid "Meals"
-# msgstr "Repas"
+msgid "Error restoring database"
+msgstr "Erreur lors de la restauration de la base de données"
 
-# msgid "Preschool"
-# msgstr "Pré-scolaire"
+msgid "Invoice of {0}"
+msgstr "Facture du {0}"
 
-# msgid "Kindergarden"
-# msgstr "Parascolaire"
+msgid "Mark as paid"
+msgstr "Marquer comme payée"
 
-# msgid "Misc"
-# msgstr "Divers"
+msgid "Are you sure you want to mark this invoice as paid ?"
+msgstr "Êtes-vous sûr de vouloir marquer cette facture comme payée ?"
 
-# msgid "Night"
-# msgstr "Nuit"
+msgid "Invoice marked as paid"
+msgstr "Facture marquée comme payée"
 
-# msgid "Save"
-# msgstr "Enregistrer"
+msgid "Show paid invoices"
+msgstr "Afficher les factures payées"
 
-# msgid "Tarifs"
-# msgstr "Tarifs"
+msgid "Hide paid invoices"
+msgstr "Masquer les factures payées"
 
-# msgid "Delete"
-# msgstr "Supprimer"
+msgid "Archive folder"
+msgstr "Archiver le dossier"
 
-# msgid "Duration"
-# msgstr "Durée"
+msgid "Unarchive folder"
+msgstr "Désarchiver le dossier"
 
-# msgid "Rates"
-# msgstr ""
+msgid "Show archived folders"
+msgstr "Afficher les dossiers archivés"
 
-# msgid "Hours"
-# msgstr ""
+msgid "Hide archived folders"
+msgstr "Masquer les dossiers archivés"
 
-# msgid "Week"
-# msgstr ""
+msgid "Are you sure you want to archive this folder ?"
+msgstr "Êtes-vous sûr de vouloir archiver ce dossier ?"
 
-# msgid "Weekend"
-# msgstr ""
+msgid "Are you sure you want to unarchive this folder ?"
+msgstr "Êtes-vous sûr de vouloir désarchiver ce dossier ?"
+
+msgid "Archived successfully"
+msgstr "Archivé avec succès"
+
+msgid "Unarchived successfully"
+msgstr "Désarchivé avec succès"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Yearly statements"
+msgstr "Relevés annuels"
+
+msgid "Yearly statement"
+msgstr "Relevé annuel"
+
+msgid "Monthly statement"
+msgstr "Relevé mensuel"
+
+msgid "Statements"
+msgstr "Relevés"
+
+msgid "(Re)generate yearly statements"
+msgstr "(Re)générer les relevés annuels"
+
+msgid "Please wait..."
+msgstr "Veuillez patienter..."
+
+msgid "Folders"
+msgstr "Dossiers"
+
+msgid "Child"
+msgstr "Enfant"
+
+msgid "Service type"
+msgstr "Type de prestation"
+
+msgid "Amount"
+msgstr "Montant"
+
+msgid "Quantity"
+msgstr "Quantité"
+
+msgid "Total : {0}"
+msgstr "Total : {0}"
+
+msgid "Name"
+msgstr "Nom"

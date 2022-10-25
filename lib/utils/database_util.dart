@@ -2,15 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-import 'package:nannyplus/utils/font_utils.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart' as sqlite;
-import 'package:path/path.dart';
+import 'package:gettext_i18n/gettext_i18n.dart';
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
-import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:intl/intl.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart' as sqlite;
 
+import '../utils/font_utils.dart';
 import 'prefs_util.dart';
 
 class DatabaseUtil {
@@ -21,10 +21,14 @@ class DatabaseUtil {
   static Future<String> get _databasePath async =>
       join(await sqlite.getDatabasesPath(), 'childcare.db');
 
-  static Future<void> deleteDatabase() async {
-    await sqlite.deleteDatabase(await _databasePath);
-    _database?.close();
+  static closeDatabase() async {
+    await _database?.close();
     _database = null;
+  }
+
+  static Future<void> deleteDatabase() async {
+    await closeDatabase();
+    await sqlite.deleteDatabase(await _databasePath);
   }
 
   static Future<void> clear() async {
@@ -34,32 +38,35 @@ class DatabaseUtil {
     await _database?.delete('invoices');
   }
 
+  static Future<String> get databasePath async => await _databasePath;
+
   static Future<sqlite.Database> get instance async {
     if (_database != null) return _database!;
 
     _database = await sqlite.openDatabase(
       await _databasePath,
-      version: 1,
+      version: 5,
       onCreate: (db, version) async {
         await _create(db);
         for (var i = 2; i <= version; i++) {
           _upgradeTo(i, db);
         }
       },
-      onUpgrade: (db, oldVersion, newVersion) {
+      onUpgrade: (db, oldVersion, newVersion) async {
         for (var i = oldVersion + 1; i <= newVersion; i++) {
           _upgradeTo(i, db);
         }
       },
-      onDowngrade: (db, oldVersion, newVersion) =>
-          throw Exception('Downgrade not supported'),
+      onDowngrade: (db, oldVersion, newVersion) async {
+        throw Exception('Downgrade not supported');
+      },
     );
 
     return _database!;
   }
 
   static Future<void> _create(sqlite.Database db) async {
-    final locale = WidgetsBinding.instance!.window.locale;
+    final locale = WidgetsBinding.instance.window.locale;
     final GettextLocalizations gettext =
         await GettextLocalizationsDelegate().load(locale);
 
@@ -143,9 +150,9 @@ class DatabaseUtil {
     prefsUtil.line2FontAsset = FontUtils.defaultFontItem.asset;
     prefsUtil.conditions =
         gettext.t("Payment within 10 day via bank transfert", null);
-    prefsUtil.bankDetails = gettext.t("Bank : {0}", ["Monopoly"]) +
-        "\n" +
-        gettext.t("IBAN : {0}", ["XY7900123456789"]);
+    prefsUtil.bankDetails = "${gettext.t("Bank : {0}", [
+          "Monopoly",
+        ])}\n${gettext.t("IBAN : {0}", ["XY7900123456789"])}";
     prefsUtil.address = "Boldistrasse 97\n2560 Nidau";
 
     var image = await rootBundle.load("assets/img/logo.png");
@@ -243,7 +250,7 @@ class DatabaseUtil {
   ) async {
     await db.insert("children", {
       "firstName": "Fabienne",
-      "lastName": "Simon (Example)",
+      "lastName": "Simon",
       "birthdate": "2014-08-01",
       "phoneNumber": "+41329866242",
       "allergies": gettext.t("Peanuts", null),
@@ -283,8 +290,65 @@ class DatabaseUtil {
     });
   }
 
-  // ignore: no-empty-block
   static void _upgradeTo(int version, sqlite.Database db) async {
-    /* Not implemented yet */
+    if (version == 2) {
+      await db.execute('''
+      ALTER TABLE children
+      ADD labelForPhoneNumber2 TEXT
+      ''');
+      await db.execute('''
+      ALTER TABLE children
+      ADD phoneNumber2 TEXT
+      ''');
+      await db.execute('''
+      ALTER TABLE children
+      ADD labelForPhoneNumber3 TEXT
+      ''');
+      await db.execute('''
+      ALTER TABLE children
+      ADD phoneNumber3 TEXT
+      ''');
+      await db.execute('''
+      ALTER TABLE children
+      ADD freeText TEXT
+      ''');
+    }
+
+    if (version == 3) {
+      await db.execute('''
+    ALTER TABLE prices
+    ADD sortOrder INTEGER NOT NULL DEFAULT 0
+    ''');
+
+      var rows = await db.query('prices', orderBy: 'label ASC');
+      var sortOrder = 1;
+      for (var row in rows) {
+        await db.update(
+          'prices',
+          {
+            'sortOrder': sortOrder,
+          },
+          where: 'id = ?',
+          whereArgs: [
+            row['id'],
+          ],
+        );
+        sortOrder += 1;
+      }
+    }
+
+    if (version == 4) {
+      await db.execute('''
+    ALTER TABLE invoices
+    ADD paid INTEGER NOT NULL DEFAULT 0
+    ''');
+    }
+
+    if (version == 5) {
+      await db.execute('''
+    ALTER TABLE prices 
+    ADD COLUMN deleted INTEGER NOT NULL DEFAULT 0
+    ''');
+    }
   }
 }

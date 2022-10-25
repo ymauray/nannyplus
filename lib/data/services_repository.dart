@@ -1,9 +1,13 @@
 import 'package:intl/intl.dart';
-import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/data/model/service.dart';
-import 'package:nannyplus/utils/list_extensions.dart';
+import 'package:nannyplus/data/model/statement_line.dart';
+import 'package:nannyplus/src/statement_view/statement_view.dart';
 
+import '../data/model/child.dart';
+import '../data/model/service.dart';
+import '../data/model/service_info.dart';
 import '../utils/database_util.dart';
+import '../utils/list_extensions.dart';
+import 'model/statement_summary.dart';
 
 class ServicesRepository {
   const ServicesRepository();
@@ -94,8 +98,8 @@ class ServicesRepository {
 
     var rows = await db.query(
       'services',
-      where: 'childId = ? AND date = ?',
-      whereArgs: [childId, DateFormat('yyyy-MM-dd').format(date)],
+      where: 'childId = ? AND date = ? AND invoiced = ?',
+      whereArgs: [childId, DateFormat('yyyy-MM-dd').format(date), 0],
     );
 
     return rows.map((row) => Service.fromMap(row)).toList();
@@ -114,6 +118,7 @@ class ServicesRepository {
     return rows.map((e) => Service.fromMap(e)).toList();
   }
 
+  @Deprecated("Use getServiceInfoPerChild instead")
   Future<double> getPendingTotal() async {
     var db = await DatabaseUtil.instance;
 
@@ -126,6 +131,7 @@ class ServicesRepository {
     );
   }
 
+  @Deprecated("Use getServiceInfoPerChild instead")
   Future<Map<int, double>> getPendingTotalPerChild() async {
     var db = await DatabaseUtil.instance;
 
@@ -148,6 +154,66 @@ class ServicesRepository {
     return map;
   }
 
+  Future<Map<int, ServiceInfo>> getServiceInfoPerChild() async {
+    var db = await DatabaseUtil.instance;
+
+    var rows =
+        await db.query('services', where: 'invoiced = ?', whereArgs: [0]);
+
+    var groupedRows = rows
+        .map((row) => Service.fromMap(row))
+        .toList()
+        .groupBy<int>((service) => service.childId)
+        .toList();
+
+    var map = <int, ServiceInfo>{
+      for (var group in groupedRows)
+        group.key: ServiceInfo(
+          pendingTotal: group.value.fold(
+            0.0,
+            (previousValue, service) => previousValue + service.total,
+          ),
+        ),
+    };
+
+    rows = await db.rawQuery(
+      'SELECT childId, MAX(date) FROM services, children '
+      'WHERE children.id = services.childId AND children.archived = ? '
+      'GROUP BY childId',
+      [0],
+    );
+    var map2 = <int, String>{
+      for (var row in rows) row['childId'] as int: row['MAX(date)'] as String,
+    };
+
+    for (var childId in map.keys) {
+      if (map2.containsKey(childId)) {
+        map[childId]!.lastEnty =
+            DateFormat('yyyy-MM-dd').parse(map2[childId] as String);
+      }
+    }
+    for (var row in rows) {
+      if (!map.containsKey(row['childId'] as int)) {
+        map[row['childId'] as int] = ServiceInfo(
+          pendingTotal: 0.0,
+          lastEnty: DateFormat('yyyy-MM-dd').parse(row['MAX(date)'] as String),
+        );
+      }
+    }
+
+    return map;
+  }
+
+  Future<List<int>> getUndeletableChildren() async {
+    var db = await DatabaseUtil.instance;
+
+    var rows = await db.query('services', groupBy: 'childId');
+
+    var undeletables = rows.map((row) => row['childId'] as int).toList();
+
+    return undeletables;
+  }
+
   Future<void> unlinkInvoice(int invoiceId) async {
     var db = await DatabaseUtil.instance;
 
@@ -160,5 +226,68 @@ class ServicesRepository {
       where: 'invoiceId = ?',
       whereArgs: [invoiceId],
     );
+  }
+
+  Future<List<StatementLine>> getStatementLines(
+    StatementViewType type,
+    DateTime date,
+  ) async {
+    assert(date.day == 1);
+    assert(type == StatementViewType.monthly || date.month == 1);
+
+    final db = await DatabaseUtil.instance;
+
+    final endDate = (type == StatementViewType.monthly)
+        ? DateTime(date.year, date.month + 1, 1)
+        : DateTime(date.year + 1, 1, 1);
+
+    final rows = await db.rawQuery(
+      'SELECT '
+      ' s.priceLabel, '
+      ' s.priceAmount, '
+      ' s.isFixedPrice, '
+      ' SUM(s.hours) + CAST(SUM(s.minutes) / 60 as int) hours, '
+      ' SUM(s.minutes) - 60 * CAST(SUM(s.minutes) / 60 as int) minutes, '
+      ' COUNT(1) count, '
+      ' SUM(s.total) total '
+      'FROM '
+      ' services s '
+      'WHERE '
+      ' s.date >= ? '
+      ' AND s.date < ? '
+      'GROUP BY '
+      ' s.priceLabel '
+      'ORDER BY '
+      ' s.isFixedPrice, '
+      ' s.priceLabel',
+      [
+        DateFormat('yyyy-MM-dd').format(date),
+        DateFormat('yyyy-MM-dd').format(endDate),
+      ],
+    );
+
+    final list = rows.map((row) => StatementLine.fromMap(row)).toList();
+
+    return list;
+  }
+
+  Future<List<StatementSummary>> getStatementsSummary() async {
+    final db = await DatabaseUtil.instance;
+
+    final rows = await db.rawQuery(
+      'SELECT '
+      ' STRFTIME("%Y-%m", date) month, '
+      ' SUM(s.total) total '
+      'FROM '
+      ' services s '
+      'GROUP BY '
+      ' month '
+      'ORDER BY '
+      ' month DESC',
+    );
+
+    final list = rows.map((row) => StatementSummary.fromMap(row)).toList();
+
+    return list;
   }
 }

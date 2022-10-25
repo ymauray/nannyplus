@@ -1,5 +1,4 @@
-import 'package:nannyplus/utils/database_util.dart';
-
+import '../utils/database_util.dart';
 import 'model/child.dart';
 
 class ChildrenRepository {
@@ -40,11 +39,13 @@ class ChildrenRepository {
       whereArgs: [child.id],
     );
 
-    return read(child.id!);
+    return await read(child.id!);
   }
 
   Future<void> delete(Child child) async {
     var db = await DatabaseUtil.instance;
+    await db.delete('invoices', where: 'childId = ?', whereArgs: [child.id]);
+    await db.delete('services', where: 'childId = ?', whereArgs: [child.id]);
     await db.delete('children', where: 'id = ?', whereArgs: [child.id]);
   }
 }

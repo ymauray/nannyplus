@@ -63,3 +63,90 @@ msgstr "Week"
 
 msgid "Weekend"
 msgstr "Weekend"
+
+msgid "No open invoice found"
+msgstr "No open invoice found"
+
+msgid "Invoice of {0}"
+msgstr "Invoice of {0}"
+
+msgid "Mark as paid"
+msgstr "Mark as paid"
+
+msgid "Are you sure you want to mark this invoice as paid ?"
+msgstr "Are you sure you want to mark this invoice as paid ?"
+
+msgid "Invoice marked as paid"
+msgstr "Invoice marked as paid"
+
+msgid "Show paid invoices"
+msgstr "Show paid invoices"
+
+msgid "Hide paid invoices"
+msgstr "Hide paid invoices"
+
+msgid "Archive folder"
+msgstr "Archive folder"
+
+msgid "Unarchive folder"
+msgstr "Unarchive folder"
+
+msgid "Show archived folders"
+msgstr "Show archived folders"
+
+msgid "Hide archived folders"
+msgstr "Hide archived folders"
+
+msgid "Are you sure you want to archive this folder ?"
+msgstr "Are you sure you want to archive this folder ?"
+
+msgid "Are you sure you want to unarchive this folder ?"
+msgstr "Are you sure you want to unarchive this folder ?"
+
+msgid "Archived successfully"
+msgstr "Archived successfully"
+
+msgid "Unarchived successfully"
+msgstr "Unarchived successfully"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Yearly statements"
+msgstr "Yearly statements"
+
+msgid "Yearly statement"
+msgstr "Yearly statement"
+
+msgid "Monthly statement"
+msgstr "Monthly statement"
+
+msgid "Statements"
+msgstr "Statements"
+
+msgid "(Re)generate yearly statements"
+msgstr "(Re)generate yearly statements"
+
+msgid "Please wait..."
+msgstr "Please wait..."
+
+msgid "Folders"
+msgstr "Folders"
+
+msgid "Child"
+msgstr "Child"
+
+msgid "Service type"
+msgstr "Service type"
+
+msgid "Amount"
+msgstr "Amount"
+
+msgid "Quantity"
+msgstr "Quantity"
+
+msgid "Total : {0}"
+msgstr "Total : {0}"
+
+msgid "Name"
+msgstr "Name"

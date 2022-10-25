@@ -18,6 +18,7 @@ class SettingsLoaded extends SettingsState {
   final String line2FontAsset;
   final String conditions;
   final String bankDetails;
+  final String name;
   final String address;
 
   const SettingsLoaded(
@@ -29,6 +30,7 @@ class SettingsLoaded extends SettingsState {
     this.line2FontAsset,
     this.conditions,
     this.bankDetails,
+    this.name,
     this.address,
   );
 
@@ -52,6 +54,7 @@ class SettingsLoaded extends SettingsState {
         other.line2FontAsset == line2FontAsset &&
         other.conditions == conditions &&
         other.bankDetails == bankDetails &&
+        other.name == name &&
         other.address == address;
   }
 
@@ -65,6 +68,7 @@ class SettingsLoaded extends SettingsState {
         line2FontAsset.hashCode ^
         conditions.hashCode ^
         bankDetails.hashCode ^
+        name.hashCode ^
         address.hashCode;
   }
 
@@ -77,6 +81,7 @@ class SettingsLoaded extends SettingsState {
     String? line2FontAsset,
     String? conditions,
     String? bankDetails,
+    String? name,
     String? address,
   }) {
     return SettingsLoaded(
@@ -88,6 +93,7 @@ class SettingsLoaded extends SettingsState {
       line2FontAsset ?? this.line2FontAsset,
       conditions ?? this.conditions,
       bankDetails ?? this.bankDetails,
+      name ?? this.name,
       address ?? this.address,
     );
   }
@@ -102,6 +108,7 @@ class SettingsLoaded extends SettingsState {
       'line2FontAsset': line2FontAsset,
       'conditions': conditions,
       'bankDetails': bankDetails,
+      'name': name,
       'address': address,
     };
   }
@@ -116,6 +123,7 @@ class SettingsLoaded extends SettingsState {
       map['line2FontAsset'] ?? '',
       map['conditions'] ?? '',
       map['bankDetails'] ?? '',
+      map['name'] ?? '',
       map['address'] ?? '',
     );
   }
@@ -127,6 +135,6 @@ class SettingsLoaded extends SettingsState {
 
   @override
   String toString() {
-    return 'SettingsLoaded(line1: $line1, line1FontFamily: $line1FontFamily, line1FontAsset: $line1FontAsset, line2: $line2, line2FontFamily: $line2FontFamily, line2FontAsset: $line2FontAsset, conditions: $conditions, bankDetails: $bankDetails, address: $address)';
+    return 'SettingsLoaded(line1: $line1, line1FontFamily: $line1FontFamily, line1FontAsset: $line1FontAsset, line2: $line2, line2FontFamily: $line2FontFamily, line2FontAsset: $line2FontAsset, conditions: $conditions, bankDetails: $bankDetails, name: $name, address: $address)';
   }
 }

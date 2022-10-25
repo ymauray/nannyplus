@@ -1,10 +1,11 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
-import 'package:nannyplus/data/children_repository.dart';
-import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/data/model/service.dart';
-import 'package:nannyplus/data/services_repository.dart';
-import 'package:nannyplus/data/prices_repository.dart';
+import 'package:flutter/material.dart';
+
+import '../data/children_repository.dart';
+import '../data/model/child.dart';
+import '../data/model/service.dart';
+import '../data/prices_repository.dart';
+import '../data/services_repository.dart';
 
 part 'service_list_state.dart';
 
@@ -22,7 +23,11 @@ class ServiceListCubit extends Cubit<ServiceListState> {
   Future<void> loadServices(int childId) async {
     try {
       final child = await childrenRepository.read(childId);
-      final services = await servicesRepository.getServices(child);
+      final prices = await pricesRepository.getPriceList();
+      var services = await servicesRepository.getServices(child);
+      services.sort((a, b) =>
+          prices.firstWhere((price) => price.id == a.priceId).sortOrder -
+          prices.firstWhere((price) => price.id == b.priceId).sortOrder);
       emit(ServiceListLoaded(child, services));
     } catch (e) {
       emit(ServiceListError(e.toString()));

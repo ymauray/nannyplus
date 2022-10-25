@@ -9,6 +9,7 @@ class PrefsUtil {
   static const String keyLine2FontAsset = 'line2FontAsset';
   static const String keyConditions = 'conditions';
   static const String keyBankDetails = 'bankDetails';
+  static const String keyName = 'name';
   static const String keyAddress = 'address';
   static const String keyShowOnboarding = 'showOnboarding';
 
@@ -54,6 +55,9 @@ class PrefsUtil {
 
   String get bankDetails => _prefs?.getString(keyBankDetails) ?? "";
   set bankDetails(String value) => _prefs?.setString(keyBankDetails, value);
+
+  String get name => _prefs?.getString(keyName) ?? "";
+  set name(String value) => _prefs?.setString(keyName, value);
 
   String get address => _prefs?.getString(keyAddress) ?? "";
   set address(String value) => _prefs?.setString(keyAddress, value);

@@ -20,8 +20,8 @@ class FloatingActionStack extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: FloatingActionButton(
-              child: const Icon(Icons.add),
               onPressed: onPressed,
+              child: const Icon(Icons.add),
             ),
           ),
         ),

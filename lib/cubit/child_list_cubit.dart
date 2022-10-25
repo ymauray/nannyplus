@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:nannyplus/data/children_repository.dart';
-import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/data/services_repository.dart';
-import 'package:nannyplus/utils/prefs_util.dart';
+
+import '../data/children_repository.dart';
+import '../data/model/child.dart';
+import '../data/model/service_info.dart';
+import '../data/services_repository.dart';
+import '../utils/prefs_util.dart';
 
 part 'child_list_state.dart';
 
@@ -14,20 +16,29 @@ class ChildListCubit extends Cubit<ChildListState> {
   ChildListCubit(this._childrenRepository, this._servicesRepository)
       : super(const ChildListInitial());
 
-  Future<void> loadChildList() async {
+  Future<void> loadChildList({bool loadArchivedFolders = false}) async {
     try {
       final childList =
-          await _childrenRepository.getChildList(state.showArchivedItems);
-      final pendingTotal = await _servicesRepository.getPendingTotal();
+          await _childrenRepository.getChildList(loadArchivedFolders);
       final pendingTotalPerChild =
           await _servicesRepository.getPendingTotalPerChild();
+      final undeletableChildren =
+          await _servicesRepository.getUndeletableChildren();
+      final servicesInfo = await _servicesRepository.getServiceInfoPerChild();
+
+      final pendingTotal =
+          servicesInfo.values.fold<double>(0.0, (total, service) {
+        return total + service.pendingTotal;
+      });
 
       emit(
         ChildListLoaded(
           childList,
           pendingTotal,
           pendingTotalPerChild,
-          showArchived: state.showArchivedItems,
+          undeletableChildren,
+          servicesInfo,
+          showArchived: loadArchivedFolders,
           showOnboarding: (await PrefsUtil.getInstance()).showOnboarding,
         ),
       );
@@ -67,7 +78,7 @@ class ChildListCubit extends Cubit<ChildListState> {
     try {
       child = child.copyWith(archived: 1);
       await _childrenRepository.update(child);
-      loadChildList();
+      //loadChildList();
     } catch (e) {
       emit(ChildListError(e.toString()));
     }
@@ -77,48 +88,8 @@ class ChildListCubit extends Cubit<ChildListState> {
     try {
       child = child.copyWith(archived: 0);
       await _childrenRepository.update(child);
-      loadChildList();
+      //loadChildList();
     } catch (e) {
-      emit(ChildListError(e.toString()));
-    }
-  }
-
-  Future<void> showArchivedItems() async {
-    try {
-      if (state is ChildListLoaded) {
-        final childList = await _childrenRepository.getChildList(true);
-        final pendingTotal = await _servicesRepository.getPendingTotal();
-        final pendingTotalPerChild =
-            await _servicesRepository.getPendingTotalPerChild();
-
-        emit(ChildListLoaded(
-          childList,
-          pendingTotal,
-          pendingTotalPerChild,
-          showArchived: true,
-        ));
-      }
-    } on Exception catch (e) {
-      emit(ChildListError(e.toString()));
-    }
-  }
-
-  Future<void> hideArchivedItems() async {
-    try {
-      if (state is ChildListLoaded) {
-        final childList = await _childrenRepository.getChildList(false);
-        final pendingTotal = await _servicesRepository.getPendingTotal();
-        final pendingTotalPerChild =
-            await _servicesRepository.getPendingTotalPerChild();
-
-        emit(ChildListLoaded(
-          childList,
-          pendingTotal,
-          pendingTotalPerChild,
-          showArchived: false,
-        ));
-      }
-    } on Exception catch (e) {
       emit(ChildListError(e.toString()));
     }
   }
