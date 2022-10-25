@@ -150,3 +150,6 @@ msgstr "Total : {0}"
 
 msgid "Name"
 msgstr "Name"
+
+msgid "Add a document"
+msgstr "Add a document"
