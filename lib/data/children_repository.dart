@@ -48,15 +48,4 @@ class ChildrenRepository {
     await db.delete('services', where: 'childId = ?', whereArgs: [child.id]);
     await db.delete('children', where: 'id = ?', whereArgs: [child.id]);
   }
-
-  Future<int> addFile(int childId, String label, String path) async {
-    var db = await DatabaseUtil.instance;
-    var id = await db.insert('files', {
-      'childId': childId,
-      'label': label,
-      'path': path,
-    });
-
-    return id;
-  }
 }

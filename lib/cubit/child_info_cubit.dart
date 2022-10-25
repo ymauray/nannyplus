@@ -27,12 +27,4 @@ class ChildInfoCubit extends Cubit<ChildInfoState> {
       emit(ChildInfoError(e.toString()));
     }
   }
-
-  void addFile(int id, String label, String path) async {
-    try {
-      await _childrenRepository.addFile(id, label, path);
-    } catch (e) {
-      emit(ChildInfoError(e.toString()));
-    }
-  }
 }

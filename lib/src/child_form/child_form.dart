@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
-import 'package:nannyplus/cubit/child_info_cubit.dart';
 import 'package:nannyplus/cubit/file_list_cubit.dart';
 import 'package:nannyplus/cubit/settings_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
@@ -15,6 +14,7 @@ import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/view.dart';
 import 'package:nannyplus/utils/i18n_utils.dart';
+import 'package:open_file_plus/open_file_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
 class NewChildForm extends StatelessWidget {
@@ -28,6 +28,7 @@ class NewChildForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormBuilderState>();
+    context.read<FileListCubit>().loadFiles(child?.id ?? 0);
 
     return FormBuilder(
       key: formKey,
@@ -319,7 +320,28 @@ class NewChildForm extends StatelessWidget {
             ),
             BlocBuilder<FileListCubit, FileListState>(
               builder: (builder, state) {
-                return Container();
+                return state is FileListLoaded
+                    ? Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: state.files
+                            .map(
+                              (file) => GestureDetector(
+                                onTap: () {
+                                  //launchUrl(Uri.parse("file://${file.path}"));
+                                  OpenFile.open(file.path);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(file.label),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      )
+                    : const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("No documents"),
+                      );
               },
             ),
             Padding(
@@ -340,7 +362,7 @@ class NewChildForm extends StatelessWidget {
                     }
                     file.copySync(path);
                     context
-                        .read<ChildInfoCubit>()
+                        .read<FileListCubit>()
                         .addFile(child!.id!, name, path);
                   }
                 },
