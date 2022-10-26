@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:nannyplus/cubit/file_list_cubit.dart';
+import 'package:open_file_plus/open_file_plus.dart';
 
 import '../../cubit/child_info_cubit.dart';
 import '../../data/model/child.dart';
@@ -59,46 +61,60 @@ class _ChildInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return UIListView.fromChildren(
-      children: [
-        _InfoCard(
-          label: context.t('Birthdate'),
-          value: child.birthdate?.formatDate() ?? '',
-        ),
-        _InfoCard(
-          label: context.t('Allergies'),
-          value: child.allergies ?? context.t('No known allergies'),
-        ),
-        _InfoCard(
-          label: context.t('Parents name'),
-          value: child.parentsName ?? '',
-        ),
-        _InfoCard(
-          label: context.t('Address'),
-          value: child.address ?? '',
-        ),
-        _InfoCard(
-          label: context.t('Phone number'),
-          value: child.phoneNumber ?? '',
-        ),
-        if ((child.labelForPhoneNumber2?.isNotEmpty ?? false) &&
-            (child.phoneNumber2?.isNotEmpty ?? false))
+    context.read<FileListCubit>().loadFiles(child.id ?? 0);
+
+    return BlocBuilder<FileListCubit, FileListState>(
+      builder: (context, state) => UIListView.fromChildren(
+        children: [
           _InfoCard(
-            label: child.labelForPhoneNumber2!,
-            value: child.phoneNumber2!,
+            label: context.t('Birthdate'),
+            value: child.birthdate?.formatDate() ?? '',
           ),
-        if ((child.labelForPhoneNumber3?.isNotEmpty ?? false) &&
-            (child.phoneNumber3?.isNotEmpty ?? false))
           _InfoCard(
-            label: child.labelForPhoneNumber3!,
-            value: child.phoneNumber3!,
+            label: context.t('Allergies'),
+            value: child.allergies ?? context.t('No known allergies'),
           ),
-        if (child.freeText?.isNotEmpty ?? false)
           _InfoCard(
-            label: context.t("Free text"),
-            value: child.freeText!,
+            label: context.t('Parents name'),
+            value: child.parentsName ?? '',
           ),
-      ],
+          _InfoCard(
+            label: context.t('Address'),
+            value: child.address ?? '',
+          ),
+          _InfoCard(
+            label: context.t('Phone number'),
+            value: child.phoneNumber ?? '',
+          ),
+          if ((child.labelForPhoneNumber2?.isNotEmpty ?? false) &&
+              (child.phoneNumber2?.isNotEmpty ?? false))
+            _InfoCard(
+              label: child.labelForPhoneNumber2!,
+              value: child.phoneNumber2!,
+            ),
+          if ((child.labelForPhoneNumber3?.isNotEmpty ?? false) &&
+              (child.phoneNumber3?.isNotEmpty ?? false))
+            _InfoCard(
+              label: child.labelForPhoneNumber3!,
+              value: child.phoneNumber3!,
+            ),
+          if (child.freeText?.isNotEmpty ?? false)
+            _InfoCard(
+              label: context.t("Free text"),
+              value: child.freeText!,
+            ),
+          if (state is FileListLoaded)
+            ...state.files.map(
+              (file) => GestureDetector(
+                onTap: (() => OpenFile.open(file.path)),
+                child: _InfoCard(
+                  label: context.t("Document"),
+                  value: file.label,
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

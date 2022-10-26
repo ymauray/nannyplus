@@ -430,3 +430,9 @@ msgstr "Nom"
 
 msgid "Add a document"
 msgstr "Ajouter un document"
+
+msgid "Document"
+msgstr "Document"
+
+msgid "Documents"
+msgstr "Documents"

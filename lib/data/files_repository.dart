@@ -27,4 +27,9 @@ class FilesRepository {
 
     return rows.map((row) => Document.fromMap(row));
   }
+
+  Future<void> removeFile(Document document) async {
+    var db = await DatabaseUtil.instance;
+    await db.delete('documents', where: 'id = ?', whereArgs: [document.id]);
+  }
 }

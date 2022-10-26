@@ -9,13 +9,13 @@ import 'package:intl/intl.dart';
 import 'package:nannyplus/cubit/file_list_cubit.dart';
 import 'package:nannyplus/cubit/settings_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/data/model/document.dart';
 import 'package:nannyplus/src/constants.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/view.dart';
 import 'package:nannyplus/utils/i18n_utils.dart';
 import 'package:open_file_plus/open_file_plus.dart';
-import 'package:path_provider/path_provider.dart';
 
 class NewChildForm extends StatelessWidget {
   const NewChildForm({
@@ -321,27 +321,8 @@ class NewChildForm extends StatelessWidget {
             BlocBuilder<FileListCubit, FileListState>(
               builder: (builder, state) {
                 return state is FileListLoaded
-                    ? Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: state.files
-                            .map(
-                              (file) => GestureDetector(
-                                onTap: () {
-                                  //launchUrl(Uri.parse("file://${file.path}"));
-                                  OpenFile.open(file.path);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(file.label),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      )
-                    : const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text("No documents"),
-                      );
+                    ? _DocumentList(child: child, documents: state.files)
+                    : Container();
               },
             ),
             Padding(
@@ -350,23 +331,10 @@ class NewChildForm extends StatelessWidget {
                 onPressed: () async {
                   final file = await openFileChooser();
                   if (file != null) {
-                    final directory = await getApplicationDocumentsDirectory();
-                    final name = file.path.split('/').last;
-                    var index = 0;
-                    var loop = true;
-                    var path = "";
-                    while (loop) {
-                      index += 1;
-                      path = "${directory.path}/${child!.id}_${index}_$name";
-                      loop = File(path).existsSync();
-                    }
-                    file.copySync(path);
-                    context
-                        .read<FileListCubit>()
-                        .addFile(child!.id!, name, path);
+                    context.read<FileListCubit>().addFile(child?.id ?? 0, file);
                   }
                 },
-                child: const Text('Add a document'),
+                child: Text(context.t('Add a document')),
               ),
             ),
           ],
@@ -384,5 +352,79 @@ class NewChildForm extends StatelessWidget {
     } else {
       return null;
     }
+  }
+}
+
+class _DocumentList extends StatelessWidget {
+  const _DocumentList({
+    required Iterable<Document> documents,
+    required Child? child,
+    Key? key,
+  })  : _documents = documents,
+        _child = child,
+        super(key: key);
+
+  final Child? _child;
+  final Iterable<Document> _documents;
+
+  @override
+  Widget build(BuildContext context) {
+    if (_documents.isEmpty) {
+      return Container();
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          context.t("Documents"),
+          style: const TextStyle(
+            fontSize: 0.75 * 16,
+          ),
+        ),
+        ..._documents
+            .map(
+              (file) => Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      OpenFile.open(file.path);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8.0,
+                      ),
+                      child: Text(
+                        file.label,
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.edit),
+                    padding: EdgeInsets.zero,
+                    visualDensity: VisualDensity.compact,
+                  ),
+                  IconButton(
+                    onPressed: () async {
+                      context
+                          .read<FileListCubit>()
+                          .removeFile(_child?.id ?? 0, file);
+                    },
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    visualDensity: VisualDensity.compact,
+                  ),
+                ],
+              ),
+            )
+            .toList(),
+      ],
+    );
   }
 }
