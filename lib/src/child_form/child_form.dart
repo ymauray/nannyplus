@@ -403,16 +403,26 @@ class _DocumentList extends StatelessWidget {
                   ),
                   const Spacer(),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      var newLabel = await _showEditDialog(context, file.label);
+                      if (newLabel != null) {
+                        context
+                            .read<FileListCubit>()
+                            .editFile(_child?.id ?? 0, file, newLabel);
+                      }
+                    },
                     icon: const Icon(Icons.edit),
                     padding: EdgeInsets.zero,
                     visualDensity: VisualDensity.compact,
                   ),
                   IconButton(
                     onPressed: () async {
-                      context
-                          .read<FileListCubit>()
-                          .removeFile(_child?.id ?? 0, file);
+                      final shouldDelete = await _showDeleteDialog(context);
+                      if (shouldDelete ?? false) {
+                        context
+                            .read<FileListCubit>()
+                            .removeFile(_child?.id ?? 0, file);
+                      }
                     },
                     icon: const Icon(
                       Icons.delete,
@@ -425,6 +435,98 @@ class _DocumentList extends StatelessWidget {
             )
             .toList(),
       ],
+    );
+  }
+
+  Future<bool?> _showDeleteDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.t('Delete document')),
+        content:
+            Text(context.t('Are you sure you want to delete this document?')),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+            child: Text(context.t('Delete')),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            child: Text(context.t('Cancel')),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ignore: long-method
+  Future<String?> _showEditDialog(BuildContext context, String label) async {
+    final formKey = GlobalKey<FormBuilderState>();
+
+    return showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(context.t('Edit')),
+          content: FormBuilder(
+            key: formKey,
+            initialValue: {
+              'label': label,
+            },
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: SizedBox(
+                    width: 235,
+                    child: FormBuilderTextField(
+                      name: 'label',
+                      decoration: InputDecoration(
+                        labelText: context.t('Description'),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                      ),
+                      autocorrect: false,
+                      textCapitalization: TextCapitalization.none,
+                      keyboardType: TextInputType.text,
+                      validator: (value) {
+                        final labelIsEmpty = value?.isEmpty ?? true;
+
+                        return labelIsEmpty
+                            ? context.t('Description cannot be empty')
+                            : null;
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: Text(context.t('Cancel')),
+              onPressed: () {
+                Navigator.of(context).pop(null);
+              },
+            ),
+            ElevatedButton(
+              child: Text(context.t('Save')),
+              onPressed: () {
+                formKey.currentState!.save();
+                if (formKey.currentState!.validate()) {
+                  Navigator.of(context)
+                      .pop(formKey.currentState!.value['label']);
+                }
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -52,4 +52,11 @@ class FileListCubit extends Cubit<FileListState> {
     final documents = await _filesRepository.getFiles(childId);
     emit(FileListLoaded(documents));
   }
+
+  void editFile(int childId, Document file, String newLabel) async {
+    if (childId == 0) return;
+    await _filesRepository.editFile(file, newLabel);
+    final documents = await _filesRepository.getFiles(childId);
+    emit(FileListLoaded(documents));
+  }
 }

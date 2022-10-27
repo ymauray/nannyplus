@@ -32,4 +32,14 @@ class FilesRepository {
     var db = await DatabaseUtil.instance;
     await db.delete('documents', where: 'id = ?', whereArgs: [document.id]);
   }
+
+  Future<void> editFile(Document file, String newLabel) async {
+    var db = await DatabaseUtil.instance;
+    await db.update(
+      'documents',
+      {'label': newLabel},
+      where: 'id = ?',
+      whereArgs: [file.id],
+    );
+  }
 }
