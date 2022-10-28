@@ -28,6 +28,7 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         labelStyle: GoogleFonts.poppins(
           fontWeight: FontWeight.normal,
+          fontSize: 16,
         ),
       ),
       scaffoldBackgroundColor: kcBackgroundColor,

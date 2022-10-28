@@ -427,3 +427,18 @@ msgstr "Total : {0}"
 
 msgid "Name"
 msgstr "Nom"
+
+msgid "Add a document"
+msgstr "Ajouter un document"
+
+msgid "Document"
+msgstr "Document"
+
+msgid "Documents"
+msgstr "Documents"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Are you sure you want to delete this document?"
+msgstr "Êtes-vous sûr de vouloir supprimer ce document ?"

@@ -491,6 +491,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  open_file_plus:
+    dependency: "direct main"
+    description:
+      name: open_file_plus
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.3.0"
   package_config:
     dependency: transitive
     description:
@@ -930,6 +937,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  very_good_analysis:
+    dependency: "direct main"
+    description:
+      name: very_good_analysis
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
   vm_service:
     dependency: transitive
     description:
