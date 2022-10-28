@@ -16,7 +16,6 @@ import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/view.dart';
 import 'package:nannyplus/utils/i18n_utils.dart';
 import 'package:open_file_plus/open_file_plus.dart';
-import 'package:path_provider/path_provider.dart';
 
 class NewChildForm extends StatelessWidget {
   const NewChildForm({
@@ -391,11 +390,7 @@ class _DocumentList extends StatelessWidget {
                   Expanded(
                     child: GestureDetector(
                       onTap: () async {
-                        Directory tempDir = await getTemporaryDirectory();
-                        final tempFileName =
-                            '${tempDir.path}/${file.path.split('/').last}';
-                        File tempFile = File(file.path).copySync(tempFileName);
-                        OpenFile.open(tempFile.path);
+                        OpenFile.open(file.path);
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
