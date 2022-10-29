@@ -46,7 +46,7 @@ class MainDrawer extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute<void>(
                     fullscreenDialog: true,
-                    builder: (context) => const NewBackupRestoreView(),
+                    builder: (context) => const BackupRestoreView(),
                   ),
                 );
               },

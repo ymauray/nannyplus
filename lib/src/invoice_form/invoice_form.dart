@@ -11,8 +11,8 @@ import 'package:nannyplus/src/ui/ui_card.dart';
 import 'package:nannyplus/src/ui/view.dart';
 import 'package:nannyplus/utils/snack_bar_util.dart';
 
-class NewInvoiceForm extends StatelessWidget {
-  const NewInvoiceForm({
+class InvoiceForm extends StatelessWidget {
+  const InvoiceForm({
     Key? key,
     required this.childId,
   }) : super(key: key);

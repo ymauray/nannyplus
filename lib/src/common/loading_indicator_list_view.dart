@@ -8,7 +8,7 @@ class LoadingIndicatorListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: const [
-        NewLoadingIndicator(),
+        LoadingIndicator(),
       ],
     );
   }

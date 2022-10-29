@@ -4,13 +4,13 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/cubit/price_list_cubit.dart';
 import 'package:nannyplus/data/model/price.dart';
 import 'package:nannyplus/forms/price_form.dart';
+import 'package:nannyplus/src/common/loading_indicator.dart';
 import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/view.dart';
 import 'package:nannyplus/utils/snack_bar_util.dart';
 import 'package:nannyplus/widgets/card_scroll_view.dart';
 import 'package:nannyplus/widgets/card_tile.dart';
 import 'package:nannyplus/widgets/floating_action_stack.dart';
-import 'package:nannyplus/widgets/loading_indicator.dart';
 
 class PriceListView extends StatelessWidget {
   const PriceListView({Key? key}) : super(key: key);

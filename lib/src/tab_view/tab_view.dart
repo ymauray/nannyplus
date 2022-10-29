@@ -44,7 +44,7 @@ class TabView extends StatelessWidget {
                 MaterialPageRoute(
                   fullscreenDialog: true,
                   builder: (context) {
-                    return NewChildForm(child: child);
+                    return ChildForm(child: child);
                   },
                 ),
               );
@@ -94,9 +94,9 @@ class TabView extends StatelessWidget {
             //    title: Text("Tab 1, Child $index"),
             //  ),
             //),
-            NewServiceListTabView(childId: childId),
-            NewInvoiceListTabView(childId: childId),
-            NewChildInfoTabView(childId: childId),
+            ServiceListTabView(childId: childId),
+            InvoiceListTabView(childId: childId),
+            ChildInfoTabView(childId: childId),
           ],
         ),
       ),

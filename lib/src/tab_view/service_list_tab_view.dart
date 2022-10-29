@@ -13,8 +13,8 @@ import 'package:nannyplus/utils/i18n_utils.dart';
 import 'package:nannyplus/utils/list_extensions.dart';
 import 'package:nannyplus/utils/snack_bar_util.dart';
 
-class NewServiceListTabView extends StatelessWidget {
-  const NewServiceListTabView({
+class ServiceListTabView extends StatelessWidget {
+  const ServiceListTabView({
     Key? key,
     required this.childId,
   }) : super(key: key);
@@ -70,7 +70,7 @@ class _List extends StatelessWidget {
       onFloatingActionPressed: () async {
         await Navigator.of(context).push(
           MaterialPageRoute<Service>(
-            builder: (context) => NewServiceForm(child: child, tab: 0),
+            builder: (context) => ServiceForm(child: child, tab: 0),
             fullscreenDialog: true,
           ),
         );
@@ -100,7 +100,7 @@ class _GroupCard extends StatelessWidget {
         onTap: () async {
           await Navigator.of(context).push(
             MaterialPageRoute<Service>(
-              builder: (context) => NewServiceForm(
+              builder: (context) => ServiceForm(
                 child: child,
                 date: DateFormat('yyyy-MM-dd').parse(group.value[0].date),
                 tab: 1,

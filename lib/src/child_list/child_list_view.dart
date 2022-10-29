@@ -7,6 +7,7 @@ import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/src/app_settings/app_settings_view.dart';
 import 'package:nannyplus/src/child_form/child_form.dart';
 import 'package:nannyplus/src/child_list/main_drawer.dart';
+import 'package:nannyplus/src/common/loading_indicator.dart';
 import 'package:nannyplus/src/constants.dart';
 import 'package:nannyplus/src/invoice_settings/invoice_settings_view.dart';
 import 'package:nannyplus/src/price_list/price_list_view.dart';
@@ -18,7 +19,6 @@ import 'package:nannyplus/src/ui/view.dart';
 import 'package:nannyplus/utils/i18n_utils.dart';
 import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:nannyplus/utils/snack_bar_util.dart';
-import 'package:nannyplus/widgets/loading_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ChildListView extends StatefulWidget {
@@ -185,7 +185,7 @@ class _ChildListViewState extends State<ChildListView> {
             onFloatingActionPressed: () async {
               final child = await Navigator.of(context).push<Child>(
                 MaterialPageRoute(
-                  builder: (context) => const NewChildForm(),
+                  builder: (context) => const ChildForm(),
                 ),
               );
               if (child != null) {
@@ -446,7 +446,7 @@ class _ChildListTile extends StatelessWidget {
                       case 3:
                         final clone = await Navigator.of(context).push<Child>(
                           MaterialPageRoute<Child>(
-                            builder: (context) => NewChildForm(
+                            builder: (context) => ChildForm(
                               childToClone: child,
                             ),
                           ),

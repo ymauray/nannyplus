@@ -9,8 +9,8 @@ import 'package:nannyplus/utils/database_util.dart';
 import 'package:nannyplus/utils/snack_bar_util.dart';
 import 'package:share_plus/share_plus.dart';
 
-class NewBackupRestoreView extends StatelessWidget {
-  const NewBackupRestoreView({Key? key}) : super(key: key);
+class BackupRestoreView extends StatelessWidget {
+  const BackupRestoreView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

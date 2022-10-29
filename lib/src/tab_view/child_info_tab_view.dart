@@ -4,15 +4,15 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/cubit/child_info_cubit.dart';
 import 'package:nannyplus/cubit/file_list_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/src/common/loading_indicator.dart';
 import 'package:nannyplus/src/constants.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/src/ui/ui_card.dart';
 import 'package:nannyplus/utils/date_format_extension.dart';
-import 'package:nannyplus/widgets/loading_indicator.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 
-class NewChildInfoTabView extends StatelessWidget {
-  const NewChildInfoTabView({
+class ChildInfoTabView extends StatelessWidget {
+  const ChildInfoTabView({
     Key? key,
     required this.childId,
   }) : super(key: key);

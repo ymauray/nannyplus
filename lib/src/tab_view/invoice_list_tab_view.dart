@@ -17,8 +17,8 @@ import 'package:nannyplus/utils/date_format_extension.dart';
 import 'package:nannyplus/utils/list_extensions.dart';
 import 'package:nannyplus/utils/snack_bar_util.dart';
 
-class NewInvoiceListTabView extends StatefulWidget {
-  const NewInvoiceListTabView({
+class InvoiceListTabView extends StatefulWidget {
+  const InvoiceListTabView({
     Key? key,
     required this.childId,
   }) : super(key: key);
@@ -26,10 +26,10 @@ class NewInvoiceListTabView extends StatefulWidget {
   final int childId;
 
   @override
-  State<NewInvoiceListTabView> createState() => _NewInvoiceListTabViewState();
+  State<InvoiceListTabView> createState() => _InvoiceListTabViewState();
 }
 
-class _NewInvoiceListTabViewState extends State<NewInvoiceListTabView> {
+class _InvoiceListTabViewState extends State<InvoiceListTabView> {
   bool showPaidInvoices = false;
 
   @override
@@ -90,7 +90,7 @@ class _List extends StatelessWidget {
     Future<void> action() async {
       await Navigator.of(context).push(
         MaterialPageRoute<Invoice>(
-          builder: (context) => NewInvoiceForm(childId: childId),
+          builder: (context) => InvoiceForm(childId: childId),
           fullscreenDialog: true,
         ),
       );

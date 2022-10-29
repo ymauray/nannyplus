@@ -17,8 +17,8 @@ import 'package:nannyplus/utils/i18n_utils.dart';
 import 'package:nannyplus/utils/snack_bar_util.dart';
 import 'package:nannyplus/widgets/time_input_dialog.dart';
 
-class NewServiceForm extends StatelessWidget {
-  const NewServiceForm({
+class ServiceForm extends StatelessWidget {
+  const ServiceForm({
     Key? key,
     required this.child,
     required this.tab,

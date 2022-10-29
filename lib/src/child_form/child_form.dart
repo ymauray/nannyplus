@@ -17,8 +17,8 @@ import 'package:nannyplus/src/ui/view.dart';
 import 'package:nannyplus/utils/i18n_utils.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 
-class NewChildForm extends StatelessWidget {
-  const NewChildForm({
+class ChildForm extends StatelessWidget {
+  const ChildForm({
     Key? key,
     this.child,
     this.childToClone,
