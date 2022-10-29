@@ -177,3 +177,6 @@ msgstr "Sort children list by last name"
 
 msgid "Show first name before last name"
 msgstr "Show first name before last name"
+
+msgid "Error loading services"
+msgstr "Error loading services"

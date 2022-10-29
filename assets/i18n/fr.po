@@ -454,3 +454,6 @@ msgstr "Trier la liste des enfants par nom de famille"
 
 msgid "Show first name before last name"
 msgstr "Afficher le prénom avant le nom de famille"
+
+msgid "Error loading services"
+msgstr "Erreur lors du chargement des prestations"
