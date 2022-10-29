@@ -24,6 +24,11 @@ class PrefsUtil {
     return _instance!;
   }
 
+  static PrefsUtil getInstanceSync() {
+    if (_instance != null) return _instance!;
+    throw Exception('PrefsUtil not initialized');
+  }
+
   Future<void> clear() async {
     await _prefs?.clear();
   }
