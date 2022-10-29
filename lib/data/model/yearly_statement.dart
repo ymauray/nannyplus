@@ -1,21 +1,33 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:nannyplus/data/model/monthly_statement.dart';
 
-import 'monthly_statement.dart';
-
+@immutable
 class YearlyStatement {
-  final int? id;
-  final int year;
-  final double amount;
-  final List<MonthlyStatement> monthlyStatements;
-
-  YearlyStatement({
+  const YearlyStatement({
     this.id,
     required this.year,
     required this.amount,
     required this.monthlyStatements,
   });
+  factory YearlyStatement.fromJson(String source) =>
+      YearlyStatement.fromMap(json.decode(source));
+
+  factory YearlyStatement.fromMap(Map<String, dynamic> map) {
+    return YearlyStatement(
+      id: map['id']?.toInt(),
+      year: map['year']?.toInt() ?? 0,
+      amount: map['amount']?.toDouble() ?? 0.0,
+      monthlyStatements: List<MonthlyStatement>.from(
+        map['monthlyStatements']?.map((x) => MonthlyStatement.fromMap(x)),
+      ),
+    );
+  }
+  final int? id;
+  final int year;
+  final double amount;
+  final List<MonthlyStatement> monthlyStatements;
 
   YearlyStatement copyWith({
     int? id,
@@ -40,21 +52,7 @@ class YearlyStatement {
     };
   }
 
-  factory YearlyStatement.fromMap(Map<String, dynamic> map) {
-    return YearlyStatement(
-      id: map['id']?.toInt(),
-      year: map['year']?.toInt() ?? 0,
-      amount: map['amount']?.toDouble() ?? 0.0,
-      monthlyStatements: List<MonthlyStatement>.from(
-        map['monthlyStatements']?.map((x) => MonthlyStatement.fromMap(x)),
-      ),
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory YearlyStatement.fromJson(String source) =>
-      YearlyStatement.fromMap(json.decode(source));
 
   @override
   String toString() {

@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-
-import '../../cubit/invoice_form_cubit.dart';
-import '../../src/common/loading_indicator_list_view.dart';
-import '../../src/constants.dart';
-import '../../src/ui/list_view.dart';
-import '../../src/ui/sliver_curved_persistent_header.dart';
-import '../../src/ui/ui_card.dart';
-import '../../src/ui/view.dart';
-import '../../utils/snack_bar_util.dart';
+import 'package:nannyplus/cubit/invoice_form_cubit.dart';
+import 'package:nannyplus/src/common/loading_indicator_list_view.dart';
+import 'package:nannyplus/src/constants.dart';
+import 'package:nannyplus/src/ui/list_view.dart';
+import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
+import 'package:nannyplus/src/ui/ui_card.dart';
+import 'package:nannyplus/src/ui/view.dart';
+import 'package:nannyplus/utils/snack_bar_util.dart';
 
 class NewInvoiceForm extends StatelessWidget {
   const NewInvoiceForm({
@@ -28,9 +27,8 @@ class NewInvoiceForm extends StatelessWidget {
 
     return FormBuilder(
       key: formKey,
-      initialValue: const {},
       child: UIView(
-        title: Text(context.t("Create invoice")),
+        title: Text(context.t('Create invoice')),
         actions: [
           IconButton(
             icon: const Icon(
@@ -38,12 +36,12 @@ class NewInvoiceForm extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () async {
-              var ok = await context.read<InvoiceFormCubit>().createInvoice();
+              final ok = await context.read<InvoiceFormCubit>().createInvoice();
               if (ok) {
                 Navigator.of(context).pop();
               } else {
                 ScaffoldMessenger.of(context)
-                    .failure(context.t("There is no service to invoice"));
+                    .failure(context.t('There is no service to invoice'));
               }
             },
           ),
@@ -63,7 +61,7 @@ class NewInvoiceForm extends StatelessWidget {
                               right: kdMediumPadding,
                             ),
                             child: Text(
-                              context.t("Invoice for"),
+                              context.t('Invoice for'),
                               style: Theme.of(context).textTheme.caption,
                             ),
                           ),
@@ -87,7 +85,7 @@ class NewInvoiceForm extends StatelessWidget {
                                 right: kdMediumPadding,
                               ),
                               child: Text(
-                                context.t("Combined with"),
+                                context.t('Combined with'),
                                 style: Theme.of(context).textTheme.caption,
                               ),
                             ),

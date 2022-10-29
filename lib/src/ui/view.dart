@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'sliver_curved_persistent_header.dart';
-import 'sliver_tab_bar_peristant_header.dart';
+import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
+import 'package:nannyplus/src/ui/sliver_tab_bar_peristant_header.dart';
 
 class UIView extends StatelessWidget {
   const UIView({
@@ -42,7 +41,7 @@ class UIView extends StatelessWidget {
               SliverOverlapAbsorber(
                 handle:
                     NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                sliver: persistentHeader!,
+                sliver: persistentHeader,
               ),
             if (persistentTabBar != null) persistentTabBar!,
           ];
@@ -72,7 +71,7 @@ class UIView extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomRight,
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16),
                   child: FloatingActionButton(
                     onPressed: onFloatingActionPressed,
                     child: const Icon(Icons.add),

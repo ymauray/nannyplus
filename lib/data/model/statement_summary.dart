@@ -1,12 +1,24 @@
 import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
+
+@immutable
 class StatementSummary {
-  String month;
-  double total;
-  StatementSummary({
+  const StatementSummary({
     required this.month,
     required this.total,
   });
+  factory StatementSummary.fromJson(String source) =>
+      StatementSummary.fromMap(json.decode(source));
+
+  factory StatementSummary.fromMap(Map<String, dynamic> map) {
+    return StatementSummary(
+      month: map['month'] ?? '',
+      total: map['total']?.toDouble() ?? 0.0,
+    );
+  }
+  final String month;
+  final double total;
 
   StatementSummary copyWith({
     String? month,
@@ -25,17 +37,7 @@ class StatementSummary {
     };
   }
 
-  factory StatementSummary.fromMap(Map<String, dynamic> map) {
-    return StatementSummary(
-      month: map['month'] ?? '',
-      total: map['total']?.toDouble() ?? 0.0,
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory StatementSummary.fromJson(String source) =>
-      StatementSummary.fromMap(json.decode(source));
 
   @override
   String toString() => 'StatementSummary(month: $month, total: $total)';

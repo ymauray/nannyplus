@@ -4,13 +4,12 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nannyplus/utils/logo_picker_controller.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../utils/logo_picker_controller.dart';
-
 class LogoPicker extends StatefulWidget {
-  final LogoPickerController controller;
   const LogoPicker({required this.controller, Key? key}) : super(key: key);
+  final LogoPickerController controller;
 
   @override
   State<LogoPicker> createState() => _LogoPickerState();
@@ -43,7 +42,7 @@ class _LogoPickerState extends State<LogoPicker> {
     );
   }
 
-  Widget buildSquare(AsyncSnapshot value, FocusNode focusNode) {
+  Widget buildSquare(AsyncSnapshot<Directory> value, FocusNode focusNode) {
     if (bytes != null) {
       return ClipRect(
         child: Image.memory(
@@ -55,8 +54,8 @@ class _LogoPickerState extends State<LogoPicker> {
       );
     } else {
       if (value.hasData) {
-        var appDocumentsPath = value.data!.path;
-        var filePath = '$appDocumentsPath/logo';
+        final appDocumentsPath = value.data!.path;
+        final filePath = '$appDocumentsPath/logo';
         if (File(filePath).existsSync()) {
           imageCache.clearLiveImages();
 
@@ -85,17 +84,17 @@ class _LogoPickerState extends State<LogoPicker> {
     }
   }
 
-  void openLogoChooser(FocusNode focusNode) async {
+  Future<void> openLogoChooser(FocusNode focusNode) async {
     focusNode.requestFocus();
-    XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (image != null) {
       //Directory appDocumentsDirectory =
       //    await getApplicationDocumentsDirectory();
       //var appDocumentsPath = appDocumentsDirectory.path;
       //var filePath = '$appDocumentsPath/logo';
       //await image.saveTo(filePath);
-      var b = await image.readAsBytes();
-      widget.controller.setBytes(b);
+      final b = await image.readAsBytes();
+      widget.controller.bytes = b;
       setState(() {
         bytes = b;
       });

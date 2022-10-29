@@ -28,38 +28,38 @@ class PrefsUtil {
     await _prefs?.clear();
   }
 
-  String get line1 => _prefs?.getString(keyLine1) ?? "";
+  String get line1 => _prefs?.getString(keyLine1) ?? '';
   set line1(String value) => _prefs?.setString(keyLine1, value);
 
-  String get line2 => _prefs?.getString(keyLine2) ?? "";
+  String get line2 => _prefs?.getString(keyLine2) ?? '';
   set line2(String value) => _prefs?.setString(keyLine2, value);
 
-  String get line1FontFamily => _prefs?.getString(keyLine1FontFamily) ?? "";
+  String get line1FontFamily => _prefs?.getString(keyLine1FontFamily) ?? '';
   set line1FontFamily(String value) =>
       _prefs?.setString(keyLine1FontFamily, value);
 
-  String get line1FontAsset => _prefs?.getString(keyLine1FontAsset) ?? "";
+  String get line1FontAsset => _prefs?.getString(keyLine1FontAsset) ?? '';
   set line1FontAsset(String value) =>
       _prefs?.setString(keyLine1FontAsset, value);
 
-  String get line2FontFamily => _prefs?.getString(keyLine2FontFamily) ?? "";
+  String get line2FontFamily => _prefs?.getString(keyLine2FontFamily) ?? '';
   set line2FontFamily(String value) =>
       _prefs?.setString(keyLine2FontFamily, value);
 
-  String get line2FontAsset => _prefs?.getString(keyLine2FontAsset) ?? "";
+  String get line2FontAsset => _prefs?.getString(keyLine2FontAsset) ?? '';
   set line2FontAsset(String value) =>
       _prefs?.setString(keyLine2FontAsset, value);
 
-  String get conditions => _prefs?.getString(keyConditions) ?? "";
+  String get conditions => _prefs?.getString(keyConditions) ?? '';
   set conditions(String value) => _prefs?.setString(keyConditions, value);
 
-  String get bankDetails => _prefs?.getString(keyBankDetails) ?? "";
+  String get bankDetails => _prefs?.getString(keyBankDetails) ?? '';
   set bankDetails(String value) => _prefs?.setString(keyBankDetails, value);
 
-  String get name => _prefs?.getString(keyName) ?? "";
+  String get name => _prefs?.getString(keyName) ?? '';
   set name(String value) => _prefs?.setString(keyName, value);
 
-  String get address => _prefs?.getString(keyAddress) ?? "";
+  String get address => _prefs?.getString(keyAddress) ?? '';
   set address(String value) => _prefs?.setString(keyAddress, value);
 
   bool get showOnboarding => _prefs?.getBool(keyShowOnboarding) ?? true;

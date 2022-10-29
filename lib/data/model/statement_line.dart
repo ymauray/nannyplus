@@ -1,15 +1,10 @@
 import 'dart:convert';
 
-class StatementLine {
-  String priceLabel;
-  double priceAmount;
-  int isFixedPrice;
-  int hours;
-  int minutes;
-  int count;
-  double total;
+import 'package:flutter/widgets.dart';
 
-  StatementLine({
+@immutable
+class StatementLine {
+  const StatementLine({
     required this.priceLabel,
     required this.priceAmount,
     required this.isFixedPrice,
@@ -18,6 +13,27 @@ class StatementLine {
     required this.count,
     required this.total,
   });
+  factory StatementLine.fromJson(String source) =>
+      StatementLine.fromMap(json.decode(source));
+
+  factory StatementLine.fromMap(Map<String, dynamic> map) {
+    return StatementLine(
+      priceLabel: map['priceLabel'] ?? '',
+      priceAmount: map['priceAmount']?.toDouble() ?? 0.0,
+      isFixedPrice: map['isFixedPrice']?.toInt() ?? 0,
+      hours: map['hours']?.toInt() ?? 0,
+      minutes: map['minutes']?.toInt() ?? 0,
+      count: map['count']?.toInt() ?? 0,
+      total: map['total']?.toDouble() ?? 0.0,
+    );
+  }
+  final String priceLabel;
+  final double priceAmount;
+  final int isFixedPrice;
+  final int hours;
+  final int minutes;
+  final int count;
+  final double total;
 
   StatementLine copyWith({
     String? priceLabel,
@@ -51,22 +67,7 @@ class StatementLine {
     };
   }
 
-  factory StatementLine.fromMap(Map<String, dynamic> map) {
-    return StatementLine(
-      priceLabel: map['priceLabel'] ?? '',
-      priceAmount: map['priceAmount']?.toDouble() ?? 0.0,
-      isFixedPrice: map['isFixedPrice']?.toInt() ?? 0,
-      hours: map['hours']?.toInt() ?? 0,
-      minutes: map['minutes']?.toInt() ?? 0,
-      count: map['count']?.toInt() ?? 0,
-      total: map['total']?.toDouble() ?? 0.0,
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory StatementLine.fromJson(String source) =>
-      StatementLine.fromMap(json.decode(source));
 
   @override
   String toString() {

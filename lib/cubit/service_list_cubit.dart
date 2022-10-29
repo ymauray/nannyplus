@@ -1,33 +1,33 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-
-import '../data/children_repository.dart';
-import '../data/model/child.dart';
-import '../data/model/service.dart';
-import '../data/prices_repository.dart';
-import '../data/services_repository.dart';
+import 'package:nannyplus/data/children_repository.dart';
+import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/data/model/service.dart';
+import 'package:nannyplus/data/prices_repository.dart';
+import 'package:nannyplus/data/services_repository.dart';
 
 part 'service_list_state.dart';
 
 class ServiceListCubit extends Cubit<ServiceListState> {
-  ServicesRepository servicesRepository;
-  PricesRepository pricesRepository;
-  ChildrenRepository childrenRepository;
-
   ServiceListCubit(
     this.servicesRepository,
     this.pricesRepository,
     this.childrenRepository,
   ) : super(const ServiceListInitial());
+  ServicesRepository servicesRepository;
+  PricesRepository pricesRepository;
+  ChildrenRepository childrenRepository;
 
   Future<void> loadServices(int childId) async {
     try {
       final child = await childrenRepository.read(childId);
       final prices = await pricesRepository.getPriceList();
-      var services = await servicesRepository.getServices(child);
-      services.sort((a, b) =>
-          prices.firstWhere((price) => price.id == a.priceId).sortOrder -
-          prices.firstWhere((price) => price.id == b.priceId).sortOrder);
+      final services = await servicesRepository.getServices(child);
+      services.sort(
+        (a, b) =>
+            prices.firstWhere((price) => price.id == a.priceId).sortOrder -
+            prices.firstWhere((price) => price.id == b.priceId).sortOrder,
+      );
       emit(ServiceListLoaded(child, services));
     } catch (e) {
       emit(ServiceListError(e.toString()));
@@ -36,7 +36,7 @@ class ServiceListCubit extends Cubit<ServiceListState> {
 
   Future<void> create(Service service, int childId) async {
     try {
-      var price = await pricesRepository.read(service.priceId);
+      final price = await pricesRepository.read(service.priceId);
       service = service.copyWith(
         childId: childId,
         priceLabel: price.label,
@@ -45,8 +45,8 @@ class ServiceListCubit extends Cubit<ServiceListState> {
             ? price.amount
             : price.amount * (service.hours! + service.minutes! / 60),
       );
-      servicesRepository.create(service);
-      loadServices(childId);
+      await servicesRepository.create(service);
+      await loadServices(childId);
     } catch (e) {
       emit(ServiceListError(e.toString()));
     }
@@ -54,7 +54,7 @@ class ServiceListCubit extends Cubit<ServiceListState> {
 
   Future<void> update(Service service, int childId) async {
     try {
-      var price = await pricesRepository.read(service.priceId);
+      final price = await pricesRepository.read(service.priceId);
       service = service.copyWith(
         priceLabel: price.label,
         isFixedPrice: price.isFixedPrice ? 1 : 0,
@@ -62,8 +62,8 @@ class ServiceListCubit extends Cubit<ServiceListState> {
             ? price.amount
             : price.amount * (service.hours! + service.minutes! / 60),
       );
-      servicesRepository.update(service);
-      loadServices(childId);
+      await servicesRepository.update(service);
+      await loadServices(childId);
     } catch (e) {
       emit(ServiceListError(e.toString()));
     }
@@ -72,7 +72,7 @@ class ServiceListCubit extends Cubit<ServiceListState> {
   Future<void> delete(Service service, int childId) async {
     try {
       await servicesRepository.delete(service.id!);
-      loadServices(childId);
+      await loadServices(childId);
     } catch (e) {
       emit(ServiceListError(e.toString()));
     }
@@ -81,7 +81,7 @@ class ServiceListCubit extends Cubit<ServiceListState> {
   Future<void> deleteDay(int childId, String date) async {
     try {
       await servicesRepository.deleteForChildAndDate(childId, date);
-      loadServices(childId);
+      await loadServices(childId);
     } catch (e) {
       emit(ServiceListError(e.toString()));
     }

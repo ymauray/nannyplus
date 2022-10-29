@@ -14,6 +14,15 @@ class InvoiceViewLoaded extends InvoiceViewState {
     this.services,
     this.children,
   );
+  factory InvoiceViewLoaded.fromJson(String source) =>
+      InvoiceViewLoaded.fromMap(json.decode(source));
+
+  factory InvoiceViewLoaded.fromMap(Map<String, dynamic> map) {
+    return InvoiceViewLoaded(
+      List<Service>.from(map['services']?.map((x) => Service.fromMap(x))),
+      List<Child>.from(map['children']?.map((x) => Child.fromMap(x))),
+    );
+  }
 
   final List<Service> services;
   final List<Child> children;
@@ -35,17 +44,7 @@ class InvoiceViewLoaded extends InvoiceViewState {
     };
   }
 
-  factory InvoiceViewLoaded.fromMap(Map<String, dynamic> map) {
-    return InvoiceViewLoaded(
-      List<Service>.from(map['services']?.map((x) => Service.fromMap(x))),
-      List<Child>.from(map['children']?.map((x) => Child.fromMap(x))),
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory InvoiceViewLoaded.fromJson(String source) =>
-      InvoiceViewLoaded.fromMap(json.decode(source));
 
   @override
   String toString() =>

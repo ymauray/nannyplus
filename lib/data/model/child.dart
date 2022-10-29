@@ -1,23 +1,10 @@
 import 'dart:convert';
 
-class Child {
-  final int? id;
-  final String firstName;
-  final String? lastName;
-  final String? birthdate;
-  final String? phoneNumber;
-  final String? allergies;
-  final String? parentsName;
-  final String? address;
-  final int preschool;
-  final int archived;
-  final String? labelForPhoneNumber2;
-  final String? phoneNumber2;
-  final String? labelForPhoneNumber3;
-  final String? phoneNumber3;
-  final String? freeText;
+import 'package:flutter/widgets.dart';
 
-  Child({
+@immutable
+class Child {
+  const Child({
     this.id,
     required this.firstName,
     this.lastName,
@@ -34,6 +21,42 @@ class Child {
     this.phoneNumber3,
     this.freeText,
   });
+  factory Child.fromJson(String source) => Child.fromMap(json.decode(source));
+
+  factory Child.fromMap(Map<String, dynamic> map) {
+    return Child(
+      id: map['id']?.toInt(),
+      firstName: map['firstName'] ?? '',
+      lastName: map['lastName'],
+      birthdate: map['birthdate'],
+      phoneNumber: map['phoneNumber'],
+      allergies: map['allergies'],
+      parentsName: map['parentsName'],
+      address: map['address'],
+      preschool: map['preschool']?.toInt() ?? 0,
+      archived: map['archived']?.toInt() ?? 0,
+      labelForPhoneNumber2: map['labelForPhoneNumber2'],
+      phoneNumber2: map['phoneNumber2'],
+      labelForPhoneNumber3: map['labelForPhoneNumber3'],
+      phoneNumber3: map['phoneNumber3'],
+      freeText: map['freeText'],
+    );
+  }
+  final int? id;
+  final String firstName;
+  final String? lastName;
+  final String? birthdate;
+  final String? phoneNumber;
+  final String? allergies;
+  final String? parentsName;
+  final String? address;
+  final int preschool;
+  final int archived;
+  final String? labelForPhoneNumber2;
+  final String? phoneNumber2;
+  final String? labelForPhoneNumber3;
+  final String? phoneNumber3;
+  final String? freeText;
 
   String get displayName => "$firstName ${lastName ?? ''}".trim();
 
@@ -101,29 +124,7 @@ class Child {
     };
   }
 
-  factory Child.fromMap(Map<String, dynamic> map) {
-    return Child(
-      id: map['id']?.toInt(),
-      firstName: map['firstName'] ?? '',
-      lastName: map['lastName'],
-      birthdate: map['birthdate'],
-      phoneNumber: map['phoneNumber'],
-      allergies: map['allergies'],
-      parentsName: map['parentsName'],
-      address: map['address'],
-      preschool: map['preschool']?.toInt() ?? 0,
-      archived: map['archived']?.toInt() ?? 0,
-      labelForPhoneNumber2: map['labelForPhoneNumber2'],
-      phoneNumber2: map['phoneNumber2'],
-      labelForPhoneNumber3: map['labelForPhoneNumber3'],
-      phoneNumber3: map['phoneNumber3'],
-      freeText: map['freeText'],
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory Child.fromJson(String source) => Child.fromMap(json.decode(source));
 
   @override
   String toString() {

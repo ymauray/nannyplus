@@ -6,12 +6,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl_standalone.dart';
+import 'package:nannyplus/app.dart';
+import 'package:nannyplus/utils/notification_util.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-
-import '../utils/notification_util.dart';
-import 'app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +18,7 @@ Future<void> main() async {
   await NotificationUtil().init();
   await NotificationUtil().requestIOSPermissions();
   tz.initializeTimeZones();
-  final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
+  final currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
   tz.setLocalLocation(tz.getLocation(currentTimeZone));
   //NotificationUtil().scheduleNotification();
 

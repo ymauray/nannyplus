@@ -1,5 +1,5 @@
-import '../utils/database_util.dart';
-import 'model/invoice.dart';
+import 'package:nannyplus/data/model/invoice.dart';
+import 'package:nannyplus/utils/database_util.dart';
 
 class InvoicesRepository {
   const InvoicesRepository();
@@ -8,7 +8,7 @@ class InvoicesRepository {
     int childId, {
     required bool loadPaidInvoices,
   }) async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
     var rows = await db.query(
       'invoices',
       where: 'childId = ?',
@@ -24,15 +24,15 @@ class InvoicesRepository {
   }
 
   Future<Invoice> create(Invoice invoice) async {
-    var db = await DatabaseUtil.instance;
-    var id = await db.insert('invoices', invoice.toMap());
+    final db = await DatabaseUtil.instance;
+    final id = await db.insert('invoices', invoice.toMap());
 
     return read(id);
   }
 
   Future<Invoice> read(int id) async {
-    var db = await DatabaseUtil.instance;
-    var invoice = await db.query(
+    final db = await DatabaseUtil.instance;
+    final invoice = await db.query(
       'invoices',
       where: 'id = ?',
       whereArgs: [id],
@@ -43,19 +43,19 @@ class InvoicesRepository {
   }
 
   Future<Invoice> update(Invoice invoice) async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
     await db.update(
       'invoices',
       invoice.toMap(),
       where: 'id = ?',
-      whereArgs: [invoice.id!],
+      whereArgs: [invoice.id],
     );
 
     return await read(invoice.id!);
   }
 
   Future<void> delete(int invoiceId) async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
     await db.delete(
       'invoices',
       where: 'id = ?',
@@ -64,14 +64,14 @@ class InvoicesRepository {
   }
 
   Future<int> getNextNumber() async {
-    var db = await DatabaseUtil.instance;
-    var rows = await db.query('invoices', orderBy: 'number desc');
+    final db = await DatabaseUtil.instance;
+    final rows = await db.query('invoices', orderBy: 'number desc');
 
     return rows.isNotEmpty ? (rows.first['number'] as int) + 1 : 1;
   }
 
   Future<void> markAsPaid(int invoiceId) async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
     await db.update(
       'invoices',
       {'paid': 1},

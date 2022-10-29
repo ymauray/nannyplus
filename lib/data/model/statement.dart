@@ -3,11 +3,24 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:nannyplus/data/model/statement_line.dart';
 
+@immutable
 class Statement {
-  List<StatementLine> lines;
-  Statement({
+  const Statement({
     required this.lines,
   });
+  factory Statement.fromJson(String source) =>
+      Statement.fromMap(json.decode(source));
+
+  factory Statement.fromMap(Map<String, dynamic> map) {
+    return Statement(
+      lines: List<StatementLine>.from(
+        map['lines']?.map(
+          (x) => StatementLine.fromMap(x),
+        ),
+      ),
+    );
+  }
+  final List<StatementLine> lines;
 
   Statement copyWith({
     List<StatementLine>? lines,
@@ -23,18 +36,7 @@ class Statement {
     };
   }
 
-  factory Statement.fromMap(Map<String, dynamic> map) {
-    return Statement(
-      lines: List<StatementLine>.from(map['lines']?.map(
-        (x) => StatementLine.fromMap(x),
-      )),
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory Statement.fromJson(String source) =>
-      Statement.fromMap(json.decode(source));
 
   @override
   String toString() => 'Statement(lines: $lines)';

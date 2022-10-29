@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:nannyplus/cubit/child_info_cubit.dart';
 import 'package:nannyplus/cubit/file_list_cubit.dart';
+import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/src/constants.dart';
+import 'package:nannyplus/src/ui/list_view.dart';
+import 'package:nannyplus/src/ui/ui_card.dart';
+import 'package:nannyplus/utils/date_format_extension.dart';
+import 'package:nannyplus/widgets/loading_indicator.dart';
 import 'package:open_file_plus/open_file_plus.dart';
-
-import '../../cubit/child_info_cubit.dart';
-import '../../data/model/child.dart';
-import '../../src/constants.dart';
-import '../../src/ui/list_view.dart';
-import '../../src/ui/ui_card.dart';
-import '../../utils/date_format_extension.dart';
-import '../../widgets/loading_indicator.dart';
 
 class NewChildInfoTabView extends StatelessWidget {
   const NewChildInfoTabView({
@@ -51,13 +50,13 @@ class _ChildInfo extends StatelessWidget {
 
   final Child child;
 
-  final labelPadding = const EdgeInsets.only(
-    left: kdSmallPadding,
-    top: kdSmallPadding,
-    right: kdSmallPadding,
-  );
+  EdgeInsets get labelPadding => const EdgeInsets.only(
+        left: kdSmallPadding,
+        top: kdSmallPadding,
+        right: kdSmallPadding,
+      );
 
-  final fieldPadding = const EdgeInsets.all(kdSmallPadding);
+  EdgeInsets get fieldPadding => const EdgeInsets.all(kdSmallPadding);
 
   @override
   Widget build(BuildContext context) {
@@ -100,15 +99,15 @@ class _ChildInfo extends StatelessWidget {
             ),
           if (child.freeText?.isNotEmpty ?? false)
             _InfoCard(
-              label: context.t("Free text"),
+              label: context.t('Free text'),
               value: child.freeText!,
             ),
           if (state is FileListLoaded)
             ...state.files.map(
               (file) => GestureDetector(
-                onTap: (() => OpenFile.open(file.path)),
+                onTap: () => OpenFile.open(file.path),
                 child: _InfoCard(
-                  label: context.t("Document"),
+                  label: context.t('Document'),
                   value: file.label,
                 ),
               ),

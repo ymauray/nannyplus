@@ -41,7 +41,7 @@ class CardTile extends StatelessWidget {
                   ? GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: onTap,
-                      child: trailing!,
+                      child: trailing,
                     )
                   : trailing!,
           ],

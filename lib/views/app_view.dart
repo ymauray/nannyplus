@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppView extends StatelessWidget {
-  final Widget title;
-  final Widget body;
-  final Widget? drawer;
-  final Widget? floatingActionButton;
-  final List<Widget>? actions;
-  final TabBar? tabBar;
   const AppView({
     required this.title,
     required this.body,
@@ -16,6 +10,12 @@ class AppView extends StatelessWidget {
     this.tabBar,
     Key? key,
   }) : super(key: key);
+  final Widget title;
+  final Widget body;
+  final Widget? drawer;
+  final Widget? floatingActionButton;
+  final List<Widget>? actions;
+  final TabBar? tabBar;
 
   @override
   Widget build(BuildContext context) {

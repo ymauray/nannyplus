@@ -1,20 +1,10 @@
 import 'dart:convert';
 
-class Service {
-  final int? id;
-  final int childId;
-  final String date;
-  final int priceId;
-  final String? priceLabel;
-  final double? priceAmount;
-  final int? isFixedPrice;
-  final int? hours;
-  final int? minutes;
-  final double total;
-  final int invoiced;
-  final int? invoiceId;
+import 'package:flutter/widgets.dart';
 
-  Service({
+@immutable
+class Service {
+  const Service({
     this.id,
     required this.childId,
     required this.date,
@@ -28,10 +18,41 @@ class Service {
     this.invoiced = 0,
     this.invoiceId,
   });
+  factory Service.fromJson(String source) =>
+      Service.fromMap(json.decode(source));
 
-  String get priceDetail => ((isFixedPrice == 1)
-      ? ""
-      : "${hours}h${minutes!.toString().padLeft(2, "0")} x ${priceAmount?.toStringAsFixed(2)}");
+  factory Service.fromMap(Map<String, dynamic> map) {
+    return Service(
+      id: map['id']?.toInt(),
+      childId: map['childId']?.toInt() ?? 0,
+      date: map['date'] ?? '',
+      priceId: map['priceId']?.toInt() ?? 0,
+      priceLabel: map['priceLabel'],
+      priceAmount: map['priceAmount']?.toDouble(),
+      isFixedPrice: map['isFixedPrice']?.toInt(),
+      hours: map['hours']?.toInt(),
+      minutes: map['minutes']?.toInt(),
+      total: map['total']?.toDouble() ?? 0.0,
+      invoiced: map['invoiced']?.toInt() ?? 0,
+      invoiceId: map['invoiceId']?.toInt(),
+    );
+  }
+  final int? id;
+  final int childId;
+  final String date;
+  final int priceId;
+  final String? priceLabel;
+  final double? priceAmount;
+  final int? isFixedPrice;
+  final int? hours;
+  final int? minutes;
+  final double total;
+  final int invoiced;
+  final int? invoiceId;
+
+  String get priceDetail => (isFixedPrice == 1)
+      ? ''
+      : "${hours}h${minutes!.toString().padLeft(2, "0")} x ${priceAmount?.toStringAsFixed(2)}";
 
   Service copyWith({
     int? id,
@@ -80,27 +101,7 @@ class Service {
     };
   }
 
-  factory Service.fromMap(Map<String, dynamic> map) {
-    return Service(
-      id: map['id']?.toInt(),
-      childId: map['childId']?.toInt() ?? 0,
-      date: map['date'] ?? '',
-      priceId: map['priceId']?.toInt() ?? 0,
-      priceLabel: map['priceLabel'],
-      priceAmount: map['priceAmount']?.toDouble(),
-      isFixedPrice: map['isFixedPrice']?.toInt(),
-      hours: map['hours']?.toInt(),
-      minutes: map['minutes']?.toInt(),
-      total: map['total']?.toDouble() ?? 0.0,
-      invoiced: map['invoiced']?.toInt() ?? 0,
-      invoiceId: map['invoiceId']?.toInt(),
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory Service.fromJson(String source) =>
-      Service.fromMap(json.decode(source));
 
   @override
   String toString() {

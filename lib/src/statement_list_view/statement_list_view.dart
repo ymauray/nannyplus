@@ -4,17 +4,16 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
 import 'package:intl/intl.dart';
-
-import '../../cubit/statement_list_cubit.dart';
-import '../../data/model/monthly_statement.dart';
-import '../../data/model/yearly_statement.dart';
-import '../../utils/text_extension.dart';
-import '../constants.dart';
-import '../statement_view/statement_view.dart';
-import '../ui/list_view.dart';
-import '../ui/sliver_curved_persistent_header.dart';
-import '../ui/ui_card.dart';
-import '../ui/view.dart';
+import 'package:nannyplus/cubit/statement_list_cubit.dart';
+import 'package:nannyplus/data/model/monthly_statement.dart';
+import 'package:nannyplus/data/model/yearly_statement.dart';
+import 'package:nannyplus/src/constants.dart';
+import 'package:nannyplus/src/statement_view/statement_view.dart';
+import 'package:nannyplus/src/ui/list_view.dart';
+import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
+import 'package:nannyplus/src/ui/ui_card.dart';
+import 'package:nannyplus/src/ui/view.dart';
+import 'package:nannyplus/utils/text_extension.dart';
 
 class StatementListView extends StatelessWidget {
   const StatementListView({Key? key}) : super(key: key);
@@ -61,17 +60,17 @@ class _YearlyStatementCard extends StatelessWidget {
     return UICard(
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 12.0),
+          padding: const EdgeInsets.only(left: 12),
           child: Row(
             children: [
               Expanded(
                 child: Text(
-                  "${statement.year}",
+                  '${statement.year}',
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 8.0),
+                padding: const EdgeInsets.only(right: 8),
                 child: Text(
                   statement.amount.toStringAsFixed(2),
                 ),
@@ -97,7 +96,7 @@ class _YearlyStatementCard extends StatelessWidget {
 
   void openPDF(BuildContext context, DateTime date) {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      MaterialPageRoute<void>(
         builder: (context) => StatementView(
           type: StatementViewType.yearly,
           date: date,
@@ -123,7 +122,7 @@ class _MonthlyStatementCard extends StatelessWidget {
     final month = DateFormat('MMMM').format(statement.date).capitalize();
 
     return Padding(
-      padding: const EdgeInsets.only(left: 12.0, top: 8.0),
+      padding: const EdgeInsets.only(left: 12, top: 8),
       child: Row(
         children: [
           Expanded(
@@ -133,7 +132,7 @@ class _MonthlyStatementCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(right: 8.0),
+            padding: const EdgeInsets.only(right: 8),
             child: Text(
               statement.amount.toStringAsFixed(2),
             ),
@@ -149,7 +148,7 @@ class _MonthlyStatementCard extends StatelessWidget {
 
   void openPDF(BuildContext context, DateTime date) {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      MaterialPageRoute<void>(
         builder: (context) => StatementView(
           type: StatementViewType.monthly,
           date: date,

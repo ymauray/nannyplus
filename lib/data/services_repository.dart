@@ -1,33 +1,33 @@
 import 'package:intl/intl.dart';
+import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/data/model/service.dart';
+import 'package:nannyplus/data/model/service_info.dart';
 import 'package:nannyplus/data/model/statement_line.dart';
+import 'package:nannyplus/data/model/statement_summary.dart';
 import 'package:nannyplus/src/statement_view/statement_view.dart';
-
-import '../data/model/child.dart';
-import '../data/model/service.dart';
-import '../data/model/service_info.dart';
-import '../utils/database_util.dart';
-import '../utils/list_extensions.dart';
-import 'model/statement_summary.dart';
+import 'package:nannyplus/utils/database_util.dart';
+import 'package:nannyplus/utils/list_extensions.dart';
 
 class ServicesRepository {
   const ServicesRepository();
 
   Future<Service> create(Service service) async {
-    var db = await DatabaseUtil.instance;
-    var id = await db.insert('services', service.toMap()..["id"] = null);
+    final db = await DatabaseUtil.instance;
+    final id = await db.insert('services', service.toMap()..['id'] = null);
 
     return read(id);
   }
 
   Future<Service> read(int id) async {
-    var db = await DatabaseUtil.instance;
-    var service = await db.query('services', where: 'id = ?', whereArgs: [id]);
+    final db = await DatabaseUtil.instance;
+    final service =
+        await db.query('services', where: 'id = ?', whereArgs: [id]);
 
     return Service.fromMap(service.first);
   }
 
   Future<Service> update(Service service) async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
     await db.update(
       'services',
       service.toMap(),
@@ -39,14 +39,14 @@ class ServicesRepository {
   }
 
   Future<void> delete(int id) async {
-    var db = await DatabaseUtil.instance;
-    db.delete('services', where: 'id = ?', whereArgs: [id]);
+    final db = await DatabaseUtil.instance;
+    await db.delete('services', where: 'id = ?', whereArgs: [id]);
   }
 
   Future<List<Service>> getServices(Child child) async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
 
-    var rows = await db.query(
+    final rows = await db.query(
       'services',
       where: 'childId = ? AND invoiced = ?',
       whereArgs: [child.id, 0],
@@ -57,9 +57,9 @@ class ServicesRepository {
   }
 
   Future<List<Service>> getServicesForInvoice(int invoiceId) async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
 
-    var rows = await db.query(
+    final rows = await db.query(
       'services',
       where: 'invoiceId = ?',
       whereArgs: [invoiceId],
@@ -70,9 +70,9 @@ class ServicesRepository {
   }
 
   Future<List<Service>> getServicesForDate(DateTime date) async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
 
-    var rows = await db.query(
+    final rows = await db.query(
       'services',
       where: 'date = ?',
       whereArgs: [DateFormat('yyyy-MM-dd').format(date)],
@@ -82,8 +82,8 @@ class ServicesRepository {
   }
 
   Future<void> deleteForChildAndDate(int childId, String date) async {
-    var db = await DatabaseUtil.instance;
-    db.delete(
+    final db = await DatabaseUtil.instance;
+    await db.delete(
       'services',
       where: 'childId = ? AND date = ?',
       whereArgs: [childId, date],
@@ -94,9 +94,9 @@ class ServicesRepository {
     int childId,
     DateTime date,
   ) async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
 
-    var rows = await db.query(
+    final rows = await db.query(
       'services',
       where: 'childId = ? AND date = ? AND invoiced = ?',
       whereArgs: [childId, DateFormat('yyyy-MM-dd').format(date), 0],
@@ -106,9 +106,9 @@ class ServicesRepository {
   }
 
   Future<List<Service>> getRecentServices(int childId) async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
 
-    var rows = await db.query(
+    final rows = await db.query(
       'services',
       where: 'childId = ?',
       whereArgs: [childId],
@@ -118,35 +118,35 @@ class ServicesRepository {
     return rows.map((e) => Service.fromMap(e)).toList();
   }
 
-  @Deprecated("Use getServiceInfoPerChild instead")
+  @Deprecated('Use getServiceInfoPerChild instead')
   Future<double> getPendingTotal() async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
 
-    var rows =
+    final rows =
         await db.query('services', where: 'invoiced = ?', whereArgs: [0]);
 
     return rows.fold<double>(
-      0.0,
+      0,
       (sum, row) => sum + (row['total']! as double),
     );
   }
 
-  @Deprecated("Use getServiceInfoPerChild instead")
+  @Deprecated('Use getServiceInfoPerChild instead')
   Future<Map<int, double>> getPendingTotalPerChild() async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
 
-    var rows =
+    final rows =
         await db.query('services', where: 'invoiced = ?', whereArgs: [0]);
 
-    var groupedRows = rows
+    final groupedRows = rows
         .map((row) => Service.fromMap(row))
         .toList()
-        .groupBy<int>((service) => service.childId)
+        .groupBy<num>((service) => service.childId)
         .toList();
-    var map = <int, double>{
+    final map = <int, double>{
       for (var group in groupedRows)
-        group.key: group.value.fold(
-          0.0,
+        group.key as int: group.value.fold(
+          0,
           (previousValue, service) => previousValue + service.total,
         ),
     };
@@ -155,22 +155,22 @@ class ServicesRepository {
   }
 
   Future<Map<int, ServiceInfo>> getServiceInfoPerChild() async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
 
     var rows =
         await db.query('services', where: 'invoiced = ?', whereArgs: [0]);
 
-    var groupedRows = rows
+    final groupedRows = rows
         .map((row) => Service.fromMap(row))
         .toList()
-        .groupBy<int>((service) => service.childId)
+        .groupBy<num>((service) => service.childId)
         .toList();
 
-    var map = <int, ServiceInfo>{
+    final map = <int, ServiceInfo>{
       for (var group in groupedRows)
-        group.key: ServiceInfo(
+        group.key as int: ServiceInfo(
           pendingTotal: group.value.fold(
-            0.0,
+            0,
             (previousValue, service) => previousValue + service.total,
           ),
         ),
@@ -182,20 +182,20 @@ class ServicesRepository {
       'GROUP BY childId',
       [0],
     );
-    var map2 = <int, String>{
+    final map2 = <int, String>{
       for (var row in rows) row['childId'] as int: row['MAX(date)'] as String,
     };
 
-    for (var childId in map.keys) {
+    for (final childId in map.keys) {
       if (map2.containsKey(childId)) {
         map[childId]!.lastEnty =
             DateFormat('yyyy-MM-dd').parse(map2[childId] as String);
       }
     }
-    for (var row in rows) {
+    for (final row in rows) {
       if (!map.containsKey(row['childId'] as int)) {
         map[row['childId'] as int] = ServiceInfo(
-          pendingTotal: 0.0,
+          pendingTotal: 0,
           lastEnty: DateFormat('yyyy-MM-dd').parse(row['MAX(date)'] as String),
         );
       }
@@ -205,17 +205,17 @@ class ServicesRepository {
   }
 
   Future<List<int>> getUndeletableChildren() async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
 
-    var rows = await db.query('services', groupBy: 'childId');
+    final rows = await db.query('services', groupBy: 'childId');
 
-    var undeletables = rows.map((row) => row['childId'] as int).toList();
+    final undeletables = rows.map((row) => row['childId'] as int).toList();
 
     return undeletables;
   }
 
   Future<void> unlinkInvoice(int invoiceId) async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
 
     await db.update(
       'services',
@@ -232,14 +232,11 @@ class ServicesRepository {
     StatementViewType type,
     DateTime date,
   ) async {
-    assert(date.day == 1);
-    assert(type == StatementViewType.monthly || date.month == 1);
-
     final db = await DatabaseUtil.instance;
 
     final endDate = (type == StatementViewType.monthly)
-        ? DateTime(date.year, date.month + 1, 1)
-        : DateTime(date.year + 1, 1, 1);
+        ? DateTime(date.year, date.month + 1)
+        : DateTime(date.year + 1);
 
     final rows = await db.rawQuery(
       'SELECT '

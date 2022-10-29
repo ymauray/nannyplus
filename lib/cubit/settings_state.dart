@@ -10,17 +10,6 @@ class SettingsInitial extends SettingsState {
 }
 
 class SettingsLoaded extends SettingsState {
-  final String line1;
-  final String line1FontFamily;
-  final String line1FontAsset;
-  final String line2;
-  final String line2FontFamily;
-  final String line2FontAsset;
-  final String conditions;
-  final String bankDetails;
-  final String name;
-  final String address;
-
   const SettingsLoaded(
     this.line1,
     this.line1FontFamily,
@@ -33,6 +22,33 @@ class SettingsLoaded extends SettingsState {
     this.name,
     this.address,
   );
+  factory SettingsLoaded.fromJson(String source) =>
+      SettingsLoaded.fromMap(json.decode(source));
+
+  factory SettingsLoaded.fromMap(Map<String, dynamic> map) {
+    return SettingsLoaded(
+      map['line1'] ?? '',
+      map['line1FontFamily'] ?? '',
+      map['line1FontAsset'] ?? '',
+      map['line2'] ?? '',
+      map['line2FontFamily'] ?? '',
+      map['line2FontAsset'] ?? '',
+      map['conditions'] ?? '',
+      map['bankDetails'] ?? '',
+      map['name'] ?? '',
+      map['address'] ?? '',
+    );
+  }
+  final String line1;
+  final String line1FontFamily;
+  final String line1FontAsset;
+  final String line2;
+  final String line2FontFamily;
+  final String line2FontAsset;
+  final String conditions;
+  final String bankDetails;
+  final String name;
+  final String address;
 
   FontItem get line1Font => line1FontFamily.isEmpty
       ? FontUtils.defaultFontItem
@@ -113,25 +129,7 @@ class SettingsLoaded extends SettingsState {
     };
   }
 
-  factory SettingsLoaded.fromMap(Map<String, dynamic> map) {
-    return SettingsLoaded(
-      map['line1'] ?? '',
-      map['line1FontFamily'] ?? '',
-      map['line1FontAsset'] ?? '',
-      map['line2'] ?? '',
-      map['line2FontFamily'] ?? '',
-      map['line2FontAsset'] ?? '',
-      map['conditions'] ?? '',
-      map['bankDetails'] ?? '',
-      map['name'] ?? '',
-      map['address'] ?? '',
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory SettingsLoaded.fromJson(String source) =>
-      SettingsLoaded.fromMap(json.decode(source));
 
   @override
   String toString() {

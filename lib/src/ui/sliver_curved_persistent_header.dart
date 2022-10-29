@@ -45,7 +45,7 @@ class _Delegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    var borderRadius = BorderRadius.vertical(
+    final borderRadius = BorderRadius.vertical(
       bottom: Radius.elliptical(
         MediaQuery.of(context).size.width / 2,
         height / 2,
@@ -54,7 +54,7 @@ class _Delegate extends SliverPersistentHeaderDelegate {
 
     return Stack(
       children: [
-        Container(
+        ColoredBox(
           color: Theme.of(context).colorScheme.background,
         ),
         Padding(

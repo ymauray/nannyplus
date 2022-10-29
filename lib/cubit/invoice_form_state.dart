@@ -1,10 +1,20 @@
 part of 'invoice_form_cubit.dart';
 
+@immutable
 class InvoiceFormChild {
   const InvoiceFormChild(
     this.child,
     this.checked,
   );
+  factory InvoiceFormChild.fromJson(String source) =>
+      InvoiceFormChild.fromMap(json.decode(source));
+
+  factory InvoiceFormChild.fromMap(Map<String, dynamic> map) {
+    return InvoiceFormChild(
+      Child.fromMap(map['child']),
+      map['checked'] ?? false,
+    );
+  }
 
   final Child child;
   final bool checked;
@@ -26,17 +36,7 @@ class InvoiceFormChild {
     };
   }
 
-  factory InvoiceFormChild.fromMap(Map<String, dynamic> map) {
-    return InvoiceFormChild(
-      Child.fromMap(map['child']),
-      map['checked'] ?? false,
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory InvoiceFormChild.fromJson(String source) =>
-      InvoiceFormChild.fromMap(json.decode(source));
 
   @override
   String toString() => 'InvoiceFormChild(child: $child, checked: $checked)';
@@ -68,6 +68,17 @@ class InvoiceFormLoaded extends InvoiceFormState {
     required this.child,
     required this.children,
   });
+  factory InvoiceFormLoaded.fromJson(String source) =>
+      InvoiceFormLoaded.fromMap(json.decode(source));
+
+  factory InvoiceFormLoaded.fromMap(Map<String, dynamic> map) {
+    return InvoiceFormLoaded(
+      child: Child.fromMap(map['child']),
+      children: List<InvoiceFormChild>.from(
+        map['children']?.map((x) => InvoiceFormChild.fromMap(x)),
+      ),
+    );
+  }
 
   final Child child;
   final List<InvoiceFormChild> children;
@@ -89,19 +100,7 @@ class InvoiceFormLoaded extends InvoiceFormState {
     };
   }
 
-  factory InvoiceFormLoaded.fromMap(Map<String, dynamic> map) {
-    return InvoiceFormLoaded(
-      child: Child.fromMap(map['child']),
-      children: List<InvoiceFormChild>.from(
-        map['children']?.map((x) => InvoiceFormChild.fromMap(x)),
-      ),
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory InvoiceFormLoaded.fromJson(String source) =>
-      InvoiceFormLoaded.fromMap(json.decode(source));
 
   @override
   String toString() => 'InvoiceFormLoaded(child: $child, children: $children)';

@@ -2,10 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nannyplus/data/model/monthly_statement.dart';
+import 'package:nannyplus/data/model/yearly_statement.dart';
 import 'package:nannyplus/data/services_repository.dart';
 import 'package:nannyplus/utils/list_extensions.dart';
-
-import '../data/model/yearly_statement.dart';
 
 part 'statement_list_state.dart';
 
@@ -20,7 +19,7 @@ class StatementListCubit extends Cubit<StatementListState> {
   Future<void> loadStatements() async {
     final summaries = await _servicesRepository.getStatementsSummary();
 
-    final summaryGroups = summaries.groupBy<int>(
+    final summaryGroups = summaries.groupBy<num>(
       (summary) => DateFormat('yyyy-MM').parse(summary.month).year,
       groupComparator: (a, b) => b.compareTo(a),
     );
@@ -30,7 +29,7 @@ class StatementListCubit extends Cubit<StatementListState> {
           (group) => YearlyStatement(
             year: group.key,
             amount: group.value.fold(
-              0.0,
+              0,
               (previousValue, summary) => previousValue + summary.total,
             ),
             monthlyStatements: group.value
@@ -93,7 +92,7 @@ class StatementListCubit extends Cubit<StatementListState> {
 
   Future<void> generateStatements() async {
     emit(StatementListGenerating());
-    await Future.delayed(const Duration(seconds: 10));
-    loadStatements();
+    await Future<void>.delayed(const Duration(seconds: 10));
+    await loadStatements();
   }
 }

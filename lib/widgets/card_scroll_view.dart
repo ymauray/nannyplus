@@ -25,7 +25,7 @@ class CardScrollView extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Container(
+          ColoredBox(
             color: Theme.of(context).colorScheme.background,
           ),
           if (onReorder == null)
@@ -38,12 +38,12 @@ class CardScrollView extends StatelessWidget {
                 } else if (index - 1 < children.length) {
                   return Card(
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16),
                       child: children[index - 1],
                     ),
                   );
                 } else {
-                  return SizedBox(height: bottomPadding!);
+                  return SizedBox(height: bottomPadding);
                 }
               },
             ),
@@ -57,11 +57,11 @@ class CardScrollView extends StatelessWidget {
                 return Card(
                   key: ValueKey(index),
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16),
                     child: Row(
                       children: [
                         const Padding(
-                          padding: EdgeInsets.only(right: 16.0),
+                          padding: EdgeInsets.only(right: 16),
                           child: Icon(Icons.reorder, color: Colors.grey),
                         ),
                         Expanded(child: children[index]),

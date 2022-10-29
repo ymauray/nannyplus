@@ -19,8 +19,8 @@ class ChildListLoaded extends ChildListState {
   const ChildListLoaded(
     this.children,
     this.pendingTotal,
-    @Deprecated("Use servicesInfo instead") this.pendingTotalPerChild,
-    @Deprecated("Use servicesInfo instead") this.undeletableChildren,
+    @Deprecated('Use servicesInfo instead') this.pendingTotalPerChild,
+    @Deprecated('Use servicesInfo instead') this.undeletableChildren,
     this.servicesInfo, {
     this.showArchived = false,
     this.showOnboarding = false,
@@ -29,10 +29,10 @@ class ChildListLoaded extends ChildListState {
   final List<Child> children;
   final double pendingTotal;
 
-  @Deprecated("Use servicesInfo instead")
+  @Deprecated('Use servicesInfo instead')
   final Map<int, double> pendingTotalPerChild;
 
-  @Deprecated("Use servicesInfo instead")
+  @Deprecated('Use servicesInfo instead')
   final List<int> undeletableChildren;
 
   final Map<int, ServiceInfo> servicesInfo;
@@ -68,8 +68,8 @@ class ChildListLoaded extends ChildListState {
 // ---------------------------------------------------------------------------
 
 class ChildListError extends ChildListState {
-  final String message;
   const ChildListError(this.message);
+  final String message;
 
   @override
   bool operator ==(Object other) {

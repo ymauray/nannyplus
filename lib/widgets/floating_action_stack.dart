@@ -18,7 +18,7 @@ class FloatingActionStack extends StatelessWidget {
         Align(
           alignment: Alignment.bottomRight,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16),
             child: FloatingActionButton(
               onPressed: onPressed,
               child: const Icon(Icons.add),

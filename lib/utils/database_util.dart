@@ -6,22 +6,20 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:nannyplus/utils/font_utils.dart';
+import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart' as sqlite;
 
-import '../utils/font_utils.dart';
-import 'prefs_util.dart';
-
 class DatabaseUtil {
-  static sqlite.Database? _database;
-
   DatabaseUtil._();
+  static sqlite.Database? _database;
 
   static Future<String> get _databasePath async =>
       join(await sqlite.getDatabasesPath(), 'childcare.db');
 
-  static closeDatabase() async {
+  static Future<void> closeDatabase() async {
     await _database?.close();
     _database = null;
   }
@@ -49,12 +47,12 @@ class DatabaseUtil {
       onCreate: (db, version) async {
         await _create(db);
         for (var i = 2; i <= version; i++) {
-          _upgradeTo(i, db);
+          await _upgradeTo(i, db);
         }
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         for (var i = oldVersion + 1; i <= newVersion; i++) {
-          _upgradeTo(i, db);
+          await _upgradeTo(i, db);
         }
       },
       onDowngrade: (db, oldVersion, newVersion) async {
@@ -67,8 +65,7 @@ class DatabaseUtil {
 
   static Future<void> _create(sqlite.Database db) async {
     final locale = WidgetsBinding.instance.window.locale;
-    final GettextLocalizations gettext =
-        await GettextLocalizationsDelegate().load(locale);
+    final gettext = await GettextLocalizationsDelegate().load(locale);
 
     await db.execute('''
       CREATE TABLE children (
@@ -140,29 +137,28 @@ class DatabaseUtil {
 
     await insertSampleInvoice(db, gettext);
 
-    var prefsUtil = await PrefsUtil.getInstance();
+    final prefsUtil = await PrefsUtil.getInstance();
     await prefsUtil.clear();
-    prefsUtil.line1 = "Nanny+";
-    prefsUtil.line1FontFamily = FontUtils.defaultFontItem.family;
-    prefsUtil.line1FontAsset = FontUtils.defaultFontItem.asset;
-    prefsUtil.line2 = gettext.t("Your name", null);
-    prefsUtil.line2FontFamily = FontUtils.defaultFontItem.family;
-    prefsUtil.line2FontAsset = FontUtils.defaultFontItem.asset;
-    prefsUtil.conditions =
-        gettext.t("Payment within 10 day via bank transfert", null);
-    prefsUtil.bankDetails = "${gettext.t("Bank : {0}", [
-          "Monopoly",
-        ])}\n${gettext.t("IBAN : {0}", ["XY7900123456789"])}";
-    prefsUtil.address = "Boldistrasse 97\n2560 Nidau";
+    prefsUtil
+      ..line1 = 'Nanny+'
+      ..line1FontFamily = FontUtils.defaultFontItem.family
+      ..line1FontAsset = FontUtils.defaultFontItem.asset
+      ..line2 = gettext.t('Your name', null)
+      ..line2FontFamily = FontUtils.defaultFontItem.family
+      ..line2FontAsset = FontUtils.defaultFontItem.asset
+      ..conditions = gettext.t('Payment within 10 day via bank transfert', null)
+      ..bankDetails = "${gettext.t("Bank : {0}", [
+            "Monopoly",
+          ])}\n${gettext.t("IBAN : {0}", ["XY7900123456789"])}"
+      ..address = 'Boldistrasse 97\n2560 Nidau';
 
-    var image = await rootBundle.load("assets/img/logo.png");
-    Directory appDocumentsDirectory = await getApplicationDocumentsDirectory();
-    var appDocumentsPath = appDocumentsDirectory.path;
-    var filePath = '$appDocumentsPath/logo';
+    final image = await rootBundle.load('assets/img/logo.png');
+    final appDocumentsDirectory = await getApplicationDocumentsDirectory();
+    final appDocumentsPath = appDocumentsDirectory.path;
+    final filePath = '$appDocumentsPath/logo';
     File(filePath).writeAsBytesSync(
       image.buffer.asUint8List(),
       flush: true,
-      mode: FileMode.write,
     );
   }
 
@@ -175,8 +171,8 @@ class DatabaseUtil {
       'childId': 1,
       'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
       'total': 43,
-      'parentsName': "Manon et Robet Simon",
-      'address': "Höhenweg 136\n8888 Heiligkreuz",
+      'parentsName': 'Manon et Robet Simon',
+      'address': 'Höhenweg 136\n8888 Heiligkreuz',
     });
   }
 
@@ -185,62 +181,62 @@ class DatabaseUtil {
     sqlite.Database db,
     GettextLocalizations gettext,
   ) async {
-    await db.insert("services", {
-      "childId": 1,
-      "date": DateFormat("yyyy-MM-dd").format(DateTime.now()),
-      "priceId": 1,
-      "priceLabel": gettext.t("Example {0}", [1]),
-      "priceAmount": 5.0,
-      "isFixedPrice": 1,
-      "hours": 0,
-      "minutes": 0,
-      "total": 5.0,
-      "invoiced": 0,
-      "invoiceId": null,
+    await db.insert('services', {
+      'childId': 1,
+      'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      'priceId': 1,
+      'priceLabel': gettext.t('Example {0}', [1]),
+      'priceAmount': 5.0,
+      'isFixedPrice': 1,
+      'hours': 0,
+      'minutes': 0,
+      'total': 5.0,
+      'invoiced': 0,
+      'invoiceId': null,
     });
 
-    await db.insert("services", {
-      "childId": 1,
-      "date": DateFormat("yyyy-MM-dd")
+    await db.insert('services', {
+      'childId': 1,
+      'date': DateFormat('yyyy-MM-dd')
           .format(DateTime.now().subtract(const Duration(days: 7))),
-      "priceId": 1,
-      "priceLabel": gettext.t("Example {0}", [2]),
-      "priceAmount": 7.0,
-      "isFixedPrice": 1,
-      "hours": 0,
-      "minutes": 0,
-      "total": 7.0,
-      "invoiced": 1,
-      "invoiceId": 1,
+      'priceId': 1,
+      'priceLabel': gettext.t('Example {0}', [2]),
+      'priceAmount': 7.0,
+      'isFixedPrice': 1,
+      'hours': 0,
+      'minutes': 0,
+      'total': 7.0,
+      'invoiced': 1,
+      'invoiceId': 1,
     });
 
-    await db.insert("services", {
-      "childId": 1,
-      "date": DateFormat("yyyy-MM-dd").format(DateTime.now()),
-      "priceId": 1,
-      "priceLabel": gettext.t("Example {0}", [3]),
-      "priceAmount": 7.0,
-      "isFixedPrice": 0,
-      "hours": 3,
-      "minutes": 15,
-      "total": 22.75,
-      "invoiced": 0,
-      "invoiceId": 0,
+    await db.insert('services', {
+      'childId': 1,
+      'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      'priceId': 1,
+      'priceLabel': gettext.t('Example {0}', [3]),
+      'priceAmount': 7.0,
+      'isFixedPrice': 0,
+      'hours': 3,
+      'minutes': 15,
+      'total': 22.75,
+      'invoiced': 0,
+      'invoiceId': 0,
     });
 
-    await db.insert("services", {
-      "childId": 1,
-      "date": DateFormat("yyyy-MM-dd")
+    await db.insert('services', {
+      'childId': 1,
+      'date': DateFormat('yyyy-MM-dd')
           .format(DateTime.now().subtract(const Duration(days: 6))),
-      "priceId": 1,
-      "priceLabel": gettext.t("Example {0}", [4]),
-      "priceAmount": 8.0,
-      "isFixedPrice": 0,
-      "hours": 4,
-      "minutes": 30,
-      "total": 36.00,
-      "invoiced": 1,
-      "invoiceId": 1,
+      'priceId': 1,
+      'priceLabel': gettext.t('Example {0}', [4]),
+      'priceAmount': 8.0,
+      'isFixedPrice': 0,
+      'hours': 4,
+      'minutes': 30,
+      'total': 36.00,
+      'invoiced': 1,
+      'invoiceId': 1,
     });
   }
 
@@ -248,16 +244,16 @@ class DatabaseUtil {
     sqlite.Database db,
     GettextLocalizations gettext,
   ) async {
-    await db.insert("children", {
-      "firstName": "Fabienne",
-      "lastName": "Simon",
-      "birthdate": "2014-08-01",
-      "phoneNumber": "+41329866242",
-      "allergies": gettext.t("Peanuts", null),
-      "parentsName": "Manon et Robert Simon",
-      "address": "Höhenweg 136\n8888 Heiligkreuz",
-      "archived": 0,
-      "preschool": 0,
+    await db.insert('children', {
+      'firstName': 'Fabienne',
+      'lastName': 'Simon',
+      'birthdate': '2014-08-01',
+      'phoneNumber': '+41329866242',
+      'allergies': gettext.t('Peanuts', null),
+      'parentsName': 'Manon et Robert Simon',
+      'address': 'Höhenweg 136\n8888 Heiligkreuz',
+      'archived': 0,
+      'preschool': 0,
     });
   }
 
@@ -265,32 +261,32 @@ class DatabaseUtil {
     sqlite.Database db,
     GettextLocalizations gettext,
   ) async {
-    await db.insert("prices", {
-      "label": gettext.t("Example {0}", [1]),
-      "amount": 5.0,
-      "fixedPrice": 1,
+    await db.insert('prices', {
+      'label': gettext.t('Example {0}', [1]),
+      'amount': 5.0,
+      'fixedPrice': 1,
     });
 
-    await db.insert("prices", {
-      "label": gettext.t("Example {0}", [2]),
-      "amount": 7.0,
-      "fixedPrice": 1,
+    await db.insert('prices', {
+      'label': gettext.t('Example {0}', [2]),
+      'amount': 7.0,
+      'fixedPrice': 1,
     });
 
-    await db.insert("prices", {
-      "label": gettext.t("Example {0}", [3]),
-      "amount": 7.0,
-      "fixedPrice": 0,
+    await db.insert('prices', {
+      'label': gettext.t('Example {0}', [3]),
+      'amount': 7.0,
+      'fixedPrice': 0,
     });
 
-    await db.insert("prices", {
-      "label": gettext.t("Example {0}", [4]),
-      "amount": 8.0,
-      "fixedPrice": 0,
+    await db.insert('prices', {
+      'label': gettext.t('Example {0}', [4]),
+      'amount': 8.0,
+      'fixedPrice': 0,
     });
   }
 
-  static void _upgradeTo(int version, sqlite.Database db) async {
+  static Future<void> _upgradeTo(int version, sqlite.Database db) async {
     if (version == 2) {
       await db.execute('''
       ALTER TABLE children
@@ -320,9 +316,9 @@ class DatabaseUtil {
     ADD sortOrder INTEGER NOT NULL DEFAULT 0
     ''');
 
-      var rows = await db.query('prices', orderBy: 'label ASC');
+      final rows = await db.query('prices', orderBy: 'label ASC');
       var sortOrder = 1;
-      for (var row in rows) {
+      for (final row in rows) {
         await db.update(
           'prices',
           {

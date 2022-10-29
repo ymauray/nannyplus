@@ -2,24 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
+import 'package:nannyplus/cubit/child_list_cubit.dart';
+import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/src/child_form/child_form.dart';
+import 'package:nannyplus/src/child_list/main_drawer.dart';
+import 'package:nannyplus/src/constants.dart';
+import 'package:nannyplus/src/price_list/price_list_view.dart';
+import 'package:nannyplus/src/settings_view/settings_view.dart';
+import 'package:nannyplus/src/statement_list_view/statement_list_view.dart';
+import 'package:nannyplus/src/tab_view/tab_view.dart';
+import 'package:nannyplus/src/ui/list_view.dart';
+import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
+import 'package:nannyplus/src/ui/view.dart';
+import 'package:nannyplus/utils/i18n_utils.dart';
+import 'package:nannyplus/utils/prefs_util.dart';
+import 'package:nannyplus/utils/snack_bar_util.dart';
+import 'package:nannyplus/widgets/loading_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../cubit/child_list_cubit.dart';
-import '../../data/model/child.dart';
-import '../../src/child_list/main_drawer.dart';
-import '../../src/constants.dart';
-import '../../utils/i18n_utils.dart';
-import '../../utils/prefs_util.dart';
-import '../../utils/snack_bar_util.dart';
-import '../../widgets/loading_indicator.dart';
-import '../child_form/child_form.dart';
-import '../price_list/price_list_view.dart';
-import '../settings_view/settings_view.dart';
-import '../statement_list_view/statement_list_view.dart';
-import '../tab_view/tab_view.dart';
-import '../ui/list_view.dart';
-import '../ui/sliver_curved_persistent_header.dart';
-import '../ui/view.dart';
 
 class ChildListView extends StatefulWidget {
   const ChildListView({Key? key}) : super(key: key);
@@ -102,15 +101,15 @@ class _ChildListViewState extends State<ChildListView> {
             children: [
               Text(
                 context.t(
-                  "Since this is the first time you run this app, we inserted some sample data.",
+                  'Since this is the first time you run this app, we inserted some sample data.',
                 ),
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 16.0),
+                padding: const EdgeInsets.only(top: 16),
                 child: Text(
                   context.t(
-                    "Thanks for using Nanny+ !",
+                    'Thanks for using Nanny+ !',
                   ),
                 ),
               ),
@@ -120,7 +119,7 @@ class _ChildListViewState extends State<ChildListView> {
             TextButton(
               child: Text(context.t('Close')),
               onPressed: () async {
-                var prefs = await PrefsUtil.getInstance();
+                final prefs = await PrefsUtil.getInstance();
                 prefs.showOnboarding = false;
                 Navigator.of(context).pop();
               },
@@ -141,26 +140,26 @@ class _ChildListViewState extends State<ChildListView> {
                 state: state,
                 onTap: () async {
                   await Navigator.of(context).push(
-                    MaterialPageRoute(
+                    MaterialPageRoute<void>(
                       builder: (context) =>
                           NewTabView(state.children[index].id!),
                     ),
                   );
-                  var cubit = context.read<ChildListCubit>();
-                  cubit.loadChildList(
+                  final cubit = context.read<ChildListCubit>();
+                  await cubit.loadChildList(
                     loadArchivedFolders: showArchivedFolders,
                   );
                 },
                 onToggleShowArchivedFolders: () {
-                  var child = state.children[index];
+                  final child = state.children[index];
                   if (!child.isArchived) {
                     context.read<ChildListCubit>().archive(child);
                     ScaffoldMessenger.of(context)
-                        .success(context.t("Archived successfully"));
+                        .success(context.t('Archived successfully'));
                   } else {
                     context.read<ChildListCubit>().unarchive(child);
                     ScaffoldMessenger.of(context)
-                        .success(context.t("Unarchived successfully"));
+                        .success(context.t('Unarchived successfully'));
                   }
                   context.read<ChildListCubit>().loadChildList(
                         loadArchivedFolders: showArchivedFolders,
@@ -176,19 +175,21 @@ class _ChildListViewState extends State<ChildListView> {
                 });
               },
               child: Text(
-                context.t(showArchivedFolders
-                    ? 'Hide archived folders'
-                    : 'Show archived folders'),
+                context.t(
+                  showArchivedFolders
+                      ? 'Hide archived folders'
+                      : 'Show archived folders',
+                ),
               ),
             ),
             onFloatingActionPressed: () async {
-              var child = await Navigator.of(context).push<Child>(
+              final child = await Navigator.of(context).push<Child>(
                 MaterialPageRoute(
                   builder: (context) => const NewChildForm(),
                 ),
               );
               if (child != null) {
-                context.read<ChildListCubit>().create(child);
+                await context.read<ChildListCubit>().create(child);
               }
             },
           )
@@ -197,80 +198,82 @@ class _ChildListViewState extends State<ChildListView> {
 
   // ignore: long-method
   Widget _buildTabView(BuildContext context, ChildListState state) {
-    return UIListView.fromChildren(children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Material(
-          elevation: 4,
-          shape: Theme.of(context).listTileTheme.shape,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const PriceListView(),
+    return UIListView.fromChildren(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: Material(
+            elevation: 4,
+            shape: Theme.of(context).listTileTheme.shape,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (context) => const PriceListView(),
+                  ),
+                );
+              },
+              behavior: HitTestBehavior.opaque,
+              child: ListTile(
+                leading: const Icon(Icons.payment),
+                title: Text(
+                  context.t('Price list'),
                 ),
-              );
-            },
-            behavior: HitTestBehavior.opaque,
-            child: ListTile(
-              leading: const Icon(Icons.payment),
-              title: Text(
-                context.t('Price list'),
+                trailing: const Icon(Icons.chevron_right),
               ),
-              trailing: const Icon(Icons.chevron_right),
             ),
           ),
         ),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Material(
-          elevation: 4,
-          shape: Theme.of(context).listTileTheme.shape,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const SettingsView(),
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: Material(
+            elevation: 4,
+            shape: Theme.of(context).listTileTheme.shape,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (context) => const SettingsView(),
+                  ),
+                );
+              },
+              behavior: HitTestBehavior.opaque,
+              child: ListTile(
+                leading: const Icon(Icons.settings),
+                title: Text(
+                  context.t('Settings'),
                 ),
-              );
-            },
-            behavior: HitTestBehavior.opaque,
-            child: ListTile(
-              leading: const Icon(Icons.settings),
-              title: Text(
-                context.t('Settings'),
+                trailing: const Icon(Icons.chevron_right),
               ),
-              trailing: const Icon(Icons.chevron_right),
             ),
           ),
         ),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Material(
-          elevation: 4,
-          shape: Theme.of(context).listTileTheme.shape,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const StatementListView(),
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: Material(
+            elevation: 4,
+            shape: Theme.of(context).listTileTheme.shape,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (context) => const StatementListView(),
+                  ),
+                );
+              },
+              behavior: HitTestBehavior.opaque,
+              child: ListTile(
+                leading: const Icon(Icons.description),
+                title: Text(
+                  context.t('Statements'),
                 ),
-              );
-            },
-            behavior: HitTestBehavior.opaque,
-            child: ListTile(
-              leading: const Icon(Icons.description),
-              title: Text(
-                context.t('Statements'),
+                trailing: const Icon(Icons.chevron_right),
               ),
-              trailing: const Icon(Icons.chevron_right),
             ),
           ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 }
 
@@ -286,7 +289,7 @@ class _ChildListTile extends StatelessWidget {
   final ChildListLoaded state;
   final int index;
   final void Function()? onTap;
-  final Function() onToggleShowArchivedFolders;
+  final void Function() onToggleShowArchivedFolders;
 
   @override
   Widget build(BuildContext context) {
@@ -307,7 +310,7 @@ class _ChildListTile extends StatelessWidget {
         : '0.00';
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8),
       child: Material(
         elevation: 4,
         shape: Theme.of(context).listTileTheme.shape,
@@ -364,7 +367,7 @@ class _ChildListTile extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
+                  padding: const EdgeInsets.only(right: 8),
                   child: Text(pendingTotal),
                 ),
                 PopupMenuButton(
@@ -375,11 +378,11 @@ class _ChildListTile extends StatelessWidget {
                             serviceInfo?.pendingTotal != 0) {
                           ScaffoldMessenger.of(context).failure(
                             context.t(
-                              "There are existing services for this child",
+                              'There are existing services for this child',
                             ),
                           );
                         } else {
-                          var archive = await _showConfirmationDialog(
+                          final archive = await _showConfirmationDialog(
                             context,
                             child.isArchived
                                 ? context.t(
@@ -398,20 +401,20 @@ class _ChildListTile extends StatelessWidget {
                         if (serviceInfo != null) {
                           ScaffoldMessenger.of(context).failure(
                             context.t(
-                              "There are existing services for this child",
+                              'There are existing services for this child',
                             ),
                           );
                         } else {
-                          var delete = await _showConfirmationDialog(
+                          final delete = await _showConfirmationDialog(
                             context,
                             context.t(
-                              'Are you sure you want to delete this child\'s folder ?',
+                              "Are you sure you want to delete this child's folder ?",
                             ),
                           );
                           if (delete ?? false) {
-                            context.read<ChildListCubit>().delete(child);
+                            await context.read<ChildListCubit>().delete(child);
                             ScaffoldMessenger.of(context).success(
-                              context.t("Removed successfully"),
+                              context.t('Removed successfully'),
                             );
                           }
                         }

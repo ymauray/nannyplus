@@ -1,14 +1,27 @@
 import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
+
+@immutable
 class MonthlyStatement {
-  final int? id;
-  final DateTime date;
-  final double amount;
-  MonthlyStatement({
+  const MonthlyStatement({
     this.id,
     required this.date,
     required this.amount,
   });
+  factory MonthlyStatement.fromJson(String source) =>
+      MonthlyStatement.fromMap(json.decode(source));
+
+  factory MonthlyStatement.fromMap(Map<String, dynamic> map) {
+    return MonthlyStatement(
+      id: map['id']?.toInt(),
+      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
+      amount: map['amount']?.toDouble() ?? 0.0,
+    );
+  }
+  final int? id;
+  final DateTime date;
+  final double amount;
 
   MonthlyStatement copyWith({
     int? id,
@@ -30,18 +43,7 @@ class MonthlyStatement {
     };
   }
 
-  factory MonthlyStatement.fromMap(Map<String, dynamic> map) {
-    return MonthlyStatement(
-      id: map['id']?.toInt(),
-      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
-      amount: map['amount']?.toDouble() ?? 0.0,
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory MonthlyStatement.fromJson(String source) =>
-      MonthlyStatement.fromMap(json.decode(source));
 
   @override
   String toString() =>

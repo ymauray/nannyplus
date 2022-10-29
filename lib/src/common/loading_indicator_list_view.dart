@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'loading_indicator.dart';
+import 'package:nannyplus/src/common/loading_indicator.dart';
 
 class LoadingIndicatorListView extends StatelessWidget {
   const LoadingIndicatorListView({Key? key}) : super(key: key);

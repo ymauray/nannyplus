@@ -6,8 +6,8 @@ abstract class StatementViewState {}
 class StatementViewInitial extends StatementViewState {}
 
 class StatementViewLoaded extends StatementViewState {
-  final Statement statement;
   StatementViewLoaded(this.statement);
+  final Statement statement;
 }
 
 class StatementViewGenerating extends StatementViewState {}

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../cubit/settings_cubit.dart';
-import 'settings_form.dart';
+import 'package:nannyplus/cubit/settings_cubit.dart';
+import 'package:nannyplus/src/settings_view/settings_form.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({Key? key}) : super(key: key);

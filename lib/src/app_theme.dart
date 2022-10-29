@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../src/constants.dart';
+import 'package:nannyplus/src/constants.dart';
 
 class AppTheme {
   static ThemeData create() {
