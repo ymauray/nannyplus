@@ -141,8 +141,7 @@ class _ChildListViewState extends State<ChildListView> {
                 onTap: () async {
                   await Navigator.of(context).push(
                     MaterialPageRoute<void>(
-                      builder: (context) =>
-                          NewTabView(state.children[index].id!),
+                      builder: (context) => TabView(state.children[index].id!),
                     ),
                   );
                   final cubit = context.read<ChildListCubit>();

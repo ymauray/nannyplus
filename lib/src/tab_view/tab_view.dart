@@ -12,8 +12,8 @@ import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/sliver_tab_bar_peristant_header.dart';
 import 'package:nannyplus/src/ui/view.dart';
 
-class NewTabView extends StatelessWidget {
-  const NewTabView(
+class TabView extends StatelessWidget {
+  const TabView(
     this.childId, {
     Key? key,
   }) : super(key: key);
