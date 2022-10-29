@@ -440,6 +440,9 @@ msgstr "Document"
 msgid "Documents"
 msgstr "Documents"
 
+msgid "Photo library"
+msgstr "Bibliothèque de photos"
+
 msgid "Cancel"
 msgstr "Annuler"
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:nannyplus/cubit/file_list_cubit.dart';
 import 'package:nannyplus/cubit/invoice_settings_cubit.dart';
@@ -333,7 +334,7 @@ class ChildForm extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 16),
               child: ElevatedButton(
                 onPressed: () async {
-                  final file = await openFileChooser();
+                  final file = await openFileChooser(context);
                   if (file != null) {
                     await context
                         .read<FileListCubit>()
@@ -349,15 +350,98 @@ class ChildForm extends StatelessWidget {
     );
   }
 
-  Future<File?> openFileChooser() async {
-    final result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      final file = File(result.files.single.path!);
+  Future<File?> openFileChooser(BuildContext context) async {
+    final storage = await showModalBottomSheet<String>(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        children: [
+                          TextButton(
+                            child: Text(context.t('Document')),
+                            onPressed: () => Navigator.of(context).pop('files'),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8),
+                            child: Divider(
+                              color: Colors.black,
+                            ),
+                          ),
+                          TextButton(
+                            child: Text(context.t('Photo library')),
+                            onPressed: () =>
+                                Navigator.of(context).pop('photos'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Column(
+                          children: [
+                            TextButton(
+                              child: Text(
+                                context.t('Cancel'),
+                              ),
+                              onPressed: () => Navigator.of(context).pop(null),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
 
-      return file;
-    } else {
+    if (storage == null) {
       return null;
+    } else if (storage == 'files') {
+      final result = await FilePicker.platform.pickFiles();
+      if (result != null) {
+        final file = File(result.files.single.path!);
+        return file;
+      } else {
+        return null;
+      }
+    } else if (storage == 'photos') {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        final file = File(image.path);
+        return file;
+      } else {
+        return null;
+      }
     }
+    return null;
   }
 }
 
