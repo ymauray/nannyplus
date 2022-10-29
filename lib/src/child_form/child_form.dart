@@ -7,7 +7,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
 import 'package:nannyplus/cubit/file_list_cubit.dart';
-import 'package:nannyplus/cubit/settings_cubit.dart';
+import 'package:nannyplus/cubit/invoice_settings_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/data/model/document.dart';
 import 'package:nannyplus/src/constants.dart';
@@ -101,7 +101,7 @@ class NewChildForm extends StatelessWidget {
                       autocorrect: false,
                       textCapitalization: TextCapitalization.words,
                       onChanged: (value) {
-                        context.read<SettingsCubit>().setLine1(value);
+                        context.read<InvoiceSettingsCubit>().setLine1(value);
                       },
                     ),
                   ),

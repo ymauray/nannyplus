@@ -7,11 +7,11 @@ import 'package:nannyplus/cubit/child_list_cubit.dart';
 import 'package:nannyplus/cubit/file_list_cubit.dart';
 import 'package:nannyplus/cubit/invoice_form_cubit.dart';
 import 'package:nannyplus/cubit/invoice_list_cubit.dart';
+import 'package:nannyplus/cubit/invoice_settings_cubit.dart';
 import 'package:nannyplus/cubit/invoice_view_cubit.dart';
 import 'package:nannyplus/cubit/price_list_cubit.dart';
 import 'package:nannyplus/cubit/service_form_cubit.dart';
 import 'package:nannyplus/cubit/service_list_cubit.dart';
-import 'package:nannyplus/cubit/settings_cubit.dart';
 import 'package:nannyplus/cubit/statement_list_cubit.dart';
 import 'package:nannyplus/cubit/statement_view_cubit.dart';
 import 'package:nannyplus/data/children_repository.dart';
@@ -69,8 +69,8 @@ class NannyPlusApp extends StatelessWidget {
             context.read<PricesRepository>(),
           ),
         ),
-        BlocProvider<SettingsCubit>(
-          create: (context) => SettingsCubit(),
+        BlocProvider<InvoiceSettingsCubit>(
+          create: (context) => InvoiceSettingsCubit(),
         ),
         BlocProvider<InvoiceListCubit>(
           create: (context) => InvoiceListCubit(

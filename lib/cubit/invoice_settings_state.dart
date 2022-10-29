@@ -1,17 +1,17 @@
 // ignore_for_file: argument_type_not_assignable
-part of 'settings_cubit.dart';
+part of 'invoice_settings_cubit.dart';
 
 @immutable
-abstract class SettingsState {
-  const SettingsState();
+abstract class InvoiceSettingsState {
+  const InvoiceSettingsState();
 }
 
-class SettingsInitial extends SettingsState {
-  const SettingsInitial();
+class InvoiceSettingsInitial extends InvoiceSettingsState {
+  const InvoiceSettingsInitial();
 }
 
-class SettingsLoaded extends SettingsState {
-  const SettingsLoaded(
+class InvoiceSettingsLoaded extends InvoiceSettingsState {
+  const InvoiceSettingsLoaded(
     this.line1,
     this.line1FontFamily,
     this.line1FontAsset,
@@ -23,11 +23,11 @@ class SettingsLoaded extends SettingsState {
     this.name,
     this.address,
   );
-  factory SettingsLoaded.fromJson(String source) =>
-      SettingsLoaded.fromMap(json.decode(source));
+  factory InvoiceSettingsLoaded.fromJson(String source) =>
+      InvoiceSettingsLoaded.fromMap(json.decode(source));
 
-  factory SettingsLoaded.fromMap(Map<String, dynamic> map) {
-    return SettingsLoaded(
+  factory InvoiceSettingsLoaded.fromMap(Map<String, dynamic> map) {
+    return InvoiceSettingsLoaded(
       map['line1'] ?? '',
       map['line1FontFamily'] ?? '',
       map['line1FontAsset'] ?? '',
@@ -62,7 +62,7 @@ class SettingsLoaded extends SettingsState {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is SettingsLoaded &&
+    return other is InvoiceSettingsLoaded &&
         other.line1 == line1 &&
         other.line1FontFamily == line1FontFamily &&
         other.line1FontAsset == line1FontAsset &&
@@ -89,7 +89,7 @@ class SettingsLoaded extends SettingsState {
         address.hashCode;
   }
 
-  SettingsLoaded copyWith({
+  InvoiceSettingsLoaded copyWith({
     String? line1,
     String? line1FontFamily,
     String? line1FontAsset,
@@ -101,7 +101,7 @@ class SettingsLoaded extends SettingsState {
     String? name,
     String? address,
   }) {
-    return SettingsLoaded(
+    return InvoiceSettingsLoaded(
       line1 ?? this.line1,
       line1FontFamily ?? this.line1FontFamily,
       line1FontAsset ?? this.line1FontAsset,

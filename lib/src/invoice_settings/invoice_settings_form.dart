@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nannyplus/cubit/settings_cubit.dart';
+import 'package:nannyplus/cubit/invoice_settings_cubit.dart';
 import 'package:nannyplus/src/constants.dart';
 import 'package:nannyplus/src/invoice_settings/logo_picker.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
@@ -18,7 +18,7 @@ class InvoiceSettingsForm extends StatelessWidget {
     line1Controller.text = _state.line1;
     line2Controller.text = _state.line2;
   }
-  final SettingsLoaded _state;
+  final InvoiceSettingsLoaded _state;
   final TextEditingController line1Controller = TextEditingController();
   final TextEditingController line2Controller = TextEditingController();
 
@@ -63,7 +63,7 @@ class InvoiceSettingsForm extends StatelessWidget {
               formKey.currentState!.save();
               if (formKey.currentState!.validate()) {
                 await context
-                    .read<SettingsCubit>()
+                    .read<InvoiceSettingsCubit>()
                     .saveSettings(formKey.currentState!.value);
                 Navigator.of(context).pop();
               }

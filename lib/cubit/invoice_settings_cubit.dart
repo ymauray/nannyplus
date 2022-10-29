@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:nannyplus/utils/font_utils.dart';
 import 'package:nannyplus/utils/prefs_util.dart';
 
-part 'settings_state.dart';
+part 'invoice_settings_state.dart';
 
-class SettingsCubit extends Cubit<SettingsState> {
-  SettingsCubit() : super(const SettingsInitial());
+class InvoiceSettingsCubit extends Cubit<InvoiceSettingsState> {
+  InvoiceSettingsCubit() : super(const InvoiceSettingsInitial());
 
   Future<void> loadSettings() async {
     final prefs = await PrefsUtil.getInstance();
-    final settingsLoaded = SettingsLoaded(
+    final settingsLoaded = InvoiceSettingsLoaded(
       prefs.line1,
       prefs.line1FontFamily,
       prefs.line1FontAsset,
@@ -76,8 +76,8 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   void setLine1(String? value) {
-    if (state is SettingsLoaded) {
-      emit((state as SettingsLoaded).copyWith(line1: value));
+    if (state is InvoiceSettingsLoaded) {
+      emit((state as InvoiceSettingsLoaded).copyWith(line1: value));
     }
   }
 }
