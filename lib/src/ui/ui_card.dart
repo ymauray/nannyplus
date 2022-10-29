@@ -11,11 +11,11 @@ class UICard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Material(
         elevation: 4,
         shape: Theme.of(context).listTileTheme.shape,
-        child: Container(
+        child: DecoratedBox(
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: (Theme.of(context).listTileTheme.shape!

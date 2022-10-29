@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-
-import '../data/invoices_repository.dart';
-import '../data/model/invoice.dart';
-import '../data/services_repository.dart';
+import 'package:nannyplus/data/invoices_repository.dart';
+import 'package:nannyplus/data/model/invoice.dart';
+import 'package:nannyplus/data/services_repository.dart';
+import 'package:nannyplus/utils/types.dart';
 
 part 'invoice_list_state.dart';
 
@@ -36,8 +36,8 @@ class InvoiceListCubit extends Cubit<InvoiceListState> {
 
   Future<void> deleteInvoice(Invoice invoice) async {
     try {
-      var childId = invoice.childId;
-      var invoiceId = invoice.id!;
+      final childId = invoice.childId;
+      final invoiceId = invoice.id!;
       await _servicesRepository.unlinkInvoice(invoiceId);
       await _invoicesRepository.delete(invoiceId);
       await loadInvoiceList(childId);
@@ -48,8 +48,8 @@ class InvoiceListCubit extends Cubit<InvoiceListState> {
 
   Future<void> markInvoiceAsPaid(Invoice invoice) async {
     try {
-      var childId = invoice.childId;
-      var invoiceId = invoice.id!;
+      final childId = invoice.childId;
+      final invoiceId = invoice.id!;
       await _invoicesRepository.markAsPaid(invoiceId);
       await loadInvoiceList(childId);
     } catch (e) {

@@ -1,5 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, argument_type_not_assignable
 import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
+
+@immutable
 class Price {
   const Price({
     this.id,
@@ -9,6 +13,18 @@ class Price {
     required this.sortOrder,
     required this.deleted,
   });
+  factory Price.fromJson(String source) => Price.fromMap(json.decode(source));
+
+  factory Price.fromMap(Map<String, dynamic> map) {
+    return Price(
+      id: map['id']?.toInt(),
+      label: map['label'] ?? '',
+      amount: map['amount']?.toDouble() ?? 0.0,
+      fixedPrice: map['fixedPrice']?.toInt() ?? 0,
+      sortOrder: map['sortOrder']?.toInt() ?? 0,
+      deleted: map['deleted']?.toInt() ?? 0,
+    );
+  }
 
   final int? id;
   final String label;
@@ -19,7 +35,7 @@ class Price {
 
   bool get isFixedPrice => fixedPrice == 1;
 
-  String get detail => amount.toStringAsFixed(2) + (isFixedPrice ? "" : " / h");
+  String get detail => amount.toStringAsFixed(2) + (isFixedPrice ? '' : ' / h');
 
   // --------------------------------------------------
 
@@ -52,20 +68,7 @@ class Price {
     };
   }
 
-  factory Price.fromMap(Map<String, dynamic> map) {
-    return Price(
-      id: map['id']?.toInt(),
-      label: map['label'] ?? '',
-      amount: map['amount']?.toDouble() ?? 0.0,
-      fixedPrice: map['fixedPrice']?.toInt() ?? 0,
-      sortOrder: map['sortOrder']?.toInt() ?? 0,
-      deleted: map['deleted']?.toInt() ?? 0,
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory Price.fromJson(String source) => Price.fromMap(json.decode(source));
 
   @override
   String toString() {

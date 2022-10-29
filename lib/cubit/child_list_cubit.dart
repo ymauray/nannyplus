@@ -1,20 +1,18 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-
-import '../data/children_repository.dart';
-import '../data/model/child.dart';
-import '../data/model/service_info.dart';
-import '../data/services_repository.dart';
-import '../utils/prefs_util.dart';
+import 'package:nannyplus/data/children_repository.dart';
+import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/data/model/service_info.dart';
+import 'package:nannyplus/data/services_repository.dart';
+import 'package:nannyplus/utils/prefs_util.dart';
 
 part 'child_list_state.dart';
 
 class ChildListCubit extends Cubit<ChildListState> {
-  final ChildrenRepository _childrenRepository;
-  final ServicesRepository _servicesRepository;
-
   ChildListCubit(this._childrenRepository, this._servicesRepository)
       : super(const ChildListInitial());
+  final ChildrenRepository _childrenRepository;
+  final ServicesRepository _servicesRepository;
 
   Future<void> loadChildList({bool loadArchivedFolders = false}) async {
     try {
@@ -27,7 +25,7 @@ class ChildListCubit extends Cubit<ChildListState> {
       final servicesInfo = await _servicesRepository.getServiceInfoPerChild();
 
       final pendingTotal =
-          servicesInfo.values.fold<double>(0.0, (total, service) {
+          servicesInfo.values.fold<double>(0, (total, service) {
         return total + service.pendingTotal;
       });
 
@@ -50,7 +48,7 @@ class ChildListCubit extends Cubit<ChildListState> {
   Future<void> create(Child child) async {
     try {
       await _childrenRepository.create(child);
-      loadChildList();
+      await loadChildList();
     } catch (e) {
       emit(ChildListError(e.toString()));
     }
@@ -59,7 +57,7 @@ class ChildListCubit extends Cubit<ChildListState> {
   Future<void> update(Child child) async {
     try {
       await _childrenRepository.update(child);
-      loadChildList();
+      await loadChildList();
     } catch (e) {
       emit(ChildListError(e.toString()));
     }
@@ -68,7 +66,7 @@ class ChildListCubit extends Cubit<ChildListState> {
   Future<void> delete(Child child) async {
     try {
       await _childrenRepository.delete(child);
-      loadChildList();
+      await loadChildList();
     } catch (e) {
       emit(ChildListError(e.toString()));
     }

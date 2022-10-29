@@ -1,12 +1,12 @@
+// ignore_for_file: argument_type_not_assignable
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-
-import '../cubit/price_list_cubit.dart';
-import '../data/model/price.dart';
-import '../views/app_view.dart';
-import '../widgets/card_scroll_view.dart';
+import 'package:nannyplus/cubit/price_list_cubit.dart';
+import 'package:nannyplus/data/model/price.dart';
+import 'package:nannyplus/views/app_view.dart';
+import 'package:nannyplus/widgets/card_scroll_view.dart';
 
 class PriceForm extends StatelessWidget {
   const PriceForm({
@@ -21,7 +21,7 @@ class PriceForm extends StatelessWidget {
     final formKey = GlobalKey<FormBuilderState>();
 
     return AppView(
-      title: Text(context.t("Create new price")),
+      title: Text(context.t('Create new price')),
       actions: [
         IconButton(
           onPressed: () => save(formKey, context, price?.id, price?.sortOrder),
@@ -41,7 +41,7 @@ class PriceForm extends StatelessWidget {
               name: 'label',
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
-                labelText: context.t("Label"),
+                labelText: context.t('Label'),
                 floatingLabelBehavior: FloatingLabelBehavior.always,
               ),
             ),
@@ -51,14 +51,14 @@ class PriceForm extends StatelessWidget {
                 decimal: true,
               ),
               decoration: InputDecoration(
-                labelText: context.t("Price"),
+                labelText: context.t('Price'),
                 floatingLabelBehavior: FloatingLabelBehavior.always,
               ),
             ),
             FormBuilderDropdown(
               name: 'fixed',
               decoration: InputDecoration(
-                labelText: context.t("Price type"),
+                labelText: context.t('Price type'),
                 floatingLabelBehavior: FloatingLabelBehavior.always,
               ),
               items: [
@@ -78,17 +78,17 @@ class PriceForm extends StatelessWidget {
     );
   }
 
-  void save(
+  Future<void> save(
     GlobalKey<FormBuilderState> formKey,
     BuildContext context,
     int? id,
     int? sortOrder,
   ) async {
     formKey.currentState!.save();
-    var price = Price(
+    final price = Price(
       label: formKey.currentState!.value['label'],
       amount: double.parse(formKey.currentState!.value['amount']),
-      fixedPrice: formKey.currentState!.value['fixed'] ? 1 : 0,
+      fixedPrice: formKey.currentState!.value['fixed'] as bool ? 1 : 0,
       sortOrder: -1,
       deleted: 0,
     );

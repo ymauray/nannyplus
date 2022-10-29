@@ -2,15 +2,15 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-
-import '../data/model/price.dart';
-import '../data/prices_repository.dart';
+import 'package:nannyplus/data/model/price.dart';
+import 'package:nannyplus/data/prices_repository.dart';
+import 'package:nannyplus/utils/types.dart';
 
 part 'price_list_state.dart';
 
 class PriceListCubit extends Cubit<PriceListState> {
-  final PricesRepository _pricesRepository;
   PriceListCubit(this._pricesRepository) : super(const PriceListInitial());
+  final PricesRepository _pricesRepository;
 
   Future<void> getPriceList() async {
     final priceList = await _pricesRepository.getPriceList();

@@ -32,8 +32,11 @@ msgstr "Dernière saisie"
 msgid "Allergies : {0}"
 msgstr "Allergies : {0}"
 
-msgid "Settings"
-msgstr "Paramètres"
+msgid "Invoice settings"
+msgstr "Paramètres de la facture"
+
+msgid "Application settings"
+msgstr "Paramètres de l'application"
 
 msgid "Price list"
 msgstr "Prestations"
@@ -442,3 +445,15 @@ msgstr "Annuler"
 
 msgid "Are you sure you want to delete this document?"
 msgstr "Êtes-vous sûr de vouloir supprimer ce document ?"
+
+msgid "Clone folder"
+msgstr "Dupliquer le dossier"
+
+msgid "Sort children list by last name"
+msgstr "Trier la liste des enfants par nom de famille"
+
+msgid "Show first name before last name"
+msgstr "Afficher le prénom avant le nom de famille"
+
+msgid "Error loading services"
+msgstr "Erreur lors du chargement des prestations"

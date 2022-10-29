@@ -3,21 +3,20 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class NotificationUtil {
-  static final NotificationUtil _singleton = NotificationUtil._internal();
-
   factory NotificationUtil() {
     return _singleton;
   }
+  NotificationUtil._internal();
+  static final NotificationUtil _singleton = NotificationUtil._internal();
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
   Future<void> init() async {
-    const AndroidInitializationSettings initializationSettingsAndroid =
+    const initializationSettingsAndroid =
         AndroidInitializationSettings('app_icon');
 
-    IOSInitializationSettings initializationSettingsIOS =
-        IOSInitializationSettings(
+    final initializationSettingsIOS = IOSInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,
       requestAlertPermission: false,
@@ -26,7 +25,7 @@ class NotificationUtil {
       },
     );
 
-    InitializationSettings initializationSettings = InitializationSettings(
+    final initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
@@ -34,7 +33,7 @@ class NotificationUtil {
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onSelectNotification: (payload) async {
-        debugPrint("Notification payload: $payload");
+        debugPrint('Notification payload: $payload');
       },
     );
   }
@@ -52,8 +51,8 @@ class NotificationUtil {
 
   Future<void> sendNotification() async {
     const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      "nannyplus",
-      "Nanny+",
+      'nannyplus',
+      'Nanny+',
       channelDescription: 'Channel Description',
       importance: Importance.max,
       priority: Priority.high,
@@ -75,13 +74,13 @@ class NotificationUtil {
       payload: 'Item x',
     );
 
-    debugPrint("Ok !");
+    debugPrint('Ok !');
   }
 
   Future<void> scheduleNotification() async {
     const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      "nannyplus",
-      "Nanny+",
+      'nannyplus',
+      'Nanny+',
       channelDescription: 'Channel Description',
       importance: Importance.max,
       priority: Priority.high,
@@ -108,6 +107,4 @@ class NotificationUtil {
           UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
-
-  NotificationUtil._internal();
 }

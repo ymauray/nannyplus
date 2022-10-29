@@ -1,10 +1,9 @@
 import 'package:intl/intl.dart';
-
-import 'i18n_utils.dart';
+import 'package:nannyplus/utils/i18n_utils.dart';
 
 extension DateFormatExtension on String {
   String formatDate({String? format}) {
-    var formatter = format != null
+    final formatter = format != null
         ? DateFormat(format)
         : DateFormat.yMMMMd(I18nUtils.locale);
 

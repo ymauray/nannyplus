@@ -1,27 +1,17 @@
-part of 'settings_cubit.dart';
+// ignore_for_file: argument_type_not_assignable
+part of 'invoice_settings_cubit.dart';
 
 @immutable
-abstract class SettingsState {
-  const SettingsState();
+abstract class InvoiceSettingsState {
+  const InvoiceSettingsState();
 }
 
-class SettingsInitial extends SettingsState {
-  const SettingsInitial();
+class InvoiceSettingsInitial extends InvoiceSettingsState {
+  const InvoiceSettingsInitial();
 }
 
-class SettingsLoaded extends SettingsState {
-  final String line1;
-  final String line1FontFamily;
-  final String line1FontAsset;
-  final String line2;
-  final String line2FontFamily;
-  final String line2FontAsset;
-  final String conditions;
-  final String bankDetails;
-  final String name;
-  final String address;
-
-  const SettingsLoaded(
+class InvoiceSettingsLoaded extends InvoiceSettingsState {
+  const InvoiceSettingsLoaded(
     this.line1,
     this.line1FontFamily,
     this.line1FontAsset,
@@ -33,6 +23,33 @@ class SettingsLoaded extends SettingsState {
     this.name,
     this.address,
   );
+  factory InvoiceSettingsLoaded.fromJson(String source) =>
+      InvoiceSettingsLoaded.fromMap(json.decode(source));
+
+  factory InvoiceSettingsLoaded.fromMap(Map<String, dynamic> map) {
+    return InvoiceSettingsLoaded(
+      map['line1'] ?? '',
+      map['line1FontFamily'] ?? '',
+      map['line1FontAsset'] ?? '',
+      map['line2'] ?? '',
+      map['line2FontFamily'] ?? '',
+      map['line2FontAsset'] ?? '',
+      map['conditions'] ?? '',
+      map['bankDetails'] ?? '',
+      map['name'] ?? '',
+      map['address'] ?? '',
+    );
+  }
+  final String line1;
+  final String line1FontFamily;
+  final String line1FontAsset;
+  final String line2;
+  final String line2FontFamily;
+  final String line2FontAsset;
+  final String conditions;
+  final String bankDetails;
+  final String name;
+  final String address;
 
   FontItem get line1Font => line1FontFamily.isEmpty
       ? FontUtils.defaultFontItem
@@ -45,7 +62,7 @@ class SettingsLoaded extends SettingsState {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is SettingsLoaded &&
+    return other is InvoiceSettingsLoaded &&
         other.line1 == line1 &&
         other.line1FontFamily == line1FontFamily &&
         other.line1FontAsset == line1FontAsset &&
@@ -72,7 +89,7 @@ class SettingsLoaded extends SettingsState {
         address.hashCode;
   }
 
-  SettingsLoaded copyWith({
+  InvoiceSettingsLoaded copyWith({
     String? line1,
     String? line1FontFamily,
     String? line1FontAsset,
@@ -84,7 +101,7 @@ class SettingsLoaded extends SettingsState {
     String? name,
     String? address,
   }) {
-    return SettingsLoaded(
+    return InvoiceSettingsLoaded(
       line1 ?? this.line1,
       line1FontFamily ?? this.line1FontFamily,
       line1FontAsset ?? this.line1FontAsset,
@@ -113,25 +130,7 @@ class SettingsLoaded extends SettingsState {
     };
   }
 
-  factory SettingsLoaded.fromMap(Map<String, dynamic> map) {
-    return SettingsLoaded(
-      map['line1'] ?? '',
-      map['line1FontFamily'] ?? '',
-      map['line1FontAsset'] ?? '',
-      map['line2'] ?? '',
-      map['line2FontFamily'] ?? '',
-      map['line2FontAsset'] ?? '',
-      map['conditions'] ?? '',
-      map['bankDetails'] ?? '',
-      map['name'] ?? '',
-      map['address'] ?? '',
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory SettingsLoaded.fromJson(String source) =>
-      SettingsLoaded.fromMap(json.decode(source));
 
   @override
   String toString() {

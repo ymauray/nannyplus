@@ -1,18 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-
-import '../data/children_repository.dart';
-import '../data/model/child.dart';
+import 'package:nannyplus/data/children_repository.dart';
+import 'package:nannyplus/data/model/child.dart';
 
 part 'child_info_state.dart';
 
 class ChildInfoCubit extends Cubit<ChildInfoState> {
-  final ChildrenRepository _childrenRepository;
   ChildInfoCubit(this._childrenRepository) : super(const ChildInfoInitial());
+  final ChildrenRepository _childrenRepository;
 
   Future<void> read(int childId) async {
     try {
-      var child = await _childrenRepository.read(childId);
+      final child = await _childrenRepository.read(childId);
       emit(ChildInfoLoaded(child));
     } catch (e) {
       emit(ChildInfoError(e.toString()));
@@ -21,7 +20,7 @@ class ChildInfoCubit extends Cubit<ChildInfoState> {
 
   Future<void> update(Child child) async {
     try {
-      var updatedChild = await _childrenRepository.update(child);
+      final updatedChild = await _childrenRepository.update(child);
       emit(ChildInfoLoaded(updatedChild));
     } catch (e) {
       emit(ChildInfoError(e.toString()));

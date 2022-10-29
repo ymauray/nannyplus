@@ -1,37 +1,42 @@
-import '../utils/database_util.dart';
-import 'model/child.dart';
+import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/utils/database_util.dart';
+import 'package:nannyplus/utils/prefs_util.dart';
 
 class ChildrenRepository {
   const ChildrenRepository();
 
   Future<List<Child>> getChildList(bool showArchived) async {
-    var db = await DatabaseUtil.instance;
-    var rows = await db.query(
+    final db = await DatabaseUtil.instance;
+    final prefs = await PrefsUtil.getInstance();
+
+    final rows = await db.query(
       'children',
       where: 'archived <= ?',
-      whereArgs: [showArchived ? 1 : 0],
-      orderBy: 'firstName, lastName',
+      whereArgs: [if (showArchived) 1 else 0],
+      orderBy: prefs.sortListByLastName
+          ? 'lastName, firstName'
+          : 'firstName, lastname',
     );
 
     return rows.map((row) => Child.fromMap(row)).toList();
   }
 
   Future<Child> create(Child child) async {
-    var db = await DatabaseUtil.instance;
-    var id = await db.insert('children', child.toMap());
+    final db = await DatabaseUtil.instance;
+    final id = await db.insert('children', child.toMap());
 
     return read(id);
   }
 
   Future<Child> read(int id) async {
-    var db = await DatabaseUtil.instance;
-    var child = await db.query('children', where: 'id = ?', whereArgs: [id]);
+    final db = await DatabaseUtil.instance;
+    final child = await db.query('children', where: 'id = ?', whereArgs: [id]);
 
     return Child.fromMap(child.first);
   }
 
   Future<Child> update(Child child) async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
     await db.update(
       'children',
       child.toMap(),
@@ -43,7 +48,7 @@ class ChildrenRepository {
   }
 
   Future<void> delete(Child child) async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
     await db.delete('invoices', where: 'childId = ?', whereArgs: [child.id]);
     await db.delete('services', where: 'childId = ?', whereArgs: [child.id]);
     await db.delete('children', where: 'id = ?', whereArgs: [child.id]);

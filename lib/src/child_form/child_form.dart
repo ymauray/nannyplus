@@ -7,7 +7,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
 import 'package:nannyplus/cubit/file_list_cubit.dart';
-import 'package:nannyplus/cubit/settings_cubit.dart';
+import 'package:nannyplus/cubit/invoice_settings_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/data/model/document.dart';
 import 'package:nannyplus/src/constants.dart';
@@ -17,13 +17,15 @@ import 'package:nannyplus/src/ui/view.dart';
 import 'package:nannyplus/utils/i18n_utils.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 
-class NewChildForm extends StatelessWidget {
-  const NewChildForm({
+class ChildForm extends StatelessWidget {
+  const ChildForm({
     Key? key,
     this.child,
+    this.childToClone,
   }) : super(key: key);
 
   final Child? child;
+  final Child? childToClone;
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +36,20 @@ class NewChildForm extends StatelessWidget {
       key: formKey,
       initialValue: {
         'firstName': child?.firstName,
-        'lastName': child?.lastName,
+        'lastName': child?.lastName ?? childToClone?.lastName,
         'birthdate': child?.birthdate != null
             ? DateFormat('yyyy-MM-dd').parse(child!.birthdate!)
             : null,
-        'phoneNumber': child?.phoneNumber,
-        'parentsName': child?.parentsName,
-        'address': child?.address,
+        'phoneNumber': child?.phoneNumber ?? childToClone?.phoneNumber,
+        'parentsName': child?.parentsName ?? childToClone?.parentsName,
+        'address': child?.address ?? childToClone?.address,
         'allergies': child?.allergies,
-        'labelForPhoneNumber2': child?.labelForPhoneNumber2,
-        'phoneNumber2': child?.phoneNumber2,
-        'labelForPhoneNumber3': child?.labelForPhoneNumber3,
-        'phoneNumber3': child?.phoneNumber3,
+        'labelForPhoneNumber2':
+            child?.labelForPhoneNumber2 ?? childToClone?.labelForPhoneNumber2,
+        'phoneNumber2': child?.phoneNumber2 ?? childToClone?.phoneNumber2,
+        'labelForPhoneNumber3':
+            child?.labelForPhoneNumber3 ?? childToClone?.labelForPhoneNumber3,
+        'phoneNumber3': child?.phoneNumber3 ?? childToClone?.phoneNumber3,
         'freeText': child?.freeText,
       },
       child: UIView(
@@ -97,7 +101,7 @@ class NewChildForm extends StatelessWidget {
                       autocorrect: false,
                       textCapitalization: TextCapitalization.words,
                       onChanged: (value) {
-                        context.read<SettingsCubit>().setLine1(value);
+                        context.read<InvoiceSettingsCubit>().setLine1(value);
                       },
                     ),
                   ),
@@ -213,9 +217,9 @@ class NewChildForm extends StatelessWidget {
                 keyboardType: TextInputType.text,
                 validator: (value) {
                   final labelIsEmpty = value?.isEmpty ?? true;
-                  final valueIsEmpty = formKey.currentState!
-                          .fields['phoneNumber2']!.value?.isEmpty ??
-                      true;
+                  final phoneNumber2 = formKey
+                      .currentState!.fields['phoneNumber2']?.value as String?;
+                  final valueIsEmpty = phoneNumber2?.isEmpty ?? true;
 
                   return labelIsEmpty && !valueIsEmpty
                       ? context.t(
@@ -237,9 +241,9 @@ class NewChildForm extends StatelessWidget {
                 autocorrect: false,
                 keyboardType: TextInputType.phone,
                 validator: (value) {
-                  final labelEmpty = formKey.currentState!
-                          .fields['labelForPhoneNumber2']!.value?.isEmpty ??
-                      true;
+                  final labelForPhoneNumber2 = formKey.currentState!
+                      .fields['labelForPhoneNumber2']?.value as String?;
+                  final labelEmpty = labelForPhoneNumber2?.isEmpty ?? true;
                   final valueEmpty = value?.isEmpty ?? true;
 
                   return (!labelEmpty && valueEmpty)
@@ -267,9 +271,9 @@ class NewChildForm extends StatelessWidget {
                 keyboardType: TextInputType.text,
                 validator: (value) {
                   final labelIsEmpty = value?.isEmpty ?? true;
-                  final valueIsEmpty = formKey.currentState!
-                          .fields['phoneNumber3']!.value?.isEmpty ??
-                      true;
+                  final phoneNumber3 = formKey
+                      .currentState!.fields['phoneNumber3']?.value as String?;
+                  final valueIsEmpty = phoneNumber3?.isEmpty ?? true;
 
                   return labelIsEmpty && !valueIsEmpty
                       ? context.t(
@@ -291,9 +295,9 @@ class NewChildForm extends StatelessWidget {
                 autocorrect: false,
                 keyboardType: TextInputType.phone,
                 validator: (value) {
-                  final labelEmpty = formKey.currentState!
-                          .fields['labelForPhoneNumber3']!.value?.isEmpty ??
-                      true;
+                  final labelForPhoneNumber3 = formKey.currentState!
+                      .fields['labelForPhoneNumber3']?.value as String?;
+                  final labelEmpty = labelForPhoneNumber3?.isEmpty ?? true;
                   final valueEmpty = value?.isEmpty ?? true;
 
                   return (!labelEmpty && valueEmpty)
@@ -331,7 +335,9 @@ class NewChildForm extends StatelessWidget {
                 onPressed: () async {
                   final file = await openFileChooser();
                   if (file != null) {
-                    context.read<FileListCubit>().addFile(child?.id ?? 0, file);
+                    await context
+                        .read<FileListCubit>()
+                        .addFile(child?.id ?? 0, file);
                   }
                 },
                 child: Text(context.t('Add a document')),
@@ -344,9 +350,9 @@ class NewChildForm extends StatelessWidget {
   }
 
   Future<File?> openFileChooser() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    final result = await FilePicker.platform.pickFiles();
     if (result != null) {
-      File file = File(result.files.single.path!);
+      final file = File(result.files.single.path!);
 
       return file;
     } else {
@@ -378,7 +384,7 @@ class _DocumentList extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          context.t("Documents"),
+          context.t('Documents'),
           style: const TextStyle(
             fontSize: 0.75 * 16,
           ),
@@ -390,11 +396,11 @@ class _DocumentList extends StatelessWidget {
                   Expanded(
                     child: GestureDetector(
                       onTap: () async {
-                        OpenFile.open(file.path);
+                        await OpenFile.open(file.path);
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                          vertical: 8.0,
+                          vertical: 8,
                         ),
                         child: Text(
                           file.label,
@@ -406,9 +412,10 @@ class _DocumentList extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () async {
-                      var newLabel = await _showEditDialog(context, file.label);
+                      final newLabel =
+                          await _showEditDialog(context, file.label);
                       if (newLabel != null) {
-                        context
+                        await context
                             .read<FileListCubit>()
                             .editFile(_child?.id ?? 0, file, newLabel);
                       }
@@ -421,7 +428,7 @@ class _DocumentList extends StatelessWidget {
                     onPressed: () async {
                       final shouldDelete = await _showDeleteDialog(context);
                       if (shouldDelete ?? false) {
-                        context
+                        await context
                             .read<FileListCubit>()
                             .removeFile(_child?.id ?? 0, file);
                       }
@@ -494,7 +501,6 @@ class _DocumentList extends StatelessWidget {
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                       ),
                       autocorrect: false,
-                      textCapitalization: TextCapitalization.none,
                       keyboardType: TextInputType.text,
                       validator: (value) {
                         final labelIsEmpty = value?.isEmpty ?? true;

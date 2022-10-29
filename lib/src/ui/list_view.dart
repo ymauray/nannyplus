@@ -1,16 +1,6 @@
 import 'package:flutter/material.dart';
 
 class UIListView extends StatelessWidget {
-  const UIListView.fromChildren({
-    Key? key,
-    required this.children,
-    this.onFloatingActionPressed,
-    this.horizontalPadding = 0,
-  })  : itemBuilder = null,
-        itemCount = 0,
-        extraWidget = null,
-        super(key: key);
-
   const UIListView({
     Key? key,
     required this.itemBuilder,
@@ -19,6 +9,15 @@ class UIListView extends StatelessWidget {
     this.horizontalPadding = 0,
     this.extraWidget,
   })  : children = null,
+        super(key: key);
+  const UIListView.fromChildren({
+    Key? key,
+    required this.children,
+    this.onFloatingActionPressed,
+    this.horizontalPadding = 0,
+  })  : itemBuilder = null,
+        itemCount = 0,
+        extraWidget = null,
         super(key: key);
 
   final IndexedWidgetBuilder? itemBuilder;
@@ -34,7 +33,6 @@ class UIListView extends StatelessWidget {
       children: [
         ListView.builder(
           padding: EdgeInsets.only(
-            top: 0,
             left: horizontalPadding!,
             right: horizontalPadding!,
             bottom: onFloatingActionPressed != null ? 80 : 0,
@@ -52,7 +50,7 @@ class UIListView extends StatelessWidget {
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16),
               child: FloatingActionButton(
                 onPressed: onFloatingActionPressed,
                 child: const Icon(Icons.add),

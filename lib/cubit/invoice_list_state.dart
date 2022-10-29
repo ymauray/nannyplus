@@ -1,3 +1,4 @@
+// ignore_for_file: argument_type_not_assignable
 part of 'invoice_list_cubit.dart';
 
 // ---------------------------------------------------------------------------
@@ -19,6 +20,14 @@ class InvoiceListLoaded extends InvoiceListState {
   const InvoiceListLoaded(
     this.invoices,
   );
+  factory InvoiceListLoaded.fromJson(String source) =>
+      InvoiceListLoaded.fromMap(json.decode(source));
+
+  factory InvoiceListLoaded.fromMap(Map<String, dynamic> map) {
+    return InvoiceListLoaded(
+      List<Invoice>.from(map['invoices']?.map((Json x) => Invoice.fromMap(x))),
+    );
+  }
 
   final List<Invoice> invoices;
 
@@ -46,16 +55,7 @@ class InvoiceListLoaded extends InvoiceListState {
     };
   }
 
-  factory InvoiceListLoaded.fromMap(Map<String, dynamic> map) {
-    return InvoiceListLoaded(
-      List<Invoice>.from(map['invoices']?.map((x) => Invoice.fromMap(x))),
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory InvoiceListLoaded.fromJson(String source) =>
-      InvoiceListLoaded.fromMap(json.decode(source));
 
   @override
   String toString() => 'InvoiceListLoaded(invoices: $invoices)';
@@ -64,9 +64,8 @@ class InvoiceListLoaded extends InvoiceListState {
 // ---------------------------------------------------------------------------
 
 class InvoiceListError extends InvoiceListState {
-  final String message;
-
   const InvoiceListError(this.message);
+  final String message;
 
   @override
   bool operator ==(Object other) {

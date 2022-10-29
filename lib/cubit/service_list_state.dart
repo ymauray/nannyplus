@@ -10,12 +10,12 @@ class ServiceListInitial extends ServiceListState {
 }
 
 class ServiceListLoaded extends ServiceListState {
+  const ServiceListLoaded(this.child, this.services);
   final List<Service> services;
   final Child child;
-  const ServiceListLoaded(this.child, this.services);
 }
 
 class ServiceListError extends ServiceListState {
-  final String message;
   const ServiceListError(this.message);
+  final String message;
 }

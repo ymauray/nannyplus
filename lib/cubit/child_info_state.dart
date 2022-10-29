@@ -30,8 +30,8 @@ class ChildInfoLoaded extends ChildInfoState {
 }
 
 class ChildInfoError extends ChildInfoState {
-  final String message;
   const ChildInfoError(this.message);
+  final String message;
 
   @override
   bool operator ==(Object other) {

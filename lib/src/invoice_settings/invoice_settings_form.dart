@@ -1,30 +1,26 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nannyplus/cubit/invoice_settings_cubit.dart';
+import 'package:nannyplus/src/constants.dart';
+import 'package:nannyplus/src/invoice_settings/logo_picker.dart';
+import 'package:nannyplus/src/ui/list_view.dart';
+import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
+import 'package:nannyplus/src/ui/view.dart';
+import 'package:nannyplus/utils/font_utils.dart';
+import 'package:nannyplus/utils/logo_picker_controller.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../cubit/settings_cubit.dart';
-import '../../utils/font_utils.dart';
-import '../../utils/logo_picker_controller.dart';
-import '../constants.dart';
-import '../ui/list_view.dart';
-import '../ui/sliver_curved_persistent_header.dart';
-import '../ui/view.dart';
-import 'logo_picker.dart';
-
-class SettingsForm extends StatelessWidget {
-  final SettingsLoaded _state;
-  final TextEditingController line1Controller = TextEditingController();
-  final TextEditingController line2Controller = TextEditingController();
-
-  SettingsForm(this._state, {Key? key}) : super(key: key) {
+class InvoiceSettingsForm extends StatelessWidget {
+  InvoiceSettingsForm(this._state, {Key? key}) : super(key: key) {
     line1Controller.text = _state.line1;
     line2Controller.text = _state.line2;
   }
+  final InvoiceSettingsLoaded _state;
+  final TextEditingController line1Controller = TextEditingController();
+  final TextEditingController line2Controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,26 +44,26 @@ class SettingsForm extends StatelessWidget {
         'address': _state.address,
       },
       child: UIView(
-        title: Text(context.t('Settings')),
+        title: Text(context.t('Invoice settings')),
         actions: [
           IconButton(
             icon: const Padding(
-              padding: EdgeInsets.only(right: 8.0),
+              padding: EdgeInsets.only(right: 8),
               child: Icon(Icons.save),
             ),
             onPressed: () async {
               if (logoPickerController.bytes != null) {
-                Directory appDocumentsDirectory =
+                final appDocumentsDirectory =
                     await getApplicationDocumentsDirectory();
-                var appDocumentsPath = appDocumentsDirectory.path;
-                var filePath = '$appDocumentsPath/logo';
-                XFile file = XFile.fromData(logoPickerController.bytes!);
+                final appDocumentsPath = appDocumentsDirectory.path;
+                final filePath = '$appDocumentsPath/logo';
+                final file = XFile.fromData(logoPickerController.bytes!);
                 await file.saveTo(filePath);
               }
               formKey.currentState!.save();
               if (formKey.currentState!.validate()) {
-                context
-                    .read<SettingsCubit>()
+                await context
+                    .read<InvoiceSettingsCubit>()
                     .saveSettings(formKey.currentState!.value);
                 Navigator.of(context).pop();
               }
@@ -79,67 +75,68 @@ class SettingsForm extends StatelessWidget {
           horizontalPadding: kdDefaultPadding,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
+              padding: const EdgeInsets.only(bottom: 16),
               child: Text(
-                context.t("Identity"),
+                context.t('Identity'),
                 style: const TextStyle(
-                  inherit: true,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
+              padding: const EdgeInsets.only(bottom: 16),
               child: LogoPicker(
                 controller: logoPickerController,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: Row(children: [
-                Expanded(
-                  child: FormBuilderTextField(
-                    name: 'line1',
-                    decoration: InputDecoration(
-                      labelText: context.t('Line 1'),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: FormBuilderTextField(
+                      name: 'line1',
+                      decoration: InputDecoration(
+                        labelText: context.t('Line 1'),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                      ),
+                      textCapitalization: TextCapitalization.words,
                     ),
-                    textCapitalization: TextCapitalization.words,
                   ),
-                ),
-              ]),
+                ],
+              ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: Row(children: [
-                Expanded(
-                  child: FormBuilderDropdown<FontItem>(
-                    name: 'line1Font',
-                    decoration: InputDecoration(
-                      labelText: context.t('Font for line 1'),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                    ),
-                    isExpanded: true,
-                    items: FontUtils.fontItems
-                        .map(
-                          (item) => DropdownMenuItem(
-                            value: item,
-                            child: Text(
-                              item.family,
-                              style: TextStyle(
-                                inherit: true,
-                                fontFamily: item.family,
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: FormBuilderDropdown<FontItem>(
+                      name: 'line1Font',
+                      decoration: InputDecoration(
+                        labelText: context.t('Font for line 1'),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                      ),
+                      items: FontUtils.fontItems
+                          .map(
+                            (item) => DropdownMenuItem(
+                              value: item,
+                              child: Text(
+                                item.family,
+                                style: TextStyle(
+                                  fontFamily: item.family,
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                        .toList(),
+                          )
+                          .toList(),
+                    ),
                   ),
-                ),
-              ]),
+                ],
+              ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
+              padding: const EdgeInsets.only(bottom: 16),
               child: Row(
                 children: [
                   Expanded(
@@ -156,7 +153,7 @@ class SettingsForm extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
+              padding: const EdgeInsets.only(bottom: 16),
               child: Row(
                 children: [
                   Expanded(
@@ -166,7 +163,6 @@ class SettingsForm extends StatelessWidget {
                         labelText: context.t('Font for line 2'),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                       ),
-                      isExpanded: true,
                       items: FontUtils.fontItems
                           .map(
                             (item) => DropdownMenuItem(
@@ -174,7 +170,6 @@ class SettingsForm extends StatelessWidget {
                               child: Text(
                                 item.family,
                                 style: TextStyle(
-                                  inherit: true,
                                   fontFamily: item.family,
                                 ),
                               ),
@@ -187,7 +182,7 @@ class SettingsForm extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
+              padding: const EdgeInsets.only(bottom: 16),
               child: Row(
                 children: [
                   Expanded(
@@ -204,7 +199,7 @@ class SettingsForm extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
+              padding: const EdgeInsets.only(bottom: 16),
               child: Row(
                 children: [
                   Expanded(
@@ -223,7 +218,7 @@ class SettingsForm extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
+              padding: const EdgeInsets.only(bottom: 16),
               child: Row(
                 children: [
                   Expanded(
@@ -239,7 +234,7 @@ class SettingsForm extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
+              padding: const EdgeInsets.only(bottom: 16),
               child: Row(
                 children: [
                   Expanded(

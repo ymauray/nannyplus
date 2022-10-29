@@ -1,16 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, argument_type_not_assignable
 import 'dart:convert';
 
-class Invoice {
-  final int? id;
-  final int number;
-  final int childId;
-  final String date;
-  final double total;
-  final String parentsName;
-  final String address;
-  final int paid;
+import 'package:flutter/widgets.dart';
 
-  Invoice({
+@immutable
+class Invoice {
+  const Invoice({
     this.id,
     required this.number,
     required this.childId,
@@ -20,6 +15,29 @@ class Invoice {
     required this.address,
     required this.paid,
   });
+  factory Invoice.fromJson(String source) =>
+      Invoice.fromMap(json.decode(source));
+
+  factory Invoice.fromMap(Map<String, dynamic> map) {
+    return Invoice(
+      id: map['id']?.toInt(),
+      number: map['number']?.toInt() ?? 0,
+      childId: map['childId']?.toInt() ?? 0,
+      date: map['date'] ?? '',
+      total: map['total']?.toDouble() ?? 0.0,
+      parentsName: map['parentsName'] ?? '',
+      address: map['address'] ?? '',
+      paid: map['paid']?.toInt() ?? 0,
+    );
+  }
+  final int? id;
+  final int number;
+  final int childId;
+  final String date;
+  final double total;
+  final String parentsName;
+  final String address;
+  final int paid;
 
   Invoice copyWith({
     int? id,
@@ -56,23 +74,7 @@ class Invoice {
     };
   }
 
-  factory Invoice.fromMap(Map<String, dynamic> map) {
-    return Invoice(
-      id: map['id']?.toInt(),
-      number: map['number']?.toInt() ?? 0,
-      childId: map['childId']?.toInt() ?? 0,
-      date: map['date'] ?? '',
-      total: map['total']?.toDouble() ?? 0.0,
-      parentsName: map['parentsName'] ?? '',
-      address: map['address'] ?? '',
-      paid: map['paid']?.toInt() ?? 0,
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory Invoice.fromJson(String source) =>
-      Invoice.fromMap(json.decode(source));
 
   @override
   String toString() {

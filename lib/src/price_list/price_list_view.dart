@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-
-import '../../cubit/price_list_cubit.dart';
-import '../../data/model/price.dart';
-import '../../forms/price_form.dart';
-import '../../utils/snack_bar_util.dart';
-import '../../widgets/card_scroll_view.dart';
-import '../../widgets/card_tile.dart';
-import '../../widgets/floating_action_stack.dart';
-import '../../widgets/loading_indicator.dart';
-import '../ui/sliver_curved_persistent_header.dart';
-import '../ui/view.dart';
+import 'package:nannyplus/cubit/price_list_cubit.dart';
+import 'package:nannyplus/data/model/price.dart';
+import 'package:nannyplus/forms/price_form.dart';
+import 'package:nannyplus/src/common/loading_indicator.dart';
+import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
+import 'package:nannyplus/src/ui/view.dart';
+import 'package:nannyplus/utils/snack_bar_util.dart';
+import 'package:nannyplus/widgets/card_scroll_view.dart';
+import 'package:nannyplus/widgets/card_tile.dart';
+import 'package:nannyplus/widgets/floating_action_stack.dart';
 
 class PriceListView extends StatelessWidget {
   const PriceListView({Key? key}) : super(key: key);
@@ -50,7 +49,7 @@ class PriceListView extends StatelessWidget {
                         fullscreenDialog: true,
                       ),
                     );
-                    context.read<PriceListCubit>().getPriceList();
+                    await context.read<PriceListCubit>().getPriceList();
                   },
                 )
               : const LoadingIndicator(),
@@ -69,21 +68,22 @@ class _PriceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardTile(
       onTap: () async {
-        await Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => PriceForm(price: price),
-          fullscreenDialog: true,
-        ));
+        await Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (context) => PriceForm(price: price),
+            fullscreenDialog: true,
+          ),
+        );
       },
       title: Text(
         price.label,
         style: const TextStyle(
-          inherit: true,
           fontWeight: FontWeight.bold,
         ),
       ),
       subtitle: Text(
         context.t(
-          price.isFixedPrice ? "Fixed price of {0}" : "Hourly price of {0}",
+          price.isFixedPrice ? 'Fixed price of {0}' : 'Hourly price of {0}',
           args: [price.amount.toStringAsFixed(2)],
         ),
         style: Theme.of(context).textTheme.caption,
@@ -93,7 +93,7 @@ class _PriceCard extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.delete_forever_outlined, color: Colors.red),
             onPressed: () async {
-              var delete = await _showConfirmationDialog(context);
+              final delete = await _showConfirmationDialog(context);
               if (delete ?? false) {
                 await context.read<PriceListCubit>().delete(price.id!);
               }

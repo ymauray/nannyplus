@@ -1,3 +1,4 @@
+// ignore_for_file: argument_type_not_assignable
 part of 'price_list_cubit.dart';
 
 // ---------------------------------------------------------------------------
@@ -19,6 +20,14 @@ class PriceListLoaded extends PriceListState {
   const PriceListLoaded(
     this.priceList,
   );
+  factory PriceListLoaded.fromJson(String source) =>
+      PriceListLoaded.fromMap(json.decode(source));
+
+  factory PriceListLoaded.fromMap(Map<String, dynamic> map) {
+    return PriceListLoaded(
+      List<Price>.from(map['priceList']?.map((Json x) => Price.fromMap(x))),
+    );
+  }
 
   final List<Price> priceList;
   //final Set<int> inUse;
@@ -47,16 +56,7 @@ class PriceListLoaded extends PriceListState {
     };
   }
 
-  factory PriceListLoaded.fromMap(Map<String, dynamic> map) {
-    return PriceListLoaded(
-      List<Price>.from(map['priceList']?.map((x) => Price.fromMap(x))),
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory PriceListLoaded.fromJson(String source) =>
-      PriceListLoaded.fromMap(json.decode(source));
 
   @override
   String toString() => 'PriceListLoaded(priceList: $priceList)';
@@ -65,8 +65,8 @@ class PriceListLoaded extends PriceListState {
 // ---------------------------------------------------------------------------
 
 class PriceListError extends PriceListState {
-  final String message;
   const PriceListError(this.message);
+  final String message;
 
   @override
   bool operator ==(Object other) {

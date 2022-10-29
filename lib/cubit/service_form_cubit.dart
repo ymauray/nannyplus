@@ -2,36 +2,43 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-
-import '../../utils/list_extensions.dart';
-import '../data/model/price.dart';
-import '../data/model/service.dart';
-import '../data/prices_repository.dart';
-import '../data/services_repository.dart';
+import 'package:nannyplus/data/model/price.dart';
+import 'package:nannyplus/data/model/service.dart';
+import 'package:nannyplus/data/prices_repository.dart';
+import 'package:nannyplus/data/services_repository.dart';
+import 'package:nannyplus/utils/list_extensions.dart';
+import 'package:nannyplus/utils/types.dart';
 
 part 'service_form_state.dart';
 
 class ServiceFormCubit extends Cubit<ServiceFormState> {
-  final ServicesRepository _servicesRepository;
-  final PricesRepository _pricesRepository;
   ServiceFormCubit(this._servicesRepository, this._pricesRepository)
       : super(const ServiceFormInitial());
+  final ServicesRepository _servicesRepository;
+  final PricesRepository _pricesRepository;
 
   Future<void> loadRecentServices(int childId, DateTime? date, int tab) async {
     try {
       final prices = await _pricesRepository.getPriceList();
       final services = await _servicesRepository.getRecentServices(childId);
-      final groups = services.groupBy((service) => service.priceId);
-      var orderedServices = groups.map((group) => group.value.first).toList();
-      orderedServices.sort((a, b) =>
-          prices.firstWhere((price) => price.id == a.priceId).sortOrder -
-          prices.firstWhere((price) => price.id == b.priceId).sortOrder);
+      final groups = services.groupBy<num>((service) => service.priceId);
+      final orderedServices = groups.map((group) => group.value.first).toList()
+        ..removeWhere((service) => service.priceId < 0)
+        ..sort(
+          (a, b) =>
+              prices.firstWhere((price) => price.id == a.priceId).sortOrder -
+              prices.firstWhere((price) => price.id == b.priceId).sortOrder,
+        );
 
-      var selectedServices = await _servicesRepository
+      final selectedServices = await _servicesRepository
           .getServicesForChildAndDate(childId, date ?? DateTime.now());
-      selectedServices.sort((a, b) =>
-          prices.firstWhere((price) => price.id == a.priceId).sortOrder -
-          prices.firstWhere((price) => price.id == b.priceId).sortOrder);
+      selectedServices
+        ..removeWhere((service) => service.priceId < 0)
+        ..sort(
+          (a, b) =>
+              prices.firstWhere((price) => price.id == a.priceId).sortOrder -
+              prices.firstWhere((price) => price.id == b.priceId).sortOrder,
+        );
 
       emit(
         ServiceFormLoaded(
@@ -58,16 +65,18 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
   }
 
   Future<void> updateService(Service service) async {
-    var newService = await _servicesRepository.update(service);
-    var updatedServices = ((services) sync* {
+    final newService = await _servicesRepository.update(service);
+    final updatedServices = ((List<Service> services) sync* {
       for (service in services) {
         yield service.id == newService.id ? newService : service;
       }
     })((state as ServiceFormLoaded).selectedServices);
 
-    emit((state as ServiceFormLoaded).copyWith(
-      selectedServices: updatedServices.toList(),
-    ));
+    emit(
+      (state as ServiceFormLoaded).copyWith(
+        selectedServices: updatedServices.toList(),
+      ),
+    );
   }
 
   void deleteService(Service service) {

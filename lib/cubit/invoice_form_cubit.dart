@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
-
-import '../data/children_repository.dart';
-import '../data/invoices_repository.dart';
-import '../data/model/child.dart';
-import '../data/model/invoice.dart';
-import '../data/services_repository.dart';
+import 'package:nannyplus/data/children_repository.dart';
+import 'package:nannyplus/data/invoices_repository.dart';
+import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/data/model/invoice.dart';
+import 'package:nannyplus/data/services_repository.dart';
+import 'package:nannyplus/utils/types.dart';
 
 part 'invoice_form_state.dart';
 
@@ -26,31 +26,35 @@ class InvoiceFormCubit extends Cubit<InvoiceFormState> {
   Future<void> init(int childId) async {
     emit(const InvoiceFormInitial());
 
-    var mainChild = await childrenRepository.read(childId);
-    var children = await childrenRepository.getChildList(false);
+    final mainChild = await childrenRepository.read(childId);
+    final children = await childrenRepository.getChildList(false);
 
-    emit(InvoiceFormLoaded(
-      child: mainChild,
-      children: children
-          .where((child) => child != mainChild)
-          .map((child) => InvoiceFormChild(child, false))
-          .toList(),
-    ));
+    emit(
+      InvoiceFormLoaded(
+        child: mainChild,
+        children: children
+            .where((child) => child != mainChild)
+            .map((child) => InvoiceFormChild(child, false))
+            .toList(),
+      ),
+    );
   }
 
   Future<void> toggle(InvoiceFormChild formChild) async {
-    var children = ((List<InvoiceFormChild> children) sync* {
-      for (var child in children) {
+    final children = ((List<InvoiceFormChild> children) sync* {
+      for (final child in children) {
         yield child == formChild
             ? child.copyWith(checked: !child.checked)
             : child;
       }
     })((state as InvoiceFormLoaded).children);
 
-    emit(InvoiceFormLoaded(
-      child: (state as InvoiceFormLoaded).child,
-      children: children.toList(),
-    ));
+    emit(
+      InvoiceFormLoaded(
+        child: (state as InvoiceFormLoaded).child,
+        children: children.toList(),
+      ),
+    );
   }
 
   Future<bool> createInvoice() async {
@@ -62,30 +66,33 @@ class InvoiceFormCubit extends Cubit<InvoiceFormState> {
             .map((formChild) => formChild.child)
             .toList();
 
-    var services = await Future.wait(
-      children.map((child) => servicesRepository.getServices(child)),
+    final services = await Future.wait(
+      children.map(servicesRepository.getServices),
     );
 
     if (services.expand((list) => list).isEmpty) {
       return false;
     } else {
-      var invoiceNumber = await invoicesRepository.getNextNumber();
+      final invoiceNumber = await invoicesRepository.getNextNumber();
 
-      var invoice = await invoicesRepository.create(Invoice(
-        number: invoiceNumber,
-        childId: child.id!,
-        date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
-        total: 0.0,
-        parentsName: child.parentsName!,
-        address: child.address!,
-        paid: 0,
-      ));
+      final invoice = await invoicesRepository.create(
+        Invoice(
+          number: invoiceNumber,
+          childId: child.id!,
+          date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+          total: 0,
+          parentsName: child.parentsName!,
+          address: child.address!,
+          paid: 0,
+        ),
+      );
 
       var total = 0.0;
 
-      for (var child in children) {
-        var services = await servicesRepository.getServices(child);
-        for (var service in services) {
+      for (final child in children) {
+        final dummyService = await servicesRepository.addDummyService(child);
+        final services = await servicesRepository.getServices(child);
+        for (final service in [dummyService, ...services]) {
           await servicesRepository.update(
             service.copyWith(
               invoiced: 1,

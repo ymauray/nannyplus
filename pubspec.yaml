@@ -15,10 +15,10 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.7.0+9999
+version: 1.8.0+9999
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.13.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -27,62 +27,52 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  bloc: ^8.0.3
+  collection: ^1.16.0
+  cupertino_icons: ^1.0.2
+  file_picker: ^5.0.1
   flutter:
     sdk: flutter
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  provider: ^6.0.1
-#  yaru: ^0.3.2
-#  yaru_icons: ^0.2.1
-  intl: ^0.17.0
-  font_awesome_flutter: ^10.1.0
-  sqflite: ^2.0.0+4
-  logger: ^1.1.0
-  gettext_i18n: ^1.0.5
-  shared_preferences: ^2.0.9
-  url_launcher: ^6.0.17
-  http: ^0.13.4
-  bloc: ^8.0.3
   flutter_bloc: ^8.0.1
-  printing: ^5.6.6
-  get: ^4.6.1
-  image_picker: ^0.8.4+4
-  path_provider: ^2.0.8
-  intersperse: ^2.0.0
   flutter_form_builder: ^7.1.1
-  grouped_list: ^5.0.1
-  share_plus: ^4.0.3
-  file_picker: ^5.0.1
-  package_info_plus: ^1.4.0
-  google_fonts: ^3.0.1
   flutter_local_notifications: ^9.4.1
-  flutter_native_timezone: ^2.0.0
   flutter_localizations:
     sdk: flutter
-  timezone: ^0.8.0
-  pdf: ^3.8.1
-  path: ^1.8.1
-  very_good_analysis: ^3.1.0
+  flutter_native_timezone: ^2.0.0
+  font_awesome_flutter: ^10.1.0
+  get: ^4.6.1
+  gettext_i18n: ^1.0.5
+  google_fonts: ^3.0.1
+  grouped_list: ^5.0.1
+  http: ^0.13.4
+  image_picker: ^0.8.4+4
+  intersperse: ^2.0.0
+  intl: ^0.17.0
+  logger: ^1.1.0
   open_file_plus: ^3.3.0
+  package_info_plus: ^1.4.0
+  path: ^1.8.1
+  path_provider: ^2.0.8
+  pdf: ^3.8.1
+  printing: ^5.6.6
+  provider: ^6.0.1
+  share_plus: ^4.0.3
+  shared_preferences: ^2.0.9
+  sqflite: ^2.0.0+4
+  timezone: ^0.8.0
+  url_launcher: ^6.0.17
+  very_good_analysis: ^3.1.0
+
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   dart_code_metrics: ^4.13.0
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
+  flutter_launcher_icons: ^0.10.0
   flutter_lints: ^2.0.1
   flutter_native_splash: ^2.2.0+1
+  flutter_test:
+    sdk: flutter
   integration_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.10.0
 
 flutter_native_splash:
   color: "#ffffff"

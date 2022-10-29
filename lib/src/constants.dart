@@ -20,13 +20,13 @@ const Color kcDisabledColor = Colors.grey;
 const Color kcCardColord = Colors.white;
 const Color kcTextColor = kcAlmostBlack;
 
-const double kdPendingTotalHeight = 46.0;
+const double kdPendingTotalHeight = 46;
 const double kdBigRadius = kdDefaultRadius * 2;
-const double kdDefaultRadius = 12.0;
+const double kdDefaultRadius = 12;
 const double kdSmallRadius = kdDefaultRadius * .75;
 
 // --- PADDING ---
 
-const double kdDefaultPadding = 16.0;
-const double kdMediumPadding = 12.0;
-const double kdSmallPadding = 8.0;
+const double kdDefaultPadding = 16;
+const double kdMediumPadding = 12;
+const double kdSmallPadding = 8;

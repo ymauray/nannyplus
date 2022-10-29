@@ -40,7 +40,7 @@ class _Delegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    return Container(
+    return DecoratedBox(
       decoration:
           BoxDecoration(color: Theme.of(context).colorScheme.background),
       child: Padding(

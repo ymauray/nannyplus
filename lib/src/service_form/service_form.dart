@@ -2,24 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
+import 'package:nannyplus/cubit/service_form_cubit.dart';
+import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/data/model/price.dart';
+import 'package:nannyplus/data/model/service.dart';
+import 'package:nannyplus/src/common/loading_indicator_list_view.dart';
+import 'package:nannyplus/src/constants.dart';
+import 'package:nannyplus/src/ui/list_view.dart';
+import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
+import 'package:nannyplus/src/ui/sliver_tab_bar_peristant_header.dart';
+import 'package:nannyplus/src/ui/ui_card.dart';
+import 'package:nannyplus/src/ui/view.dart';
+import 'package:nannyplus/utils/i18n_utils.dart';
+import 'package:nannyplus/utils/snack_bar_util.dart';
+import 'package:nannyplus/widgets/time_input_dialog.dart';
 
-import '../../cubit/service_form_cubit.dart';
-import '../../data/model/child.dart';
-import '../../data/model/price.dart';
-import '../../data/model/service.dart';
-import '../../src/common/loading_indicator_list_view.dart';
-import '../../src/constants.dart';
-import '../../src/ui/list_view.dart';
-import '../../src/ui/sliver_curved_persistent_header.dart';
-import '../../src/ui/sliver_tab_bar_peristant_header.dart';
-import '../../src/ui/ui_card.dart';
-import '../../utils/i18n_utils.dart';
-import '../../utils/snack_bar_util.dart';
-import '../../widgets/time_input_dialog.dart';
-import '../ui/view.dart';
-
-class NewServiceForm extends StatelessWidget {
-  const NewServiceForm({
+class ServiceForm extends StatelessWidget {
+  const ServiceForm({
     Key? key,
     required this.child,
     required this.tab,
@@ -80,7 +79,7 @@ class NewServiceForm extends StatelessWidget {
             builder: (context, state) {
               return IconButton(
                 onPressed: () async {
-                  var selectedDate = await showDatePicker(
+                  final selectedDate = await showDatePicker(
                     context: context,
                     initialDate: state is ServiceFormLoaded
                         ? state.date!
@@ -89,7 +88,7 @@ class NewServiceForm extends StatelessWidget {
                     lastDate: DateTime(DateTime.now().year + 1),
                   );
                   if (selectedDate != null) {
-                    context.read<ServiceFormCubit>().loadRecentServices(
+                    await context.read<ServiceFormCubit>().loadRecentServices(
                           child.id!,
                           selectedDate,
                           (state as ServiceFormLoaded).selectedTab,
@@ -174,7 +173,7 @@ class _List extends StatelessWidget {
                         ),
                         onPressed: () async {
                           //_formKey.currentState!.save();
-                          var delete = await _showConfirmationDialog(
+                          final delete = await _showConfirmationDialog(
                             context,
                           );
                           if (delete ?? false) {
@@ -182,9 +181,11 @@ class _List extends StatelessWidget {
                                 .read<ServiceFormCubit>()
                                 .deleteService(service);
                             ScaffoldMessenger.of(context).success(
-                              context.t("Removed successfully"),
+                              context.t('Removed successfully'),
                             );
-                            context.read<ServiceFormCubit>().loadRecentServices(
+                            await context
+                                .read<ServiceFormCubit>()
+                                .loadRecentServices(
                                   child.id!,
                                   state.date,
                                   1,
@@ -208,9 +209,9 @@ class _List extends StatelessWidget {
     DateTime date,
   ) async {
     ScaffoldMessenger.of(context).success(
-      context.t("Added successfully"),
+      context.t('Added successfully'),
     );
-    var service = Service(
+    final service = Service(
       childId: child.id!,
       date: DateFormat('yyyy-MM-dd').format(date),
       priceId: price.id!,
@@ -220,7 +221,6 @@ class _List extends StatelessWidget {
       hours: 0,
       minutes: 0,
       total: price.amount,
-      invoiced: 0,
     );
     await context.read<ServiceFormCubit>().addService(service, child.id!, date);
   }
@@ -231,7 +231,7 @@ class _List extends StatelessWidget {
     //GlobalKey<FormBuilderState> formKey,
     DateTime date,
   ) async {
-    var time = await showDialog<TimeInputData>(
+    final time = await showDialog<TimeInputData>(
       context: context,
       builder: (context) {
         return const TimeInputDialog();
@@ -240,13 +240,13 @@ class _List extends StatelessWidget {
     if (time != null) {
       if (time.hours == 0 && time.minutes == 0) {
         ScaffoldMessenger.of(context).failure(
-          context.t("Input canceled"),
+          context.t('Input canceled'),
         );
       } else {
         ScaffoldMessenger.of(context).success(
-          context.t("Added successfully"),
+          context.t('Added successfully'),
         );
-        var service = Service(
+        final service = Service(
           childId: child.id!,
           date: DateFormat('yyyy-MM-dd').format(date),
           priceId: price.id!,
@@ -256,7 +256,6 @@ class _List extends StatelessWidget {
           hours: time.hours,
           minutes: time.minutes,
           total: price.amount * (time.hours + time.minutes / 60),
-          invoiced: 0,
         );
         await context
             .read<ServiceFormCubit>()
@@ -266,7 +265,7 @@ class _List extends StatelessWidget {
   }
 
   Future<void> editService(BuildContext context, Service service) async {
-    var time = await showDialog<TimeInputData>(
+    final time = await showDialog<TimeInputData>(
       context: context,
       builder: (context) {
         return TimeInputDialog(
@@ -278,13 +277,13 @@ class _List extends StatelessWidget {
     if (time != null) {
       if (time.hours == 0 && time.minutes == 0) {
         ScaffoldMessenger.of(context).failure(
-          context.t("Input canceled"),
+          context.t('Input canceled'),
         );
       } else {
         ScaffoldMessenger.of(context).success(
-          context.t("Edited successfully"),
+          context.t('Edited successfully'),
         );
-        var newService = service.copyWith(
+        final newService = service.copyWith(
           hours: time.hours,
           minutes: time.minutes,
           total: service.priceAmount! * (time.hours + time.minutes / 60),
@@ -324,15 +323,15 @@ class _List extends StatelessWidget {
 }
 
 class _PriceTile extends StatelessWidget {
-  final Price price;
-  final int childId;
-  final VoidCallback? onPressed;
   const _PriceTile({
     required this.price,
     required this.childId,
     this.onPressed,
     Key? key,
   }) : super(key: key);
+  final Price price;
+  final int childId;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -353,7 +352,6 @@ class _PriceTile extends StatelessWidget {
                     child: Text(
                       price.label,
                       style: const TextStyle(
-                        inherit: true,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -363,13 +361,13 @@ class _PriceTile extends StatelessWidget {
                     child: Text(
                       price.isFixedPrice
                           ? context.t(
-                              "Fixed price of {0}",
+                              'Fixed price of {0}',
                               args: [
                                 price.amount.toStringAsFixed(2),
                               ],
                             )
                           : context.t(
-                              "Hourly price of {0}",
+                              'Hourly price of {0}',
                               args: [
                                 price.amount.toStringAsFixed(2),
                               ],
@@ -419,7 +417,6 @@ class _ServiceTile extends StatelessWidget {
                     child: Text(
                       service.priceLabel!,
                       style: const TextStyle(
-                        inherit: true,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -429,7 +426,7 @@ class _ServiceTile extends StatelessWidget {
                     child: Text(
                       service.isFixedPrice == 1
                           ? context.t(
-                              "Fixed price of {0}",
+                              'Fixed price of {0}',
                               args: [
                                 service.priceAmount!.toStringAsFixed(2),
                               ],

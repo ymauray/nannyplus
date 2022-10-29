@@ -6,22 +6,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
+import 'package:nannyplus/cubit/child_info_cubit.dart';
+import 'package:nannyplus/cubit/invoice_view_cubit.dart';
+import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/data/model/invoice.dart';
+import 'package:nannyplus/data/model/service.dart';
+import 'package:nannyplus/src/common/loading_indicator.dart';
+import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
+import 'package:nannyplus/src/ui/view.dart';
+import 'package:nannyplus/utils/date_format_extension.dart';
 import 'package:nannyplus/utils/list_extensions.dart';
+import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-
-import '../../cubit/child_info_cubit.dart';
-import '../../cubit/invoice_view_cubit.dart';
-import '../../data/model/child.dart';
-import '../../data/model/invoice.dart';
-import '../../data/model/service.dart';
-import '../../utils/date_format_extension.dart';
-import '../../utils/prefs_util.dart';
-import '../../widgets/loading_indicator.dart';
-import '../ui/sliver_curved_persistent_header.dart';
-import '../ui/view.dart';
 
 class InvoiceView extends StatelessWidget {
   const InvoiceView(
@@ -78,28 +77,27 @@ class _DocumentBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder<pw.Document>(
       future: (() async {
-        var prefs = await PrefsUtil.getInstance();
-        pw.Font? line1Font = await _getLine1Font(prefs);
-        pw.Font? line2Font = await _getLine2Font(prefs);
+        final prefs = await PrefsUtil.getInstance();
+        final line1Font = await _getLine1Font(prefs);
+        final line2Font = await _getLine2Font(prefs);
 
-        var conditions = prefs.conditions;
-        var groupedServices = state.services.groupBy((service) => service.date);
+        final conditions = prefs.conditions;
+        final groupedServices =
+            state.services.groupBy((service) => service.date);
 
-        File logoFile = await _getLogoFile();
+        final logoFile = await _getLogoFile();
 
-        var doc = pw.Document();
-        var childrenMap = Map<int, Child>.fromIterable(
-          state.children,
-          key: (child) => child.id,
-        );
+        final doc = pw.Document();
+        final childrenMap = {
+          for (final child in state.children) child.id!: child
+        };
 
         var maxHeight = 15.0;
         var currentHeight = 0.0;
         var page = 1;
-        var pages = <List<Group<String, Service>>>[];
-        pages.add([]);
-        for (var group in groupedServices) {
-          var groupHeight = 1.5 + group.value.length;
+        final pages = <List<Group<String, Service>>>[[]];
+        for (final group in groupedServices) {
+          final groupHeight = 1.5 + group.value.length;
           if (groupHeight + currentHeight > maxHeight) {
             pages.add([]);
             page += 1;
@@ -122,7 +120,7 @@ class _DocumentBuilder extends StatelessWidget {
             pw.Page(
               pageFormat: PdfPageFormat.a4,
               margin: const pw.EdgeInsets.all(50),
-              build: ((context) {
+              build: (context) {
                 return pw.Stack(
                   children: [
                     // Page 1 has the header
@@ -153,7 +151,6 @@ class _DocumentBuilder extends StatelessWidget {
                             logoFile.readAsBytesSync(),
                           ),
                           height: 120,
-                          fit: pw.BoxFit.contain,
                         ),
                       ),
                     if (page == pages.length - 1)
@@ -185,10 +182,12 @@ class _DocumentBuilder extends StatelessWidget {
                           crossAxisAlignment: pw.CrossAxisAlignment.end,
                           children: [
                             if (prefs.address.isNotEmpty)
-                              blueText(gettext.t(
-                                'Address',
-                                null,
-                              )),
+                              blueText(
+                                gettext.t(
+                                  'Address',
+                                  null,
+                                ),
+                              ),
                             if (prefs.address.isNotEmpty)
                               pw.Text(
                                 prefs.address,
@@ -199,7 +198,7 @@ class _DocumentBuilder extends StatelessWidget {
                       ),
                   ],
                 );
-              }),
+              },
             ),
           );
         }
@@ -215,9 +214,12 @@ class _DocumentBuilder extends StatelessWidget {
           scrollViewDecoration: BoxDecoration(
             color: Theme.of(context).colorScheme.background,
           ),
-          pdfFileName: "${context.t('Invoice {0}', args: [
-                    invoice.number,
-                  ]).toLowerCase().replaceAll(' ', '_')}.pdf",
+          pdfFileName: "${context.t(
+                'Invoice {0}',
+                args: [
+                  invoice.number,
+                ],
+              ).toLowerCase().replaceAll(' ', '_')}.pdf",
           build: (pageFormat) => snapshot.data!.save(),
         );
       },
@@ -230,8 +232,8 @@ class _DocumentBuilder extends StatelessWidget {
     int page,
     Map<int, Child> childrenMap,
   ) sync* {
-    var previousChildId = -1;
-    for (var group in pages[page]) {
+    const previousChildId = -1;
+    for (final group in pages[page]) {
       yield pw.TableRow(
         decoration: const pw.BoxDecoration(
           border: pw.Border(
@@ -241,7 +243,7 @@ class _DocumentBuilder extends StatelessWidget {
         children: [
           pw.Padding(
             padding: const pw.EdgeInsets.symmetric(
-              vertical: 8.0,
+              vertical: 8,
             ),
             child: pw.Text(
               group.key.formatDate(),
@@ -251,39 +253,38 @@ class _DocumentBuilder extends StatelessWidget {
           ),
         ],
       );
-      for (var service in group.value) {
-        bool newChild = service.childId != previousChildId;
+      for (final service in group.value) {
+        final newChild = service.childId != previousChildId;
         yield pw.TableRow(
           children: [
             pw.Padding(
               padding: const pw.EdgeInsets.symmetric(
-                vertical: 4.0,
+                vertical: 4,
               ),
               child: pw.Text(
                 state.children.length == 1
-                    ? ""
+                    ? ''
                     : newChild
                         ? childrenMap[service.childId]!.firstName
-                        : "",
+                        : '',
                 style: pw.TextStyle(
-                  inherit: true,
                   fontStyle: pw.FontStyle.italic,
                 ),
               ),
             ),
             pw.Padding(
               padding: const pw.EdgeInsets.symmetric(
-                vertical: 4.0,
+                vertical: 4,
               ),
               child: pw.Text(
-                service.priceLabel!,
+                service.priceLabel ?? 'Dummy service',
                 textAlign: pw.TextAlign.left,
                 style: const pw.TextStyle(fontSize: 14),
               ),
             ),
             pw.Padding(
               padding: const pw.EdgeInsets.symmetric(
-                vertical: 4.0,
+                vertical: 4,
               ),
               child: pw.Text(
                 service.isFixedPrice == 1
@@ -295,7 +296,7 @@ class _DocumentBuilder extends StatelessWidget {
             ),
             pw.Padding(
               padding: const pw.EdgeInsets.symmetric(
-                vertical: 4.0,
+                vertical: 4,
               ),
               child: pw.Text(
                 service.total.toStringAsFixed(2),
@@ -319,7 +320,7 @@ class _DocumentBuilder extends StatelessWidget {
   }
 
   Future<pw.Font?> _getLine2Font(PrefsUtil prefs) async {
-    var line2FontAsset = prefs.line2FontAsset;
+    final line2FontAsset = prefs.line2FontAsset;
     final byteData2 = line2FontAsset.isNotEmpty
         ? await rootBundle.load(prefs.line2FontAsset)
         : null;
@@ -329,7 +330,7 @@ class _DocumentBuilder extends StatelessWidget {
   }
 
   Future<pw.Font?> _getLine1Font(PrefsUtil prefs) async {
-    var line1FontAsset = prefs.line1FontAsset;
+    final line1FontAsset = prefs.line1FontAsset;
     final byteData1 = line1FontAsset.isNotEmpty
         ? await rootBundle.load(line1FontAsset)
         : null;
@@ -375,7 +376,7 @@ class _DocumentBuilder extends StatelessWidget {
   }
 
   pw.Widget invoiceTitle(List<Child> children) {
-    String childName = children[0].displayName;
+    var childName = children[0].displayName;
     if (children.length > 1) {
       childName =
           "${children.take(children.length - 1).map((child) => child.firstName).join(", ")} ${gettext.t("and", null)} ${children.last.firstName}";
@@ -426,12 +427,11 @@ class _DocumentBuilder extends StatelessWidget {
 
   pw.Expanded invoiceMetaRight() {
     return pw.Expanded(
-      flex: 1,
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.end,
         children: [
           pw.Text(
-            gettext.t("Invoiced to", null),
+            gettext.t('Invoiced to', null),
             style: pw.TextStyle(
               fontWeight: pw.FontWeight.bold,
               color: PdfColors.blue,
@@ -445,7 +445,6 @@ class _DocumentBuilder extends StatelessWidget {
           pw.Text(
             invoice.address,
             style: const pw.TextStyle(
-              inherit: true,
               fontSize: 14,
             ),
             textAlign: pw.TextAlign.right,
@@ -457,12 +456,11 @@ class _DocumentBuilder extends StatelessWidget {
 
   pw.Expanded invoiceMetaLeft() {
     return pw.Expanded(
-      flex: 1,
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
           pw.Text(
-            gettext.t("Invoice number", null),
+            gettext.t('Invoice number', null),
             style: pw.TextStyle(
               fontWeight: pw.FontWeight.bold,
               color: PdfColors.blue,
@@ -475,7 +473,7 @@ class _DocumentBuilder extends StatelessWidget {
           ),
           pw.SizedBox(height: 8),
           pw.Text(
-            gettext.t("Date", null),
+            gettext.t('Date', null),
             style: pw.TextStyle(
               fontWeight: pw.FontWeight.bold,
               color: PdfColors.blue,
@@ -499,20 +497,18 @@ class _DocumentBuilder extends StatelessWidget {
             pw.TableRow(
               decoration: const pw.BoxDecoration(
                 border: pw.Border(
-                  bottom: pw.BorderSide(
-                    color: PdfColors.black,
-                  ),
+                  bottom: pw.BorderSide(),
                 ),
               ),
               children: [
-                blueText(gettext.t("Date", null)),
-                blueText(gettext.t("Service", null)),
+                blueText(gettext.t('Date', null)),
+                blueText(gettext.t('Service', null)),
                 blueText(
-                  gettext.t("Hours", null),
+                  gettext.t('Hours', null),
                   textAlign: pw.TextAlign.center,
                 ),
                 blueText(
-                  gettext.t("Price", null),
+                  gettext.t('Price', null),
                   textAlign: pw.TextAlign.right,
                 ),
               ],

@@ -21,8 +21,8 @@ class I18nUtils {
   //}
 
   static String? formatCurrency(double value) {
-    var locale = WidgetsBinding.instance.window.locale;
-    var format = NumberFormat.simpleCurrency(locale: locale.toString());
+    final locale = WidgetsBinding.instance.window.locale;
+    final format = NumberFormat.simpleCurrency(locale: locale.toString());
 
     return format.format(value);
   }

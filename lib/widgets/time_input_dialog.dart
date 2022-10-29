@@ -1,11 +1,12 @@
+// ignore_for_file: argument_type_not_assignable
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 
 class TimeInputData {
+  const TimeInputData({required this.hours, required this.minutes});
   final int hours;
   final int minutes;
-  const TimeInputData({required this.hours, required this.minutes});
 }
 
 class TimeInputDialog extends StatelessWidget {
@@ -26,13 +27,11 @@ class TimeInputDialog extends StatelessWidget {
       elevation: 0,
       backgroundColor: Colors.transparent,
       child: Container(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8),
         decoration: const BoxDecoration(
-          shape: BoxShape.rectangle,
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black,
               offset: Offset(0, 10),
               blurRadius: 10,
             ),
@@ -57,11 +56,13 @@ class TimeInputDialog extends StatelessWidget {
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                       ),
                       items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-                          .map((e) => DropdownMenuItem(
-                                value: e,
-                                alignment: Alignment.center,
-                                child: Text(e.toString()),
-                              ))
+                          .map(
+                            (e) => DropdownMenuItem(
+                              value: e,
+                              alignment: Alignment.center,
+                              child: Text(e.toString()),
+                            ),
+                          )
                           .toList(),
                     ),
                   ),
@@ -106,7 +107,7 @@ class TimeInputDialog extends StatelessWidget {
                   }
                 },
                 child: Text(
-                  context.t("Save"),
+                  context.t('Save'),
                 ),
               ),
             ],

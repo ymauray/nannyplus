@@ -1,3 +1,4 @@
+// ignore_for_file: argument_type_not_assignable
 part of 'service_form_cubit.dart';
 
 @immutable
@@ -10,12 +11,6 @@ class ServiceFormInitial extends ServiceFormState {
 }
 
 class ServiceFormLoaded extends ServiceFormState {
-  final int selectedTab;
-  final DateTime? date;
-  final List<Service> services;
-  final List<Price> prices;
-  final List<Service> selectedServices;
-
   const ServiceFormLoaded(
     this.selectedTab,
     this.date,
@@ -23,6 +18,27 @@ class ServiceFormLoaded extends ServiceFormState {
     this.prices,
     this.selectedServices,
   ) : super();
+  factory ServiceFormLoaded.fromJson(String source) =>
+      ServiceFormLoaded.fromMap(json.decode(source));
+
+  factory ServiceFormLoaded.fromMap(Map<String, dynamic> map) {
+    return ServiceFormLoaded(
+      map['selectedTab']?.toInt() ?? 0,
+      map['date'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['date'])
+          : null,
+      List<Service>.from(map['services']?.map((Json x) => Service.fromMap(x))),
+      List<Price>.from(map['prices']?.map((Json x) => Price.fromMap(x))),
+      List<Service>.from(
+        map['selectedServices']?.map((Json x) => Service.fromMap(x)),
+      ),
+    );
+  }
+  final int selectedTab;
+  final DateTime? date;
+  final List<Service> services;
+  final List<Price> prices;
+  final List<Service> selectedServices;
 
   @override
   bool operator ==(Object other) {
@@ -71,24 +87,7 @@ class ServiceFormLoaded extends ServiceFormState {
     };
   }
 
-  factory ServiceFormLoaded.fromMap(Map<String, dynamic> map) {
-    return ServiceFormLoaded(
-      map['selectedTab']?.toInt() ?? 0,
-      map['date'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['date'])
-          : null,
-      List<Service>.from(map['services']?.map((x) => Service.fromMap(x))),
-      List<Price>.from(map['prices']?.map((x) => Price.fromMap(x))),
-      List<Service>.from(
-        map['selectedServices']?.map((x) => Service.fromMap(x)),
-      ),
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory ServiceFormLoaded.fromJson(String source) =>
-      ServiceFormLoaded.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -97,8 +96,8 @@ class ServiceFormLoaded extends ServiceFormState {
 }
 
 class ServiceFormError extends ServiceFormState {
-  final String _message;
   const ServiceFormError(this._message) : super();
+  final String _message;
 
   @override
   bool operator ==(Object other) {

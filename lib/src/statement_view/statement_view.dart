@@ -7,17 +7,16 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:nannyplus/cubit/statement_view_cubit.dart';
 import 'package:nannyplus/data/model/statement.dart';
+import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
+import 'package:nannyplus/src/ui/view.dart';
+import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:nannyplus/utils/text_extension.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-
-import '../../cubit/statement_view_cubit.dart';
-import '../../utils/prefs_util.dart';
-import '../ui/sliver_curved_persistent_header.dart';
-import '../ui/view.dart';
 
 enum StatementViewType {
   yearly,
@@ -44,31 +43,42 @@ class StatementView extends StatelessWidget {
     context.read<StatementViewCubit>().loadStatement(_type, _date);
 
     return BlocBuilder<StatementViewCubit, StatementViewState>(
-      builder: ((context, state) {
+      builder: (context, state) {
         return UIView(
-          title: Text(_type == StatementViewType.yearly
-              ? context.t('Yearly statement')
-              : context.t('Monthly statement')),
-          persistentHeader: UISliverCurvedPersistenHeader(
-            child: Text(_type == StatementViewType.yearly
-                ? DateFormat('yyyy').format(_date)
-                : DateFormat('MMMM yyyy').format(_date).capitalize()),
+          title: Text(
+            _type == StatementViewType.yearly
+                ? context.t('Yearly statement')
+                : context.t('Monthly statement'),
           ),
-          body: Builder(builder: (context) {
-            if (state is StatementViewGenerating) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state is StatementViewLoaded) {
-              return _DocumentBuilder(_type, _date, state.statement, _gettext);
-            } else {
-              return Center(
-                child: Text(context.t('No data')),
-              );
-            }
-          }),
+          persistentHeader: UISliverCurvedPersistenHeader(
+            child: Text(
+              _type == StatementViewType.yearly
+                  ? DateFormat('yyyy').format(_date)
+                  : DateFormat('MMMM yyyy').format(_date).capitalize(),
+            ),
+          ),
+          body: Builder(
+            builder: (context) {
+              if (state is StatementViewGenerating) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state is StatementViewLoaded) {
+                return _DocumentBuilder(
+                  _type,
+                  _date,
+                  state.statement,
+                  _gettext,
+                );
+              } else {
+                return Center(
+                  child: Text(context.t('No data')),
+                );
+              }
+            },
+          ),
         );
-      }),
+      },
     );
   }
 }
@@ -95,7 +105,7 @@ class _DocumentBuilder extends StatelessWidget {
         ? "${context.t('Yearly statement')} ${_date.year}"
         : "${context.t('Monthly statement')} ${DateFormat('yyyy MM').format(_date)}";
     final fileBase = title.toLowerCase().replaceAll(' ', '_');
-    final fileName = "$fileBase.pdf";
+    final fileName = '$fileBase.pdf';
 
     return FutureBuilder<pw.Document>(
       future: (() async {
@@ -125,17 +135,17 @@ class _DocumentBuilder extends StatelessWidget {
     pw.Document doc,
     Statement statement,
   ) async {
-    var prefs = await PrefsUtil.getInstance();
-    pw.Font? line1Font = await _getLine1Font(prefs);
-    pw.Font? line2Font = await _getLine2Font(prefs);
+    final prefs = await PrefsUtil.getInstance();
+    final line1Font = await _getLine1Font(prefs);
+    final line2Font = await _getLine2Font(prefs);
 
-    File logoFile = await _getLogoFile();
+    final logoFile = await _getLogoFile();
 
     doc.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,
         margin: const pw.EdgeInsets.all(50),
-        build: ((context) {
+        build: (context) {
           return pw.Stack(
             children: [
               pw.Column(
@@ -162,18 +172,17 @@ class _DocumentBuilder extends StatelessWidget {
                       logoFile.readAsBytesSync(),
                     ),
                     height: 120,
-                    fit: pw.BoxFit.contain,
                   ),
                 ),
             ],
           );
-        }),
+        },
       ),
     );
   }
 
   Future<pw.Font?> _getLine1Font(PrefsUtil prefs) async {
-    var line1FontAsset = prefs.line1FontAsset;
+    final line1FontAsset = prefs.line1FontAsset;
     final byteData1 = line1FontAsset.isNotEmpty
         ? await rootBundle.load(line1FontAsset)
         : null;
@@ -183,7 +192,7 @@ class _DocumentBuilder extends StatelessWidget {
   }
 
   Future<pw.Font?> _getLine2Font(PrefsUtil prefs) async {
-    var line2FontAsset = prefs.line2FontAsset;
+    final line2FontAsset = prefs.line2FontAsset;
     final byteData2 = line2FontAsset.isNotEmpty
         ? await rootBundle.load(prefs.line2FontAsset)
         : null;
@@ -277,7 +286,6 @@ class _DocumentBuilder extends StatelessWidget {
           crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: [
             pw.Expanded(
-              flex: 1,
               child: pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
@@ -285,7 +293,6 @@ class _DocumentBuilder extends StatelessWidget {
                   pw.Text(
                     address,
                     style: const pw.TextStyle(
-                      inherit: true,
                       fontSize: 14,
                     ),
                   ),
@@ -307,9 +314,7 @@ class _DocumentBuilder extends StatelessWidget {
             pw.TableRow(
               decoration: const pw.BoxDecoration(
                 border: pw.Border(
-                  bottom: pw.BorderSide(
-                    color: PdfColors.black,
-                  ),
+                  bottom: pw.BorderSide(),
                 ),
               ),
               children: [
@@ -362,7 +367,7 @@ class _DocumentBuilder extends StatelessWidget {
             padding: const pw.EdgeInsets.symmetric(vertical: 4),
             child: pw.Text(
               line.isFixedPrice == 0
-                  ? "${line.hours}.${line.minutes}"
+                  ? '${line.hours}.${line.minutes}'
                   : line.count.toString(),
               textAlign: pw.TextAlign.center,
             ),
@@ -382,7 +387,7 @@ class _DocumentBuilder extends StatelessWidget {
 
   pw.Widget statementTotal(Statement statement) {
     final total = statement.lines
-        .fold<double>(0.0, (previousValue, line) => previousValue + line.total);
+        .fold<double>(0, (previousValue, line) => previousValue + line.total);
 
     return pw.Row(
       mainAxisAlignment: pw.MainAxisAlignment.end,

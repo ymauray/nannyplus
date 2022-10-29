@@ -1,13 +1,12 @@
 import 'package:nannyplus/data/model/document.dart';
-
-import '../utils/database_util.dart';
+import 'package:nannyplus/utils/database_util.dart';
 
 class FilesRepository {
   const FilesRepository();
 
   Future<int> addFile(int childId, String label, String path) async {
-    var db = await DatabaseUtil.instance;
-    var id = await db.insert('documents', {
+    final db = await DatabaseUtil.instance;
+    final id = await db.insert('documents', {
       'childId': childId,
       'label': label,
       'path': path,
@@ -17,8 +16,8 @@ class FilesRepository {
   }
 
   Future<Iterable<Document>> getFiles(int childId) async {
-    var db = await DatabaseUtil.instance;
-    var rows = await db.query(
+    final db = await DatabaseUtil.instance;
+    final rows = await db.query(
       'documents',
       where: 'childId = ?',
       whereArgs: [childId],
@@ -29,12 +28,12 @@ class FilesRepository {
   }
 
   Future<void> removeFile(Document document) async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
     await db.delete('documents', where: 'id = ?', whereArgs: [document.id]);
   }
 
   Future<void> editFile(Document file, String newLabel) async {
-    var db = await DatabaseUtil.instance;
+    final db = await DatabaseUtil.instance;
     await db.update(
       'documents',
       {'label': newLabel},

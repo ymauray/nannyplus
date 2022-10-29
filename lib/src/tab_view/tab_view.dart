@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:nannyplus/cubit/child_info_cubit.dart';
+import 'package:nannyplus/cubit/service_list_cubit.dart';
+import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/src/child_form/child_form.dart';
+import 'package:nannyplus/src/tab_view/child_info_tab_view.dart';
+import 'package:nannyplus/src/tab_view/invoice_list_tab_view.dart';
+import 'package:nannyplus/src/tab_view/service_list_tab_view.dart';
+import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
+import 'package:nannyplus/src/ui/sliver_tab_bar_peristant_header.dart';
+import 'package:nannyplus/src/ui/view.dart';
 
-import '../../cubit/child_info_cubit.dart';
-import '../../cubit/service_list_cubit.dart';
-import '../../data/model/child.dart';
-import '../../src/tab_view/service_list_tab_view.dart';
-import '../../src/ui/sliver_curved_persistent_header.dart';
-import '../../src/ui/sliver_tab_bar_peristant_header.dart';
-import '../../src/ui/view.dart';
-import '../child_form/child_form.dart';
-import 'child_info_tab_view.dart';
-import 'invoice_list_tab_view.dart';
-
-class NewTabView extends StatelessWidget {
-  const NewTabView(
+class TabView extends StatelessWidget {
+  const TabView(
     this.childId, {
     Key? key,
   }) : super(key: key);
@@ -38,19 +37,19 @@ class NewTabView extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () async {
-              var state =
+              final state =
                   context.read<ChildInfoCubit>().state as ChildInfoLoaded;
-              var child = state.child;
-              var updatedChild = await Navigator.of(context).push<Child>(
+              final child = state.child;
+              final updatedChild = await Navigator.of(context).push<Child>(
                 MaterialPageRoute(
                   fullscreenDialog: true,
                   builder: (context) {
-                    return NewChildForm(child: child);
+                    return ChildForm(child: child);
                   },
                 ),
               );
               if (updatedChild != null) {
-                context
+                await context
                     .read<ChildInfoCubit>()
                     .update(updatedChild.copyWith(id: child.id));
               }
@@ -62,12 +61,12 @@ class NewTabView extends StatelessWidget {
             builder: (context, state) => state is ServiceListLoaded
                 ? Text(
                     '${context.t('Pending total')} : ${state.services.fold<double>(
-                          0.0,
+                          0,
                           (previousValue, service) =>
                               previousValue + service.total,
                         ).toStringAsFixed(2)}',
                   )
-                : Text(context.t("Loading...")),
+                : Text(context.t('Loading...')),
           ),
         ),
         persistentTabBar: UISliverTabBarPeristantHeader(
@@ -95,9 +94,9 @@ class NewTabView extends StatelessWidget {
             //    title: Text("Tab 1, Child $index"),
             //  ),
             //),
-            NewServiceListTabView(childId: childId),
-            NewInvoiceListTabView(childId: childId),
-            NewChildInfoTabView(childId: childId),
+            ServiceListTabView(childId: childId),
+            InvoiceListTabView(childId: childId),
+            ChildInfoTabView(childId: childId),
           ],
         ),
       ),

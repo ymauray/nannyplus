@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
+import 'package:nannyplus/cubit/service_list_cubit.dart';
+import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/data/model/service.dart';
+import 'package:nannyplus/src/common/loading_indicator_list_view.dart';
+import 'package:nannyplus/src/service_form/service_form.dart';
+import 'package:nannyplus/src/ui/list_view.dart';
+import 'package:nannyplus/src/ui/ui_card.dart';
+import 'package:nannyplus/utils/i18n_utils.dart';
+import 'package:nannyplus/utils/list_extensions.dart';
+import 'package:nannyplus/utils/snack_bar_util.dart';
 
-import '../../cubit/service_list_cubit.dart';
-import '../../data/model/child.dart';
-import '../../data/model/service.dart';
-import '../../src/common/loading_indicator_list_view.dart';
-import '../../src/ui/list_view.dart';
-import '../../src/ui/ui_card.dart';
-import '../../utils/i18n_utils.dart';
-import '../../utils/list_extensions.dart';
-import '../../utils/snack_bar_util.dart';
-import '../service_form/service_form.dart';
-
-class NewServiceListTabView extends StatelessWidget {
-  const NewServiceListTabView({
+class ServiceListTabView extends StatelessWidget {
+  const ServiceListTabView({
     Key? key,
     required this.childId,
   }) : super(key: key);
@@ -55,7 +54,7 @@ class _List extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var s = services.groupBy<DateTime>(
+    final s = services.groupBy<DateTime>(
       (service) => DateFormat('yyyy-MM-dd').parse(service.date),
       groupComparator: (a, b) => b.compareTo(a),
     );
@@ -71,11 +70,11 @@ class _List extends StatelessWidget {
       onFloatingActionPressed: () async {
         await Navigator.of(context).push(
           MaterialPageRoute<Service>(
-            builder: (context) => NewServiceForm(child: child, tab: 0),
+            builder: (context) => ServiceForm(child: child, tab: 0),
             fullscreenDialog: true,
           ),
         );
-        context.read<ServiceListCubit>().loadServices(child.id!);
+        await context.read<ServiceListCubit>().loadServices(child.id!);
       },
     );
   }
@@ -94,14 +93,14 @@ class _GroupCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     {
-      double dailyTotal = 0.0;
+      var dailyTotal = 0.0;
 
       return GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () async {
           await Navigator.of(context).push(
             MaterialPageRoute<Service>(
-              builder: (context) => NewServiceForm(
+              builder: (context) => ServiceForm(
                 child: child,
                 date: DateFormat('yyyy-MM-dd').parse(group.value[0].date),
                 tab: 1,
@@ -109,12 +108,12 @@ class _GroupCard extends StatelessWidget {
               fullscreenDialog: true,
             ),
           );
-          context.read<ServiceListCubit>().loadServices(child.id!);
+          await context.read<ServiceListCubit>().loadServices(child.id!);
         },
         child: UICard(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 12.0),
+              padding: const EdgeInsets.only(left: 12),
               child: Row(
                 children: [
                   Expanded(
@@ -125,13 +124,13 @@ class _GroupCard extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () async {
-                      var delete = await _showConfirmationDialog(context);
+                      final delete = await _showConfirmationDialog(context);
                       if (delete ?? false) {
-                        context
+                        await context
                             .read<ServiceListCubit>()
                             .deleteDay(child.id!, group.value[0].date);
                         ScaffoldMessenger.of(context).success(
-                          context.t("Removed successfully"),
+                          context.t('Removed successfully'),
                         );
                       }
                     },
@@ -161,9 +160,8 @@ class _GroupCard extends StatelessWidget {
                   child: Container(),
                 ),
                 const Expanded(
-                  flex: 1,
                   child: Padding(
-                    padding: EdgeInsets.only(top: 8.0),
+                    padding: EdgeInsets.only(top: 8),
                     child: Divider(
                       height: 2,
                     ),
@@ -172,22 +170,16 @@ class _GroupCard extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Expanded(
-                    flex: 5,
-                    child: Container(),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 12.0),
-                      child: Text(
-                        dailyTotal.toStringAsFixed(2),
-                        textAlign: TextAlign.end,
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: Text(
+                      dailyTotal.toStringAsFixed(2),
+                      textAlign: TextAlign.end,
+                      style: Theme.of(context).textTheme.subtitle1,
                     ),
                   ),
                 ],
@@ -240,28 +232,30 @@ class _Detail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 12.0, right: 12, top: 8.0),
+      padding: const EdgeInsets.only(left: 12, right: 12, top: 8),
       child: DefaultTextStyle(
         style: Theme.of(context).textTheme.bodyText2!,
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(flex: 2, child: Text(service.priceLabel!)),
+            Expanded(
+                flex: service.isFixedPrice! == 0 ? 2 : 5,
+                child: Text(service.priceLabel!)),
             const SizedBox(
               width: 8,
             ),
-            Expanded(
-              flex: 2,
-              child: Text(
-                service.isFixedPrice! == 0 ? service.priceDetail : "",
-                textAlign: TextAlign.end,
+            if (service.isFixedPrice! == 0)
+              Expanded(
+                flex: 2,
+                child: Text(
+                  service.isFixedPrice! == 0 ? service.priceDetail : '',
+                  textAlign: TextAlign.end,
+                ),
               ),
-            ),
-            const SizedBox(
-              width: 8,
-            ),
+            if (service.isFixedPrice! == 0)
+              const SizedBox(
+                width: 8,
+              ),
             Expanded(
-              flex: 1,
               child: Text(
                 service.total.toStringAsFixed(2),
                 textAlign: TextAlign.end,
