@@ -172,19 +172,14 @@ class _GroupCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Expanded(
-                    flex: 5,
-                    child: Container(),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 12),
-                      child: Text(
-                        dailyTotal.toStringAsFixed(2),
-                        textAlign: TextAlign.end,
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: Text(
+                      dailyTotal.toStringAsFixed(2),
+                      textAlign: TextAlign.end,
+                      style: Theme.of(context).textTheme.subtitle1,
                     ),
                   ),
                 ],
@@ -242,20 +237,24 @@ class _Detail extends StatelessWidget {
         style: Theme.of(context).textTheme.bodyText2!,
         child: Row(
           children: [
-            Expanded(flex: 2, child: Text(service.priceLabel!)),
-            const SizedBox(
-              width: 8,
-            ),
             Expanded(
-              flex: 2,
-              child: Text(
-                service.isFixedPrice! == 0 ? service.priceDetail : '',
-                textAlign: TextAlign.end,
-              ),
-            ),
+                flex: service.isFixedPrice! == 0 ? 2 : 5,
+                child: Text(service.priceLabel!)),
             const SizedBox(
               width: 8,
             ),
+            if (service.isFixedPrice! == 0)
+              Expanded(
+                flex: 2,
+                child: Text(
+                  service.isFixedPrice! == 0 ? service.priceDetail : '',
+                  textAlign: TextAlign.end,
+                ),
+              ),
+            if (service.isFixedPrice! == 0)
+              const SizedBox(
+                width: 8,
+              ),
             Expanded(
               child: Text(
                 service.total.toStringAsFixed(2),

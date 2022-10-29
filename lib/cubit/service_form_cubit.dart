@@ -23,6 +23,7 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
       final services = await _servicesRepository.getRecentServices(childId);
       final groups = services.groupBy<num>((service) => service.priceId);
       final orderedServices = groups.map((group) => group.value.first).toList()
+        ..removeWhere((service) => service.priceId < 0)
         ..sort(
           (a, b) =>
               prices.firstWhere((price) => price.id == a.priceId).sortOrder -
@@ -31,11 +32,13 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
 
       final selectedServices = await _servicesRepository
           .getServicesForChildAndDate(childId, date ?? DateTime.now());
-      selectedServices.sort(
-        (a, b) =>
-            prices.firstWhere((price) => price.id == a.priceId).sortOrder -
-            prices.firstWhere((price) => price.id == b.priceId).sortOrder,
-      );
+      selectedServices
+        ..removeWhere((service) => service.priceId < 0)
+        ..sort(
+          (a, b) =>
+              prices.firstWhere((price) => price.id == a.priceId).sortOrder -
+              prices.firstWhere((price) => price.id == b.priceId).sortOrder,
+        );
 
       emit(
         ServiceFormLoaded(

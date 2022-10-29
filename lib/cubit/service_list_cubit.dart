@@ -23,11 +23,13 @@ class ServiceListCubit extends Cubit<ServiceListState> {
       final child = await childrenRepository.read(childId);
       final prices = await pricesRepository.getPriceList();
       final services = await servicesRepository.getServices(child);
-      services.sort(
-        (a, b) =>
-            prices.firstWhere((price) => price.id == a.priceId).sortOrder -
-            prices.firstWhere((price) => price.id == b.priceId).sortOrder,
-      );
+      services
+        ..removeWhere((service) => service.priceId < 0)
+        ..sort(
+          (a, b) =>
+              prices.firstWhere((price) => price.id == a.priceId).sortOrder -
+              prices.firstWhere((price) => price.id == b.priceId).sortOrder,
+        );
       emit(ServiceListLoaded(child, services));
     } catch (e) {
       emit(ServiceListError(e.toString()));
