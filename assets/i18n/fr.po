@@ -35,6 +35,9 @@ msgstr "Allergies : {0}"
 msgid "Invoice settings"
 msgstr "Paramètres de la facture"
 
+msgid "Application settings"
+msgstr "Paramètres de l'application"
+
 msgid "Price list"
 msgstr "Prestations"
 
@@ -445,3 +448,9 @@ msgstr "Êtes-vous sûr de vouloir supprimer ce document ?"
 
 msgid "Clone folder"
 msgstr "Dupliquer le dossier"
+
+msgid "Sort children list by last name"
+msgstr "Trier la liste des enfants par nom de famille"
+
+msgid "Show first name before last name"
+msgstr "Afficher le prénom avant le nom de famille"

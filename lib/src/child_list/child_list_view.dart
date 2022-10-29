@@ -4,6 +4,7 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
 import 'package:nannyplus/cubit/child_list_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/src/app_settings/app_settings_view.dart';
 import 'package:nannyplus/src/child_form/child_form.dart';
 import 'package:nannyplus/src/child_list/main_drawer.dart';
 import 'package:nannyplus/src/constants.dart';
@@ -232,7 +233,30 @@ class _ChildListViewState extends State<ChildListView> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute<void>(
-                    builder: (context) => const SettingsView(),
+                    builder: (context) => const AppSettingsView(),
+                  ),
+                );
+              },
+              behavior: HitTestBehavior.opaque,
+              child: ListTile(
+                leading: const Icon(Icons.app_settings_alt),
+                title: Text(
+                  context.t('Application settings'),
+                ),
+                trailing: const Icon(Icons.chevron_right),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: Material(
+            elevation: 4,
+            shape: Theme.of(context).listTileTheme.shape,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
                     builder: (context) => const InvoiceSettingsView(),
                   ),
                 );

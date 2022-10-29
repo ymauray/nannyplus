@@ -12,6 +12,9 @@ class PrefsUtil {
   static const String keyName = 'name';
   static const String keyAddress = 'address';
   static const String keyShowOnboarding = 'showOnboarding';
+  static const String keySortListByLastName = 'sortListByLastName';
+  static const String keyShowFirstNameBeforeLastName =
+      'showFirstNameBeforeLastName';
 
   static PrefsUtil? _instance;
 
@@ -68,5 +71,14 @@ class PrefsUtil {
   set address(String value) => _prefs?.setString(keyAddress, value);
 
   bool get showOnboarding => _prefs?.getBool(keyShowOnboarding) ?? true;
-  set showOnboarding(bool value) => _prefs?.setBool('showOnboarding', value);
+  set showOnboarding(bool value) => _prefs?.setBool(keyShowOnboarding, value);
+
+  bool get sortListByLastName => _prefs?.getBool(keySortListByLastName) ?? true;
+  set sortListByLastName(bool value) =>
+      _prefs?.setBool(keySortListByLastName, value);
+
+  bool get showFirstNameBeforeLastName =>
+      _prefs?.getBool(keyShowFirstNameBeforeLastName) ?? true;
+  set showFirstNameBeforeLastName(bool value) =>
+      _prefs?.setBool(keyShowFirstNameBeforeLastName, value);
 }

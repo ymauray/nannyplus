@@ -16,6 +16,9 @@ msgstr ""
 msgid "Invoice settings"
 msgstr "Invoice settings"
 
+msgid "Application settings"
+msgstr "Application settings"
+
 msgid "Use dark mode"
 msgstr "Use dark mode"
 
@@ -168,3 +171,9 @@ msgstr "Are you sure you want to delete this document?"
 
 msgid "Clone folder"
 msgstr "Clone folder"
+
+msgid "Sort children list by last name"
+msgstr "Sort children list by last name"
+
+msgid "Show first name before last name"
+msgstr "Show first name before last name"

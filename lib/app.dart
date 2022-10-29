@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:nannyplus/cubit/app_settings_cubit.dart';
 import 'package:nannyplus/cubit/child_info_cubit.dart';
 import 'package:nannyplus/cubit/child_list_cubit.dart';
 import 'package:nannyplus/cubit/file_list_cubit.dart';
@@ -71,6 +72,9 @@ class NannyPlusApp extends StatelessWidget {
         ),
         BlocProvider<InvoiceSettingsCubit>(
           create: (context) => InvoiceSettingsCubit(),
+        ),
+        BlocProvider<AppSettingsCubit>(
+          create: (context) => AppSettingsCubit(),
         ),
         BlocProvider<InvoiceListCubit>(
           create: (context) => InvoiceListCubit(
