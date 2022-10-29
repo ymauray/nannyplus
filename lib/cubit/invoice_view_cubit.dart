@@ -28,11 +28,16 @@ class InvoiceViewCubit extends Cubit<InvoiceViewState> {
     final prices = await _pricesRepository.getPriceList();
     final services =
         await _servicesRepository.getServicesForInvoice(invoice.id!);
-    services.sort(
-      (a, b) =>
-          prices.firstWhere((price) => price.id == a.priceId).sortOrder -
-          prices.firstWhere((price) => price.id == b.priceId).sortOrder,
-    );
+    services.sort((a, b) {
+      if (a.priceId == -1) {
+        return 1;
+      }
+      if (b.priceId == -1) {
+        return -1;
+      }
+      return prices.firstWhere((price) => price.id == a.priceId).sortOrder -
+          prices.firstWhere((price) => price.id == b.priceId).sortOrder;
+    });
     final children = await Future.wait(
       services
           .map((service) => service.childId)
@@ -40,7 +45,10 @@ class InvoiceViewCubit extends Cubit<InvoiceViewState> {
           .map(_childrenRepository.read),
     );
     emit(
-      InvoiceViewLoaded(services, children),
+      InvoiceViewLoaded(
+        services.where((service) => service.priceId >= 0).toList(),
+        children,
+      ),
     );
   }
 }

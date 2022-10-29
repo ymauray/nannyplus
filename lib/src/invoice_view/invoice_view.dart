@@ -277,7 +277,7 @@ class _DocumentBuilder extends StatelessWidget {
                 vertical: 4,
               ),
               child: pw.Text(
-                service.priceLabel!,
+                service.priceLabel ?? 'Dummy service',
                 textAlign: pw.TextAlign.left,
                 style: const pw.TextStyle(fontSize: 14),
               ),

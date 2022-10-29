@@ -90,8 +90,9 @@ class InvoiceFormCubit extends Cubit<InvoiceFormState> {
       var total = 0.0;
 
       for (final child in children) {
+        final dummyService = await servicesRepository.addDummyService(child);
         final services = await servicesRepository.getServices(child);
-        for (final service in services) {
+        for (final service in [dummyService, ...services]) {
           await servicesRepository.update(
             service.copyWith(
               invoiced: 1,

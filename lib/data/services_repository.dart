@@ -226,6 +226,12 @@ class ServicesRepository {
       where: 'invoiceId = ?',
       whereArgs: [invoiceId],
     );
+
+    await db.delete(
+      'services',
+      where: 'priceId = ? AND invoiceId = ?',
+      whereArgs: [-1, invoiceId],
+    );
   }
 
   Future<List<StatementLine>> getStatementLines(
@@ -286,5 +292,19 @@ class ServicesRepository {
     final list = rows.map((row) => StatementSummary.fromMap(row)).toList();
 
     return list;
+  }
+
+  Future<Service> addDummyService(Child child) async {
+    final db = await DatabaseUtil.instance;
+    final service = Service(
+      childId: child.id!,
+      date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      priceId: -1,
+      isFixedPrice: 1,
+      total: 0,
+    );
+    final id = await db.insert('services', service.toMap()..['id'] = null);
+
+    return service.copyWith(id: id);
   }
 }
