@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nannyplus/cubit/settings_cubit.dart';
-import 'package:nannyplus/src/settings_view/settings_form.dart';
+import 'package:nannyplus/src/invoice_settings/invoice_settings_form.dart';
 
-class SettingsView extends StatelessWidget {
-  const SettingsView({Key? key}) : super(key: key);
+class InvoiceSettingsView extends StatelessWidget {
+  const InvoiceSettingsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class SettingsView extends StatelessWidget {
           previous is SettingsInitial && current is SettingsLoaded,
       builder: (context, state) {
         return state is SettingsLoaded
-            ? SettingsForm(state)
+            ? InvoiceSettingsForm(state)
             : const Center(child: CircularProgressIndicator());
       },
     );

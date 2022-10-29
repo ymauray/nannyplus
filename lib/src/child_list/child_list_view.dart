@@ -7,8 +7,8 @@ import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/src/child_form/child_form.dart';
 import 'package:nannyplus/src/child_list/main_drawer.dart';
 import 'package:nannyplus/src/constants.dart';
+import 'package:nannyplus/src/invoice_settings/invoice_settings_view.dart';
 import 'package:nannyplus/src/price_list/price_list_view.dart';
-import 'package:nannyplus/src/settings_view/settings_view.dart';
 import 'package:nannyplus/src/statement_list_view/statement_list_view.dart';
 import 'package:nannyplus/src/tab_view/tab_view.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
@@ -233,6 +233,7 @@ class _ChildListViewState extends State<ChildListView> {
                 Navigator.of(context).push(
                   MaterialPageRoute<void>(
                     builder: (context) => const SettingsView(),
+                    builder: (context) => const InvoiceSettingsView(),
                   ),
                 );
               },
@@ -240,7 +241,7 @@ class _ChildListViewState extends State<ChildListView> {
               child: ListTile(
                 leading: const Icon(Icons.settings),
                 title: Text(
-                  context.t('Settings'),
+                  context.t('Invoice settings'),
                 ),
                 trailing: const Icon(Icons.chevron_right),
               ),

@@ -13,8 +13,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: en\n"
 
-msgid "Settings"
-msgstr "Settings"
+msgid "Invoice settings"
+msgstr "Invoice settings"
 
 msgid "Use dark mode"
 msgstr "Use dark mode"

@@ -32,8 +32,8 @@ msgstr "Dernière saisie"
 msgid "Allergies : {0}"
 msgstr "Allergies : {0}"
 
-msgid "Settings"
-msgstr "Paramètres"
+msgid "Invoice settings"
+msgstr "Paramètres de la facture"
 
 msgid "Price list"
 msgstr "Prestations"

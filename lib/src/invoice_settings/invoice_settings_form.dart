@@ -5,7 +5,7 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nannyplus/cubit/settings_cubit.dart';
 import 'package:nannyplus/src/constants.dart';
-import 'package:nannyplus/src/settings_view/logo_picker.dart';
+import 'package:nannyplus/src/invoice_settings/logo_picker.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/view.dart';
@@ -13,8 +13,8 @@ import 'package:nannyplus/utils/font_utils.dart';
 import 'package:nannyplus/utils/logo_picker_controller.dart';
 import 'package:path_provider/path_provider.dart';
 
-class SettingsForm extends StatelessWidget {
-  SettingsForm(this._state, {Key? key}) : super(key: key) {
+class InvoiceSettingsForm extends StatelessWidget {
+  InvoiceSettingsForm(this._state, {Key? key}) : super(key: key) {
     line1Controller.text = _state.line1;
     line2Controller.text = _state.line2;
   }
@@ -44,7 +44,7 @@ class SettingsForm extends StatelessWidget {
         'address': _state.address,
       },
       child: UIView(
-        title: Text(context.t('Settings')),
+        title: Text(context.t('Invoice settings')),
         actions: [
           IconButton(
             icon: const Padding(
