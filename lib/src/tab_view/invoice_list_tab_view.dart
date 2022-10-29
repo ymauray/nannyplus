@@ -142,7 +142,7 @@ class _GroupCard extends StatelessWidget {
     required this.group,
   }) : super(key: key);
 
-  final Group<int, Invoice> group;
+  final Group<num, Invoice> group;
 
   @override
   Widget build(BuildContext context) {

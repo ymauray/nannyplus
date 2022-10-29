@@ -27,7 +27,7 @@ class StatementListCubit extends Cubit<StatementListState> {
     final statements = summaryGroups
         .map(
           (group) => YearlyStatement(
-            year: group.key,
+            year: group.key as int,
             amount: group.value.fold(
               0,
               (previousValue, summary) => previousValue + summary.total,

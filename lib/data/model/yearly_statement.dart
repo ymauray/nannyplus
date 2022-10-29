@@ -1,7 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, argument_type_not_assignable
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:nannyplus/data/model/monthly_statement.dart';
+import 'package:nannyplus/utils/types.dart';
 
 @immutable
 class YearlyStatement {
@@ -20,7 +22,7 @@ class YearlyStatement {
       year: map['year']?.toInt() ?? 0,
       amount: map['amount']?.toDouble() ?? 0.0,
       monthlyStatements: List<MonthlyStatement>.from(
-        map['monthlyStatements']?.map((x) => MonthlyStatement.fromMap(x)),
+        map['monthlyStatements']?.map((Json x) => MonthlyStatement.fromMap(x)),
       ),
     );
   }

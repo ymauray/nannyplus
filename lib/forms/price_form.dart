@@ -1,3 +1,4 @@
+// ignore_for_file: argument_type_not_assignable
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';

@@ -1,3 +1,4 @@
+// ignore_for_file: argument_type_not_assignable
 part of 'price_list_cubit.dart';
 
 // ---------------------------------------------------------------------------
@@ -24,7 +25,7 @@ class PriceListLoaded extends PriceListState {
 
   factory PriceListLoaded.fromMap(Map<String, dynamic> map) {
     return PriceListLoaded(
-      List<Price>.from(map['priceList']?.map((x) => Price.fromMap(x))),
+      List<Price>.from(map['priceList']?.map((Json x) => Price.fromMap(x))),
     );
   }
 

@@ -89,7 +89,7 @@ class _DocumentBuilder extends StatelessWidget {
 
         final doc = pw.Document();
         final childrenMap = {
-          for (final child in state.children) child.id: child
+          for (final child in state.children) child.id!: child
         };
 
         var maxHeight = 15.0;

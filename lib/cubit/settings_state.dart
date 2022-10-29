@@ -1,3 +1,4 @@
+// ignore_for_file: argument_type_not_assignable
 part of 'settings_cubit.dart';
 
 @immutable

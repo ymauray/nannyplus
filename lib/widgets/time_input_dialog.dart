@@ -1,3 +1,4 @@
+// ignore_for_file: argument_type_not_assignable
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';

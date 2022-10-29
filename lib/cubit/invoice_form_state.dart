@@ -1,3 +1,4 @@
+// ignore_for_file: argument_type_not_assignable
 part of 'invoice_form_cubit.dart';
 
 @immutable
@@ -75,7 +76,7 @@ class InvoiceFormLoaded extends InvoiceFormState {
     return InvoiceFormLoaded(
       child: Child.fromMap(map['child']),
       children: List<InvoiceFormChild>.from(
-        map['children']?.map((x) => InvoiceFormChild.fromMap(x)),
+        map['children']?.map((Json x) => InvoiceFormChild.fromMap(x)),
       ),
     );
   }

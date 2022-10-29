@@ -214,7 +214,7 @@ class NewChildForm extends StatelessWidget {
                 validator: (value) {
                   final labelIsEmpty = value?.isEmpty ?? true;
                   final phoneNumber2 = formKey
-                      .currentState!.fields['phoneNumber2']!.value as String?;
+                      .currentState!.fields['phoneNumber2']?.value as String?;
                   final valueIsEmpty = phoneNumber2?.isEmpty ?? true;
 
                   return labelIsEmpty && !valueIsEmpty
@@ -238,7 +238,7 @@ class NewChildForm extends StatelessWidget {
                 keyboardType: TextInputType.phone,
                 validator: (value) {
                   final labelForPhoneNumber2 = formKey.currentState!
-                      .fields['labelForPhoneNumber2']!.value as String?;
+                      .fields['labelForPhoneNumber2']?.value as String?;
                   final labelEmpty = labelForPhoneNumber2?.isEmpty ?? true;
                   final valueEmpty = value?.isEmpty ?? true;
 
@@ -268,7 +268,7 @@ class NewChildForm extends StatelessWidget {
                 validator: (value) {
                   final labelIsEmpty = value?.isEmpty ?? true;
                   final phoneNumber3 = formKey
-                      .currentState!.fields['phoneNumber3']!.value as String?;
+                      .currentState!.fields['phoneNumber3']?.value as String?;
                   final valueIsEmpty = phoneNumber3?.isEmpty ?? true;
 
                   return labelIsEmpty && !valueIsEmpty
@@ -292,7 +292,7 @@ class NewChildForm extends StatelessWidget {
                 keyboardType: TextInputType.phone,
                 validator: (value) {
                   final labelForPhoneNumber3 = formKey.currentState!
-                      .fields['labelForPhoneNumber3']!.value as String?;
+                      .fields['labelForPhoneNumber3']?.value as String?;
                   final labelEmpty = labelForPhoneNumber3?.isEmpty ?? true;
                   final valueEmpty = value?.isEmpty ?? true;
 

@@ -4,6 +4,16 @@ linter:
   rules:
     public_member_api_docs: false
     avoid_positional_boolean_parameters: false
+    argument_type_not_assignable: false
+    avoid_dynamic_calls: false
+    unnecessary_await_in_return: false
+    lines_longer_than_80_chars: false
+    deprecated_member_use_from_same_package: false
+    unnecessary_to_list_in_spreads: false
+    deprecated_member_use: false
+    cast_nullable_to_non_nullable: false
+    parameter_assignments: false
+    inference_failure_on_untyped_parameter: false
     use_build_context_synchronously: false
 
 analyzer:
@@ -11,17 +21,8 @@ analyzer:
     - very_good_analysis
     - dart_code_metrics
   errors:
-    argument_type_not_assignable: ignore
-    avoid_dynamic_calls: ignore
-    unnecessary_await_in_return: ignore
-    lines_longer_than_80_chars: ignore
     deprecated_member_use_from_same_package: ignore
-    unnecessary_to_list_in_spreads: ignore
-    deprecated_member_use: ignore
-    cast_nullable_to_non_nullable: ignore
-    parameter_assignments: ignore
-    inference_failure_on_untyped_parameter: ignore
-
+    
 dart_code_metrics:
   metrics-exlude:
     - test/**

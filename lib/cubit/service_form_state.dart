@@ -1,3 +1,4 @@
+// ignore_for_file: argument_type_not_assignable
 part of 'service_form_cubit.dart';
 
 @immutable
@@ -26,10 +27,10 @@ class ServiceFormLoaded extends ServiceFormState {
       map['date'] != null
           ? DateTime.fromMillisecondsSinceEpoch(map['date'])
           : null,
-      List<Service>.from(map['services']?.map((x) => Service.fromMap(x))),
-      List<Price>.from(map['prices']?.map((x) => Price.fromMap(x))),
+      List<Service>.from(map['services']?.map((Json x) => Service.fromMap(x))),
+      List<Price>.from(map['prices']?.map((Json x) => Price.fromMap(x))),
       List<Service>.from(
-        map['selectedServices']?.map((x) => Service.fromMap(x)),
+        map['selectedServices']?.map((Json x) => Service.fromMap(x)),
       ),
     );
   }

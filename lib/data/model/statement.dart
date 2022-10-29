@@ -1,7 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, argument_type_not_assignable
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:nannyplus/data/model/statement_line.dart';
+import 'package:nannyplus/utils/types.dart';
 
 @immutable
 class Statement {
@@ -15,7 +17,7 @@ class Statement {
     return Statement(
       lines: List<StatementLine>.from(
         map['lines']?.map(
-          (x) => StatementLine.fromMap(x),
+          (Json x) => StatementLine.fromMap(x),
         ),
       ),
     );

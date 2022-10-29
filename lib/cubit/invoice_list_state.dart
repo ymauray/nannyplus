@@ -1,3 +1,4 @@
+// ignore_for_file: argument_type_not_assignable
 part of 'invoice_list_cubit.dart';
 
 // ---------------------------------------------------------------------------
@@ -24,7 +25,7 @@ class InvoiceListLoaded extends InvoiceListState {
 
   factory InvoiceListLoaded.fromMap(Map<String, dynamic> map) {
     return InvoiceListLoaded(
-      List<Invoice>.from(map['invoices']?.map((x) => Invoice.fromMap(x))),
+      List<Invoice>.from(map['invoices']?.map((Json x) => Invoice.fromMap(x))),
     );
   }
 
