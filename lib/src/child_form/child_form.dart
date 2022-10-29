@@ -21,9 +21,11 @@ class NewChildForm extends StatelessWidget {
   const NewChildForm({
     Key? key,
     this.child,
+    this.childToClone,
   }) : super(key: key);
 
   final Child? child;
+  final Child? childToClone;
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +36,20 @@ class NewChildForm extends StatelessWidget {
       key: formKey,
       initialValue: {
         'firstName': child?.firstName,
-        'lastName': child?.lastName,
+        'lastName': child?.lastName ?? childToClone?.lastName,
         'birthdate': child?.birthdate != null
             ? DateFormat('yyyy-MM-dd').parse(child!.birthdate!)
             : null,
-        'phoneNumber': child?.phoneNumber,
-        'parentsName': child?.parentsName,
-        'address': child?.address,
+        'phoneNumber': child?.phoneNumber ?? childToClone?.phoneNumber,
+        'parentsName': child?.parentsName ?? childToClone?.parentsName,
+        'address': child?.address ?? childToClone?.address,
         'allergies': child?.allergies,
-        'labelForPhoneNumber2': child?.labelForPhoneNumber2,
-        'phoneNumber2': child?.phoneNumber2,
-        'labelForPhoneNumber3': child?.labelForPhoneNumber3,
-        'phoneNumber3': child?.phoneNumber3,
+        'labelForPhoneNumber2':
+            child?.labelForPhoneNumber2 ?? childToClone?.labelForPhoneNumber2,
+        'phoneNumber2': child?.phoneNumber2 ?? childToClone?.phoneNumber2,
+        'labelForPhoneNumber3':
+            child?.labelForPhoneNumber3 ?? childToClone?.labelForPhoneNumber3,
+        'phoneNumber3': child?.phoneNumber3 ?? childToClone?.phoneNumber3,
         'freeText': child?.freeText,
       },
       child: UIView(

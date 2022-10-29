@@ -442,3 +442,6 @@ msgstr "Annuler"
 
 msgid "Are you sure you want to delete this document?"
 msgstr "Êtes-vous sûr de vouloir supprimer ce document ?"
+
+msgid "Clone folder"
+msgstr "Dupliquer le dossier"

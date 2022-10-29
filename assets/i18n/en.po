@@ -165,3 +165,6 @@ msgstr "Cancel"
 
 msgid "Are you sure you want to delete this document?"
 msgstr "Are you sure you want to delete this document?"
+
+msgid "Clone folder"
+msgstr "Clone folder"

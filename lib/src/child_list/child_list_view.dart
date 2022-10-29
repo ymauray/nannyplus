@@ -418,11 +418,37 @@ class _ChildListTile extends StatelessWidget {
                           }
                         }
                         break;
+                      case 3:
+                        final clone = await Navigator.of(context).push<Child>(
+                          MaterialPageRoute<Child>(
+                            builder: (context) => NewChildForm(
+                              childToClone: child,
+                            ),
+                          ),
+                        );
+                        if (clone != null) {
+                          await context.read<ChildListCubit>().create(clone);
+                        }
+
+                        break;
                     }
                   },
                   padding: EdgeInsets.zero,
                   itemBuilder: (context) {
                     return [
+                      PopupMenuItem(
+                        value: 3,
+                        child: ListTile(
+                          leading: const Icon(
+                            Icons.copy,
+                            color: kcAlmostBlack,
+                          ),
+                          title: Text(
+                            context.t('Clone folder'),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ),
                       PopupMenuItem(
                         value: 1,
                         child: ListTile(
