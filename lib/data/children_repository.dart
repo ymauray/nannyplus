@@ -10,7 +10,7 @@ class ChildrenRepository {
       'children',
       where: 'archived <= ?',
       whereArgs: [if (showArchived) 1 else 0],
-      orderBy: 'firstName, lastName',
+      orderBy: 'lastName, firstName',
     );
 
     return rows.map((row) => Child.fromMap(row)).toList();
