@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
+import 'package:nannyplus/utils/prefs_util.dart';
 
 @immutable
 class Child {
@@ -59,7 +60,10 @@ class Child {
   final String? phoneNumber3;
   final String? freeText;
 
-  String get displayName => "$firstName ${lastName ?? ''}".trim();
+  String get displayName =>
+      PrefsUtil.getInstanceSync().showFirstNameBeforeLastName
+          ? "$firstName ${lastName ?? ''}".trim()
+          : "${lastName == null ? '' : '$lastName, '}$firstName".trim();
 
   bool get hasPhoneNumber => !(phoneNumber?.isEmpty ?? true);
 

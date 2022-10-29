@@ -1,16 +1,21 @@
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/utils/database_util.dart';
+import 'package:nannyplus/utils/prefs_util.dart';
 
 class ChildrenRepository {
   const ChildrenRepository();
 
   Future<List<Child>> getChildList(bool showArchived) async {
     final db = await DatabaseUtil.instance;
+    final prefs = await PrefsUtil.getInstance();
+
     final rows = await db.query(
       'children',
       where: 'archived <= ?',
       whereArgs: [if (showArchived) 1 else 0],
-      orderBy: 'lastName, firstName',
+      orderBy: prefs.sortListByLastName
+          ? 'lastName, firstName'
+          : 'firstName, lastname',
     );
 
     return rows.map((row) => Child.fromMap(row)).toList();

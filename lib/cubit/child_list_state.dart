@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'child_list_cubit.dart';
 
 // ---------------------------------------------------------------------------
@@ -38,31 +39,6 @@ class ChildListLoaded extends ChildListState {
   final Map<int, ServiceInfo> servicesInfo;
   final bool showArchived;
   final bool showOnboarding;
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is ChildListLoaded &&
-        listEquals(other.children, children) &&
-        other.pendingTotal == pendingTotal &&
-        mapEquals(other.pendingTotalPerChild, pendingTotalPerChild) &&
-        listEquals(other.undeletableChildren, undeletableChildren) &&
-        mapEquals(other.servicesInfo, servicesInfo) &&
-        other.showArchived == showArchived &&
-        other.showOnboarding == showOnboarding;
-  }
-
-  @override
-  int get hashCode {
-    return children.hashCode ^
-        pendingTotal.hashCode ^
-        pendingTotalPerChild.hashCode ^
-        undeletableChildren.hashCode ^
-        servicesInfo.hashCode ^
-        showArchived.hashCode ^
-        showOnboarding.hashCode;
-  }
 }
 
 // ---------------------------------------------------------------------------
