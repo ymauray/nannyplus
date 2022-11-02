@@ -20,10 +20,14 @@ class ServiceFormCubit extends Cubit<ServiceFormState> {
   Future<void> loadRecentServices(int childId, DateTime? date, int tab) async {
     try {
       final prices = await _pricesRepository.getPriceList();
+      final priceIds = prices.map((price) => price.id);
       final services = await _servicesRepository.getRecentServices(childId);
       final groups = services.groupBy<num>((service) => service.priceId);
       final orderedServices = groups.map((group) => group.value.first).toList()
-        ..removeWhere((service) => service.priceId < 0)
+        ..removeWhere(
+          (service) =>
+              service.priceId < 0 || !priceIds.contains(service.priceId),
+        )
         ..sort(
           (a, b) =>
               prices.firstWhere((price) => price.id == a.priceId).sortOrder -
