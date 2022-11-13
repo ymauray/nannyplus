@@ -16,7 +16,7 @@ class NotificationUtil {
     const initializationSettingsAndroid =
         AndroidInitializationSettings('app_icon');
 
-    final initializationSettingsIOS = IOSInitializationSettings(
+    final initializationSettingsIOS = DarwinInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,
       requestAlertPermission: false,
@@ -32,8 +32,11 @@ class NotificationUtil {
 
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onSelectNotification: (payload) async {
-        debugPrint('Notification payload: $payload');
+      onDidReceiveNotificationResponse: (payload) async {
+        debugPrint('onDidReceiveNotificationResponse: $payload');
+      },
+      onDidReceiveBackgroundNotificationResponse: (payload) async {
+        debugPrint('onDidReceiveBackgroundNotificationResponse: $payload');
       },
     );
   }
@@ -59,7 +62,7 @@ class NotificationUtil {
       ticker: 'Ticker',
     );
 
-    const iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    const iOSPlatformChannelSpecifics = DarwinNotificationDetails();
 
     const platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,
@@ -89,7 +92,7 @@ class NotificationUtil {
       fullScreenIntent: true,
     );
 
-    const iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    const iOSPlatformChannelSpecifics = DarwinNotificationDetails();
 
     const platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,

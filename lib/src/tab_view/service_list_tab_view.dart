@@ -238,8 +238,9 @@ class _Detail extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-                flex: service.isFixedPrice! == 0 ? 2 : 5,
-                child: Text(service.priceLabel!)),
+              flex: service.isFixedPrice! == 0 ? 2 : 5,
+              child: Text(service.priceLabel!),
+            ),
             const SizedBox(
               width: 8,
             ),

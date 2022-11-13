@@ -9,10 +9,6 @@ class ChildInfoInitial extends ChildInfoState {
   const ChildInfoInitial();
 }
 
-class ChildInfoLoading extends ChildInfoState {
-  const ChildInfoLoading();
-}
-
 class ChildInfoLoaded extends ChildInfoState {
   const ChildInfoLoaded(this.child);
 
