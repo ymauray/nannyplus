@@ -460,3 +460,9 @@ msgstr "Afficher le prénom avant le nom de famille"
 
 msgid "Error loading services"
 msgstr "Erreur lors du chargement des prestations"
+
+msgid "Statement {0}"
+msgstr "Relevé {0}"
+
+msgid "Statement for {0}"
+msgstr "Relevé pour {0}"

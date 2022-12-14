@@ -183,3 +183,9 @@ msgstr "Show first name before last name"
 
 msgid "Error loading services"
 msgstr "Error loading services"
+
+msgid "Statement {0}"
+msgstr "Statement {0}"
+
+msgid "Statement for {0}"
+msgstr "Statement for {0}"

@@ -10,6 +10,7 @@ import 'package:nannyplus/data/model/invoice.dart';
 import 'package:nannyplus/src/common/loading_indicator_list_view.dart';
 import 'package:nannyplus/src/constants.dart';
 import 'package:nannyplus/src/invoice_form/invoice_form.dart';
+import 'package:nannyplus/src/invoice_view/child_statement_view.dart';
 import 'package:nannyplus/src/invoice_view/invoice_view.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/src/ui/ui_card.dart';
@@ -158,8 +159,9 @@ class _GroupCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
-              const SizedBox(
-                height: 40,
+              IconButton(
+                icon: const Icon(Icons.picture_as_pdf),
+                onPressed: () => _openYearlyStatementPDF(context, group),
               ),
             ],
           ),
@@ -173,6 +175,20 @@ class _GroupCard extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  void _openYearlyStatementPDF(
+    BuildContext context,
+    Group<num, Invoice> group,
+  ) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (context) => ChildStatementView(
+          group,
+          GettextLocalizations.of(context),
+        ),
+      ),
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:nannyplus/src/child_list/child_list_view.dart';
 import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/view.dart';
