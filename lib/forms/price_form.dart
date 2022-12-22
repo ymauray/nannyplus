@@ -49,6 +49,7 @@ class PriceForm extends StatelessWidget {
               name: 'amount',
               keyboardType: const TextInputType.numberWithOptions(
                 decimal: true,
+                signed: true,
               ),
               decoration: InputDecoration(
                 labelText: context.t('Price'),
