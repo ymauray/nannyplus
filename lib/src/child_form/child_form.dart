@@ -11,6 +11,7 @@ import 'package:nannyplus/cubit/file_list_cubit.dart';
 import 'package:nannyplus/cubit/invoice_settings_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/data/model/document.dart';
+import 'package:nannyplus/src/child_form/profile_photo.dart';
 import 'package:nannyplus/src/constants.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
@@ -32,6 +33,7 @@ class ChildForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormBuilderState>();
     context.read<FileListCubit>().loadFiles(child?.id ?? 0);
+    final profilePhotoController = ProfilePhotoController()..bytes = child?.pic;
 
     return FormBuilder(
       key: formKey,
@@ -73,6 +75,7 @@ class ChildForm extends StatelessWidget {
                     map['birthdate'] = DateFormat('yyyy-MM-dd')
                         .format(map['birthdate'] as DateTime);
                   }
+                  map['pic'] = profilePhotoController.bytes;
                   final data = Child.fromMap(map);
 
                   Navigator.of(context).pop(data);
@@ -85,6 +88,17 @@ class ChildForm extends StatelessWidget {
         body: UIListView.fromChildren(
           horizontalPadding: kdDefaultPadding,
           children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: kdDefaultPadding),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ProfilePhoto(
+                    controller: profilePhotoController,
+                  ),
+                ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(bottom: kdDefaultPadding),
               child: Row(
