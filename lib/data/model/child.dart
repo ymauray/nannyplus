@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, argument_type_not_assignable
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nannyplus/utils/prefs_util.dart';
 
@@ -22,6 +23,7 @@ class Child {
     this.labelForPhoneNumber3,
     this.phoneNumber3,
     this.freeText,
+    this.pic,
   });
   factory Child.fromJson(String source) => Child.fromMap(json.decode(source));
 
@@ -42,6 +44,7 @@ class Child {
       labelForPhoneNumber3: map['labelForPhoneNumber3'],
       phoneNumber3: map['phoneNumber3'],
       freeText: map['freeText'],
+      pic: map['pic'],
     );
   }
   final int? id;
@@ -59,6 +62,7 @@ class Child {
   final String? labelForPhoneNumber3;
   final String? phoneNumber3;
   final String? freeText;
+  final Uint8List? pic;
 
   String get displayName =>
       PrefsUtil.getInstanceSync().showFirstNameBeforeLastName
@@ -89,6 +93,7 @@ class Child {
     String? labelForPhoneNumber3,
     String? phoneNumber3,
     String? freeText,
+    Uint8List? pic,
   }) {
     return Child(
       id: id ?? this.id,
@@ -106,6 +111,7 @@ class Child {
       labelForPhoneNumber3: labelForPhoneNumber3 ?? this.labelForPhoneNumber3,
       phoneNumber3: phoneNumber3 ?? this.phoneNumber3,
       freeText: freeText ?? this.freeText,
+      pic: pic ?? this.pic,
     );
   }
 
@@ -126,6 +132,7 @@ class Child {
       'labelForPhoneNumber3': labelForPhoneNumber3,
       'phoneNumber3': phoneNumber3,
       'freeText': freeText,
+      'pic': pic,
     };
   }
 
@@ -133,7 +140,14 @@ class Child {
 
   @override
   String toString() {
-    return 'Child(id: $id, firstName: $firstName, lastName: $lastName, birthdate: $birthdate, phoneNumber: $phoneNumber, allergies: $allergies, parentsName: $parentsName, address: $address, preschool: $preschool, archived: $archived, labelForPhoneNumber2: $labelForPhoneNumber2, phoneNumber2: $phoneNumber2, labelForPhoneNumber3: $labelForPhoneNumber3, phoneNumber3: $phoneNumber3, freeText: $freeText)';
+    return 'Child(id: $id, firstName: $firstName, lastName: $lastName, '
+        'birthdate: $birthdate, phoneNumber: $phoneNumber, '
+        'allergies: $allergies, parentsName: $parentsName, address: $address, '
+        'preschool: $preschool, archived: $archived, '
+        'labelForPhoneNumber2: $labelForPhoneNumber2, '
+        'phoneNumber2: $phoneNumber2, '
+        'labelForPhoneNumber3: $labelForPhoneNumber3, '
+        'phoneNumber3: $phoneNumber3, freeText: $freeText)';
   }
 
   @override
@@ -155,7 +169,8 @@ class Child {
         other.phoneNumber2 == phoneNumber2 &&
         other.labelForPhoneNumber3 == labelForPhoneNumber3 &&
         other.phoneNumber3 == phoneNumber3 &&
-        other.freeText == freeText;
+        other.freeText == freeText &&
+        other.pic == pic;
   }
 
   @override
@@ -174,6 +189,7 @@ class Child {
         phoneNumber2.hashCode ^
         labelForPhoneNumber3.hashCode ^
         phoneNumber3.hashCode ^
-        freeText.hashCode;
+        freeText.hashCode ^
+        pic.hashCode;
   }
 }

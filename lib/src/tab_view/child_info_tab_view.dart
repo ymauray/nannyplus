@@ -4,6 +4,7 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/cubit/child_info_cubit.dart';
 import 'package:nannyplus/cubit/file_list_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/src/child_form/profile_photo.dart';
 import 'package:nannyplus/src/common/loading_indicator.dart';
 import 'package:nannyplus/src/constants.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
@@ -61,10 +62,21 @@ class _ChildInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<FileListCubit>().loadFiles(child.id ?? 0);
+    final profilePhotoController = ProfilePhotoController()..bytes = child.pic;
 
     return BlocBuilder<FileListCubit, FileListState>(
       builder: (context, state) => UIListView.fromChildren(
         children: [
+          if (profilePhotoController.bytes != null)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ProfilePhoto(
+                  controller: profilePhotoController,
+                  readonly: true,
+                ),
+              ],
+            ),
           _InfoCard(
             label: context.t('Birthdate'),
             value: child.birthdate?.formatDate() ?? '',
