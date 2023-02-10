@@ -104,7 +104,7 @@ class _ChildListViewState extends State<ChildListView> {
                 context.t(
                   'Since this is the first time you run this app, we inserted some sample data.',
                 ),
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
@@ -364,7 +364,7 @@ class _ChildListTile extends StatelessWidget {
             ),
             title: Text(
               child.displayName,
-              style: Theme.of(context).textTheme.subtitle1!.copyWith(
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     fontStyle:
                         child.isArchived ? FontStyle.italic : FontStyle.normal,
                     color: child.isArchived ? Colors.grey : null,
@@ -380,7 +380,7 @@ class _ChildListTile extends StatelessWidget {
                 ),
                 Text(
                   '${context.t('Last entry')} : $lastEntry',
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 12,
                         color: Colors.grey,
                       ),

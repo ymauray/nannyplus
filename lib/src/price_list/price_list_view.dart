@@ -86,7 +86,7 @@ class _PriceCard extends StatelessWidget {
           price.isFixedPrice ? 'Fixed price of {0}' : 'Hourly price of {0}',
           args: [price.amount.toStringAsFixed(2)],
         ),
-        style: Theme.of(context).textTheme.caption,
+        style: Theme.of(context).textTheme.bodySmall,
       ),
       trailing: Row(
         children: [

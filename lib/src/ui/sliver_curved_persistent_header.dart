@@ -76,7 +76,7 @@ class _Delegate extends SliverPersistentHeaderDelegate {
                   if (child != null)
                     DefaultTextStyle(
                       style: Theme.of(context).appBarTheme.toolbarTextStyle ??
-                          Theme.of(context).textTheme.bodyText1!,
+                          Theme.of(context).textTheme.bodyLarge!,
                       child: child!,
                     ),
                 ],

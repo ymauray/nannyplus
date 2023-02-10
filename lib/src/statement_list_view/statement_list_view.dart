@@ -66,7 +66,7 @@ class _YearlyStatementCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   '${statement.year}',
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               Padding(

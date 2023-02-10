@@ -156,7 +156,7 @@ class _GroupCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   group.key.toString(),
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               IconButton(
