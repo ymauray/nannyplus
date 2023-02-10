@@ -56,7 +56,7 @@ class AppTheme {
 
   static TextTheme primaryTextTheme() {
     return TextTheme(
-      headline6: GoogleFonts.poppins(
+      titleLarge: GoogleFonts.poppins(
         textStyle: const TextStyle(
           fontWeight: FontWeight.bold,
         ),
@@ -66,12 +66,12 @@ class AppTheme {
 
   static TextTheme textTheme() {
     return TextTheme(
-      bodyText2: GoogleFonts.poppins(
+      bodyMedium: GoogleFonts.poppins(
         textStyle: const TextStyle(
           fontSize: 14,
         ),
       ),
-      subtitle1: GoogleFonts.poppins(
+      titleMedium: GoogleFonts.poppins(
         textStyle: const TextStyle(
           fontWeight: FontWeight.bold,
         ),

@@ -62,7 +62,7 @@ class InvoiceForm extends StatelessWidget {
                             ),
                             child: Text(
                               context.t('Invoice for'),
-                              style: Theme.of(context).textTheme.caption,
+                              style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ),
                           Padding(
@@ -86,7 +86,7 @@ class InvoiceForm extends StatelessWidget {
                               ),
                               child: Text(
                                 context.t('Combined with'),
-                                style: Theme.of(context).textTheme.caption,
+                                style: Theme.of(context).textTheme.bodySmall,
                               ),
                             ),
                             ...state.children.map((child) => _Child(child)),

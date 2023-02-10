@@ -119,7 +119,7 @@ class _GroupCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       DateFormat.yMMMMd(I18nUtils.locale).format(group.key),
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                   IconButton(
@@ -179,7 +179,7 @@ class _GroupCard extends StatelessWidget {
                     child: Text(
                       dailyTotal.toStringAsFixed(2),
                       textAlign: TextAlign.end,
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                 ],
@@ -234,7 +234,7 @@ class _Detail extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 12, right: 12, top: 8),
       child: DefaultTextStyle(
-        style: Theme.of(context).textTheme.bodyText2!,
+        style: Theme.of(context).textTheme.bodyMedium!,
         child: Row(
           children: [
             Expanded(

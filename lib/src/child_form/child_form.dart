@@ -502,7 +502,7 @@ class _DocumentList extends StatelessWidget {
                         ),
                         child: Text(
                           file.label,
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
