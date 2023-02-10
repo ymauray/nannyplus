@@ -289,7 +289,9 @@ class _DocumentBuilder extends StatelessWidget {
               child: pw.Text(
                 service.isFixedPrice == 1
                     ? '-'
-                    : "${service.hours.toString()}h${service.minutes.toString().padLeft(2, '0')} x ${service.priceAmount!.toStringAsFixed(2)}",
+                    : '${service.hours}h'
+                        "${service.minutes.toString().padLeft(2, '0')} x "
+                        '${service.priceAmount!.toStringAsFixed(2)}',
                 textAlign: pw.TextAlign.center,
                 style: const pw.TextStyle(fontSize: 14),
               ),
