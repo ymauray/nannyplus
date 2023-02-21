@@ -1,10 +1,10 @@
 [
     {
-        "language": "en-US",
-        "text": "Possibility to set a negative price for a service\nPossibility to add a profile picture on a child's file."
+        "language": "en-GB",
+        "text": "Bumped Android SDK target version."
     },
     {
         "language": "fr-FR",
-        "text": "Possibilité de mettre un prix négatif pour un service\nPossibilité d'ajouter une photo de profil sur le dossier d'un enfant."
+        "text": "Mise à jour de la version cible du SDK Android."
     }
 ]
