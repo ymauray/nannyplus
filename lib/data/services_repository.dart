@@ -118,42 +118,6 @@ class ServicesRepository {
     return rows.map((e) => Service.fromMap(e)).toList();
   }
 
-  @Deprecated('Use getServiceInfoPerChild instead')
-  Future<double> getPendingTotal() async {
-    final db = await DatabaseUtil.instance;
-
-    final rows =
-        await db.query('services', where: 'invoiced = ?', whereArgs: [0]);
-
-    return rows.fold<double>(
-      0,
-      (sum, row) => sum + (row['total']! as double),
-    );
-  }
-
-  @Deprecated('Use getServiceInfoPerChild instead')
-  Future<Map<int, double>> getPendingTotalPerChild() async {
-    final db = await DatabaseUtil.instance;
-
-    final rows =
-        await db.query('services', where: 'invoiced = ?', whereArgs: [0]);
-
-    final groupedRows = rows
-        .map((row) => Service.fromMap(row))
-        .toList()
-        .groupBy<num>((service) => service.childId)
-        .toList();
-    final map = <int, double>{
-      for (var group in groupedRows)
-        group.key as int: group.value.fold(
-          0,
-          (previousValue, service) => previousValue + service.total,
-        ),
-    };
-
-    return map;
-  }
-
   Future<Map<int, ServiceInfo>> getServiceInfoPerChild() async {
     final db = await DatabaseUtil.instance;
 
@@ -169,6 +133,7 @@ class ServicesRepository {
     final map = <int, ServiceInfo>{
       for (var group in groupedRows)
         group.key as int: ServiceInfo(
+          pendingInvoice: 0,
           pendingTotal: group.value.fold(
             0,
             (previousValue, service) => previousValue + service.total,
@@ -192,12 +157,38 @@ class ServicesRepository {
             DateFormat('yyyy-MM-dd').parse(map2[childId] as String);
       }
     }
+
     for (final row in rows) {
       if (!map.containsKey(row['childId'] as int)) {
         map[row['childId'] as int] = ServiceInfo(
           pendingTotal: 0,
+          pendingInvoice: 0,
           lastEnty: DateFormat('yyyy-MM-dd').parse(row['MAX(date)'] as String),
         );
+      }
+    }
+
+    rows = await db.query(
+      'invoices',
+      where: 'paid = ?',
+      whereArgs: [0],
+    );
+
+    final groupedInvoices =
+        rows.groupBy<num>((row) => row['childId'] as int).toList();
+
+    final invoicesMap = <int, double>{
+      for (var group in groupedInvoices)
+        group.key as int: group.value.fold(
+          0,
+          (previousValue, row) =>
+              previousValue + double.parse(row['total']!.toString()),
+        ),
+    };
+
+    for (final childId in map.keys) {
+      if (invoicesMap.containsKey(childId)) {
+        map[childId]!.pendingInvoice = invoicesMap[childId]!;
       }
     }
 

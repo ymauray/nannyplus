@@ -332,6 +332,9 @@ class _ChildListTile extends StatelessWidget {
     final pendingTotal = serviceInfo != null
         ? serviceInfo.pendingTotal.toStringAsFixed(2)
         : '0.00';
+    final pendingInvoice = serviceInfo != null
+        ? serviceInfo.pendingInvoice.toStringAsFixed(2)
+        : '0.00';
 
     return Padding(
       padding: const EdgeInsets.all(8),
@@ -392,7 +395,21 @@ class _ChildListTile extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
-                  child: Text(pendingTotal),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(pendingTotal),
+                      const Divider(),
+                      Text(
+                        pendingInvoice,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 PopupMenuButton(
                   onSelected: (value) async {
