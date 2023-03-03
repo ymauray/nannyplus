@@ -400,6 +400,13 @@ class _ChildListTile extends StatelessWidget {
                         color: Colors.grey,
                       ),
                 ),
+                Text(
+                  '${context.t('Pending invoice')} : $pendingInvoice',
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      ),
+                ),
               ],
             ),
             trailing: Row(
@@ -407,23 +414,7 @@ class _ChildListTile extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(pendingTotal),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8),
-                        child: Text(
-                          pendingInvoice,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: Text(pendingTotal),
                 ),
                 PopupMenuButton(
                   onSelected: (value) async {
