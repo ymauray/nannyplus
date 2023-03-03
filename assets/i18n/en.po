@@ -192,3 +192,9 @@ msgstr "Statement for {0}"
 
 msgid "Pending invoice"
 msgstr "Pending invoice"
+
+msgid "File not found"
+msgstr "File not found"
+
+msgid "Delete document"
+msgstr "Delete document"

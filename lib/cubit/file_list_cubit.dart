@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:nannyplus/data/files_repository.dart';
 import 'package:nannyplus/data/model/document.dart';
-import 'package:path_provider/path_provider.dart';
 
 part 'file_list_state.dart';
 
@@ -17,18 +16,8 @@ class FileListCubit extends Cubit<FileListState> {
 
   Future<void> addFile(int childId, File file) async {
     if (childId == 0) return;
-    final directory = await getApplicationDocumentsDirectory();
     final name = file.path.split('/').last;
-    var index = 0;
-    var loop = true;
-    var path = '';
-    while (loop) {
-      index += 1;
-      path = '${directory.path}/${childId}_${index}_$name';
-      loop = File(path).existsSync();
-    }
-    file.copySync(path);
-    await _filesRepository.addFile(childId, name, path);
+    await _filesRepository.addFile(childId, name, file.readAsBytesSync());
     final documents = await _filesRepository.getFiles(childId);
     emit(FileListLoaded(documents));
   }
@@ -44,7 +33,12 @@ class FileListCubit extends Cubit<FileListState> {
     if (childId == 0) return;
     await _filesRepository.removeFile(document);
     try {
-      await File(document.path).delete();
+      if (document.path != '') {
+        final file = File(document.path);
+        if (file.existsSync()) {
+          File(document.path).deleteSync();
+        }
+      }
     } catch (e) {
       debugPrint('$e');
     }
