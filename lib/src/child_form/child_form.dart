@@ -66,6 +66,7 @@ class ChildForm extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: IconButton(
+              tooltip: context.t('Save'),
               onPressed: () {
                 formKey.currentState!.save();
                 if (formKey.currentState!.validate()) {

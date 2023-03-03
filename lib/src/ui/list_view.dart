@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gettext_i18n/gettext_i18n.dart';
 
 class UIListView extends StatelessWidget {
   const UIListView({
@@ -52,6 +53,7 @@ class UIListView extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: FloatingActionButton(
+                tooltip: context.t('Add Child'),
                 onPressed: onFloatingActionPressed,
                 child: const Icon(Icons.add),
               ),
