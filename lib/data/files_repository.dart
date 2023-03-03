@@ -1,15 +1,19 @@
+import 'dart:typed_data';
+
 import 'package:nannyplus/data/model/document.dart';
 import 'package:nannyplus/utils/database_util.dart';
 
 class FilesRepository {
   const FilesRepository();
 
-  Future<int> addFile(int childId, String label, String path) async {
+  Future<int> addFile(int childId, String label, Uint8List bytes) async {
     final db = await DatabaseUtil.instance;
+
     final id = await db.insert('documents', {
       'childId': childId,
       'label': label,
-      'path': path,
+      'path': '',
+      'bytes': bytes,
     });
 
     return id;
@@ -24,7 +28,7 @@ class FilesRepository {
       orderBy: 'label',
     );
 
-    return rows.map((row) => Document.fromMap(row));
+    return rows.map(Document.fromMap);
   }
 
   Future<void> removeFile(Document document) async {

@@ -26,8 +26,8 @@ class InvoiceView extends StatelessWidget {
   const InvoiceView(
     this.invoice,
     this.gettext, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Invoice invoice;
   final GettextLocalizations gettext;
@@ -62,12 +62,7 @@ class InvoiceView extends StatelessWidget {
 }
 
 class _DocumentBuilder extends StatelessWidget {
-  const _DocumentBuilder(
-    this.state,
-    this.invoice,
-    this.gettext, {
-    Key? key,
-  }) : super(key: key);
+  const _DocumentBuilder(this.state, this.invoice, this.gettext);
 
   final InvoiceViewLoaded state;
   final Invoice invoice;

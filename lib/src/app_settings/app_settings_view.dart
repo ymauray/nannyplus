@@ -4,7 +4,7 @@ import 'package:nannyplus/cubit/app_settings_cubit.dart';
 import 'package:nannyplus/src/app_settings/app_settings_form.dart';
 
 class AppSettingsView extends StatelessWidget {
-  const AppSettingsView({Key? key}) : super(key: key);
+  const AppSettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {

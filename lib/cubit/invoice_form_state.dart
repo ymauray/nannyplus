@@ -76,7 +76,7 @@ class InvoiceFormLoaded extends InvoiceFormState {
     return InvoiceFormLoaded(
       child: Child.fromMap(map['child']),
       children: List<InvoiceFormChild>.from(
-        map['children']?.map((Json x) => InvoiceFormChild.fromMap(x)),
+        map['children']?.map(InvoiceFormChild.fromMap),
       ),
     );
   }

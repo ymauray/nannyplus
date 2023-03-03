@@ -53,7 +53,7 @@ class ServicesRepository {
       orderBy: 'date DESC',
     );
 
-    return rows.map((e) => Service.fromMap(e)).toList();
+    return rows.map(Service.fromMap).toList();
   }
 
   Future<List<Service>> getServicesForInvoice(int invoiceId) async {
@@ -66,7 +66,7 @@ class ServicesRepository {
       orderBy: 'date DESC',
     );
 
-    return rows.map((e) => Service.fromMap(e)).toList();
+    return rows.map(Service.fromMap).toList();
   }
 
   Future<List<Service>> getServicesForDate(DateTime date) async {
@@ -78,7 +78,7 @@ class ServicesRepository {
       whereArgs: [DateFormat('yyyy-MM-dd').format(date)],
     );
 
-    return rows.map((row) => Service.fromMap(row)).toList();
+    return rows.map(Service.fromMap).toList();
   }
 
   Future<void> deleteForChildAndDate(int childId, String date) async {
@@ -102,7 +102,7 @@ class ServicesRepository {
       whereArgs: [childId, DateFormat('yyyy-MM-dd').format(date), 0],
     );
 
-    return rows.map((row) => Service.fromMap(row)).toList();
+    return rows.map(Service.fromMap).toList();
   }
 
   Future<List<Service>> getRecentServices(int childId) async {
@@ -115,43 +115,7 @@ class ServicesRepository {
       orderBy: 'date DESC',
     );
 
-    return rows.map((e) => Service.fromMap(e)).toList();
-  }
-
-  @Deprecated('Use getServiceInfoPerChild instead')
-  Future<double> getPendingTotal() async {
-    final db = await DatabaseUtil.instance;
-
-    final rows =
-        await db.query('services', where: 'invoiced = ?', whereArgs: [0]);
-
-    return rows.fold<double>(
-      0,
-      (sum, row) => sum + (row['total']! as double),
-    );
-  }
-
-  @Deprecated('Use getServiceInfoPerChild instead')
-  Future<Map<int, double>> getPendingTotalPerChild() async {
-    final db = await DatabaseUtil.instance;
-
-    final rows =
-        await db.query('services', where: 'invoiced = ?', whereArgs: [0]);
-
-    final groupedRows = rows
-        .map((row) => Service.fromMap(row))
-        .toList()
-        .groupBy<num>((service) => service.childId)
-        .toList();
-    final map = <int, double>{
-      for (var group in groupedRows)
-        group.key as int: group.value.fold(
-          0,
-          (previousValue, service) => previousValue + service.total,
-        ),
-    };
-
-    return map;
+    return rows.map(Service.fromMap).toList();
   }
 
   Future<Map<int, ServiceInfo>> getServiceInfoPerChild() async {
@@ -161,7 +125,7 @@ class ServicesRepository {
         await db.query('services', where: 'invoiced = ?', whereArgs: [0]);
 
     final groupedRows = rows
-        .map((row) => Service.fromMap(row))
+        .map(Service.fromMap)
         .toList()
         .groupBy<num>((service) => service.childId)
         .toList();
@@ -169,6 +133,7 @@ class ServicesRepository {
     final map = <int, ServiceInfo>{
       for (var group in groupedRows)
         group.key as int: ServiceInfo(
+          pendingInvoice: 0,
           pendingTotal: group.value.fold(
             0,
             (previousValue, service) => previousValue + service.total,
@@ -192,12 +157,38 @@ class ServicesRepository {
             DateFormat('yyyy-MM-dd').parse(map2[childId] as String);
       }
     }
+
     for (final row in rows) {
       if (!map.containsKey(row['childId'] as int)) {
         map[row['childId'] as int] = ServiceInfo(
           pendingTotal: 0,
+          pendingInvoice: 0,
           lastEnty: DateFormat('yyyy-MM-dd').parse(row['MAX(date)'] as String),
         );
+      }
+    }
+
+    rows = await db.query(
+      'invoices',
+      where: 'paid = ?',
+      whereArgs: [0],
+    );
+
+    final groupedInvoices =
+        rows.groupBy<num>((row) => row['childId'] as int).toList();
+
+    final invoicesMap = <int, double>{
+      for (var group in groupedInvoices)
+        group.key as int: group.value.fold(
+          0,
+          (previousValue, row) =>
+              previousValue + double.parse(row['total']!.toString()),
+        ),
+    };
+
+    for (final childId in map.keys) {
+      if (invoicesMap.containsKey(childId)) {
+        map[childId]!.pendingInvoice = invoicesMap[childId]!;
       }
     }
 
@@ -270,7 +261,7 @@ class ServicesRepository {
       ],
     );
 
-    final list = rows.map((row) => StatementLine.fromMap(row)).toList();
+    final list = rows.map(StatementLine.fromMap).toList();
 
     return list;
   }
@@ -290,7 +281,7 @@ class ServicesRepository {
       ' month DESC',
     );
 
-    final list = rows.map((row) => StatementSummary.fromMap(row)).toList();
+    final list = rows.map(StatementSummary.fromMap).toList();
 
     return list;
   }

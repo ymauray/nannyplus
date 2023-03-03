@@ -27,10 +27,10 @@ class ServiceFormLoaded extends ServiceFormState {
       map['date'] != null
           ? DateTime.fromMillisecondsSinceEpoch(map['date'])
           : null,
-      List<Service>.from(map['services']?.map((Json x) => Service.fromMap(x))),
-      List<Price>.from(map['prices']?.map((Json x) => Price.fromMap(x))),
+      List<Service>.from(map['services']?.map(Service.fromMap)),
+      List<Price>.from(map['prices']?.map(Price.fromMap)),
       List<Service>.from(
-        map['selectedServices']?.map((Json x) => Service.fromMap(x)),
+        map['selectedServices']?.map(Service.fromMap),
       ),
     );
   }

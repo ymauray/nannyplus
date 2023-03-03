@@ -9,7 +9,7 @@ import 'package:nannyplus/utils/snack_bar_util.dart';
 import 'package:share_plus/share_plus.dart';
 
 class BackupRestoreView extends StatelessWidget {
-  const BackupRestoreView({Key? key}) : super(key: key);
+  const BackupRestoreView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +77,7 @@ class BackupRestoreView extends StatelessWidget {
 
   Future<void> _backup(BuildContext context) async {
     await DatabaseUtil.closeDatabase();
+    // ignore: deprecated_member_use
     await Share.shareFiles([await DatabaseUtil.databasePath]);
   }
 

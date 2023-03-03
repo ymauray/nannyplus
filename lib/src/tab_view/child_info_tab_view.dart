@@ -1,5 +1,8 @@
+import 'dart:io' as io;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/cubit/child_info_cubit.dart';
 import 'package:nannyplus/cubit/file_list_cubit.dart';
@@ -11,12 +14,13 @@ import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/src/ui/ui_card.dart';
 import 'package:nannyplus/utils/date_format_extension.dart';
 import 'package:open_file_plus/open_file_plus.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ChildInfoTabView extends StatelessWidget {
   const ChildInfoTabView({
-    Key? key,
+    super.key,
     required this.childId,
-  }) : super(key: key);
+  });
 
   final int childId;
 
@@ -45,9 +49,8 @@ class ChildInfoTabView extends StatelessWidget {
 
 class _ChildInfo extends StatelessWidget {
   const _ChildInfo({
-    Key? key,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Child child;
 
@@ -117,10 +120,42 @@ class _ChildInfo extends StatelessWidget {
           if (state is FileListLoaded)
             ...state.files.map(
               (file) => GestureDetector(
-                onTap: () => OpenFile.open(file.path),
+                onTap: () {
+                  final deviceFile = io.File(file.path);
+                  if (deviceFile.existsSync()) {
+                    OpenFile.open(file.path);
+                  } else if (file.bytes.isNotEmpty) {
+                    getTemporaryDirectory().then((tempDir) {
+                      final tempFile = io.File('${tempDir.path}/${file.label}')
+                        ..writeAsBytesSync(file.bytes);
+                      OpenFile.open(tempFile.path);
+                    });
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text(context.t('File not found')),
+                      ),
+                    );
+                  }
+                },
                 child: _InfoCard(
                   label: context.t('Document'),
                   value: file.label,
+                  icon: file.bytes.isNotEmpty
+                      ? const Icon(
+                          FontAwesomeIcons.database,
+                          color: Colors.green,
+                        )
+                      : io.File(file.path).existsSync()
+                          ? const Icon(
+                              FontAwesomeIcons.fileCircleCheck,
+                              color: Colors.green,
+                            )
+                          : const Icon(
+                              FontAwesomeIcons.fileCircleExclamation,
+                              color: Colors.red,
+                            ),
                 ),
               ),
             ),
@@ -132,13 +167,14 @@ class _ChildInfo extends StatelessWidget {
 
 class _InfoCard extends StatelessWidget {
   const _InfoCard({
-    Key? key,
     required this.label,
     required this.value,
-  }) : super(key: key);
+    this.icon,
+  });
 
   final String label;
   final String value;
+  final Icon? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -164,6 +200,7 @@ class _InfoCard extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
+                  if (icon != null) icon!,
                 ],
               ),
             ],

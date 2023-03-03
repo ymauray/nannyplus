@@ -20,8 +20,8 @@ class InvoiceViewLoaded extends InvoiceViewState {
 
   factory InvoiceViewLoaded.fromMap(Map<String, dynamic> map) {
     return InvoiceViewLoaded(
-      List<Service>.from(map['services']?.map((Json x) => Service.fromMap(x))),
-      List<Child>.from(map['children']?.map((Json x) => Child.fromMap(x))),
+      List<Service>.from(map['services']?.map(Service.fromMap)),
+      List<Child>.from(map['children']?.map(Child.fromMap)),
     );
   }
 

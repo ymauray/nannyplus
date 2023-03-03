@@ -15,9 +15,9 @@ import 'package:nannyplus/utils/snack_bar_util.dart';
 
 class ServiceListTabView extends StatelessWidget {
   const ServiceListTabView({
-    Key? key,
+    super.key,
     required this.childId,
-  }) : super(key: key);
+  });
 
   final int childId;
 
@@ -44,10 +44,9 @@ class ServiceListTabView extends StatelessWidget {
 
 class _List extends StatelessWidget {
   const _List({
-    Key? key,
     required this.child,
     required this.services,
-  }) : super(key: key);
+  });
 
   final Child child;
   final List<Service> services;
@@ -84,8 +83,7 @@ class _GroupCard extends StatelessWidget {
   const _GroupCard({
     required this.child,
     required this.group,
-    Key? key,
-  }) : super(key: key);
+  });
 
   final Child child;
   final Group<DateTime, Service> group;
@@ -223,9 +221,8 @@ class _GroupCard extends StatelessWidget {
 
 class _Detail extends StatelessWidget {
   const _Detail({
-    Key? key,
     required this.service,
-  }) : super(key: key);
+  });
 
   final Service service;
 

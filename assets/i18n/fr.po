@@ -466,3 +466,12 @@ msgstr "Relevé {0}"
 
 msgid "Statement for {0}"
 msgstr "Relevé pour {0}"
+
+msgid "Pending invoice"
+msgstr "Total à encaisser"
+
+msgid "File not found"
+msgstr "Fichier introuvable"
+
+msgid "Delete document"
+msgstr "Supprimer le document"

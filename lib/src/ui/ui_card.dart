@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class UICard extends StatelessWidget {
   const UICard({
-    Key? key,
+    super.key,
     required this.children,
-  }) : super(key: key);
+  });
 
   final List<Widget> children;
 

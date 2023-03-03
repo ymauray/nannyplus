@@ -20,7 +20,7 @@ class InvoicesRepository {
       rows = rows.where((row) => row['paid'] == 0).toList();
     }
 
-    return rows.map((row) => Invoice.fromMap(row)).toList();
+    return rows.map(Invoice.fromMap).toList();
   }
 
   Future<Invoice> create(Invoice invoice) async {

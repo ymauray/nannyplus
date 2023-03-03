@@ -21,10 +21,10 @@ import 'package:open_file_plus/open_file_plus.dart';
 
 class ChildForm extends StatelessWidget {
   const ChildForm({
-    Key? key,
+    super.key,
     this.child,
     this.childToClone,
-  }) : super(key: key);
+  });
 
   final Child? child;
   final Child? childToClone;
@@ -66,6 +66,7 @@ class ChildForm extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: IconButton(
+              tooltip: context.t('Save'),
               onPressed: () {
                 formKey.currentState!.save();
                 if (formKey.currentState!.validate()) {
@@ -463,10 +464,8 @@ class _DocumentList extends StatelessWidget {
   const _DocumentList({
     required Iterable<Document> documents,
     required Child? child,
-    Key? key,
   })  : _documents = documents,
-        _child = child,
-        super(key: key);
+        _child = child;
 
   final Child? _child;
   final Iterable<Document> _documents;

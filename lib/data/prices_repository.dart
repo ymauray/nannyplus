@@ -13,7 +13,7 @@ class PricesRepository {
       where: 'deleted = ?',
       whereArgs: [0],
     );
-    final priceList = rows.map((row) => Price.fromMap(row)).toList();
+    final priceList = rows.map(Price.fromMap).toList();
 
     return priceList;
   }
@@ -34,7 +34,7 @@ class PricesRepository {
   Future<void> reorder(int oldIndex, int newIndex) async {
     final database = await DatabaseUtil.instance;
     final rows = await database.query('prices', orderBy: 'sortOrder asc');
-    final priceList = rows.map((row) => Price.fromMap(row)).toList();
+    final priceList = rows.map(Price.fromMap).toList();
 
     final price = priceList.removeAt(oldIndex);
     if (newIndex > oldIndex) {

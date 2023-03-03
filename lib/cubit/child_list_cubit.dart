@@ -18,10 +18,6 @@ class ChildListCubit extends Cubit<ChildListState> {
     try {
       final childList =
           await _childrenRepository.getChildList(loadArchivedFolders);
-      final pendingTotalPerChild =
-          await _servicesRepository.getPendingTotalPerChild();
-      final undeletableChildren =
-          await _servicesRepository.getUndeletableChildren();
       final servicesInfo = await _servicesRepository.getServiceInfoPerChild();
 
       final pendingTotal =
@@ -33,8 +29,6 @@ class ChildListCubit extends Cubit<ChildListState> {
         ChildListLoaded(
           childList,
           pendingTotal,
-          pendingTotalPerChild,
-          undeletableChildren,
           servicesInfo,
           showArchived: loadArchivedFolders,
           showOnboarding: (await PrefsUtil.getInstance()).showOnboarding,

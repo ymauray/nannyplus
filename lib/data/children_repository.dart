@@ -18,7 +18,7 @@ class ChildrenRepository {
           : 'firstName, lastname',
     );
 
-    return rows.map((row) => Child.fromMap(row)).toList();
+    return rows.map(Child.fromMap).toList();
   }
 
   Future<Child> create(Child child) async {

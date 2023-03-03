@@ -23,8 +23,8 @@ class ChildStatementView extends StatelessWidget {
   const ChildStatementView(
     this.group,
     this.gettext, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Group<num, Invoice> group;
   final GettextLocalizations gettext;
@@ -57,12 +57,7 @@ class ChildStatementView extends StatelessWidget {
 }
 
 class _DocumentBuilder extends StatelessWidget {
-  const _DocumentBuilder(
-    this.child,
-    this.group,
-    this.gettext, {
-    Key? key,
-  }) : super(key: key);
+  const _DocumentBuilder(this.child, this.group, this.gettext);
 
   final Child child;
   final Group<num, Invoice> group;

@@ -19,11 +19,11 @@ import 'package:nannyplus/widgets/time_input_dialog.dart';
 
 class ServiceForm extends StatelessWidget {
   const ServiceForm({
-    Key? key,
+    super.key,
     required this.child,
     required this.tab,
     this.date,
-  }) : super(key: key);
+  });
 
   final Child child;
   final int tab;
@@ -114,10 +114,9 @@ class ServiceForm extends StatelessWidget {
 
 class _List extends StatelessWidget {
   const _List({
-    Key? key,
     required this.state,
     required this.child,
-  }) : super(key: key);
+  });
 
   final ServiceFormLoaded state;
   final Child child;
@@ -327,8 +326,7 @@ class _PriceTile extends StatelessWidget {
     required this.price,
     required this.childId,
     this.onPressed,
-    Key? key,
-  }) : super(key: key);
+  });
   final Price price;
   final int childId;
   final VoidCallback? onPressed;
@@ -392,8 +390,7 @@ class _ServiceTile extends StatelessWidget {
   const _ServiceTile({
     required this.service,
     required this.trailing,
-    Key? key,
-  }) : super(key: key);
+  });
 
   final Service service;
   final Widget trailing;

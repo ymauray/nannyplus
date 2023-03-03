@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
 import 'package:nannyplus/cubit/child_list_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/provider/show_pending_invoice_provider.dart';
 import 'package:nannyplus/src/app_settings/app_settings_view.dart';
 import 'package:nannyplus/src/child_form/child_form.dart';
 import 'package:nannyplus/src/child_list/main_drawer.dart';
@@ -21,14 +23,14 @@ import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:nannyplus/utils/snack_bar_util.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ChildListView extends StatefulWidget {
-  const ChildListView({Key? key}) : super(key: key);
+class ChildListView extends ConsumerStatefulWidget {
+  const ChildListView({super.key});
 
   @override
-  State<ChildListView> createState() => _ChildListViewState();
+  ConsumerState<ChildListView> createState() => _ChildListViewState();
 }
 
-class _ChildListViewState extends State<ChildListView> {
+class _ChildListViewState extends ConsumerState<ChildListView> {
   bool showArchivedFolders = false;
   int _currentIndex = 0;
 
@@ -37,6 +39,8 @@ class _ChildListViewState extends State<ChildListView> {
     context
         .read<ChildListCubit>()
         .loadChildList(loadArchivedFolders: showArchivedFolders);
+
+    final showPendingInvoice = ref.watch(showPendingInvoiceProvider);
 
     return BlocConsumer<ChildListCubit, ChildListState>(
       listener: (context, state) async {
@@ -71,8 +75,17 @@ class _ChildListViewState extends State<ChildListView> {
           title: const Text(ksAppName),
           persistentHeader: UISliverCurvedPersistenHeader(
             child: _currentIndex == 0
-                ? Text(
-                    '${context.t('Pending total')} : ${state is ChildListLoaded ? state.pendingTotal.toStringAsFixed(2) : '...'}',
+                ? GestureDetector(
+                    onTap: () {
+                      ref.read(showPendingInvoiceProvider.notifier).toggle();
+                    },
+                    child: showPendingInvoice
+                        ? Text(
+                            '${context.t('Pending invoice')} : ${state is ChildListLoaded ? state.pendingInvoice.toStringAsFixed(2) : '...'}',
+                          )
+                        : Text(
+                            '${context.t('Pending total')} : ${state is ChildListLoaded ? state.pendingTotal.toStringAsFixed(2) : '...'}',
+                          ),
                   )
                 : Text(
                     context.t('Options'),
@@ -307,8 +320,7 @@ class _ChildListTile extends StatelessWidget {
     required this.state,
     required this.onToggleShowArchivedFolders,
     this.onTap,
-    Key? key,
-  }) : super(key: key);
+  });
 
   final ChildListLoaded state;
   final int index;
@@ -331,6 +343,9 @@ class _ChildListTile extends StatelessWidget {
         : '...';
     final pendingTotal = serviceInfo != null
         ? serviceInfo.pendingTotal.toStringAsFixed(2)
+        : '0.00';
+    final pendingInvoice = serviceInfo != null
+        ? serviceInfo.pendingInvoice.toStringAsFixed(2)
         : '0.00';
 
     return Padding(
@@ -380,6 +395,13 @@ class _ChildListTile extends StatelessWidget {
                 ),
                 Text(
                   '${context.t('Last entry')} : $lastEntry',
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      ),
+                ),
+                Text(
+                  '${context.t('Pending invoice')} : $pendingInvoice',
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 12,
                         color: Colors.grey,

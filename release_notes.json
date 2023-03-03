@@ -1,10 +1,10 @@
 [
     {
         "language": "en-GB",
-        "text": "Bumped Android SDK target version."
+        "text": "Show pending invoice on child list."
     },
     {
         "language": "fr-FR",
-        "text": "Mise à jour de la version cible du SDK Android."
+        "text": "Ajout du total à facturer sur la liste des enfants."
     }
 ]

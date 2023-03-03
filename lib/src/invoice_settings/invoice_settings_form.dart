@@ -14,7 +14,7 @@ import 'package:nannyplus/utils/logo_picker_controller.dart';
 import 'package:path_provider/path_provider.dart';
 
 class InvoiceSettingsForm extends StatelessWidget {
-  InvoiceSettingsForm(this._state, {Key? key}) : super(key: key) {
+  InvoiceSettingsForm(this._state, {super.key}) {
     line1Controller.text = _state.line1;
     line2Controller.text = _state.line2;
   }

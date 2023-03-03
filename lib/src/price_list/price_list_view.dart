@@ -13,7 +13,7 @@ import 'package:nannyplus/widgets/card_tile.dart';
 import 'package:nannyplus/widgets/floating_action_stack.dart';
 
 class PriceListView extends StatelessWidget {
-  const PriceListView({Key? key}) : super(key: key);
+  const PriceListView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +38,7 @@ class PriceListView extends StatelessWidget {
                           .reorder(oldIndex, newIndex);
                     },
                     bottomPadding: 80,
-                    children: state.priceList
-                        .map((price) => _PriceCard(price))
-                        .toList(),
+                    children: state.priceList.map(_PriceCard.new).toList(),
                   ),
                   onPressed: () async {
                     await Navigator.of(context).push(
@@ -60,7 +58,7 @@ class PriceListView extends StatelessWidget {
 }
 
 class _PriceCard extends StatelessWidget {
-  const _PriceCard(this.price, {Key? key}) : super(key: key);
+  const _PriceCard(this.price, {super.key});
 
   final Price price;
 

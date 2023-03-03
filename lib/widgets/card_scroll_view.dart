@@ -5,8 +5,8 @@ class CardScrollView extends StatelessWidget {
     required this.children,
     this.bottomPadding,
     this.onReorder,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final List<Widget> children;
   final double? bottomPadding;

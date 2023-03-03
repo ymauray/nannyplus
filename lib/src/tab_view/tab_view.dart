@@ -15,8 +15,8 @@ import 'package:nannyplus/src/ui/view.dart';
 class TabView extends StatelessWidget {
   const TabView(
     this.childId, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final int childId;
 

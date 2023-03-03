@@ -12,8 +12,8 @@ class UIView extends StatelessWidget {
     this.onFloatingActionPressed,
     this.actions,
     this.bottomNavigationBar,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget? drawer;
   final Widget? title;

@@ -28,11 +28,10 @@ class StatementView extends StatelessWidget {
     required StatementViewType type,
     required DateTime date,
     required GettextLocalizations gettext,
-    Key? key,
+    super.key,
   })  : _type = type,
         _date = date,
-        _gettext = gettext,
-        super(key: key);
+        _gettext = gettext;
 
   final StatementViewType _type;
   final DateTime _date;

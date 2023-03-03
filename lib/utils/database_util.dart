@@ -43,7 +43,7 @@ class DatabaseUtil {
 
     _database = await sqlite.openDatabase(
       await _databasePath,
-      version: 7,
+      version: 8,
       onCreate: (db, version) async {
         await _create(db);
         for (var i = 2; i <= version; i++) {
@@ -363,6 +363,13 @@ class DatabaseUtil {
       await db.execute('''
     ALTER TABLE children
     ADD COLUMN pic BLOB
+    ''');
+    }
+
+    if (version == 8) {
+      await db.execute('''
+    ALTER TABLE documents
+    ADD COLUMN bytes BLOB
     ''');
     }
   }
