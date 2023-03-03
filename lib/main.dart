@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:nannyplus/app.dart';
@@ -37,6 +38,6 @@ Future<void> main() async {
   }
 
   runApp(
-    const NannyPlusApp(),
+    const ProviderScope(child: NannyPlusApp()),
   );
 }
