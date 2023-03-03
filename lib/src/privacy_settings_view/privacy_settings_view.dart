@@ -4,7 +4,7 @@ import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/view.dart';
 
 class PrivacySettingsView extends StatelessWidget {
-  const PrivacySettingsView({Key? key}) : super(key: key);
+  const PrivacySettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {

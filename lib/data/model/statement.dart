@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:nannyplus/data/model/statement_line.dart';
-import 'package:nannyplus/utils/types.dart';
 
 @immutable
 class Statement {
@@ -16,9 +15,7 @@ class Statement {
   factory Statement.fromMap(Map<String, dynamic> map) {
     return Statement(
       lines: List<StatementLine>.from(
-        map['lines']?.map(
-          (Json x) => StatementLine.fromMap(x),
-        ),
+        map['lines']?.map(StatementLine.fromMap),
       ),
     );
   }

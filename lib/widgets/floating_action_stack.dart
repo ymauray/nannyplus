@@ -4,8 +4,8 @@ class FloatingActionStack extends StatelessWidget {
   const FloatingActionStack({
     required this.child,
     required this.onPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget child;
   final VoidCallback onPressed;

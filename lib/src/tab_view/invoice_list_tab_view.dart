@@ -20,9 +20,9 @@ import 'package:nannyplus/utils/snack_bar_util.dart';
 
 class InvoiceListTabView extends StatefulWidget {
   const InvoiceListTabView({
-    Key? key,
+    super.key,
     required this.childId,
-  }) : super(key: key);
+  });
 
   final int childId;
 
@@ -69,12 +69,11 @@ class _InvoiceListTabViewState extends State<InvoiceListTabView> {
 
 class _List extends StatelessWidget {
   const _List({
-    Key? key,
     required this.invoices,
     required this.childId,
     required this.showPaidInvoices,
     required this.onToggleShowPaidInvoices,
-  }) : super(key: key);
+  });
 
   final List<Invoice> invoices;
   final int childId;
@@ -139,9 +138,8 @@ class _List extends StatelessWidget {
 
 class _GroupCard extends StatelessWidget {
   const _GroupCard({
-    Key? key,
     required this.group,
-  }) : super(key: key);
+  });
 
   final Group<num, Invoice> group;
 
@@ -195,9 +193,8 @@ class _GroupCard extends StatelessWidget {
 
 class _InvoiceCard extends StatelessWidget {
   const _InvoiceCard({
-    Key? key,
     required this.invoice,
-  }) : super(key: key);
+  });
 
   final Invoice invoice;
 

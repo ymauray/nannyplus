@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:nannyplus/data/invoices_repository.dart';
 import 'package:nannyplus/data/model/invoice.dart';
 import 'package:nannyplus/data/services_repository.dart';
-import 'package:nannyplus/utils/types.dart';
 
 part 'invoice_list_state.dart';
 

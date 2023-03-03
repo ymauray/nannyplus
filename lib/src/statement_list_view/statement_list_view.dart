@@ -16,7 +16,7 @@ import 'package:nannyplus/src/ui/view.dart';
 import 'package:nannyplus/utils/text_extension.dart';
 
 class StatementListView extends StatelessWidget {
-  const StatementListView({Key? key}) : super(key: key);
+  const StatementListView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +49,8 @@ class StatementListView extends StatelessWidget {
 
 class _YearlyStatementCard extends StatelessWidget {
   const _YearlyStatementCard({
-    Key? key,
     required this.statement,
-  }) : super(key: key);
+  });
 
   final YearlyStatement statement;
 
@@ -111,9 +110,8 @@ class _YearlyStatementCard extends StatelessWidget {
 
 class _MonthlyStatementCard extends StatelessWidget {
   const _MonthlyStatementCard({
-    Key? key,
     required this.statement,
-  }) : super(key: key);
+  });
 
   final MonthlyStatement statement;
 

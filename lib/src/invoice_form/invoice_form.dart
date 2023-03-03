@@ -13,9 +13,9 @@ import 'package:nannyplus/utils/snack_bar_util.dart';
 
 class InvoiceForm extends StatelessWidget {
   const InvoiceForm({
-    Key? key,
+    super.key,
     required this.childId,
-  }) : super(key: key);
+  });
 
   final int childId;
 
@@ -89,7 +89,7 @@ class InvoiceForm extends StatelessWidget {
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
                             ),
-                            ...state.children.map((child) => _Child(child)),
+                            ...state.children.map(_Child.new),
                           ],
                         ),
                       if (state.children.isEmpty)
@@ -117,8 +117,8 @@ class InvoiceForm extends StatelessWidget {
 class _Child extends StatelessWidget {
   const _Child(
     this.formChild, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final InvoiceFormChild formChild;
 

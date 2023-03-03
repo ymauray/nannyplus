@@ -14,9 +14,9 @@ import 'package:open_file_plus/open_file_plus.dart';
 
 class ChildInfoTabView extends StatelessWidget {
   const ChildInfoTabView({
-    Key? key,
+    super.key,
     required this.childId,
-  }) : super(key: key);
+  });
 
   final int childId;
 
@@ -45,9 +45,8 @@ class ChildInfoTabView extends StatelessWidget {
 
 class _ChildInfo extends StatelessWidget {
   const _ChildInfo({
-    Key? key,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Child child;
 
@@ -132,10 +131,9 @@ class _ChildInfo extends StatelessWidget {
 
 class _InfoCard extends StatelessWidget {
   const _InfoCard({
-    Key? key,
     required this.label,
     required this.value,
-  }) : super(key: key);
+  });
 
   final String label;
   final String value;

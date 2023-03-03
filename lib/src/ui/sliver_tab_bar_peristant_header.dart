@@ -7,8 +7,8 @@ class UISliverTabBarPeristantHeader extends StatelessWidget {
     this.padding,
     required this.tabBar,
     this.onTap,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final double? padding;
   final TabBar tabBar;

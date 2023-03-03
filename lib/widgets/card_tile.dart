@@ -8,8 +8,8 @@ class CardTile extends StatelessWidget {
     this.trailing,
     this.onTap,
     this.expandGestureDetector = true,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget title;
   final Widget? subtitle;

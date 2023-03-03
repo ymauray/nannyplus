@@ -27,7 +27,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 class NannyPlusApp extends StatelessWidget {
-  const NannyPlusApp({Key? key}) : super(key: key);
+  const NannyPlusApp({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,6 @@ import 'package:nannyplus/data/model/invoice.dart';
 import 'package:nannyplus/data/model/service.dart';
 import 'package:nannyplus/data/prices_repository.dart';
 import 'package:nannyplus/data/services_repository.dart';
-import 'package:nannyplus/utils/types.dart';
 
 part 'invoice_view_state.dart';
 

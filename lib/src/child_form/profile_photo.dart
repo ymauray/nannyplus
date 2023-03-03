@@ -9,10 +9,10 @@ class ProfilePhotoController {
 
 class ProfilePhoto extends StatefulWidget {
   const ProfilePhoto({
-    Key? key,
+    super.key,
     required this.controller,
     this.readonly = false,
-  }) : super(key: key);
+  });
 
   final ProfilePhotoController controller;
   final bool readonly;

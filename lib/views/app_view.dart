@@ -8,8 +8,8 @@ class AppView extends StatelessWidget {
     this.floatingActionButton,
     this.actions,
     this.tabBar,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   final Widget title;
   final Widget body;
   final Widget? drawer;

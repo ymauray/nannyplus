@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 @immutable
 class MainDrawer extends StatelessWidget {
-  const MainDrawer({Key? key}) : super(key: key);
+  const MainDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {

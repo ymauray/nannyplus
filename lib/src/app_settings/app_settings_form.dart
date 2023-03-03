@@ -9,9 +9,7 @@ import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/view.dart';
 
 class AppSettingsForm extends StatelessWidget {
-  const AppSettingsForm(AppSettingsLoaded state, {Key? key})
-      : _state = state,
-        super(key: key);
+  const AppSettingsForm(AppSettingsLoaded state, {super.key}) : _state = state;
 
   final AppSettingsLoaded _state;
 

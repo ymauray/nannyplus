@@ -25,7 +25,7 @@ class InvoiceListLoaded extends InvoiceListState {
 
   factory InvoiceListLoaded.fromMap(Map<String, dynamic> map) {
     return InvoiceListLoaded(
-      List<Invoice>.from(map['invoices']?.map((Json x) => Invoice.fromMap(x))),
+      List<Invoice>.from(map['invoices']?.map(Invoice.fromMap)),
     );
   }
 

@@ -24,7 +24,7 @@ class FilesRepository {
       orderBy: 'label',
     );
 
-    return rows.map((row) => Document.fromMap(row));
+    return rows.map(Document.fromMap);
   }
 
   Future<void> removeFile(Document document) async {

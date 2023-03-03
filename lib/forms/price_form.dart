@@ -11,8 +11,8 @@ import 'package:nannyplus/widgets/card_scroll_view.dart';
 class PriceForm extends StatelessWidget {
   const PriceForm({
     this.price,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Price? price;
 

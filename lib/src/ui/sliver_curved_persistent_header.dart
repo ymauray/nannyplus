@@ -8,8 +8,8 @@ class UISliverCurvedPersistenHeader extends StatelessWidget {
     this.child,
     this.height = _kDefaultHeight,
     this.spacing = _kDefaultSpacing,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget? child;
   final double height;

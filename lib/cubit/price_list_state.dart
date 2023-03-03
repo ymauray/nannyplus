@@ -25,7 +25,7 @@ class PriceListLoaded extends PriceListState {
 
   factory PriceListLoaded.fromMap(Map<String, dynamic> map) {
     return PriceListLoaded(
-      List<Price>.from(map['priceList']?.map((Json x) => Price.fromMap(x))),
+      List<Price>.from(map['priceList']?.map(Price.fromMap)),
     );
   }
 

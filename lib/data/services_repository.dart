@@ -53,7 +53,7 @@ class ServicesRepository {
       orderBy: 'date DESC',
     );
 
-    return rows.map((e) => Service.fromMap(e)).toList();
+    return rows.map(Service.fromMap).toList();
   }
 
   Future<List<Service>> getServicesForInvoice(int invoiceId) async {
@@ -66,7 +66,7 @@ class ServicesRepository {
       orderBy: 'date DESC',
     );
 
-    return rows.map((e) => Service.fromMap(e)).toList();
+    return rows.map(Service.fromMap).toList();
   }
 
   Future<List<Service>> getServicesForDate(DateTime date) async {
@@ -78,7 +78,7 @@ class ServicesRepository {
       whereArgs: [DateFormat('yyyy-MM-dd').format(date)],
     );
 
-    return rows.map((row) => Service.fromMap(row)).toList();
+    return rows.map(Service.fromMap).toList();
   }
 
   Future<void> deleteForChildAndDate(int childId, String date) async {
@@ -102,7 +102,7 @@ class ServicesRepository {
       whereArgs: [childId, DateFormat('yyyy-MM-dd').format(date), 0],
     );
 
-    return rows.map((row) => Service.fromMap(row)).toList();
+    return rows.map(Service.fromMap).toList();
   }
 
   Future<List<Service>> getRecentServices(int childId) async {
@@ -115,7 +115,7 @@ class ServicesRepository {
       orderBy: 'date DESC',
     );
 
-    return rows.map((e) => Service.fromMap(e)).toList();
+    return rows.map(Service.fromMap).toList();
   }
 
   Future<Map<int, ServiceInfo>> getServiceInfoPerChild() async {
@@ -125,7 +125,7 @@ class ServicesRepository {
         await db.query('services', where: 'invoiced = ?', whereArgs: [0]);
 
     final groupedRows = rows
-        .map((row) => Service.fromMap(row))
+        .map(Service.fromMap)
         .toList()
         .groupBy<num>((service) => service.childId)
         .toList();
@@ -261,7 +261,7 @@ class ServicesRepository {
       ],
     );
 
-    final list = rows.map((row) => StatementLine.fromMap(row)).toList();
+    final list = rows.map(StatementLine.fromMap).toList();
 
     return list;
   }
@@ -281,7 +281,7 @@ class ServicesRepository {
       ' month DESC',
     );
 
-    final list = rows.map((row) => StatementSummary.fromMap(row)).toList();
+    final list = rows.map(StatementSummary.fromMap).toList();
 
     return list;
   }

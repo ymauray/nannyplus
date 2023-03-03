@@ -8,7 +8,7 @@ import 'package:nannyplus/utils/logo_picker_controller.dart';
 import 'package:path_provider/path_provider.dart';
 
 class LogoPicker extends StatefulWidget {
-  const LogoPicker({required this.controller, Key? key}) : super(key: key);
+  const LogoPicker({required this.controller, super.key});
   final LogoPickerController controller;
 
   @override

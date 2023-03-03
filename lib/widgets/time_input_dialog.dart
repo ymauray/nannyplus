@@ -13,8 +13,8 @@ class TimeInputDialog extends StatelessWidget {
   const TimeInputDialog({
     this.hours,
     this.minutes,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final int? hours;
   final int? minutes;

@@ -7,7 +7,6 @@ import 'package:nannyplus/data/model/service.dart';
 import 'package:nannyplus/data/prices_repository.dart';
 import 'package:nannyplus/data/services_repository.dart';
 import 'package:nannyplus/utils/list_extensions.dart';
-import 'package:nannyplus/utils/types.dart';
 
 part 'service_form_state.dart';
 
