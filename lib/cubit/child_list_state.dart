@@ -31,6 +31,11 @@ class ChildListLoaded extends ChildListState {
   final Map<int, ServiceInfo> servicesInfo;
   final bool showArchived;
   final bool showOnboarding;
+
+  double get pendingInvoice => servicesInfo.values.fold(
+        0,
+        (previousValue, element) => previousValue + element.pendingInvoice,
+      );
 }
 
 // ---------------------------------------------------------------------------

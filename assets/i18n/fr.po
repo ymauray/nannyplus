@@ -466,3 +466,6 @@ msgstr "Relevé {0}"
 
 msgid "Statement for {0}"
 msgstr "Relevé pour {0}"
+
+msgid "Pending invoice"
+msgstr "Total à encaisser"
