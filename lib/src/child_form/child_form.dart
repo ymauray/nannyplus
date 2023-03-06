@@ -346,7 +346,7 @@ class ChildForm extends StatelessWidget {
               },
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               child: ElevatedButton(
                 onPressed: () async {
                   final file = await openFileChooser(context);
@@ -356,7 +356,10 @@ class ChildForm extends StatelessWidget {
                         .addFile(child?.id ?? 0, file);
                   }
                 },
-                child: Text(context.t('Add a document')),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Text(context.t('Add a document')),
+                ),
               ),
             ),
           ],
