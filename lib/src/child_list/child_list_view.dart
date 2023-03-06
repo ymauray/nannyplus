@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
-import 'package:nannyplus/cubit/child_list_cubit.dart';
+import 'package:nannyplus/cubit/child_list_state.dart';
 import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/provider/child_list_provider.dart';
 import 'package:nannyplus/provider/show_pending_invoice_provider.dart';
 import 'package:nannyplus/src/app_settings/app_settings_view.dart';
 import 'package:nannyplus/src/child_form/child_form.dart';
@@ -36,66 +38,70 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
 
   @override
   Widget build(BuildContext context) {
-    context
-        .read<ChildListCubit>()
-        .loadChildList(loadArchivedFolders: showArchivedFolders);
-
     final showPendingInvoice = ref.watch(showPendingInvoiceProvider);
 
-    return BlocConsumer<ChildListCubit, ChildListState>(
-      listener: (context, state) async {
-        if (state is ChildListLoaded) {
-          if (state.showOnboarding) {
-            await _showOnboardingDialog(context);
-          }
-        }
-        if (state is ChildListError) {
-          ScaffoldMessenger.of(context).failure(state.message);
-        }
-      },
-      builder: (context, state) {
-        return UIView(
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            onTap: (index) {
-              setState(() => _currentIndex = index);
-            },
-            items: [
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.folder),
-                label: context.t('Folders'),
-              ),
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.settings),
-                label: context.t('Options'),
-              ),
-            ],
-          ),
-          drawer: const MainDrawer(),
-          title: const Text(ksAppName),
-          persistentHeader: UISliverCurvedPersistenHeader(
-            child: _currentIndex == 0
-                ? GestureDetector(
-                    onTap: () {
-                      ref.read(showPendingInvoiceProvider.notifier).toggle();
-                    },
-                    child: showPendingInvoice
-                        ? Text(
-                            '${context.t('Pending invoice')} : ${state is ChildListLoaded ? state.pendingInvoice.toStringAsFixed(2) : '...'}',
-                          )
-                        : Text(
-                            '${context.t('Pending total')} : ${state is ChildListLoaded ? state.pendingTotal.toStringAsFixed(2) : '...'}',
-                          ),
-                  )
-                : Text(
-                    context.t('Options'),
-                  ),
-          ),
-          body: _currentIndex == 0
-              ? _buildChildList(context, state)
-              : _buildTabView(context, state),
+    final childListState = ref.watch(childListControllerProvider);
+
+    ref.read(childListControllerProvider.notifier).loadChildList(
+          loadArchivedFolders: showArchivedFolders,
         );
-      },
+
+    if (childListState is ChildListLoaded) {
+      if (childListState.showOnboarding) {
+        Future<void>.delayed(
+          Duration.zero,
+          () => _showOnboardingDialog(context),
+        );
+      }
+    }
+
+    if (childListState is ChildListError) {
+      Future<void>.delayed(
+        Duration.zero,
+        () => ScaffoldMessenger.of(context).failure(childListState.message),
+      );
+    }
+
+    return UIView(
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() => _currentIndex = index);
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.folder),
+            label: context.t('Folders'),
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.settings),
+            label: context.t('Options'),
+          ),
+        ],
+      ),
+      drawer: const MainDrawer(),
+      title: const Text(ksAppName),
+      persistentHeader: UISliverCurvedPersistenHeader(
+        child: _currentIndex == 0
+            ? GestureDetector(
+                onTap: () {
+                  ref.read(showPendingInvoiceProvider.notifier).toggle();
+                },
+                child: showPendingInvoice
+                    ? Text(
+                        '${context.t('Pending invoice')} : ${childListState is ChildListLoaded ? childListState.pendingInvoice.toStringAsFixed(2) : '...'}',
+                      )
+                    : Text(
+                        '${context.t('Pending total')} : ${childListState is ChildListLoaded ? childListState.pendingTotal.toStringAsFixed(2) : '...'}',
+                      ),
+              )
+            : Text(
+                context.t('Options'),
+              ),
+      ),
+      body: _currentIndex == 0
+          ? _buildChildList(context, childListState)
+          : _buildTabView(context, childListState),
     );
   }
 
@@ -158,23 +164,28 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
                       builder: (context) => TabView(state.children[index].id!),
                     ),
                   );
-                  final cubit = context.read<ChildListCubit>();
-                  await cubit.loadChildList(
-                    loadArchivedFolders: showArchivedFolders,
-                  );
+                  await ref
+                      .read(childListControllerProvider.notifier)
+                      .loadChildList(
+                        loadArchivedFolders: showArchivedFolders,
+                      );
                 },
                 onToggleShowArchivedFolders: () {
                   final child = state.children[index];
                   if (!child.isArchived) {
-                    context.read<ChildListCubit>().archive(child);
+                    ref
+                        .read(childListControllerProvider.notifier)
+                        .archive(child);
                     ScaffoldMessenger.of(context)
                         .success(context.t('Archived successfully'));
                   } else {
-                    context.read<ChildListCubit>().unarchive(child);
+                    ref
+                        .read(childListControllerProvider.notifier)
+                        .unarchive(child);
                     ScaffoldMessenger.of(context)
                         .success(context.t('Unarchived successfully'));
                   }
-                  context.read<ChildListCubit>().loadChildList(
+                  ref.read(childListControllerProvider.notifier).loadChildList(
                         loadArchivedFolders: showArchivedFolders,
                       );
                 },
@@ -202,7 +213,9 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
                 ),
               );
               if (child != null) {
-                await context.read<ChildListCubit>().create(child);
+                await ref
+                    .read(childListControllerProvider.notifier)
+                    .create(child);
               }
             },
           )
@@ -314,7 +327,7 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
   }
 }
 
-class _ChildListTile extends StatelessWidget {
+class _ChildListTile extends ConsumerWidget {
   const _ChildListTile({
     required this.index,
     required this.state,
@@ -328,7 +341,7 @@ class _ChildListTile extends StatelessWidget {
   final void Function() onToggleShowArchivedFolders;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final child = state.children[index];
     final serviceInfo = state.servicesInfo[child.id];
     final lastEntry = serviceInfo != null
@@ -458,7 +471,9 @@ class _ChildListTile extends StatelessWidget {
                             ),
                           );
                           if (delete ?? false) {
-                            await context.read<ChildListCubit>().delete(child);
+                            await ref
+                                .read(childListControllerProvider.notifier)
+                                .delete(child);
                             ScaffoldMessenger.of(context).success(
                               context.t('Removed successfully'),
                             );
@@ -474,7 +489,9 @@ class _ChildListTile extends StatelessWidget {
                           ),
                         );
                         if (clone != null) {
-                          await context.read<ChildListCubit>().create(clone);
+                          await ref
+                              .read(childListControllerProvider.notifier)
+                              .create(clone);
                         }
 
                         break;

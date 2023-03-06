@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-import 'package:nannyplus/cubit/child_list_cubit.dart';
 import 'package:nannyplus/data/model/price.dart';
+import 'package:nannyplus/provider/child_list_provider.dart';
 import 'package:nannyplus/src/backup_restore/backup_restore_view.dart';
 import 'package:nannyplus/src/privacy_settings_view/privacy_settings_view.dart';
 import 'package:nannyplus/utils/database_util.dart';
@@ -11,11 +12,11 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @immutable
-class MainDrawer extends StatelessWidget {
+class MainDrawer extends ConsumerWidget {
   const MainDrawer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final packageInfo = context.read<PackageInfo>();
 
     return Drawer(
@@ -81,7 +82,9 @@ class MainDrawer extends StatelessWidget {
                 onTap: () async {
                   await DatabaseUtil.deleteDatabase();
                   await (await SharedPreferences.getInstance()).clear();
-                  await context.read<ChildListCubit>().loadChildList();
+                  await ref
+                      .read(childListControllerProvider.notifier)
+                      .loadChildList();
                   Navigator.of(context).pop();
                 },
               ),
