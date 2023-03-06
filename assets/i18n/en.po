@@ -13,6 +13,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: en\n"
 
+msgid "Allergies"
+msgstr "Notes / Allergies"
+
 msgid "Invoice settings"
 msgstr "Invoice settings"
 

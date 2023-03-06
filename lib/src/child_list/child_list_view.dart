@@ -390,7 +390,7 @@ class _ChildListTile extends StatelessWidget {
               children: [
                 Text(
                   child.hasAllergies
-                      ? '${context.t('Allergies')} : ${child.allergies!}'
+                      ? child.allergies!
                       : context.t('No known allergies'),
                 ),
                 Text(
