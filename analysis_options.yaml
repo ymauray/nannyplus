@@ -15,7 +15,6 @@ linter:
 analyzer:
   plugins:
     - very_good_analysis
-    - dart_code_metrics
   errors:
     deprecated_member_use_from_same_package: ignore
     
