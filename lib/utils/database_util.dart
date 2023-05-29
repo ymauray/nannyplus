@@ -43,7 +43,7 @@ class DatabaseUtil {
 
     _database = await sqlite.openDatabase(
       await _databasePath,
-      version: 8,
+      version: 9,
       onCreate: (db, version) async {
         await _create(db);
         for (var i = 2; i <= version; i++) {
@@ -370,6 +370,23 @@ class DatabaseUtil {
       await db.execute('''
     ALTER TABLE documents
     ADD COLUMN bytes BLOB
+    ''');
+    }
+
+    if (version == 9) {
+      await db.execute('''
+    ALTER TABLE invoices
+    ADD COLUMN childFirstName TEXT NOT NULL DEFAULT ''
+    ''');
+      await db.execute('''
+    ALTER TABLE invoices
+    ADD COLUMN childLastName TEXT NOT NULL DEFAULT ''
+    ''');
+      await db.execute('''
+    UPDATE invoices 
+    SET 
+      childFirstName = (SELECT firstName FROM children WHERE children.id = invoices.childId), 
+      childLastName = (SELECT lastName FROM children WHERE children.id = invoices.childId)
     ''');
     }
   }

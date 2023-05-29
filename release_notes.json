@@ -1,10 +1,10 @@
 [
     {
         "language": "en-GB",
-        "text": "Show pending invoice on child list."
+        "text": "Baked the name of the child in the invoice."
     },
     {
         "language": "fr-FR",
-        "text": "Ajout du total à facturer sur la liste des enfants."
+        "text": "Figer le nom de l'enfant dans la facture."
     }
 ]

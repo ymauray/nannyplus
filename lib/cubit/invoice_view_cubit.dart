@@ -47,6 +47,8 @@ class InvoiceViewCubit extends Cubit<InvoiceViewState> {
       InvoiceViewLoaded(
         services.where((service) => service.priceId >= 0).toList(),
         children,
+        invoice.childFirstName,
+        invoice.childLastName,
       ),
     );
   }
