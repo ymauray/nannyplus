@@ -153,8 +153,9 @@ class ServicesRepository {
 
     for (final childId in map.keys) {
       if (map2.containsKey(childId)) {
-        map[childId]!.lastEnty =
-            DateFormat('yyyy-MM-dd').parse(map2[childId] as String);
+        map[childId] = map[childId]!.copyWith(
+          lastEnty: DateFormat('yyyy-MM-dd').parse(map2[childId] as String),
+        );
       }
     }
 
@@ -188,7 +189,9 @@ class ServicesRepository {
 
     for (final childId in map.keys) {
       if (invoicesMap.containsKey(childId)) {
-        map[childId]!.pendingInvoice = invoicesMap[childId]!;
+        map[childId] = map[childId]!.copyWith(
+          pendingInvoice: invoicesMap[childId],
+        );
       }
     }
 

@@ -129,7 +129,12 @@ class _DocumentBuilder extends StatelessWidget {
                             line1Font,
                             line2Font,
                           ),
-                        if (page == 0) invoiceTitle(state.children),
+                        if (page == 0)
+                          invoiceTitle(
+                            state.children,
+                            state.childFirstName,
+                            state.childLastName,
+                          ),
                         if (page == 0) invoiceMeta(),
                         if (page == 0) invoiceTotal(conditions),
                         if (pages[page].isEmpty) pw.Container(),
@@ -372,8 +377,15 @@ class _DocumentBuilder extends StatelessWidget {
     );
   }
 
-  pw.Widget invoiceTitle(List<Child> children) {
-    var childName = children[0].displayName;
+  pw.Widget invoiceTitle(
+    List<Child> children,
+    String childFirstName,
+    String childLastName,
+  ) {
+    //var childName = children[0].displayName;
+    var childName = PrefsUtil.getInstanceSync().showFirstNameBeforeLastName
+        ? '$childFirstName $childLastName'.trim()
+        : '$childLastName $childFirstName'.trim();
     if (children.length > 1) {
       childName =
           "${children.take(children.length - 1).map((child) => child.firstName).join(", ")} ${gettext.t("and", null)} ${children.last.firstName}";

@@ -9,6 +9,8 @@ class Invoice {
     this.id,
     required this.number,
     required this.childId,
+    required this.childFirstName,
+    required this.childLastName,
     required this.date,
     required this.total,
     required this.parentsName,
@@ -23,6 +25,8 @@ class Invoice {
       id: map['id']?.toInt(),
       number: map['number']?.toInt() ?? 0,
       childId: map['childId']?.toInt() ?? 0,
+      childFirstName: map['childFirstName'] ?? '',
+      childLastName: map['childLastName'] ?? '',
       date: map['date'] ?? '',
       total: map['total']?.toDouble() ?? 0.0,
       parentsName: map['parentsName'] ?? '',
@@ -33,6 +37,8 @@ class Invoice {
   final int? id;
   final int number;
   final int childId;
+  final String childFirstName;
+  final String childLastName;
   final String date;
   final double total;
   final String parentsName;
@@ -43,6 +49,8 @@ class Invoice {
     int? id,
     int? number,
     int? childId,
+    String? childFirstName,
+    String? childLastName,
     String? date,
     double? total,
     String? parentsName,
@@ -53,6 +61,8 @@ class Invoice {
       id: id ?? this.id,
       number: number ?? this.number,
       childId: childId ?? this.childId,
+      childFirstName: childFirstName ?? this.childFirstName,
+      childLastName: childLastName ?? this.childLastName,
       date: date ?? this.date,
       total: total ?? this.total,
       parentsName: parentsName ?? this.parentsName,
@@ -66,6 +76,8 @@ class Invoice {
       'id': id,
       'number': number,
       'childId': childId,
+      'childFirstName': childFirstName,
+      'childLastName': childLastName,
       'date': date,
       'total': total,
       'parentsName': parentsName,
@@ -78,7 +90,7 @@ class Invoice {
 
   @override
   String toString() {
-    return 'Invoice(id: $id, number: $number, childId: $childId, date: $date, total: $total, parentsName: $parentsName, address: $address, paid: $paid)';
+    return 'Invoice(id: $id, number: $number, childId: $childId, childFirstName: $childFirstName, childLastName: $childLastName, date: $date, total: $total, parentsName: $parentsName, address: $address, paid: $paid)';
   }
 
   @override
@@ -89,6 +101,8 @@ class Invoice {
         other.id == id &&
         other.number == number &&
         other.childId == childId &&
+        other.childFirstName == childFirstName &&
+        other.childLastName == childLastName &&
         other.date == date &&
         other.total == total &&
         other.parentsName == parentsName &&
@@ -101,6 +115,8 @@ class Invoice {
     return id.hashCode ^
         number.hashCode ^
         childId.hashCode ^
+        childFirstName.hashCode ^
+        childLastName.hashCode ^
         date.hashCode ^
         total.hashCode ^
         parentsName.hashCode ^

@@ -1,7 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-part of 'child_list_cubit.dart';
 
 // ---------------------------------------------------------------------------
+
+import 'package:flutter/foundation.dart';
+import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/data/model/service_info.dart';
 
 @immutable
 abstract class ChildListState {
@@ -36,6 +39,26 @@ class ChildListLoaded extends ChildListState {
         0,
         (previousValue, element) => previousValue + element.pendingInvoice,
       );
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ChildListLoaded &&
+        listEquals(other.children, children) &&
+        other.pendingTotal == pendingTotal &&
+        mapEquals(other.servicesInfo, servicesInfo) &&
+        other.showArchived == showArchived &&
+        other.showOnboarding == showOnboarding;
+  }
+
+  @override
+  int get hashCode =>
+      children.hashCode ^
+      pendingTotal.hashCode ^
+      servicesInfo.hashCode ^
+      showArchived.hashCode ^
+      showOnboarding.hashCode;
 }
 
 // ---------------------------------------------------------------------------

@@ -78,6 +78,8 @@ class InvoiceFormCubit extends Cubit<InvoiceFormState> {
         Invoice(
           number: invoiceNumber,
           childId: child.id!,
+          childFirstName: child.firstName,
+          childLastName: child.lastName ?? '',
           date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
           total: 0,
           parentsName: child.parentsName!,

@@ -2,13 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/cubit/price_list_cubit.dart';
 import 'package:nannyplus/data/model/price.dart';
 import 'package:nannyplus/views/app_view.dart';
 import 'package:nannyplus/widgets/card_scroll_view.dart';
 
-class PriceForm extends StatelessWidget {
+class PriceForm extends ConsumerWidget {
   const PriceForm({
     this.price,
     super.key,
@@ -17,7 +18,7 @@ class PriceForm extends StatelessWidget {
   final Price? price;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormBuilderState>();
 
     return AppView(

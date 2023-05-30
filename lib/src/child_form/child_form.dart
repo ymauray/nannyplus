@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -346,7 +347,7 @@ class ChildForm extends StatelessWidget {
               },
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               child: ElevatedButton(
                 onPressed: () async {
                   final file = await openFileChooser(context);
@@ -356,7 +357,10 @@ class ChildForm extends StatelessWidget {
                         .addFile(child?.id ?? 0, file);
                   }
                 },
-                child: Text(context.t('Add a document')),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Text(context.t('Add a document')),
+                ),
               ),
             ),
           ],
@@ -507,6 +511,22 @@ class _DocumentList extends StatelessWidget {
                       ),
                     ),
                   ),
+                  if (file.bytes.isNotEmpty)
+                    const IconButton(
+                      onPressed: null,
+                      icon: Icon(
+                        FontAwesomeIcons.database,
+                        color: Colors.green,
+                      ),
+                    ),
+                  if (!file.bytes.isNotEmpty)
+                    const IconButton(
+                      onPressed: null,
+                      icon: Icon(
+                        FontAwesomeIcons.fileCircleExclamation,
+                        color: Colors.red,
+                      ),
+                    ),
                   IconButton(
                     onPressed: () async {
                       final newLabel =
