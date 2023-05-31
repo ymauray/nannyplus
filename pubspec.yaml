@@ -30,7 +30,7 @@ dependencies:
   bloc: ^8.0.3
   collection: ^1.16.0
   cupertino_icons: ^1.0.2
-  file_picker: ^5.0.1
+  file_picker: ^5.3.1
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
@@ -38,7 +38,7 @@ dependencies:
   flutter_form_builder: ^9.0.0
   flutter_localizations:
     sdk: flutter
-  flutter_native_timezone: ^2.0.0
+  #flutter_native_timezone: ^2.0.0
   flutter_riverpod: ^2.3.0
   font_awesome_flutter: ^10.1.0
   get: ^4.6.1
