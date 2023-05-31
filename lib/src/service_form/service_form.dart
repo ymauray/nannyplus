@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
@@ -222,6 +223,9 @@ class _List extends StatelessWidget {
       total: price.amount,
     );
     await context.read<ServiceFormCubit>().addService(service, child.id!, date);
+    await FirebaseAnalytics.instance.logEvent(
+      name: 'service_added',
+    );
   }
 
   Future<void> handleVariablePrice(
@@ -259,6 +263,9 @@ class _List extends StatelessWidget {
         await context
             .read<ServiceFormCubit>()
             .addService(service, child.id!, date);
+        await FirebaseAnalytics.instance.logEvent(
+          name: 'service_added',
+        );
       }
     }
   }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "335594145597",
+    "project_id": "nannyplus",
+    "storage_bucket": "nannyplus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335594145597:android:3f42fb354fbbb69cb7a754",
+        "android_client_info": {
+          "package_name": "ch.frenchguy.nannyplus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-fzgIdIYOobnsB1NJqK2gota5th2EV-s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

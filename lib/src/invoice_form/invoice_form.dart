@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -38,6 +39,9 @@ class InvoiceForm extends StatelessWidget {
             onPressed: () async {
               final ok = await context.read<InvoiceFormCubit>().createInvoice();
               if (ok) {
+                await FirebaseAnalytics.instance.logEvent(
+                  name: 'invoice_created',
+                );
                 Navigator.of(context).pop();
               } else {
                 ScaffoldMessenger.of(context)
