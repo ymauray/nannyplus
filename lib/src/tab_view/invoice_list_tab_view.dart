@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
@@ -306,12 +308,14 @@ class _InvoiceCard extends StatelessWidget {
                             '{{total}}',
                             invoice.total.toStringAsFixed(2),
                           );
-                      final sms = Uri(
-                        scheme: 'sms',
-                        path: phoneNumber,
-                        queryParameters: <String, String>{
-                          'body': message,
-                        },
+                      final sanitizedPhoneNumer = phoneNumber.replaceAll(
+                        RegExp(r'[^\d\.\-\+]'),
+                        '',
+                      );
+                      final sms = Uri.parse(
+                        Platform.isAndroid
+                            ? 'sms:$sanitizedPhoneNumer?body=$message'
+                            : 'sms:$sanitizedPhoneNumer&body=$message',
                       );
 
                       if (await launchUrl(sms)) {
