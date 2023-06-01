@@ -3,5 +3,13 @@
         "source.fixAll": true,
         "source.organizeImports": true,
     },
-    "cmake.sourceDirectory": "${workspaceFolder}/linux"
+    "cmake.sourceDirectory": "${workspaceFolder}/linux",
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "childcare.db",
+            "name": "Nanny+"
+        }
+    ]
 }
