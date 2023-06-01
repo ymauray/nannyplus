@@ -1,10 +1,10 @@
 [
     {
         "language": "en-GB",
-        "text": "Baked the name of the child in the invoice."
+        "text": "Notify parents of unpaid invoices via SMS.\nConfigure notifcation template in app settings."
     },
     {
         "language": "fr-FR",
-        "text": "Figer le nom de l'enfant dans la facture."
+        "text": "Notifier les parents des factures impayées par SMS.\nConfigurer le modèle de notification dans les paramètres de l'application."
     }
 ]
