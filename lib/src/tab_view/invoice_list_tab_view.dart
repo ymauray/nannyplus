@@ -16,7 +16,9 @@ import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/src/ui/ui_card.dart';
 import 'package:nannyplus/utils/date_format_extension.dart';
 import 'package:nannyplus/utils/list_extensions.dart';
+import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:nannyplus/utils/snack_bar_util.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceListTabView extends StatefulWidget {
   const InvoiceListTabView({
@@ -53,7 +55,10 @@ class _InvoiceListTabViewState extends State<InvoiceListTabView> {
         return state is InvoiceListLoaded
             ? _List(
                 invoices: state.invoices,
+                daysBeforeUnpaidInvoiceNotification:
+                    state.daysBeforeUnpaidInvoiceNotification,
                 childId: widget.childId,
+                phoneNumber: state.phoneNumber,
                 showPaidInvoices: showPaidInvoices,
                 onToggleShowPaidInvoices: (showHiddenInvoices) {
                   setState(() {
@@ -70,15 +75,19 @@ class _InvoiceListTabViewState extends State<InvoiceListTabView> {
 class _List extends StatelessWidget {
   const _List({
     required this.invoices,
+    required this.daysBeforeUnpaidInvoiceNotification,
     required this.childId,
+    required this.phoneNumber,
     required this.showPaidInvoices,
     required this.onToggleShowPaidInvoices,
   });
 
   final List<Invoice> invoices;
+  final int daysBeforeUnpaidInvoiceNotification;
   final int childId;
   final bool showPaidInvoices;
   final void Function(bool) onToggleShowPaidInvoices;
+  final String phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -113,6 +122,9 @@ class _List extends StatelessWidget {
             itemBuilder: (context, index) {
               return _GroupCard(
                 group: i[index],
+                daysBeforeUnpaidInvoiceNotification:
+                    daysBeforeUnpaidInvoiceNotification,
+                phoneNumber: phoneNumber,
               );
             },
             itemCount: i.length,
@@ -139,9 +151,13 @@ class _List extends StatelessWidget {
 class _GroupCard extends StatelessWidget {
   const _GroupCard({
     required this.group,
+    required this.daysBeforeUnpaidInvoiceNotification,
+    required this.phoneNumber,
   });
 
   final Group<num, Invoice> group;
+  final int daysBeforeUnpaidInvoiceNotification;
+  final String phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -170,6 +186,9 @@ class _GroupCard extends StatelessWidget {
         ...group.value.map(
           (invoice) => _InvoiceCard(
             invoice: invoice,
+            daysBeforeUnpaidInvoiceNotification:
+                daysBeforeUnpaidInvoiceNotification,
+            phoneNumber: phoneNumber,
           ),
         ),
       ],
@@ -192,11 +211,19 @@ class _GroupCard extends StatelessWidget {
 }
 
 class _InvoiceCard extends StatelessWidget {
-  const _InvoiceCard({
+  _InvoiceCard({
     required this.invoice,
-  });
+    required int daysBeforeUnpaidInvoiceNotification,
+    required this.phoneNumber,
+  }) : isLate = DateFormat('yyyy-MM-dd').parse(invoice.date).isBefore(
+              DateTime.now().subtract(
+                Duration(days: daysBeforeUnpaidInvoiceNotification),
+              ),
+            );
 
   final Invoice invoice;
+  final bool isLate;
+  final String phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -213,6 +240,7 @@ class _InvoiceCard extends StatelessWidget {
                       fontStyle: invoice.paid == 1
                           ? FontStyle.italic
                           : FontStyle.normal,
+                      color: isLate ? Colors.red : null,
                     ),
               ),
               onTap: () => openPDF(context),
@@ -228,6 +256,7 @@ class _InvoiceCard extends StatelessWidget {
                       fontStyle: invoice.paid == 1
                           ? FontStyle.italic
                           : FontStyle.normal,
+                      color: isLate ? Colors.red : null,
                     ),
               ),
             ),
@@ -267,11 +296,52 @@ class _InvoiceCard extends StatelessWidget {
                           context.t('Removed successfully'),
                         );
                       }
+                      break;
+                    case 3:
+                      final template =
+                          (await PrefsUtil.getInstance()).notificationMessage;
+                      final message = template
+                          .replaceAll('{{date}}', invoice.date.formatDate())
+                          .replaceAll(
+                            '{{total}}',
+                            invoice.total.toStringAsFixed(2),
+                          );
+                      final sms = Uri(
+                        scheme: 'sms',
+                        path: phoneNumber,
+                        queryParameters: <String, String>{
+                          'body': message,
+                        },
+                      );
+
+                      if (await launchUrl(sms)) {
+                        ScaffoldMessenger.of(context).success(
+                          context.t('Notification sent'),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).failure(
+                          context.t('Cannot open text app'),
+                        );
+                      }
+                      break;
                   }
                 },
                 padding: EdgeInsets.zero,
                 itemBuilder: (context) {
                   return [
+                    PopupMenuItem(
+                      value: 3,
+                      child: ListTile(
+                        leading: const Icon(
+                          Icons.alarm,
+                          color: Colors.black,
+                        ),
+                        title: Text(
+                          context.t('Notify'),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                    ),
                     PopupMenuItem(
                       value: 1,
                       enabled: invoice.paid == 0,

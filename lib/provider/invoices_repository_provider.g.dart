@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'child_list_provider.dart';
+part of 'invoices_repository_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$childListControllerHash() =>
-    r'08d83ab98715faa2c5c2172a80e025f19efdc73a';
+String _$invoicesRepositoryHash() =>
+    r'ab29acdc0448440353951c1b40683f3ab3dc5932';
 
-/// See also [ChildListController].
-@ProviderFor(ChildListController)
-final childListControllerProvider =
-    AutoDisposeNotifierProvider<ChildListController, ChildListState>.internal(
-  ChildListController.new,
-  name: r'childListControllerProvider',
+/// See also [invoicesRepository].
+@ProviderFor(invoicesRepository)
+final invoicesRepositoryProvider =
+    AutoDisposeProvider<InvoicesRepository>.internal(
+  invoicesRepository,
+  name: r'invoicesRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$childListControllerHash,
+      : _$invoicesRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$ChildListController = AutoDisposeNotifier<ChildListState>;
+typedef InvoicesRepositoryRef = AutoDisposeProviderRef<InvoicesRepository>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

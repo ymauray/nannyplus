@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:nannyplus/utils/font_utils.dart';
+import 'package:nannyplus/utils/i18n_utils.dart';
 import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -64,8 +64,7 @@ class DatabaseUtil {
   }
 
   static Future<void> _create(sqlite.Database db) async {
-    final locale = WidgetsBinding.instance.window.locale;
-    final gettext = await GettextLocalizationsDelegate().load(locale);
+    final gettext = await GettextLocalizationsDelegate().load(I18nUtils.locale);
 
     await db.execute('''
       CREATE TABLE children (

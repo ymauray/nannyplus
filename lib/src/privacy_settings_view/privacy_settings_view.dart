@@ -11,11 +11,11 @@ class PrivacySettingsView extends StatelessWidget {
     return UIView(
       title: Text(context.t('Privacy settings')),
       persistentHeader: const UISliverCurvedPersistenHeader(child: Text('')),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
+      body: const Padding(
+        padding: EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             Padding(
               padding: EdgeInsets.only(bottom: 8),
               child: Text(

@@ -154,7 +154,7 @@ class ChildForm extends StatelessWidget {
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                       ),
                       inputType: InputType.date,
-                      format: DateFormat.yMMMMd(I18nUtils.locale),
+                      format: DateFormat.yMMMMd(I18nUtils.localeString),
                     ),
                   ),
                 ],

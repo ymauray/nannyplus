@@ -45,7 +45,7 @@ class ServiceForm extends StatelessWidget {
           child: BlocBuilder<ServiceFormCubit, ServiceFormState>(
             builder: (context, state) {
               return Text(
-                DateFormat.yMMMMd(I18nUtils.locale).format(
+                DateFormat.yMMMMd(I18nUtils.localeString).format(
                   state is ServiceFormLoaded ? state.date! : DateTime.now(),
                 ),
               );

@@ -1,6 +1,7 @@
 import 'package:nannyplus/cubit/child_list_state.dart';
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/provider/children_repository_provider.dart';
+import 'package:nannyplus/provider/invoices_repository_provider.dart';
 import 'package:nannyplus/provider/services_repository_provider.dart';
 import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -19,10 +20,12 @@ class ChildListController extends _$ChildListController {
   }) async {
     final childrenRepository = ref.read(childrenRepositoryProvider);
     final servicesRepository = ref.read(servicesRepositoryProvider);
+    final invoicesRepository = ref.read(invoicesRepositoryProvider);
 
     final childList =
         await childrenRepository.getChildList(loadArchivedFolders);
     final servicesInfo = await servicesRepository.getServiceInfoPerChild();
+    final invoicesInfo = await invoicesRepository.getInvoicesInfoPerChild();
 
     final pendingTotal = servicesInfo.values.fold<double>(0, (total, service) {
       return total + service.pendingTotal;
@@ -32,6 +35,7 @@ class ChildListController extends _$ChildListController {
       childList,
       pendingTotal,
       servicesInfo,
+      invoicesInfo,
       showArchived: loadArchivedFolders,
       showOnboarding: (await PrefsUtil.getInstance()).showOnboarding,
     );

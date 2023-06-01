@@ -12,6 +12,8 @@ class AppSettingsCubit extends Cubit<AppSettingsState> {
     final settingsLoaded = AppSettingsLoaded(
       prefs.sortListByLastName,
       prefs.showFirstNameBeforeLastName,
+      prefs.daysBeforeUnpaidInvoiceNotification,
+      prefs.notificationMessage,
     );
     emit(settingsLoaded);
   }
@@ -21,7 +23,10 @@ class AppSettingsCubit extends Cubit<AppSettingsState> {
     prefs
       ..sortListByLastName = value['sortListByLastName'] as bool
       ..showFirstNameBeforeLastName =
-          value['showFirstNameBeforeLastName'] as bool;
+          value['showFirstNameBeforeLastName'] as bool
+      ..daysBeforeUnpaidInvoiceNotification =
+          value['daysBeforeUnpaidInvoiceNotification'] as int
+      ..notificationMessage = value['notificationMessage'] as String;
     await loadSettings();
   }
 }

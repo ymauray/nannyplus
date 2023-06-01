@@ -350,8 +350,9 @@ class _ChildListTile extends ConsumerWidget {
               const Duration(days: 7),
             ),
           )
-            ? DateFormat.yMd(I18nUtils.locale).format(serviceInfo.lastEnty!)
-            : DateFormat(DateFormat.WEEKDAY, I18nUtils.locale)
+            ? DateFormat.yMd(I18nUtils.localeString)
+                .format(serviceInfo.lastEnty!)
+            : DateFormat(DateFormat.WEEKDAY, I18nUtils.localeString)
                 .format(serviceInfo.lastEnty!))
         : '...';
     final pendingTotal = serviceInfo != null
@@ -395,7 +396,11 @@ class _ChildListTile extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     fontStyle:
                         child.isArchived ? FontStyle.italic : FontStyle.normal,
-                    color: child.isArchived ? Colors.grey : null,
+                    color: child.isArchived
+                        ? Colors.grey
+                        : (state.invoicesInfo.contains(child.id)
+                            ? Colors.red
+                            : null),
                   ),
             ),
             subtitle: Column(

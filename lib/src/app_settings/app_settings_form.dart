@@ -21,6 +21,9 @@ class AppSettingsForm extends StatelessWidget {
       initialValue: {
         'sortListByLastName': _state.sortListByLastName,
         'showFirstNameBeforeLastName': _state.showFirstNameBeforeLastName,
+        'daysBeforeUnpaidInvoiceNotification':
+            _state.daysBeforeUnpaidInvoiceNotification.toString(),
+        'notificationMessage': _state.notificationMessage,
       },
       child: UIView(
         title: Text(context.t('Application settings')),
@@ -60,6 +63,7 @@ class AppSettingsForm extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(height: kdDefaultPadding),
             Row(
               children: [
                 Expanded(
@@ -73,6 +77,55 @@ class AppSettingsForm extends StatelessWidget {
                       decoration: const InputDecoration(
                         fillColor: Colors.red,
                       ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: kdDefaultPadding),
+            Row(
+              children: [
+                Expanded(
+                  child: Theme(
+                    data: ThemeData(),
+                    child: FormBuilderTextField(
+                      name: 'daysBeforeUnpaidInvoiceNotification',
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: context.t(
+                          'Days before unpaid invoice notification',
+                        ),
+                      ),
+                      validator: (value) =>
+                          (int.tryParse(value ?? '-1') ?? -1) > 0
+                              ? null
+                              : context.t('Must be greater than 0'),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      valueTransformer: (value) => int.tryParse(value ?? '-1'),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: kdDefaultPadding),
+            Row(
+              children: [
+                Expanded(
+                  child: Theme(
+                    data: ThemeData(),
+                    child: FormBuilderTextField(
+                      maxLines: 5,
+                      name: 'notificationMessage',
+                      decoration: InputDecoration(
+                        labelText: context.t(
+                          'Notification message',
+                        ),
+                      ),
+                      validator: (value) => value!.isNotEmpty
+                          ? null
+                          : context.t('Notification message cannot be empty'),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      valueTransformer: (value) => int.tryParse(value ?? '-1'),
                     ),
                   ),
                 ),

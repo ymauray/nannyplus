@@ -1,5 +1,8 @@
+import 'package:intl/intl.dart';
 import 'package:nannyplus/data/model/invoice.dart';
 import 'package:nannyplus/utils/database_util.dart';
+import 'package:nannyplus/utils/list_extensions.dart';
+import 'package:nannyplus/utils/prefs_util.dart';
 
 class InvoicesRepository {
   const InvoicesRepository();
@@ -78,5 +81,29 @@ class InvoicesRepository {
       where: 'id = ?',
       whereArgs: [invoiceId],
     );
+  }
+
+  Future<List<int>> getInvoicesInfoPerChild() async {
+    final db = await DatabaseUtil.instance;
+
+    final rows = await db.query('invoices', where: 'paid = ?', whereArgs: [0]);
+
+    final daysBeforeUnpaidInvoiceNotification =
+        (await PrefsUtil.getInstance()).daysBeforeUnpaidInvoiceNotification;
+
+    final groupedRows = rows
+        .map(Invoice.fromMap)
+        .where(
+          (invoice) => DateFormat('yyyy-MM-dd').parse(invoice.date).isBefore(
+                DateTime.now().subtract(
+                  Duration(days: daysBeforeUnpaidInvoiceNotification),
+                ),
+              ),
+        )
+        .toList()
+        .groupBy<num>((invoice) => invoice.childId)
+        .toList();
+
+    return {for (final group in groupedRows) group.key}.cast<int>().toList();
   }
 }

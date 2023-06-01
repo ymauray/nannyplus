@@ -116,7 +116,8 @@ class _GroupCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      DateFormat.yMMMMd(I18nUtils.locale).format(group.key),
+                      DateFormat.yMMMMd(I18nUtils.localeString)
+                          .format(group.key),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),

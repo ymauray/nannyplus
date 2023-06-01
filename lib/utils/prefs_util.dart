@@ -1,3 +1,7 @@
+import 'package:gettext_i18n/gettext_i18n.dart';
+// ignore: implementation_imports
+import 'package:gettext_i18n/src/gettext_localizations.dart';
+import 'package:nannyplus/utils/i18n_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefsUtil {
@@ -15,15 +19,20 @@ class PrefsUtil {
   static const String keySortListByLastName = 'sortListByLastName';
   static const String keyShowFirstNameBeforeLastName =
       'showFirstNameBeforeLastName';
+  static const String keyDaysBeforeUnpaidInvoiceNotification =
+      'daysBeforeUnpaidInvoiceNotification';
+  static const String keyNotificationMessage = 'notificationMessage';
 
   static PrefsUtil? _instance;
 
-  SharedPreferences? _prefs;
+  late SharedPreferences _prefs;
+  late GettextLocalizations _gettext;
 
   static Future<PrefsUtil> getInstance() async {
     if (_instance != null) return _instance!;
-    _instance = PrefsUtil().._prefs = await SharedPreferences.getInstance();
-
+    _instance = PrefsUtil()
+      .._prefs = await SharedPreferences.getInstance()
+      .._gettext = await GettextLocalizationsDelegate().load(I18nUtils.locale);
     return _instance!;
   }
 
@@ -33,52 +42,63 @@ class PrefsUtil {
   }
 
   Future<void> clear() async {
-    await _prefs?.clear();
+    await _prefs.clear();
   }
 
-  String get line1 => _prefs?.getString(keyLine1) ?? '';
-  set line1(String value) => _prefs?.setString(keyLine1, value);
+  String get line1 => _prefs.getString(keyLine1) ?? '';
+  set line1(String value) => _prefs.setString(keyLine1, value);
 
-  String get line2 => _prefs?.getString(keyLine2) ?? '';
-  set line2(String value) => _prefs?.setString(keyLine2, value);
+  String get line2 => _prefs.getString(keyLine2) ?? '';
+  set line2(String value) => _prefs.setString(keyLine2, value);
 
-  String get line1FontFamily => _prefs?.getString(keyLine1FontFamily) ?? '';
+  String get line1FontFamily => _prefs.getString(keyLine1FontFamily) ?? '';
   set line1FontFamily(String value) =>
-      _prefs?.setString(keyLine1FontFamily, value);
+      _prefs.setString(keyLine1FontFamily, value);
 
-  String get line1FontAsset => _prefs?.getString(keyLine1FontAsset) ?? '';
+  String get line1FontAsset => _prefs.getString(keyLine1FontAsset) ?? '';
   set line1FontAsset(String value) =>
-      _prefs?.setString(keyLine1FontAsset, value);
+      _prefs.setString(keyLine1FontAsset, value);
 
-  String get line2FontFamily => _prefs?.getString(keyLine2FontFamily) ?? '';
+  String get line2FontFamily => _prefs.getString(keyLine2FontFamily) ?? '';
   set line2FontFamily(String value) =>
-      _prefs?.setString(keyLine2FontFamily, value);
+      _prefs.setString(keyLine2FontFamily, value);
 
-  String get line2FontAsset => _prefs?.getString(keyLine2FontAsset) ?? '';
+  String get line2FontAsset => _prefs.getString(keyLine2FontAsset) ?? '';
   set line2FontAsset(String value) =>
-      _prefs?.setString(keyLine2FontAsset, value);
+      _prefs.setString(keyLine2FontAsset, value);
 
-  String get conditions => _prefs?.getString(keyConditions) ?? '';
-  set conditions(String value) => _prefs?.setString(keyConditions, value);
+  String get conditions => _prefs.getString(keyConditions) ?? '';
+  set conditions(String value) => _prefs.setString(keyConditions, value);
 
-  String get bankDetails => _prefs?.getString(keyBankDetails) ?? '';
-  set bankDetails(String value) => _prefs?.setString(keyBankDetails, value);
+  String get bankDetails => _prefs.getString(keyBankDetails) ?? '';
+  set bankDetails(String value) => _prefs.setString(keyBankDetails, value);
 
-  String get name => _prefs?.getString(keyName) ?? '';
-  set name(String value) => _prefs?.setString(keyName, value);
+  String get name => _prefs.getString(keyName) ?? '';
+  set name(String value) => _prefs.setString(keyName, value);
 
-  String get address => _prefs?.getString(keyAddress) ?? '';
-  set address(String value) => _prefs?.setString(keyAddress, value);
+  String get address => _prefs.getString(keyAddress) ?? '';
+  set address(String value) => _prefs.setString(keyAddress, value);
 
-  bool get showOnboarding => _prefs?.getBool(keyShowOnboarding) ?? true;
-  set showOnboarding(bool value) => _prefs?.setBool(keyShowOnboarding, value);
+  bool get showOnboarding => _prefs.getBool(keyShowOnboarding) ?? true;
+  set showOnboarding(bool value) => _prefs.setBool(keyShowOnboarding, value);
 
-  bool get sortListByLastName => _prefs?.getBool(keySortListByLastName) ?? true;
+  bool get sortListByLastName => _prefs.getBool(keySortListByLastName) ?? true;
   set sortListByLastName(bool value) =>
-      _prefs?.setBool(keySortListByLastName, value);
+      _prefs.setBool(keySortListByLastName, value);
 
   bool get showFirstNameBeforeLastName =>
-      _prefs?.getBool(keyShowFirstNameBeforeLastName) ?? true;
+      _prefs.getBool(keyShowFirstNameBeforeLastName) ?? true;
   set showFirstNameBeforeLastName(bool value) =>
-      _prefs?.setBool(keyShowFirstNameBeforeLastName, value);
+      _prefs.setBool(keyShowFirstNameBeforeLastName, value);
+
+  int get daysBeforeUnpaidInvoiceNotification =>
+      _prefs.getInt(keyDaysBeforeUnpaidInvoiceNotification) ?? 10;
+  set daysBeforeUnpaidInvoiceNotification(int value) =>
+      _prefs.setInt(keyDaysBeforeUnpaidInvoiceNotification, value);
+
+  String get notificationMessage =>
+      _prefs.getString(keyNotificationMessage) ??
+      _gettext.t('You have unpaid invoices', []);
+  set notificationMessage(String value) =>
+      _prefs.setString(keyNotificationMessage, value);
 }

@@ -472,3 +472,24 @@ msgstr "Fichier introuvable"
 
 msgid "Delete document"
 msgstr "Supprimer le document"
+
+msgid "Days before unpaid invoice notification"
+msgstr "Jours avant notification de facture impayée"
+
+msgid "Must be greater than 0"
+msgstr "Doit être supérieur à 0"
+
+msgid "Notify"
+msgstr "Notifier"
+
+msgid "Notification message"
+msgstr "Message de notification"
+
+msgid "You have unpaid invoices"
+msgstr "Sauf erreur de notre part, nous n'avons pas reçu votre paiement pour la facture du {{date}} pour un montant de {{total}}. Merci de bien vouloir effectuer le paiement au plus vite."
+
+msgid "Notification message cannot be empty"
+msgstr "Le message de notification ne peut pas être vide"
+
+msgid "Notification sent"
+msgstr "Notification envoyée"

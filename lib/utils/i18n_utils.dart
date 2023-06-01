@@ -2,8 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 class I18nUtils {
-  static String? get locale {
+  static String get localeString {
+    // ignore: deprecated_member_use
     return WidgetsBinding.instance.window.locale.toString();
+  }
+
+  static Locale get locale {
+    // ignore: deprecated_member_use
+    return WidgetsBinding.instance.window.locale;
   }
 
   //static String? get currencySymbol {
@@ -21,6 +27,7 @@ class I18nUtils {
   //}
 
   static String? formatCurrency(double value) {
+    // ignore: deprecated_member_use
     final locale = WidgetsBinding.instance.window.locale;
     final format = NumberFormat.simpleCurrency(locale: locale.toString());
 

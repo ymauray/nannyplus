@@ -5,7 +5,7 @@ extension DateFormatExtension on String {
   String formatDate({String? format}) {
     final formatter = format != null
         ? DateFormat(format)
-        : DateFormat.yMMMMd(I18nUtils.locale);
+        : DateFormat.yMMMMd(I18nUtils.localeString);
 
     return formatter.format(DateFormat('yyyy-MM-dd').parse(this));
   }

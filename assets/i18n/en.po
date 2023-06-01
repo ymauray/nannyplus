@@ -201,3 +201,24 @@ msgstr "File not found"
 
 msgid "Delete document"
 msgstr "Delete document"
+
+msgid "Days before unpaid invoice notification"
+msgstr "Days before unpaid invoice notification"
+
+msgid "Must be greater than 0"
+msgstr "Must be greater than 0"
+
+msgid "Notify"
+msgstr "Notify"
+
+msgid "Notification message"
+msgstr "Notification message"
+
+msgid "You have unpaid invoices"
+msgstr "Unless we are mistaken, we have not received your payment for the invoice dated {{date}} for {{total}}. Please make the payment as soon as possible."
+
+msgid "Notification message cannot be empty"
+msgstr "Notification message cannot be empty"
+
+msgid "Notification sent"
+msgstr "Notification sent"

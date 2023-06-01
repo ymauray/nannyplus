@@ -73,6 +73,7 @@ class NannyPlusApp extends StatelessWidget {
           create: (context) => InvoiceListCubit(
             context.read<InvoicesRepository>(),
             context.read<ServicesRepository>(),
+            context.read<ChildrenRepository>(),
           ),
         ),
         BlocProvider<ServiceFormCubit>(
