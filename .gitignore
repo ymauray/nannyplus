@@ -49,3 +49,6 @@ lib/src/widgets/basic_auth.dart
 key.properties
 
 childcare.db
+firebase_options.dart
+GoogleService-Info.plist
+google-services.json
