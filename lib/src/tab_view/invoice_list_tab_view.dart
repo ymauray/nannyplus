@@ -218,10 +218,11 @@ class _InvoiceCard extends StatelessWidget {
     required int daysBeforeUnpaidInvoiceNotification,
     required this.phoneNumber,
   }) : isLate = DateFormat('yyyy-MM-dd').parse(invoice.date).isBefore(
-              DateTime.now().subtract(
-                Duration(days: daysBeforeUnpaidInvoiceNotification),
-              ),
-            );
+                  DateTime.now().subtract(
+                    Duration(days: daysBeforeUnpaidInvoiceNotification),
+                  ),
+                ) &&
+            invoice.paid == 0;
 
   final Invoice invoice;
   final bool isLate;
