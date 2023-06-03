@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
@@ -9,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:nannyplus/cubit/invoice_list_cubit.dart';
 import 'package:nannyplus/cubit/service_list_cubit.dart';
 import 'package:nannyplus/data/model/invoice.dart';
+import 'package:nannyplus/provider/invoice_average_provider.dart';
 import 'package:nannyplus/src/common/loading_indicator_list_view.dart';
 import 'package:nannyplus/src/constants.dart';
 import 'package:nannyplus/src/invoice_form/invoice_form.dart';
@@ -22,7 +24,7 @@ import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:nannyplus/utils/snack_bar_util.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class InvoiceListTabView extends StatefulWidget {
+class InvoiceListTabView extends ConsumerStatefulWidget {
   const InvoiceListTabView({
     super.key,
     required this.childId,
@@ -31,10 +33,10 @@ class InvoiceListTabView extends StatefulWidget {
   final int childId;
 
   @override
-  State<InvoiceListTabView> createState() => _InvoiceListTabViewState();
+  ConsumerState<InvoiceListTabView> createState() => _InvoiceListTabViewState();
 }
 
-class _InvoiceListTabViewState extends State<InvoiceListTabView> {
+class _InvoiceListTabViewState extends ConsumerState<InvoiceListTabView> {
   bool showPaidInvoices = false;
 
   @override
@@ -42,6 +44,8 @@ class _InvoiceListTabViewState extends State<InvoiceListTabView> {
     context
         .read<InvoiceListCubit>()
         .loadInvoiceList(widget.childId, loadPaidInvoices: showPaidInvoices);
+
+    final averages = ref.watch(invoiceAveragesProvider(widget.childId));
 
     return BlocConsumer<InvoiceListCubit, InvoiceListState>(
       listener: (context, state) {
@@ -57,6 +61,7 @@ class _InvoiceListTabViewState extends State<InvoiceListTabView> {
         return state is InvoiceListLoaded
             ? _List(
                 invoices: state.invoices,
+                averages: averages.whenData((value) => value).value ?? {},
                 daysBeforeUnpaidInvoiceNotification:
                     state.daysBeforeUnpaidInvoiceNotification,
                 childId: widget.childId,
@@ -77,6 +82,7 @@ class _InvoiceListTabViewState extends State<InvoiceListTabView> {
 class _List extends StatelessWidget {
   const _List({
     required this.invoices,
+    required this.averages,
     required this.daysBeforeUnpaidInvoiceNotification,
     required this.childId,
     required this.phoneNumber,
@@ -85,6 +91,7 @@ class _List extends StatelessWidget {
   });
 
   final List<Invoice> invoices;
+  final Map<int, double> averages;
   final int daysBeforeUnpaidInvoiceNotification;
   final int childId;
   final bool showPaidInvoices;
@@ -127,6 +134,7 @@ class _List extends StatelessWidget {
                 daysBeforeUnpaidInvoiceNotification:
                     daysBeforeUnpaidInvoiceNotification,
                 phoneNumber: phoneNumber,
+                average: averages[i[index].key] ?? 0,
               );
             },
             itemCount: i.length,
@@ -155,11 +163,13 @@ class _GroupCard extends StatelessWidget {
     required this.group,
     required this.daysBeforeUnpaidInvoiceNotification,
     required this.phoneNumber,
+    required this.average,
   });
 
   final Group<num, Invoice> group;
   final int daysBeforeUnpaidInvoiceNotification;
   final String phoneNumber;
+  final double average;
 
   @override
   Widget build(BuildContext context) {
@@ -171,8 +181,14 @@ class _GroupCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  group.key.toString(),
+                  '${group.key}',
                   style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Text(
+                  '${context.t('Monthly average')} : ${average.toStringAsFixed(2)}',
                 ),
               ),
               IconButton(

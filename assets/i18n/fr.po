@@ -493,3 +493,6 @@ msgstr "Le message de notification ne peut pas être vide"
 
 msgid "Notification sent"
 msgstr "Notification envoyée"
+
+msgid "Monthly average"
+msgstr "Moyenne mensuelle"

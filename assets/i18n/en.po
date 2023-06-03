@@ -222,3 +222,6 @@ msgstr "Notification message cannot be empty"
 
 msgid "Notification sent"
 msgstr "Notification sent"
+
+msgid "Monthly average"
+msgstr "Monthly average"
