@@ -131,6 +131,8 @@ class _List extends StatelessWidget {
             itemBuilder: (context, index) {
               return _GroupCard(
                 group: i[index],
+                year: i[index].key as int,
+                childId: childId,
                 daysBeforeUnpaidInvoiceNotification:
                     daysBeforeUnpaidInvoiceNotification,
                 phoneNumber: phoneNumber,
@@ -161,12 +163,16 @@ class _List extends StatelessWidget {
 class _GroupCard extends StatelessWidget {
   const _GroupCard({
     required this.group,
+    required this.year,
+    required this.childId,
     required this.daysBeforeUnpaidInvoiceNotification,
     required this.phoneNumber,
     required this.average,
   });
 
   final Group<num, Invoice> group;
+  final int year;
+  final int childId;
   final int daysBeforeUnpaidInvoiceNotification;
   final String phoneNumber;
   final double average;
@@ -193,7 +199,11 @@ class _GroupCard extends StatelessWidget {
               ),
               IconButton(
                 icon: const Icon(Icons.picture_as_pdf),
-                onPressed: () => _openYearlyStatementPDF(context, group),
+                onPressed: () => _openYearlyStatementPDF(
+                  context,
+                  year,
+                  childId,
+                ),
               ),
             ],
           ),
@@ -215,12 +225,14 @@ class _GroupCard extends StatelessWidget {
 
   void _openYearlyStatementPDF(
     BuildContext context,
-    Group<num, Invoice> group,
+    int year,
+    int childId,
   ) {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (context) => ChildStatementView(
-          group,
+          year,
+          childId,
           GettextLocalizations.of(context),
         ),
       ),
