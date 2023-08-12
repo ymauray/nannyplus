@@ -8,8 +8,8 @@ import 'package:nannyplus/utils/prefs_util.dart';
 @immutable
 class Child {
   const Child({
-    this.id,
     required this.firstName,
+    this.id,
     this.lastName,
     this.birthdate,
     this.phoneNumber,

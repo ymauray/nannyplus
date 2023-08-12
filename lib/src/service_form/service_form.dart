@@ -22,10 +22,10 @@ import 'package:nannyplus/widgets/time_input_dialog.dart';
 
 class ServiceForm extends StatelessWidget {
   const ServiceForm({
-    super.key,
     required this.child,
     required this.tab,
     this.date,
+    super.key,
   });
 
   final Child child;

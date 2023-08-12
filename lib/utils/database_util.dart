@@ -43,7 +43,7 @@ class DatabaseUtil {
 
     _database = await sqlite.openDatabase(
       await _databasePath,
-      version: 9,
+      version: 10,
       onCreate: (db, version) async {
         await _create(db);
         for (var i = 2; i <= version; i++) {
@@ -386,6 +386,19 @@ class DatabaseUtil {
     SET 
       childFirstName = (SELECT firstName FROM children WHERE children.id = invoices.childId), 
       childLastName = (SELECT lastName FROM children WHERE children.id = invoices.childId)
+    ''');
+    }
+
+    if (version == 10) {
+      await db.execute('''
+    CREATE TABLE deductions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+      sortOrder INTEGER NOT NULL DEFAULT 0,
+      label TEXT,
+      value REAL NOT NULL DEFAULT 0,
+      type TEXT,
+      periodicity TEXT
+    )
     ''');
     }
   }

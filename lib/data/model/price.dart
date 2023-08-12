@@ -6,12 +6,12 @@ import 'package:flutter/widgets.dart';
 @immutable
 class Price {
   const Price({
-    this.id,
     required this.label,
     required this.amount,
     required this.fixedPrice,
     required this.sortOrder,
     required this.deleted,
+    this.id,
   });
   factory Price.fromJson(String source) => Price.fromMap(json.decode(source));
 

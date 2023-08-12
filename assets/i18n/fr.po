@@ -496,3 +496,33 @@ msgstr "Notification envoyée"
 
 msgid "Monthly average"
 msgstr "Moyenne mensuelle"
+
+msgid "Deductions"
+msgstr "Deductions"
+
+msgid "Create new deduction"
+msgstr "Créer une nouvelle déduction"
+
+msgid "This field is required"
+msgstr "Ce champ est obligatoire"
+
+msgid "This field must be a number"
+msgstr "Ce champ doit être un nombre"
+
+msgid "Periodicity"
+msgstr "Périodicité"
+
+msgid "Monthly"
+msgstr "Mensuel"
+
+msgid "Yearly"
+msgstr "Annuel"
+
+msgid "Value"
+msgstr "Valeur"
+
+msgid "Percent"
+msgstr "Pourcentage"
+
+msgid "Are you sure you want to delete this deduction ?"
+msgstr "Êtes-vous sûr de vouloir supprimer cette déduction ?"

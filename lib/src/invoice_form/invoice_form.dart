@@ -16,8 +16,8 @@ import 'package:nannyplus/utils/snack_bar_util.dart';
 
 class InvoiceForm extends StatelessWidget {
   const InvoiceForm({
-    super.key,
     required this.childId,
+    super.key,
   });
 
   final int childId;

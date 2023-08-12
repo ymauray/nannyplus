@@ -26,8 +26,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceListTabView extends ConsumerStatefulWidget {
   const InvoiceListTabView({
-    super.key,
     required this.childId,
+    super.key,
   });
 
   final int childId;
@@ -313,7 +313,6 @@ class _InvoiceCard extends StatelessWidget {
                           context.t('Invoice marked as paid'),
                         );
                       }
-                      break;
                     case 2:
                       final delete = await _showConfirmationDialog(context);
                       if (delete ?? false) {
@@ -327,7 +326,6 @@ class _InvoiceCard extends StatelessWidget {
                           context.t('Removed successfully'),
                         );
                       }
-                      break;
                     case 3:
                       final template =
                           (await PrefsUtil.getInstance()).notificationMessage;
@@ -356,7 +354,6 @@ class _InvoiceCard extends StatelessWidget {
                           context.t('Cannot open text app'),
                         );
                       }
-                      break;
                   }
                 },
                 padding: EdgeInsets.zero,

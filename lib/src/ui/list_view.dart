@@ -3,18 +3,18 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 
 class UIListView extends StatelessWidget {
   const UIListView({
-    super.key,
     required this.itemBuilder,
     this.itemCount,
     this.onFloatingActionPressed,
     this.horizontalPadding = 0,
     this.extraWidget,
+    super.key,
   }) : children = null;
   const UIListView.fromChildren({
-    super.key,
     required this.children,
     this.onFloatingActionPressed,
     this.horizontalPadding = 0,
+    super.key,
   })  : itemBuilder = null,
         itemCount = 0,
         extraWidget = null;

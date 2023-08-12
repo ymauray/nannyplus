@@ -30,9 +30,9 @@ class UISliverCurvedPersistenHeader extends StatelessWidget {
 
 class _Delegate extends SliverPersistentHeaderDelegate {
   _Delegate({
-    this.child,
     required this.height,
     required this.spacing,
+    this.child,
   });
 
   final Widget? child;

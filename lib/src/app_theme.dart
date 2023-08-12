@@ -15,7 +15,7 @@ class AppTheme {
         onSurface: kcAlmostBlack,
         onBackground: Colors.brown,
         brightness: Brightness.light,
-        error: Colors.yellow,
+        error: Colors.red,
         onError: Colors.blue,
         surface: Colors.lime,
       ),

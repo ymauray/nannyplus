@@ -6,7 +6,6 @@ import 'package:flutter/widgets.dart';
 @immutable
 class Invoice {
   const Invoice({
-    this.id,
     required this.number,
     required this.childId,
     required this.childFirstName,
@@ -16,6 +15,7 @@ class Invoice {
     required this.parentsName,
     required this.address,
     required this.paid,
+    this.id,
   });
   factory Invoice.fromJson(String source) =>
       Invoice.fromMap(json.decode(source));

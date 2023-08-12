@@ -18,8 +18,8 @@ import 'package:path_provider/path_provider.dart';
 
 class ChildInfoTabView extends StatelessWidget {
   const ChildInfoTabView({
-    super.key,
     required this.childId,
+    super.key,
   });
 
   final int childId;

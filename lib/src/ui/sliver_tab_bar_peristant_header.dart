@@ -4,8 +4,8 @@ const _kDefaultSpacing = 12.0;
 
 class UISliverTabBarPeristantHeader extends StatelessWidget {
   const UISliverTabBarPeristantHeader({
-    this.padding,
     required this.tabBar,
+    this.padding,
     this.onTap,
     super.key,
   });
@@ -25,8 +25,8 @@ class UISliverTabBarPeristantHeader extends StatelessWidget {
 
 class _Delegate extends SliverPersistentHeaderDelegate {
   _Delegate({
-    this.padding,
     required this.tabBar,
+    this.padding,
     this.onTap,
   });
 

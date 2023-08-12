@@ -4,11 +4,11 @@ import 'package:nannyplus/src/ui/sliver_tab_bar_peristant_header.dart';
 
 class UIView extends StatelessWidget {
   const UIView({
+    required this.body,
     this.drawer,
     this.title,
     this.persistentHeader,
     this.persistentTabBar,
-    required this.body,
     this.onFloatingActionPressed,
     this.actions,
     this.bottomNavigationBar,
