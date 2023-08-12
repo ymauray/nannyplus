@@ -42,9 +42,11 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
 
     final childListState = ref.watch(childListControllerProvider);
 
-    ref.read(childListControllerProvider.notifier).loadChildList(
-          loadArchivedFolders: showArchivedFolders,
-        );
+    if (childListState is ChildListInitial) {
+      ref.read(childListControllerProvider.notifier).loadChildList(
+            loadArchivedFolders: showArchivedFolders,
+          );
+    }
 
     if (childListState is ChildListLoaded) {
       if (childListState.showOnboarding) {
