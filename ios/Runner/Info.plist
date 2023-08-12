@@ -68,5 +68,7 @@
         <string>sms</string>
         <string>mailto</string>
     </array>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 </dict>
 </plist>
