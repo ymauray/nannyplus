@@ -7,7 +7,7 @@ part of 'child_list_provider.dart';
 // **************************************************************************
 
 String _$childListControllerHash() =>
-    r'08d83ab98715faa2c5c2172a80e025f19efdc73a';
+    r'296bc2542649a36ce2f5e7ae43c64ceb7742c79c';
 
 /// See also [ChildListController].
 @ProviderFor(ChildListController)
