@@ -151,8 +151,11 @@ msgstr "Amount"
 msgid "Quantity"
 msgstr "Quantity"
 
-msgid "Total : {0}"
-msgstr "Total : {0}"
+msgid "Gross total : {0}"
+msgstr "Gross total : {0}"
+
+msgid "Net total : {0}"
+msgstr "Net total : {0}"
 
 msgid "Name"
 msgstr "Name"
@@ -252,6 +255,9 @@ msgstr "Value"
 
 msgid "Percent"
 msgstr "Percent"
+
+msgid "Amount / Rate"
+msgstr "Amount / Rate"
 
 msgid "Are you sure you want to delete this deduction ?"
 msgstr "Are you sure you want to delete this deduction ?"

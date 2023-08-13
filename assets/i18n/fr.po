@@ -422,8 +422,11 @@ msgstr "Montant"
 msgid "Quantity"
 msgstr "Quantité"
 
-msgid "Total : {0}"
-msgstr "Total : {0}"
+msgid "Gross total : {0}"
+msgstr "Total brut : {0}"
+
+msgid "Net total : {0}"
+msgstr "Total net : {0}"
 
 msgid "Name"
 msgstr "Nom"
@@ -523,6 +526,9 @@ msgstr "Valeur"
 
 msgid "Percent"
 msgstr "Pourcentage"
+
+msgid "Amount / Rate"
+msgstr "Montant / Taux"
 
 msgid "Are you sure you want to delete this deduction ?"
 msgstr "Êtes-vous sûr de vouloir supprimer cette déduction ?"

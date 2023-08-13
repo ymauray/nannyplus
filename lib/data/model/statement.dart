@@ -2,32 +2,18 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:nannyplus/data/model/deduction.dart';
 import 'package:nannyplus/data/model/statement_line.dart';
 
 @immutable
 class Statement {
   const Statement({
     required this.lines,
+    required this.deductions,
   });
-  factory Statement.fromJson(String source) =>
-      Statement.fromMap(json.decode(source));
 
-  factory Statement.fromMap(Map<String, dynamic> map) {
-    return Statement(
-      lines: List<StatementLine>.from(
-        map['lines']?.map(StatementLine.fromMap),
-      ),
-    );
-  }
   final List<StatementLine> lines;
-
-  Statement copyWith({
-    List<StatementLine>? lines,
-  }) {
-    return Statement(
-      lines: lines ?? this.lines,
-    );
-  }
+  final List<Deduction> deductions;
 
   Map<String, dynamic> toMap() {
     return {

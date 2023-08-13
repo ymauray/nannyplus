@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/cubit/app_settings_cubit.dart';
 import 'package:nannyplus/cubit/child_info_cubit.dart';
@@ -15,6 +16,7 @@ import 'package:nannyplus/cubit/service_list_cubit.dart';
 import 'package:nannyplus/cubit/statement_list_cubit.dart';
 import 'package:nannyplus/cubit/statement_view_cubit.dart';
 import 'package:nannyplus/data/children_repository.dart';
+import 'package:nannyplus/data/deduction_repository.dart';
 import 'package:nannyplus/data/files_repository.dart';
 import 'package:nannyplus/data/invoices_repository.dart';
 import 'package:nannyplus/data/prices_repository.dart';
@@ -25,11 +27,11 @@ import 'package:nannyplus/src/constants.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
-class NannyPlusApp extends StatelessWidget {
+class NannyPlusApp extends riverpod.ConsumerWidget {
   const NannyPlusApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, riverpod.WidgetRef ref) {
     return MultiProvider(
       providers: [
         FutureProvider<PackageInfo>(
@@ -104,6 +106,7 @@ class NannyPlusApp extends StatelessWidget {
         BlocProvider<StatementViewCubit>(
           create: (context) => StatementViewCubit(
             context.read<ServicesRepository>(),
+            ref.read(deductionRepositoryProvider),
           ),
         ),
         BlocProvider<FileListCubit>(
