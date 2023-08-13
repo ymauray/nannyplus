@@ -77,6 +77,8 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
   - Flutter (1.0.0)
+  - flutter_native_splash (0.0.1):
+    - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -158,6 +160,7 @@ DEPENDENCIES:
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
+  - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - open_file_plus (from `.symlinks/plugins/open_file_plus/ios`)
@@ -195,6 +198,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core/ios"
   Flutter:
     :path: Flutter
+  flutter_native_splash:
+    :path: ".symlinks/plugins/flutter_native_splash/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   integration_test:
@@ -228,6 +233,7 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: b342e37cd4f5b4454ec34308f073420e7920858e
   FirebaseInstallations: b28af1b9f997f1a799efe818c94695a3728c352f
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GoogleAppMeasurement: 2d800fab85e7848b1e66a6f8ce5bca06c5aad892
   GoogleUtilities: 13e2c67ede716b8741c7989e26893d151b2b2084
