@@ -261,3 +261,6 @@ msgstr "Reset help messages"
 
 msgid "deductions_help"
 msgstr "Deductions are automatically applied to monthly and/or annual statements. They are calculated from the gross total to give the net total."
+
+msgid "statements_help"
+msgstr "These monthly and annual statements have no official value. Check the regulations in force to find out whether you can use them as pay slips or tax receipts."

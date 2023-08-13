@@ -28,6 +28,7 @@ class StatementListView extends StatelessWidget {
           title: Text(
             context.t('Statements'),
           ),
+          help: context.t('statements_help'),
           persistentHeader:
               const UISliverCurvedPersistenHeader(child: Text('')),
           body: UIListView.fromChildren(

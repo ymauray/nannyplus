@@ -532,3 +532,6 @@ msgstr "Réinitialiser les messages d'aide"
 
 msgid "deductions_help"
 msgstr "Les déductions sont automatiquement appliquées aux relevés mensuels et/ou annuels. Elles sont calculées à partir du total brut, pour donner le total net."
+
+msgid "statements_help"
+msgstr "Ces relevés mensuels et annuels n'ont aucune valeur officielles. Vérifier la réglementation en vigueur pour savoir si vous pouvez les utiliser en tant que fiche de salaire ou justificatifs pour les impôts."
