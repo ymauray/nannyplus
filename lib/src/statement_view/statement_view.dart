@@ -386,6 +386,7 @@ class _DocumentBuilder extends StatelessWidget {
               line.isFixedPrice == 0
                   ? '${line.hours}.${line.minutes}'
                   : line.count.toString(),
+              style: const pw.TextStyle(fontSize: 14 * scale),
               textAlign: pw.TextAlign.center,
             ),
           ),
@@ -393,8 +394,8 @@ class _DocumentBuilder extends StatelessWidget {
             padding: const pw.EdgeInsets.symmetric(vertical: 2),
             child: pw.Text(
               line.total.toStringAsFixed(2),
-              textAlign: pw.TextAlign.right,
               style: const pw.TextStyle(fontSize: 14 * scale),
+              textAlign: pw.TextAlign.right,
             ),
           ),
         ],

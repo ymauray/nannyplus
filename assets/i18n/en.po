@@ -262,6 +262,15 @@ msgstr "Percent"
 msgid "Amount / Rate"
 msgstr "Amount / Rate"
 
+msgid "Type"
+msgstr "Type"
+
+msgid "Deduction"
+msgstr "Deduction"
+
+msgid "Total"
+msgstr "Total"
+
 msgid "Are you sure you want to delete this deduction ?"
 msgstr "Are you sure you want to delete this deduction ?"
 
