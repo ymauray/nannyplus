@@ -7,7 +7,12 @@ import 'package:nannyplus/views/app_view.dart';
 import 'package:nannyplus/widgets/card_scroll_view.dart';
 
 class DeductionForm extends ConsumerWidget {
-  const DeductionForm({super.key});
+  const DeductionForm({
+    this.deduction,
+    super.key,
+  });
+
+  final Deduction? deduction;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,6 +33,12 @@ class DeductionForm extends ConsumerWidget {
       ],
       body: FormBuilder(
         key: formKey,
+        initialValue: {
+          'label': deduction?.label,
+          'value': deduction?.value.toStringAsFixed(2),
+          'type': deduction?.type,
+          'periodicity': deduction?.periodicity,
+        },
         child: CardScrollView(
           children: [
             FormBuilderTextField(

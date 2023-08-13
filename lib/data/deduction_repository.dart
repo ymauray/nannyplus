@@ -35,6 +35,17 @@ class DeductionRepository {
     return read(id);
   }
 
+  FutureOr<void> update(Deduction deduction) async {
+    final db = await DatabaseUtil.instance;
+    await db.update(
+      'deductions',
+      deduction.toJson(),
+      where: 'id = ?',
+      whereArgs: [deduction.id],
+    );
+    reorder();
+  }
+
   FutureOr<void> delete(Deduction deduction) async {
     final db = await DatabaseUtil.instance;
     await db.delete(

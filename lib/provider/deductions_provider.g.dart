@@ -6,7 +6,7 @@ part of 'deductions_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$deductionsHash() => r'2c55c4c90d6c1cc6ca80303827ad7447f2686750';
+String _$deductionsHash() => r'5875e6770ab1eecb27e37d2b085b3fbae7f0f739';
 
 /// See also [Deductions].
 @ProviderFor(Deductions)

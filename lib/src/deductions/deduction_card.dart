@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/data/model/deduction.dart';
 import 'package:nannyplus/provider/deductions_provider.dart';
+import 'package:nannyplus/src/deductions/deduction_form.dart';
 import 'package:nannyplus/widgets/card_tile.dart';
 
 class DeductionCard extends ConsumerWidget {
@@ -19,7 +20,22 @@ class DeductionCard extends ConsumerWidget {
     subtitle += deduction.type == 'percent' ? '%' : '';
 
     return CardTile(
-      onTap: () async {},
+      onTap: () async {
+        final updatedDeduction = await Navigator.of(context).push(
+          MaterialPageRoute<Deduction?>(
+            builder: (context) => DeductionForm(deduction: deduction),
+            fullscreenDialog: true,
+          ),
+        );
+        if (updatedDeduction != null) {
+          await ref.read(deductionsProvider.notifier).upd(
+                updatedDeduction.copyWith(
+                  id: deduction.id,
+                  sortOrder: deduction.sortOrder,
+                ),
+              );
+        }
+      },
       title: Text(
         deduction.label,
         style: const TextStyle(
@@ -51,7 +67,8 @@ class DeductionCard extends ConsumerWidget {
         return AlertDialog(
           title: Text(context.t('Delete')),
           content: Text(
-              context.t('Are you sure you want to delete this deduction ?')),
+            context.t('Are you sure you want to delete this deduction ?'),
+          ),
           actions: [
             TextButton(
               child: Text(context.t('Yes')),

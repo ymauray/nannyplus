@@ -21,6 +21,15 @@ class Deductions extends _$Deductions {
     });
   }
 
+  FutureOr<void> upd(Deduction deduction) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final deductionRepository = ref.read(deductionRepositoryProvider);
+      await deductionRepository.update(deduction);
+      return await deductionRepository.readAll();
+    });
+  }
+
   FutureOr<void> remove(Deduction deduction) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
