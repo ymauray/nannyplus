@@ -15,6 +15,10 @@ class ChildListController extends _$ChildListController {
     return const ChildListInitial();
   }
 
+  void reinitialize() {
+    state = const ChildListInitial();
+  }
+
   Future<void> loadChildList({
     bool loadArchivedFolders = false,
   }) async {
