@@ -238,26 +238,45 @@ class ServicesRepository {
         ? DateTime(date.year, date.month + 1)
         : DateTime(date.year + 1);
 
+    final query = type == StatementViewType.monthly
+        ? 'SELECT '
+            ' s.priceLabel, '
+            ' s.priceAmount, '
+            ' s.isFixedPrice, '
+            ' s.date, '
+            ' SUM(s.hours) + CAST(SUM(s.minutes) / 60 as int) hours, '
+            ' SUM(s.minutes) - 60 * CAST(SUM(s.minutes) / 60 as int) minutes, '
+            ' COUNT(1) count, '
+            ' SUM(s.total) total '
+            'FROM '
+            ' services s '
+            'WHERE '
+            ' s.priceId != -1 '
+            ' AND s.date >= ? '
+            ' AND s.date < ? '
+            'GROUP BY '
+            ' s.priceLabel '
+            'ORDER BY '
+            ' s.isFixedPrice, '
+            ' s.priceLabel'
+        : 'SELECT '
+            ' s.priceLabel, '
+            ' s.priceAmount, '
+            ' s.isFixedPrice, '
+            ' s.date, '
+            ' 0 hours, '
+            ' 0 minutes, '
+            ' 0 count, '
+            ' total '
+            'FROM '
+            ' services s '
+            'WHERE '
+            ' s.priceId != -1 '
+            ' AND s.date >= ? '
+            ' AND s.date < ? ';
+
     final rows = await db.rawQuery(
-      'SELECT '
-      ' s.priceLabel, '
-      ' s.priceAmount, '
-      ' s.isFixedPrice, '
-      ' SUM(s.hours) + CAST(SUM(s.minutes) / 60 as int) hours, '
-      ' SUM(s.minutes) - 60 * CAST(SUM(s.minutes) / 60 as int) minutes, '
-      ' COUNT(1) count, '
-      ' SUM(s.total) total '
-      'FROM '
-      ' services s '
-      'WHERE '
-      ' s.priceId != -1 '
-      ' AND s.date >= ? '
-      ' AND s.date < ? '
-      'GROUP BY '
-      ' s.priceLabel '
-      'ORDER BY '
-      ' s.isFixedPrice, '
-      ' s.priceLabel',
+      query,
       [
         DateFormat('yyyy-MM-dd').format(date),
         DateFormat('yyyy-MM-dd').format(endDate),

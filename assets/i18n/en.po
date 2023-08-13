@@ -151,6 +151,9 @@ msgstr "Amount"
 msgid "Quantity"
 msgstr "Quantity"
 
+msgid "Month"
+msgstr "Month"
+
 msgid "Gross total : {0}"
 msgstr "Gross total : {0}"
 

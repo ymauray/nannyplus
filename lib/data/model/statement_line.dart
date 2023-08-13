@@ -13,6 +13,7 @@ class StatementLine {
     required this.minutes,
     required this.count,
     required this.total,
+    required this.date,
   });
   factory StatementLine.fromJson(String source) =>
       StatementLine.fromMap(json.decode(source));
@@ -26,6 +27,7 @@ class StatementLine {
       minutes: map['minutes']?.toInt() ?? 0,
       count: map['count']?.toInt() ?? 0,
       total: map['total']?.toDouble() ?? 0.0,
+      date: map['date'] ?? '',
     );
   }
   final String priceLabel;
@@ -35,6 +37,7 @@ class StatementLine {
   final int minutes;
   final int count;
   final double total;
+  final String date;
 
   StatementLine copyWith({
     String? priceLabel,
@@ -44,6 +47,7 @@ class StatementLine {
     int? minutes,
     int? count,
     double? total,
+    String? date,
   }) {
     return StatementLine(
       priceLabel: priceLabel ?? this.priceLabel,
@@ -53,6 +57,7 @@ class StatementLine {
       minutes: minutes ?? this.minutes,
       count: count ?? this.count,
       total: total ?? this.total,
+      date: date ?? this.date,
     );
   }
 
@@ -65,6 +70,7 @@ class StatementLine {
       'minutes': minutes,
       'count': count,
       'total': total,
+      'date': date,
     };
   }
 
@@ -72,7 +78,7 @@ class StatementLine {
 
   @override
   String toString() {
-    return 'StatementLine(priceLabel: $priceLabel, priceAmount: $priceAmount, isFixedPrice: $isFixedPrice, hours: $hours, minutes: $minutes, count: $count, total: $total)';
+    return 'StatementLine(priceLabel: $priceLabel, priceAmount: $priceAmount, isFixedPrice: $isFixedPrice, hours: $hours, minutes: $minutes, count: $count, total: $total, date: $date)';
   }
 
   @override
@@ -86,7 +92,8 @@ class StatementLine {
         other.hours == hours &&
         other.minutes == minutes &&
         other.count == count &&
-        other.total == total;
+        other.total == total &&
+        other.date == date;
   }
 
   @override
@@ -97,6 +104,7 @@ class StatementLine {
         hours.hashCode ^
         minutes.hashCode ^
         count.hashCode ^
-        total.hashCode;
+        total.hashCode ^
+        date.hashCode;
   }
 }

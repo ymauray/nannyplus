@@ -422,6 +422,9 @@ msgstr "Montant"
 msgid "Quantity"
 msgstr "Quantité"
 
+msgid "Month"
+msgstr "Mois"
+
 msgid "Gross total : {0}"
 msgstr "Total brut : {0}"
 
