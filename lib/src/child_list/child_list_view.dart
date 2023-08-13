@@ -103,7 +103,7 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
               ),
       ),
       body: _currentIndex == 0
-          ? _buildChildList(context, childListState)
+          ? _buildChildList(context, childListState, ref)
           : _buildTabView(context, childListState),
     );
   }
@@ -154,7 +154,11 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
   }
 
   // ignore: long-method
-  Widget _buildChildList(BuildContext context, ChildListState state) {
+  Widget _buildChildList(
+    BuildContext context,
+    ChildListState state,
+    WidgetRef ref,
+  ) {
     return (state is ChildListLoaded)
         ? UIListView(
             itemBuilder: (context, index) {
@@ -198,6 +202,7 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
             extraWidget: TextButton(
               onPressed: () {
                 setState(() {
+                  ref.read(childListControllerProvider.notifier).reinitialize();
                   showArchivedFolders = !showArchivedFolders;
                 });
               },
@@ -466,7 +471,8 @@ class _ChildListTile extends ConsumerWidget {
                     switch (value) {
                       case 1:
                         if (!child.isArchived &&
-                            serviceInfo?.pendingTotal != 0) {
+                            serviceInfo != null &&
+                            serviceInfo.pendingTotal != 0) {
                           ScaffoldMessenger.of(context).failure(
                             context.t(
                               'There are existing services for this child',
