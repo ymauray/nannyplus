@@ -19,6 +19,7 @@ class DeductionsView extends ConsumerWidget {
 
     return UIView(
       title: Text(context.t('Deductions')),
+      help: context.t('deductions_help'),
       persistentHeader: const UISliverCurvedPersistenHeader(),
       body: FloatingActionStack(
         child: deductions.when(
