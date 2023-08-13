@@ -72,6 +72,25 @@ class MainDrawer extends ConsumerWidget {
               },
             ),
             const Divider(),
+            ListTile(
+              title: Text(
+                context.t('Reset help messages'),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              leading: const Icon(Icons.help),
+              onTap: () async {
+                final prefs = await SharedPreferences.getInstance();
+                final keys =
+                    prefs.getKeys().where((key) => key.startsWith('help_'));
+                for (final key in keys) {
+                  await prefs.remove(key);
+                }
+                Navigator.of(context).pop();
+              },
+            ),
+            const Divider(),
             if (kDebugMode)
               ListTile(
                 title: Text(

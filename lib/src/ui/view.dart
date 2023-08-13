@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/sliver_tab_bar_peristant_header.dart';
+import 'package:nannyplus/widgets/help_card.dart';
 
 class UIView extends StatelessWidget {
   const UIView({
     required this.body,
+    this.help,
     this.drawer,
     this.title,
     this.persistentHeader,
@@ -15,6 +17,7 @@ class UIView extends StatelessWidget {
     super.key,
   });
 
+  final String? help;
   final Widget? drawer;
   final Widget? title;
   final UISliverCurvedPersistenHeader? persistentHeader;
@@ -54,6 +57,10 @@ class UIView extends StatelessWidget {
                   handle:
                       NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                 ),
+                if (help != null)
+                  SliverToBoxAdapter(
+                    child: HelpCard(help!),
+                  ),
                 SliverFillRemaining(child: body),
               ],
             );

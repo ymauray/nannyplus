@@ -255,3 +255,6 @@ msgstr "Percent"
 
 msgid "Are you sure you want to delete this deduction ?"
 msgstr "Are you sure you want to delete this deduction ?"
+
+msgid "Reset help messages"
+msgstr "Reset help messages"

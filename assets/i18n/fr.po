@@ -526,3 +526,6 @@ msgstr "Pourcentage"
 
 msgid "Are you sure you want to delete this deduction ?"
 msgstr "Êtes-vous sûr de vouloir supprimer cette déduction ?"
+
+msgid "Reset help messages"
+msgstr "Réinitialiser les messages d'aide"
