@@ -52,6 +52,7 @@ class StatementView extends ConsumerWidget {
                 ? context.t('Yearly statement')
                 : context.t('Monthly statement'),
           ),
+          help: context.t('pdf_statements_help'),
           persistentHeader: UISliverCurvedPersistenHeader(
             child: Text(
               _type == StatementViewType.yearly

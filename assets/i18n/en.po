@@ -285,3 +285,6 @@ msgstr "Deductions are automatically applied to monthly and/or annual statements
 
 msgid "statements_help"
 msgstr "These monthly and annual statements have no official value. Check the regulations in force to find out whether you can use them as pay slips or tax receipts."
+
+msgid "pdf_statements_help"
+msgstr "Reminder: these statements have no official value. Check with the relevant financial authorities to see if you can use them as pay slips or tax receipts."
