@@ -543,6 +543,39 @@ class _DocumentBuilder extends StatelessWidget {
     _DocumentContext documentContext,
   ) sync* {
     documentContext.netTotal = documentContext.grossTotal;
+    if (statement.deductions.isEmpty) {
+      yield pw.TableRow(
+        decoration: const pw.BoxDecoration(
+          color: PdfColors.grey200,
+        ),
+        children: [
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
+            child: pw.Text(
+              _gettext.t('No deductions', []),
+              style: const pw.TextStyle(fontSize: 14 * scale),
+            ),
+          ),
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
+            child: pw.Text(
+              '0.00    ',
+              style: const pw.TextStyle(fontSize: 14 * scale),
+              textAlign: pw.TextAlign.right,
+            ),
+          ),
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
+            child: pw.Text(
+              '0.00',
+              textAlign: pw.TextAlign.right,
+              style: const pw.TextStyle(fontSize: 14 * scale),
+            ),
+          ),
+        ],
+      );
+      return;
+    }
     var highlight = false;
     for (final line in statement.deductions.where((deduction) {
       return _type == StatementViewType.yearly ||

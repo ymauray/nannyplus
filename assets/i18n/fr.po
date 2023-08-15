@@ -539,6 +539,9 @@ msgstr "Type"
 msgid "Deduction"
 msgstr "Déduction"
 
+msgid "No deductions"
+msgstr "Aucune déduction"
+
 msgid "Total"
 msgstr "Total"
 
