@@ -437,8 +437,12 @@ class _DocumentBuilder extends StatelessWidget {
     documentContext.grossTotal = 0;
     var highlight = false;
 
+    final currentMonth = DateFormat('yyyy-MM').format(DateTime.now());
+    final lines = statement.lines
+        .where((statement) => statement.date.substring(0, 7) != currentMonth)
+        .toList();
     final map = <String, double>{};
-    for (final line in statement.lines) {
+    for (final line in lines) {
       final key = line.date.substring(0, 7);
       if (!map.keys.contains(key)) map[key] = 0;
       map[key] = map[key]! + line.total;
