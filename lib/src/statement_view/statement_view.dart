@@ -89,6 +89,7 @@ class StatementView extends ConsumerWidget {
 class _DocumentContext {
   double grossTotal = 0;
   double netTotal = 0;
+  int yearlyLinesCount = 0;
 }
 
 class _DocumentBuilder extends StatelessWidget {
@@ -449,7 +450,9 @@ class _DocumentBuilder extends StatelessWidget {
       map[key] = map[key]! + line.total;
     }
 
+    documentContext.yearlyLinesCount = 0;
     for (final entry in map.entries) {
+      documentContext.yearlyLinesCount++;
       highlight = !highlight;
       final dt = DateFormat('MMMM yyyy')
           .format(DateTime.parse('${entry.key}-01'))
@@ -605,7 +608,7 @@ class _DocumentBuilder extends StatelessWidget {
           : -line.value *
               (line.periodicity == 'monthly' &&
                       _type == StatementViewType.yearly
-                  ? 12
+                  ? documentContext.yearlyLinesCount
                   : 1);
       documentContext.netTotal += amount;
       yield pw.TableRow(
