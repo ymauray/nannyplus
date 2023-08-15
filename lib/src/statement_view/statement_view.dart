@@ -529,6 +529,10 @@ class _DocumentBuilder extends StatelessWidget {
                   textAlign: pw.TextAlign.right,
                 ),
                 blueText(
+                  context.t('Periodicity'),
+                  textAlign: pw.TextAlign.center,
+                ),
+                blueText(
                   context.t('Total'),
                   textAlign: pw.TextAlign.right,
                 ),
@@ -566,6 +570,14 @@ class _DocumentBuilder extends StatelessWidget {
               '0.00    ',
               style: const pw.TextStyle(fontSize: 14 * scale),
               textAlign: pw.TextAlign.right,
+            ),
+          ),
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
+            child: pw.Text(
+              '-',
+              style: const pw.TextStyle(fontSize: 14 * scale),
+              textAlign: pw.TextAlign.center,
             ),
           ),
           pw.Padding(
@@ -613,6 +625,18 @@ class _DocumentBuilder extends StatelessWidget {
               '${line.value.toStringAsFixed(2)}${line.type == 'percent' ? ' %' : '    '}',
               style: const pw.TextStyle(fontSize: 14 * scale),
               textAlign: pw.TextAlign.right,
+            ),
+          ),
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
+            child: pw.Text(
+              line.type == 'percent'
+                  ? '-'
+                  : line.periodicity == 'monthly'
+                      ? _gettext.t('Monthly', [])
+                      : _gettext.t('Yearly', []),
+              style: const pw.TextStyle(fontSize: 14 * scale),
+              textAlign: pw.TextAlign.center,
             ),
           ),
           pw.Padding(
