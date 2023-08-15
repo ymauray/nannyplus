@@ -589,7 +589,11 @@ class _DocumentBuilder extends StatelessWidget {
       highlight = !highlight;
       final amount = line.type == 'percent'
           ? -documentContext.grossTotal * (line.value / 100.0)
-          : -line.value;
+          : -line.value *
+              (line.periodicity == 'monthly' &&
+                      _type == StatementViewType.yearly
+                  ? 12
+                  : 1);
       documentContext.netTotal += amount;
       yield pw.TableRow(
         decoration: pw.BoxDecoration(
