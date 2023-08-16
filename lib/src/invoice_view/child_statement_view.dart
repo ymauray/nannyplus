@@ -3,34 +3,40 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
 import 'package:nannyplus/cubit/child_info_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/data/model/invoice.dart';
+import 'package:nannyplus/provider/yearly_invoices_provider.dart';
 import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/view.dart';
 import 'package:nannyplus/utils/date_format_extension.dart';
-import 'package:nannyplus/utils/list_extensions.dart';
 import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-class ChildStatementView extends StatelessWidget {
+class ChildStatementView extends ConsumerWidget {
   const ChildStatementView(
-    this.group,
+    this.year,
+    this.childId,
     this.gettext, {
     super.key,
   });
 
-  final Group<num, Invoice> group;
+  //final Group<num, Invoice> group;
+  final int year;
+  final int childId;
   final GettextLocalizations gettext;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final yearlyInvoices = ref.watch(yearlyInvoicesProvider(year, childId));
+
     return UIView(
       title: BlocBuilder<ChildInfoCubit, ChildInfoState>(
         builder: (context, state) => state is ChildInfoLoaded
@@ -41,15 +47,18 @@ class ChildStatementView extends StatelessWidget {
         child: Text(
           context.t(
             'Statement for {0}',
-            args: [
-              group.key,
-            ],
+            args: [year],
           ),
         ),
       ),
       body: BlocBuilder<ChildInfoCubit, ChildInfoState>(
         builder: (context, state) => state is ChildInfoLoaded
-            ? _DocumentBuilder(state.child, group, gettext)
+            ? _DocumentBuilder(
+                state.child,
+                year,
+                yearlyInvoices.whenData((value) => value).value ?? [],
+                gettext,
+              )
             : Text(context.t('Loading...')),
       ),
     );
@@ -57,10 +66,16 @@ class ChildStatementView extends StatelessWidget {
 }
 
 class _DocumentBuilder extends StatelessWidget {
-  const _DocumentBuilder(this.child, this.group, this.gettext);
+  const _DocumentBuilder(
+    this.child,
+    this.year,
+    this.invoices,
+    this.gettext,
+  );
 
   final Child child;
-  final Group<num, Invoice> group;
+  final int year;
+  final List<Invoice> invoices;
   final GettextLocalizations gettext;
 
   @override
@@ -92,10 +107,10 @@ class _DocumentBuilder extends StatelessWidget {
                         ),
                         _statementTitle(
                           '${child.displayName} - '
-                          '${gettext.t('Yearly statement', null)} ${group.key}',
+                          '${gettext.t('Yearly statement', null)} $year',
                         ),
-                        _statementTable(_buildTable(group.value)),
-                        _statementTotal(group),
+                        _statementTable(_buildTable(invoices)),
+                        _statementTotal(invoices),
                       ],
                     ),
                     if (logoFile.existsSync())
@@ -128,9 +143,7 @@ class _DocumentBuilder extends StatelessWidget {
           ),
           pdfFileName: "${context.t(
                 'Statement {0}',
-                args: [
-                  group.key,
-                ],
+                args: [year],
               ).toLowerCase().replaceAll(' ', '_')}.pdf",
           build: (pageFormat) => snapshot.data!.save(),
         );
@@ -138,7 +151,6 @@ class _DocumentBuilder extends StatelessWidget {
     );
   }
 
-  // ignore: long-method
   Iterable<pw.TableRow> _buildTable(
     List<Invoice> invoices,
   ) sync* {
@@ -296,8 +308,8 @@ class _DocumentBuilder extends StatelessWidget {
     );
   }
 
-  pw.Widget _statementTotal(Group<num, Invoice> group) {
-    final total = group.value.fold<double>(
+  pw.Widget _statementTotal(List<Invoice> invoices) {
+    final total = invoices.fold<double>(
       0,
       (previousValue, element) => previousValue + element.total,
     );

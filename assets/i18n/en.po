@@ -151,8 +151,14 @@ msgstr "Amount"
 msgid "Quantity"
 msgstr "Quantity"
 
-msgid "Total : {0}"
-msgstr "Total : {0}"
+msgid "Month"
+msgstr "Month"
+
+msgid "Gross total : {0}"
+msgstr "Gross total : {0}"
+
+msgid "Net total : {0}"
+msgstr "Net total : {0}"
 
 msgid "Name"
 msgstr "Name"
@@ -222,3 +228,63 @@ msgstr "Notification message cannot be empty"
 
 msgid "Notification sent"
 msgstr "Notification sent"
+
+msgid "Monthly average"
+msgstr "Monthly average"
+
+msgid "Deductions"
+msgstr "Deductions"
+
+msgid "Create new deduction"
+msgstr "Create new deduction"
+
+msgid "This field is required"
+msgstr "This field is required"
+
+msgid "This field must be a number"
+msgstr "This field must be a number"
+
+msgid "Periodicity"
+msgstr "Periodicity"
+
+msgid "Monthly"
+msgstr "Monthly"
+
+msgid "Yearly"
+msgstr "Yearly"
+
+msgid "Value"
+msgstr "Value"
+
+msgid "Percent"
+msgstr "Percent"
+
+msgid "Amount / Rate"
+msgstr "Amount / Rate"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Deduction"
+msgstr "Deduction"
+
+msgid "No deductions"
+msgstr "No deductions"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Are you sure you want to delete this deduction ?"
+msgstr "Are you sure you want to delete this deduction ?"
+
+msgid "Reset help messages"
+msgstr "Reset help messages"
+
+msgid "deductions_help"
+msgstr "Deductions are automatically applied to monthly and/or annual statements. They are calculated from the gross total to give the net total."
+
+msgid "statements_help"
+msgstr "These monthly and annual statements have no official value. Check the regulations in force to find out whether you can use them as pay slips or tax receipts."
+
+msgid "pdf_statements_help"
+msgstr "Reminder: these statements have no official value. Check with the relevant financial authorities to see if you can use them as pay slips or tax receipts."

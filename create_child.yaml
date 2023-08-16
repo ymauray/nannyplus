@@ -14,7 +14,7 @@ description: Reset the data
 - writeText: "Anke"
 - pressOn: "Nom"
 - writeText: "Wechsler"
-- pressOn: "Allergies"
+- pressOn: "Notes / Allergies"
 - writeText: "Pollen"
 - pressOn: "Nom des parents"
 - writeText: "Anna et Paul Wechsler"

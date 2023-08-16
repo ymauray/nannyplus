@@ -7,7 +7,7 @@ part of 'child_list_provider.dart';
 // **************************************************************************
 
 String _$childListControllerHash() =>
-    r'08d83ab98715faa2c5c2172a80e025f19efdc73a';
+    r'296bc2542649a36ce2f5e7ae43c64ceb7742c79c';
 
 /// See also [ChildListController].
 @ProviderFor(ChildListController)
@@ -23,4 +23,5 @@ final childListControllerProvider =
 );
 
 typedef _$ChildListController = AutoDisposeNotifier<ChildListState>;
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member

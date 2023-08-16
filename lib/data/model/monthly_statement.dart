@@ -6,9 +6,9 @@ import 'package:flutter/widgets.dart';
 @immutable
 class MonthlyStatement {
   const MonthlyStatement({
-    this.id,
     required this.date,
     required this.amount,
+    this.id,
   });
   factory MonthlyStatement.fromJson(String source) =>
       MonthlyStatement.fromMap(json.decode(source));

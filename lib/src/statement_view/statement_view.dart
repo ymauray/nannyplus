@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
@@ -23,7 +24,9 @@ enum StatementViewType {
   monthly,
 }
 
-class StatementView extends StatelessWidget {
+const double scale = 0.75;
+
+class StatementView extends ConsumerWidget {
   const StatementView({
     required StatementViewType type,
     required DateTime date,
@@ -38,7 +41,7 @@ class StatementView extends StatelessWidget {
   final GettextLocalizations _gettext;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     context.read<StatementViewCubit>().loadStatement(_type, _date);
 
     return BlocBuilder<StatementViewCubit, StatementViewState>(
@@ -49,6 +52,7 @@ class StatementView extends StatelessWidget {
                 ? context.t('Yearly statement')
                 : context.t('Monthly statement'),
           ),
+          help: context.t('pdf_statements_help'),
           persistentHeader: UISliverCurvedPersistenHeader(
             child: Text(
               _type == StatementViewType.yearly
@@ -80,6 +84,12 @@ class StatementView extends StatelessWidget {
       },
     );
   }
+}
+
+class _DocumentContext {
+  double grossTotal = 0;
+  double netTotal = 0;
+  int yearlyLinesCount = 0;
 }
 
 class _DocumentBuilder extends StatelessWidget {
@@ -140,11 +150,13 @@ class _DocumentBuilder extends StatelessWidget {
 
     final logoFile = await _getLogoFile();
 
+    final documentContext = _DocumentContext();
+
     doc.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,
         margin: const pw.EdgeInsets.all(50),
-        build: (context) {
+        build: (pcontext) {
           return pw.Stack(
             children: [
               pw.Column(
@@ -158,8 +170,13 @@ class _DocumentBuilder extends StatelessWidget {
                   ),
                   statementTitle(_date, _type),
                   statementMeta(prefs.name, prefs.address),
-                  statementTable(statement),
-                  statementTotal(statement),
+                  if (_type == StatementViewType.monthly)
+                    statementMonthlyTable(context, statement, documentContext),
+                  if (_type == StatementViewType.yearly)
+                    statementYearlyTable(context, statement, documentContext),
+                  statementGrossTotal(documentContext),
+                  statementDeductionsTable(context, statement, documentContext),
+                  statementNetTotal(documentContext),
                 ],
               ),
               if (logoFile.existsSync())
@@ -228,14 +245,14 @@ class _DocumentBuilder extends StatelessWidget {
                   title1 ?? 'Title 1 not set',
                   style: pw.TextStyle(
                     font: line1Font,
-                    fontSize: 30,
+                    fontSize: 30 * scale,
                   ),
                 ),
                 pw.Text(
                   title2 ?? 'Title 2 not set',
                   style: pw.TextStyle(
                     font: line2Font,
-                    fontSize: 13,
+                    fontSize: 13 * scale,
                   ),
                 ),
               ],
@@ -262,7 +279,7 @@ class _DocumentBuilder extends StatelessWidget {
                         : "${_gettext.t('Yearly statement', null)} ${_date.year}",
                     textAlign: pw.TextAlign.center,
                     style: const pw.TextStyle(
-                      fontSize: 17,
+                      fontSize: 17 * scale,
                     ),
                   ),
                 ),
@@ -288,12 +305,13 @@ class _DocumentBuilder extends StatelessWidget {
               child: pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
-                  pw.Text(name, style: const pw.TextStyle(fontSize: 14)),
+                  pw.Text(
+                    name,
+                    style: const pw.TextStyle(fontSize: 14 * scale),
+                  ),
                   pw.Text(
                     address,
-                    style: const pw.TextStyle(
-                      fontSize: 14,
-                    ),
+                    style: const pw.TextStyle(fontSize: 14 * scale),
                   ),
                 ],
               ),
@@ -305,7 +323,197 @@ class _DocumentBuilder extends StatelessWidget {
     );
   }
 
-  pw.Widget statementTable(Statement statement) {
+  pw.Widget statementMonthlyTable(
+    BuildContext context,
+    Statement statement,
+    _DocumentContext documentContext,
+  ) {
+    return pw.Column(
+      children: [
+        pw.Table(
+          children: [
+            pw.TableRow(
+              decoration: const pw.BoxDecoration(
+                border: pw.Border(bottom: pw.BorderSide()),
+              ),
+              children: [
+                blueText(context.t('Service')),
+                blueText(context.t('Price'), textAlign: pw.TextAlign.right),
+                blueText(context.t('Quantity'), textAlign: pw.TextAlign.center),
+                blueText(context.t('Amount'), textAlign: pw.TextAlign.right),
+              ],
+            ),
+            pw.TableRow(children: [pw.SizedBox(height: 2)]),
+            ...statementMonthlyRows(statement, documentContext),
+          ],
+        ),
+      ],
+    );
+  }
+
+  // ignore: long-method
+  Iterable<pw.TableRow> statementMonthlyRows(
+    Statement statement,
+    _DocumentContext documentContext,
+  ) sync* {
+    documentContext.grossTotal = 0;
+    var highlight = false;
+
+    for (final line in statement.lines) {
+      highlight = !highlight;
+      documentContext.grossTotal += line.total;
+      yield pw.TableRow(
+        decoration: pw.BoxDecoration(
+          color: highlight ? PdfColors.grey200 : PdfColors.white,
+        ),
+        children: [
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
+            child: pw.Text(
+              line.priceLabel,
+              style: const pw.TextStyle(fontSize: 14 * scale),
+            ),
+          ),
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
+            child: pw.Text(
+              line.priceAmount.toStringAsFixed(2),
+              style: const pw.TextStyle(fontSize: 14 * scale),
+              textAlign: pw.TextAlign.right,
+            ),
+          ),
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
+            child: pw.Text(
+              line.isFixedPrice == 0
+                  ? '${line.hours}.${line.minutes}'
+                  : line.count.toString(),
+              style: const pw.TextStyle(fontSize: 14 * scale),
+              textAlign: pw.TextAlign.center,
+            ),
+          ),
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
+            child: pw.Text(
+              line.total.toStringAsFixed(2),
+              style: const pw.TextStyle(fontSize: 14 * scale),
+              textAlign: pw.TextAlign.right,
+            ),
+          ),
+        ],
+      );
+    }
+  }
+
+  pw.Widget statementYearlyTable(
+    BuildContext context,
+    Statement statement,
+    _DocumentContext documentContext,
+  ) {
+    return pw.Column(
+      children: [
+        pw.Table(
+          children: [
+            pw.TableRow(
+              decoration: const pw.BoxDecoration(
+                border: pw.Border(bottom: pw.BorderSide()),
+              ),
+              children: [
+                blueText(context.t('Month')),
+                blueText(context.t('Amount'), textAlign: pw.TextAlign.right),
+              ],
+            ),
+            pw.TableRow(children: [pw.SizedBox(height: 2)]),
+            ...statementYearlyRows(statement, documentContext),
+          ],
+        ),
+      ],
+    );
+  }
+
+  // ignore: long-method
+  Iterable<pw.TableRow> statementYearlyRows(
+    Statement statement,
+    _DocumentContext documentContext,
+  ) sync* {
+    documentContext.grossTotal = 0;
+    var highlight = false;
+
+    final currentMonth = DateFormat('yyyy-MM').format(DateTime.now());
+    final lines = statement.lines
+        .where((statement) => statement.date.substring(0, 7) != currentMonth)
+        .toList();
+    final map = <String, double>{};
+    for (final line in lines) {
+      final key = line.date.substring(0, 7);
+      if (!map.keys.contains(key)) map[key] = 0;
+      map[key] = map[key]! + line.total;
+    }
+
+    documentContext.yearlyLinesCount = 0;
+    for (final entry in map.entries) {
+      documentContext.yearlyLinesCount++;
+      highlight = !highlight;
+      final dt = DateFormat('MMMM yyyy')
+          .format(DateTime.parse('${entry.key}-01'))
+          .capitalize();
+      documentContext.grossTotal += entry.value;
+      yield pw.TableRow(
+        decoration: pw.BoxDecoration(
+          color: highlight ? PdfColors.grey200 : PdfColors.white,
+        ),
+        children: [
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
+            child: pw.Text(
+              dt,
+              style: const pw.TextStyle(fontSize: 14 * scale),
+            ),
+          ),
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
+            child: pw.Text(
+              entry.value.toStringAsFixed(2),
+              textAlign: pw.TextAlign.right,
+              style: const pw.TextStyle(fontSize: 14 * scale),
+            ),
+          ),
+        ],
+      );
+    }
+  }
+
+  pw.Widget statementGrossTotal(_DocumentContext documentContext) {
+    return pw.Row(
+      mainAxisAlignment: pw.MainAxisAlignment.end,
+      children: [
+        pw.SizedBox(height: 70),
+        pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text(
+              _gettext.t(
+                'Gross total : {0}',
+                [documentContext.grossTotal.toStringAsFixed(2)],
+              ),
+              style: pw.TextStyle(
+                fontSize: 16 * scale,
+                fontWeight: pw.FontWeight.bold,
+                color: PdfColors.blue,
+              ),
+              textAlign: pw.TextAlign.right,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  pw.Widget statementDeductionsTable(
+    BuildContext context,
+    Statement statement,
+    _DocumentContext documentContext,
+  ) {
     return pw.Column(
       children: [
         pw.Table(
@@ -318,65 +526,129 @@ class _DocumentBuilder extends StatelessWidget {
               ),
               children: [
                 blueText(
-                  _gettext.t('Service', []),
+                  context.t('Deduction'),
                 ),
                 blueText(
-                  _gettext.t('Price', []),
+                  context.t('Amount / Rate'),
                   textAlign: pw.TextAlign.right,
                 ),
                 blueText(
-                  _gettext.t('Quantity', []),
+                  context.t('Periodicity'),
                   textAlign: pw.TextAlign.center,
                 ),
                 blueText(
-                  _gettext.t('Amount', []),
+                  context.t('Total'),
                   textAlign: pw.TextAlign.right,
                 ),
               ],
             ),
-            ...statementRows(statement),
+            pw.TableRow(children: [pw.SizedBox(height: 2)]),
+            ...statementDeductionsRows(statement, documentContext),
           ],
         ),
-        //pw.SizedBox(height: 28),
       ],
     );
   }
 
-  // ignore: long-method
-  Iterable<pw.TableRow> statementRows(Statement statement) sync* {
-    for (final line in statement.lines) {
+  Iterable<pw.TableRow> statementDeductionsRows(
+    Statement statement,
+    _DocumentContext documentContext,
+  ) sync* {
+    documentContext.netTotal = documentContext.grossTotal;
+    if (statement.deductions.isEmpty) {
       yield pw.TableRow(
+        decoration: const pw.BoxDecoration(
+          color: PdfColors.grey200,
+        ),
         children: [
           pw.Padding(
-            padding: const pw.EdgeInsets.symmetric(vertical: 4),
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
             child: pw.Text(
-              line.priceLabel,
-              style: const pw.TextStyle(fontSize: 14),
+              _gettext.t('No deductions', []),
+              style: const pw.TextStyle(fontSize: 14 * scale),
             ),
           ),
           pw.Padding(
-            padding: const pw.EdgeInsets.symmetric(vertical: 4),
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
             child: pw.Text(
-              line.priceAmount.toStringAsFixed(2),
-              style: const pw.TextStyle(fontSize: 14),
+              '0.00    ',
+              style: const pw.TextStyle(fontSize: 14 * scale),
               textAlign: pw.TextAlign.right,
             ),
           ),
           pw.Padding(
-            padding: const pw.EdgeInsets.symmetric(vertical: 4),
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
             child: pw.Text(
-              line.isFixedPrice == 0
-                  ? '${line.hours}.${line.minutes}'
-                  : line.count.toString(),
+              '-',
+              style: const pw.TextStyle(fontSize: 14 * scale),
               textAlign: pw.TextAlign.center,
             ),
           ),
           pw.Padding(
-            padding: const pw.EdgeInsets.symmetric(vertical: 4),
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
             child: pw.Text(
-              line.total.toStringAsFixed(2),
+              '0.00',
               textAlign: pw.TextAlign.right,
-              style: const pw.TextStyle(fontSize: 14),
+              style: const pw.TextStyle(fontSize: 14 * scale),
+            ),
+          ),
+        ],
+      );
+      return;
+    }
+    var highlight = false;
+    for (final line in statement.deductions.where((deduction) {
+      return _type == StatementViewType.yearly ||
+          _type == StatementViewType.monthly &&
+              deduction.periodicity == 'monthly';
+    })) {
+      highlight = !highlight;
+      final amount = line.type == 'percent'
+          ? -documentContext.grossTotal * (line.value / 100.0)
+          : -line.value *
+              (line.periodicity == 'monthly' &&
+                      _type == StatementViewType.yearly
+                  ? documentContext.yearlyLinesCount
+                  : 1);
+      documentContext.netTotal += amount;
+      yield pw.TableRow(
+        decoration: pw.BoxDecoration(
+          color: highlight ? PdfColors.grey200 : PdfColors.white,
+        ),
+        children: [
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
+            child: pw.Text(
+              line.label,
+              style: const pw.TextStyle(fontSize: 14 * scale),
+            ),
+          ),
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
+            child: pw.Text(
+              '${line.value.toStringAsFixed(2)}${line.type == 'percent' ? ' %' : '    '}',
+              style: const pw.TextStyle(fontSize: 14 * scale),
+              textAlign: pw.TextAlign.right,
+            ),
+          ),
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
+            child: pw.Text(
+              line.type == 'percent'
+                  ? '-'
+                  : line.periodicity == 'monthly'
+                      ? _gettext.t('Monthly', [])
+                      : _gettext.t('Yearly', []),
+              style: const pw.TextStyle(fontSize: 14 * scale),
+              textAlign: pw.TextAlign.center,
+            ),
+          ),
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
+            child: pw.Text(
+              amount.toStringAsFixed(2),
+              textAlign: pw.TextAlign.right,
+              style: const pw.TextStyle(fontSize: 14 * scale),
             ),
           ),
         ],
@@ -384,10 +656,7 @@ class _DocumentBuilder extends StatelessWidget {
     }
   }
 
-  pw.Widget statementTotal(Statement statement) {
-    final total = statement.lines
-        .fold<double>(0, (previousValue, line) => previousValue + line.total);
-
+  pw.Widget statementNetTotal(_DocumentContext documentContext) {
     return pw.Row(
       mainAxisAlignment: pw.MainAxisAlignment.end,
       children: [
@@ -396,9 +665,12 @@ class _DocumentBuilder extends StatelessWidget {
           crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: [
             pw.Text(
-              _gettext.t('Total : {0}', [total.toStringAsFixed(2)]),
+              _gettext.t(
+                'Net total : {0}',
+                [documentContext.netTotal.toStringAsFixed(2)],
+              ),
               style: pw.TextStyle(
-                fontSize: 16,
+                fontSize: 16 * scale,
                 fontWeight: pw.FontWeight.bold,
                 color: PdfColors.blue,
               ),
@@ -418,7 +690,7 @@ class _DocumentBuilder extends StatelessWidget {
         textAlign: textAlign ?? pw.TextAlign.left,
         style: pw.TextStyle(
           fontWeight: pw.FontWeight.bold,
-          fontSize: 14,
+          fontSize: 14 * scale,
           color: PdfColors.blue,
         ),
       ),

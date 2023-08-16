@@ -15,8 +15,8 @@ import 'package:nannyplus/utils/snack_bar_util.dart';
 
 class ServiceListTabView extends StatelessWidget {
   const ServiceListTabView({
-    super.key,
     required this.childId,
+    super.key,
   });
 
   final int childId;

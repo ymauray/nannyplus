@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,10 +22,10 @@ import 'package:nannyplus/widgets/time_input_dialog.dart';
 
 class ServiceForm extends StatelessWidget {
   const ServiceForm({
-    super.key,
     required this.child,
     required this.tab,
     this.date,
+    super.key,
   });
 
   final Child child;
@@ -223,9 +225,11 @@ class _List extends StatelessWidget {
       total: price.amount,
     );
     await context.read<ServiceFormCubit>().addService(service, child.id!, date);
-    await FirebaseAnalytics.instance.logEvent(
-      name: 'service_added',
-    );
+    if (!Platform.isLinux && !Platform.isWindows) {
+      await FirebaseAnalytics.instance.logEvent(
+        name: 'service_added',
+      );
+    }
   }
 
   Future<void> handleVariablePrice(
@@ -263,9 +267,11 @@ class _List extends StatelessWidget {
         await context
             .read<ServiceFormCubit>()
             .addService(service, child.id!, date);
-        await FirebaseAnalytics.instance.logEvent(
-          name: 'service_added',
-        );
+        if (!Platform.isLinux && !Platform.isWindows) {
+          await FirebaseAnalytics.instance.logEvent(
+            name: 'service_added',
+          );
+        }
       }
     }
   }

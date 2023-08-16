@@ -6,16 +6,16 @@ import 'package:flutter/widgets.dart';
 @immutable
 class Service {
   const Service({
-    this.id,
     required this.childId,
     required this.date,
     required this.priceId,
+    required this.total,
+    this.id,
     this.priceLabel,
     this.priceAmount,
     this.isFixedPrice,
     this.hours,
     this.minutes,
-    required this.total,
     this.invoiced = 0,
     this.invoiceId,
   });

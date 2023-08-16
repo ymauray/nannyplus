@@ -13,6 +13,7 @@ import 'package:nannyplus/src/child_form/child_form.dart';
 import 'package:nannyplus/src/child_list/main_drawer.dart';
 import 'package:nannyplus/src/common/loading_indicator.dart';
 import 'package:nannyplus/src/constants.dart';
+import 'package:nannyplus/src/deductions/deductions_view.dart';
 import 'package:nannyplus/src/invoice_settings/invoice_settings_view.dart';
 import 'package:nannyplus/src/price_list/price_list_view.dart';
 import 'package:nannyplus/src/statement_list_view/statement_list_view.dart';
@@ -42,9 +43,11 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
 
     final childListState = ref.watch(childListControllerProvider);
 
-    ref.read(childListControllerProvider.notifier).loadChildList(
-          loadArchivedFolders: showArchivedFolders,
-        );
+    if (childListState is ChildListInitial) {
+      ref.read(childListControllerProvider.notifier).loadChildList(
+            loadArchivedFolders: showArchivedFolders,
+          );
+    }
 
     if (childListState is ChildListLoaded) {
       if (childListState.showOnboarding) {
@@ -100,7 +103,7 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
               ),
       ),
       body: _currentIndex == 0
-          ? _buildChildList(context, childListState)
+          ? _buildChildList(context, childListState, ref)
           : _buildTabView(context, childListState),
     );
   }
@@ -151,7 +154,11 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
   }
 
   // ignore: long-method
-  Widget _buildChildList(BuildContext context, ChildListState state) {
+  Widget _buildChildList(
+    BuildContext context,
+    ChildListState state,
+    WidgetRef ref,
+  ) {
     return (state is ChildListLoaded)
         ? UIListView(
             itemBuilder: (context, index) {
@@ -195,6 +202,7 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
             extraWidget: TextButton(
               onPressed: () {
                 setState(() {
+                  ref.read(childListControllerProvider.notifier).reinitialize();
                   showArchivedFolders = !showArchivedFolders;
                 });
               },
@@ -244,6 +252,30 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
                 leading: const Icon(Icons.payment),
                 title: Text(
                   context.t('Price list'),
+                ),
+                trailing: const Icon(Icons.chevron_right),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: Material(
+            elevation: 4,
+            shape: Theme.of(context).listTileTheme.shape,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (context) => const DeductionsView(),
+                  ),
+                );
+              },
+              behavior: HitTestBehavior.opaque,
+              child: ListTile(
+                leading: const Icon(Icons.remove_circle_outline),
+                title: Text(
+                  context.t('Deductions'),
                 ),
                 trailing: const Icon(Icons.chevron_right),
               ),
@@ -439,7 +471,8 @@ class _ChildListTile extends ConsumerWidget {
                     switch (value) {
                       case 1:
                         if (!child.isArchived &&
-                            serviceInfo?.pendingTotal != 0) {
+                            serviceInfo != null &&
+                            serviceInfo.pendingTotal != 0) {
                           ScaffoldMessenger.of(context).failure(
                             context.t(
                               'There are existing services for this child',
@@ -460,7 +493,6 @@ class _ChildListTile extends ConsumerWidget {
                             onToggleShowArchivedFolders();
                           }
                         }
-                        break;
                       case 2:
                         if (serviceInfo != null) {
                           ScaffoldMessenger.of(context).failure(
@@ -484,7 +516,6 @@ class _ChildListTile extends ConsumerWidget {
                             );
                           }
                         }
-                        break;
                       case 3:
                         final clone = await Navigator.of(context).push<Child>(
                           MaterialPageRoute<Child>(
@@ -498,8 +529,6 @@ class _ChildListTile extends ConsumerWidget {
                               .read(childListControllerProvider.notifier)
                               .create(clone);
                         }
-
-                        break;
                     }
                   },
                   padding: EdgeInsets.zero,

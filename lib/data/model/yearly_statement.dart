@@ -7,10 +7,10 @@ import 'package:nannyplus/data/model/monthly_statement.dart';
 @immutable
 class YearlyStatement {
   const YearlyStatement({
-    this.id,
     required this.year,
     required this.amount,
     required this.monthlyStatements,
+    this.id,
   });
   factory YearlyStatement.fromJson(String source) =>
       YearlyStatement.fromMap(json.decode(source));

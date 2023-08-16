@@ -7,8 +7,8 @@ import 'package:flutter/foundation.dart';
 class ServiceInfo {
   const ServiceInfo({
     required this.pendingTotal,
-    this.lastEnty,
     required this.pendingInvoice,
+    this.lastEnty,
   });
 
   final double pendingTotal;
