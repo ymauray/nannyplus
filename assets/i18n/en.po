@@ -76,6 +76,15 @@ msgstr "No open invoice found"
 msgid "Invoice of {0}"
 msgstr "Invoice of {0}"
 
+msgid "Combined with"
+msgstr "Combined with"
+
+msgid "No other child to add to the invoice"
+msgstr "No other child to add to the invoice"
+
+msgid "Nothing to invoice"
+msgstr "Nothing to invoice"
+
 msgid "Mark as paid"
 msgstr "Mark as paid"
 

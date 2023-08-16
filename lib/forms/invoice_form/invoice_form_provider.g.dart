@@ -18,12 +18,30 @@ Map<String, dynamic> _$$_InvoiceFormChildToJson(_$_InvoiceFormChild instance) =>
       'selected': instance.selected,
     };
 
+_$_InvoiceFormState _$$_InvoiceFormStateFromJson(Map<String, dynamic> json) =>
+    _$_InvoiceFormState(
+      child: Child.fromJson(json['child'] as String),
+      children: (json['children'] as List<dynamic>)
+          .map((e) => InvoiceFormChild.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      months:
+          (json['months'] as List<dynamic>).map((e) => e as String).toList(),
+      selectedMonth: json['selectedMonth'] as String?,
+    );
+
+Map<String, dynamic> _$$_InvoiceFormStateToJson(_$_InvoiceFormState instance) =>
+    <String, dynamic>{
+      'child': instance.child,
+      'children': instance.children,
+      'months': instance.months,
+      'selectedMonth': instance.selectedMonth,
+    };
+
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$invoiceFormChildrenHash() =>
-    r'b5d513226e1e73d56415123155c98bbfedc18860';
+String _$invoiceFormHash() => r'f53c911e2a6482267d9a4a1d6fd22e07a79e359a';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -46,40 +64,39 @@ class _SystemHash {
   }
 }
 
-abstract class _$InvoiceFormChildren
-    extends BuildlessAutoDisposeAsyncNotifier<List<InvoiceFormChild>> {
-  late final int excludedId;
+abstract class _$InvoiceForm
+    extends BuildlessAutoDisposeAsyncNotifier<InvoiceFormState> {
+  late final int childId;
 
-  FutureOr<List<InvoiceFormChild>> build(
-    int excludedId,
+  FutureOr<InvoiceFormState> build(
+    int childId,
   );
 }
 
-/// See also [InvoiceFormChildren].
-@ProviderFor(InvoiceFormChildren)
-const invoiceFormChildrenProvider = InvoiceFormChildrenFamily();
+/// See also [InvoiceForm].
+@ProviderFor(InvoiceForm)
+const invoiceFormProvider = InvoiceFormFamily();
 
-/// See also [InvoiceFormChildren].
-class InvoiceFormChildrenFamily
-    extends Family<AsyncValue<List<InvoiceFormChild>>> {
-  /// See also [InvoiceFormChildren].
-  const InvoiceFormChildrenFamily();
+/// See also [InvoiceForm].
+class InvoiceFormFamily extends Family<AsyncValue<InvoiceFormState>> {
+  /// See also [InvoiceForm].
+  const InvoiceFormFamily();
 
-  /// See also [InvoiceFormChildren].
-  InvoiceFormChildrenProvider call(
-    int excludedId,
+  /// See also [InvoiceForm].
+  InvoiceFormProvider call(
+    int childId,
   ) {
-    return InvoiceFormChildrenProvider(
-      excludedId,
+    return InvoiceFormProvider(
+      childId,
     );
   }
 
   @override
-  InvoiceFormChildrenProvider getProviderOverride(
-    covariant InvoiceFormChildrenProvider provider,
+  InvoiceFormProvider getProviderOverride(
+    covariant InvoiceFormProvider provider,
   ) {
     return call(
-      provider.excludedId,
+      provider.childId,
     );
   }
 
@@ -95,50 +112,49 @@ class InvoiceFormChildrenFamily
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'invoiceFormChildrenProvider';
+  String? get name => r'invoiceFormProvider';
 }
 
-/// See also [InvoiceFormChildren].
-class InvoiceFormChildrenProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    InvoiceFormChildren, List<InvoiceFormChild>> {
-  /// See also [InvoiceFormChildren].
-  InvoiceFormChildrenProvider(
-    this.excludedId,
+/// See also [InvoiceForm].
+class InvoiceFormProvider extends AutoDisposeAsyncNotifierProviderImpl<
+    InvoiceForm, InvoiceFormState> {
+  /// See also [InvoiceForm].
+  InvoiceFormProvider(
+    this.childId,
   ) : super.internal(
-          () => InvoiceFormChildren()..excludedId = excludedId,
-          from: invoiceFormChildrenProvider,
-          name: r'invoiceFormChildrenProvider',
+          () => InvoiceForm()..childId = childId,
+          from: invoiceFormProvider,
+          name: r'invoiceFormProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$invoiceFormChildrenHash,
-          dependencies: InvoiceFormChildrenFamily._dependencies,
+                  : _$invoiceFormHash,
+          dependencies: InvoiceFormFamily._dependencies,
           allTransitiveDependencies:
-              InvoiceFormChildrenFamily._allTransitiveDependencies,
+              InvoiceFormFamily._allTransitiveDependencies,
         );
 
-  final int excludedId;
+  final int childId;
 
   @override
   bool operator ==(Object other) {
-    return other is InvoiceFormChildrenProvider &&
-        other.excludedId == excludedId;
+    return other is InvoiceFormProvider && other.childId == childId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, excludedId.hashCode);
+    hash = _SystemHash.combine(hash, childId.hashCode);
 
     return _SystemHash.finish(hash);
   }
 
   @override
-  FutureOr<List<InvoiceFormChild>> runNotifierBuild(
-    covariant InvoiceFormChildren notifier,
+  FutureOr<InvoiceFormState> runNotifierBuild(
+    covariant InvoiceForm notifier,
   ) {
     return notifier.build(
-      excludedId,
+      childId,
     );
   }
 }

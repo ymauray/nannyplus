@@ -321,4 +321,11 @@ class ServicesRepository {
 
     return service.copyWith(id: id);
   }
+
+  Future<List<Service>> getNonInvoicedServices() async {
+    final db = await DatabaseUtil.instance;
+    final rows = await db.query('services', where: 'invoiceId is null');
+    final list = rows.map(Service.fromMap).toList();
+    return list;
+  }
 }

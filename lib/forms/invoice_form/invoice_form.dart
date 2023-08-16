@@ -5,15 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
+import 'package:intl/intl.dart';
 import 'package:nannyplus/forms/invoice_form/invoice_form_provider.dart';
-import 'package:nannyplus/provider/children.dart';
 //import 'package:nannyplus/cubit/invoice_form_cubit.dart';
 import 'package:nannyplus/src/constants.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/ui_card.dart';
 import 'package:nannyplus/src/ui/view.dart';
-import 'package:nannyplus/utils/snack_bar_util.dart';
 
 class InvoiceForm extends ConsumerWidget {
   const InvoiceForm({
@@ -26,8 +25,9 @@ class InvoiceForm extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     //context.read<InvoiceFormCubit>().init(childId);
-    final child = ref.watch(childInfoProvider(childId));
-    final children = ref.watch(invoiceFormChildrenProvider(childId));
+    //final child = ref.watch(childInfoProvider(childId));
+    //final children = ref.watch(invoiceFormChildrenProvider(childId));
+    final invoiceFormState = ref.watch(invoiceFormProvider(childId));
 
     final formKey = GlobalKey<FormBuilderState>();
 
@@ -42,27 +42,44 @@ class InvoiceForm extends ConsumerWidget {
               color: Colors.white,
             ),
             onPressed: () async {
-              //final ok = await context.read<InvoiceFormCubit>().createInvoice();
-              final ok = await ref.read(invoiceFormChildrenProvider(childId).notifier).createInvoice();
-              if (ok) {
-                if (!Platform.isLinux && !Platform.isWindows) {
-                  await FirebaseAnalytics.instance.logEvent(
-                    name: 'invoice_created',
-                  );
+              if (invoiceFormState.asData!.value.selectedMonth != null) {
+                final ok = await ref
+                    .read(invoiceFormProvider(childId).notifier)
+                    .createInvoice();
+                if (ok) {
+                  if (!Platform.isLinux && !Platform.isWindows) {
+                    await FirebaseAnalytics.instance.logEvent(
+                      name: 'invoice_created',
+                    );
+                  }
                 }
-                Navigator.of(context).pop();
-              } else {
-                ScaffoldMessenger.of(context)
-                    .failure(context.t('There is no service to invoice'));
               }
+              Navigator.of(context).pop();
             },
           ),
         ],
         persistentHeader: const UISliverCurvedPersistenHeader(child: Text('')),
-        body: Builder(
-          builder: (context) {
-            return UIListView.fromChildren(
-              children: [
+        body: invoiceFormState.when(
+          loading: () => const Expanded(
+            child: CircularProgressIndicator(),
+          ),
+          error: (error, stackTrace) => Expanded(
+            child: Text(error.toString()),
+          ),
+          data: (formState) => UIListView.fromChildren(
+            children: [
+              if (formState.selectedMonth == null)
+                UICard(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(kdMediumPadding),
+                      child: Text(
+                        context.t('Nothing to invoice'),
+                      ),
+                    ),
+                  ],
+                ),
+              if (formState.selectedMonth != null)
                 UICard(
                   children: [
                     Padding(
@@ -80,64 +97,67 @@ class InvoiceForm extends ConsumerWidget {
                       padding: const EdgeInsets.all(kdMediumPadding),
                       child: Row(
                         children: [
-                          child.when(
-                            data: (child) => Expanded(
-                              child: Text(child.displayName),
-                            ),
-                            loading: () => const Expanded(
-                              child: CircularProgressIndicator(),
-                            ),
-                            error: (error, stackTrace) => Expanded(
-                              child: Text(error.toString()),
-                            ),
+                          Expanded(
+                            child: Text(formState.child.displayName),
+                          ),
+                          DropdownButton(
+                            value: formState.selectedMonth,
+                            items: formState.months
+                                .map(
+                                  (month) => DropdownMenuItem(
+                                    value: month,
+                                    child: Text(
+                                      DateFormat('MMMM yyyy').format(
+                                        DateFormat('yyyy-MM').parse(month),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                            onChanged: (value) {
+                              ref
+                                  .read(
+                                    invoiceFormProvider(childId).notifier,
+                                  )
+                                  .selectMonth(value);
+                            },
                           ),
                         ],
                       ),
                     ),
                   ],
                 ),
-                children.when(
-                  data: (children) => children.isNotEmpty
-                      ? UICard(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                left: kdMediumPadding,
-                                top: kdMediumPadding,
-                                right: kdMediumPadding,
-                              ),
-                              child: Text(
-                                context.t('Combined with'),
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                            ),
-                            ...children.map(
-                              (c) => _Child(
-                                formChild: c,
-                                onPressed: () {
-                                  ref
-                                      .read(
-                                        invoiceFormChildrenProvider(childId)
-                                            .notifier,
-                                      )
-                                      .toggle(c);
-                                },
-                              ),
-                            ),
-                          ],
-                        )
-                      : UICard(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(kdMediumPadding),
-                              child: Text(
-                                context
-                                    .t('No other child to add to the invoice'),
-                              ),
-                            ),
-                          ],
+              if (formState.selectedMonth != null)
+                if (formState.children.isNotEmpty)
+                  UICard(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: kdMediumPadding,
+                          top: kdMediumPadding,
+                          right: kdMediumPadding,
                         ),
-                  loading: () => UICard(
+                        child: Text(
+                          context.t('Combined with'),
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                      ...formState.children.map(
+                        (c) => _Child(
+                          formChild: c,
+                          onPressed: () {
+                            ref
+                                .read(
+                                  invoiceFormProvider(childId).notifier,
+                                )
+                                .toggle(c);
+                          },
+                        ),
+                      ),
+                    ],
+                  )
+                else
+                  UICard(
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(kdMediumPadding),
@@ -147,18 +167,8 @@ class InvoiceForm extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  error: (error, stackTrace) => UICard(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(kdMediumPadding),
-                        child: Text(error.toString()),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          },
+            ],
+          ),
         ),
       ),
     );
