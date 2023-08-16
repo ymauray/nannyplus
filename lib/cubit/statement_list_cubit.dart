@@ -17,7 +17,12 @@ class StatementListCubit extends Cubit<StatementListState> {
   final ServicesRepository _servicesRepository;
 
   Future<void> loadStatements() async {
-    final summaries = await _servicesRepository.getStatementsSummary();
+    final formatter = DateFormat('yyyy-MM');
+    final currentMonth = formatter.format(DateTime.now());
+
+    final summaries = (await _servicesRepository.getStatementsSummary())
+        .where((statement) => statement.month != currentMonth)
+        .toList();
 
     final summaryGroups = summaries.groupBy<num>(
       (summary) => DateFormat('yyyy-MM').parse(summary.month).year,
