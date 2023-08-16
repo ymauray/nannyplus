@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 // ignore: implementation_imports
 import 'package:gettext_i18n/src/gettext_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:nannyplus/cubit/statement_list_cubit.dart';
+import 'package:nannyplus/data/model/deduction.dart';
 import 'package:nannyplus/data/model/monthly_statement.dart';
 import 'package:nannyplus/data/model/yearly_statement.dart';
+import 'package:nannyplus/provider/deductions_provider.dart';
 import 'package:nannyplus/src/constants.dart';
 import 'package:nannyplus/src/statement_view/statement_view.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
@@ -15,32 +18,38 @@ import 'package:nannyplus/src/ui/ui_card.dart';
 import 'package:nannyplus/src/ui/view.dart';
 import 'package:nannyplus/utils/text_extension.dart';
 
-class StatementListView extends StatelessWidget {
+class StatementListView extends ConsumerWidget {
   const StatementListView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     context.read<StatementListCubit>().loadStatements();
+    final deductions = ref.watch(deductionsProvider);
 
     return BlocBuilder<StatementListCubit, StatementListState>(
       builder: (context, state) {
         return UIView(
-          title: Text(
-            context.t('Statements'),
-          ),
+          title: Text(context.t('Statements')),
           help: context.t('statements_help'),
           persistentHeader:
               const UISliverCurvedPersistenHeader(child: Text('')),
-          body: UIListView.fromChildren(
-            horizontalPadding: kdDefaultPadding,
-            children: [
-              if (state is StatementListLoaded)
-                ...(() sync* {
-                  for (final statement in state.statements) {
-                    yield _YearlyStatementCard(statement: statement);
-                  }
-                })(),
-            ],
+          body: deductions.when(
+            data: (deductions) => UIListView.fromChildren(
+              horizontalPadding: kdDefaultPadding,
+              children: [
+                if (state is StatementListLoaded)
+                  ...(() sync* {
+                    for (final statement in state.statements) {
+                      yield _YearlyStatementCard(
+                        statement: statement,
+                        deductions: deductions,
+                      );
+                    }
+                  })(),
+              ],
+            ),
+            error: (_, __) => const Text('Error'),
+            loading: () => const Center(child: CircularProgressIndicator()),
           ),
         );
       },
@@ -48,15 +57,35 @@ class StatementListView extends StatelessWidget {
   }
 }
 
-class _YearlyStatementCard extends StatelessWidget {
+class _YearlyStatementCard extends ConsumerWidget {
   const _YearlyStatementCard({
     required this.statement,
+    required this.deductions,
   });
 
   final YearlyStatement statement;
+  final List<Deduction> deductions;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final copies = <MonthlyStatement>[];
+    var netTotal = 0.0;
+
+    for (final monthlyStatement in statement.monthlyStatements) {
+      var amount = monthlyStatement.amount;
+      for (final deduction in deductions) {
+        if (deduction.periodicity == 'monthly') {
+          if (deduction.type == 'percent') {
+            amount -= monthlyStatement.amount * deduction.value / 100.0;
+          } else {
+            amount -= deduction.value;
+          }
+        }
+      }
+      copies.add(monthlyStatement.copyWith(netAmount: amount));
+      netTotal += amount;
+    }
+
     return UICard(
       children: [
         Padding(
@@ -71,9 +100,7 @@ class _YearlyStatementCard extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 8),
-                child: Text(
-                  statement.amount.toStringAsFixed(2),
-                ),
+                child: Text(netTotal.toStringAsFixed(2)),
               ),
               IconButton(
                 icon: const Icon(Icons.picture_as_pdf),
@@ -82,12 +109,11 @@ class _YearlyStatementCard extends StatelessWidget {
             ],
           ),
         ),
-        const Divider(
-          height: 2,
-        ),
-        ...statement.monthlyStatements.map(
+        const Divider(height: 2),
+        ...copies.map(
           (statement) => _MonthlyStatementCard(
             statement: statement,
+            deductions: deductions,
           ),
         ),
       ],
@@ -101,8 +127,6 @@ class _YearlyStatementCard extends StatelessWidget {
           type: StatementViewType.yearly,
           date: date,
           gettext: GettextLocalizations.of(context),
-          //  invoice,
-          //  GettextLocalizations.of(context),
         ),
       ),
     );
@@ -112,9 +136,11 @@ class _YearlyStatementCard extends StatelessWidget {
 class _MonthlyStatementCard extends StatelessWidget {
   const _MonthlyStatementCard({
     required this.statement,
+    required this.deductions,
   });
 
   final MonthlyStatement statement;
+  final List<Deduction> deductions;
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +159,7 @@ class _MonthlyStatementCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 8),
             child: Text(
-              statement.amount.toStringAsFixed(2),
+              statement.netAmount.toStringAsFixed(2),
             ),
           ),
           IconButton(
@@ -152,8 +178,6 @@ class _MonthlyStatementCard extends StatelessWidget {
           type: StatementViewType.monthly,
           date: date,
           gettext: GettextLocalizations.of(context),
-          //  invoice,
-          //  GettextLocalizations.of(context),
         ),
       ),
     );
