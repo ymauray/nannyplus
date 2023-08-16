@@ -44,49 +44,6 @@ class StatementListCubit extends Cubit<StatementListState> {
           ),
         )
         .toList();
-    //final children = await _childrenRepository.getChildList(true);
-    //var invoices = <Invoice>[];
-    //for (final child in children) {
-    //  invoices.addAll(
-    //    await _invoicesRepository.getInvoiceList(
-    //      child.id!,
-    //      loadPaidInvoices: true,
-    //    ),
-    //  );
-    //}
-    //final invoiceGroups = invoices.groupBy<int>(
-    //  (invoice) => DateFormat('yyyy-MM-dd').parse(invoice.date).year,
-    //  groupComparator: (a, b) => b.compareTo(a),
-    //);
-    //final statements = invoiceGroups
-    //    .map(
-    //      (group) => YearlyStatement(
-    //        year: group.key,
-    //        amount: group.value.fold(
-    //          0.0,
-    //          (total, invoice) => total + invoice.total,
-    //        ),
-    //        monthlyStatements: group.value
-    //            .groupBy<DateTime>(
-    //              (invoice) {
-    //                final invoiceDate =
-    //                    DateFormat('yyyy-MM-dd').parse(invoice.date);
-
-    //                return DateTime(invoiceDate.year, invoiceDate.month, 1);
-    //              },
-    //              groupComparator: (a, b) => b.compareTo(a),
-    //            )
-    //            .map(
-    //              (group) => MonthlyStatement(
-    //                date: group.key,
-    //                amount: group.value
-    //                    .fold(0.0, (total, invoice) => total + invoice.total),
-    //              ),
-    //            )
-    //            .toList(),
-    //      ),
-    //    )
-    //    .toList();
 
     emit(StatementListLoaded(statements));
   }
