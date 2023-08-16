@@ -8,6 +8,7 @@ class MonthlyStatement {
   const MonthlyStatement({
     required this.date,
     required this.amount,
+    required this.netAmount,
     this.id,
   });
   factory MonthlyStatement.fromJson(String source) =>
@@ -18,21 +19,25 @@ class MonthlyStatement {
       id: map['id']?.toInt(),
       date: DateTime.fromMillisecondsSinceEpoch(map['date']),
       amount: map['amount']?.toDouble() ?? 0.0,
+      netAmount: map['netAmount']?.toDouble() ?? 0.0,
     );
   }
   final int? id;
   final DateTime date;
   final double amount;
+  final double netAmount;
 
   MonthlyStatement copyWith({
     int? id,
     DateTime? date,
     double? amount,
+    double? netAmount,
   }) {
     return MonthlyStatement(
       id: id ?? this.id,
       date: date ?? this.date,
       amount: amount ?? this.amount,
+      netAmount: netAmount ?? this.netAmount,
     );
   }
 
@@ -41,6 +46,7 @@ class MonthlyStatement {
       'id': id,
       'date': date.millisecondsSinceEpoch,
       'amount': amount,
+      'netAmount': netAmount,
     };
   }
 
@@ -48,7 +54,7 @@ class MonthlyStatement {
 
   @override
   String toString() =>
-      'MonthlyStatement(id: $id, date: $date, amount: $amount)';
+      'MonthlyStatement(id: $id, date: $date, amount: $amount, netAmount: $netAmount)';
 
   @override
   bool operator ==(Object other) {
@@ -57,9 +63,11 @@ class MonthlyStatement {
     return other is MonthlyStatement &&
         other.id == id &&
         other.date == date &&
-        other.amount == amount;
+        other.amount == amount &&
+        other.netAmount == netAmount;
   }
 
   @override
-  int get hashCode => id.hashCode ^ date.hashCode ^ amount.hashCode;
+  int get hashCode =>
+      id.hashCode ^ date.hashCode ^ amount.hashCode ^ netAmount.hashCode;
 }

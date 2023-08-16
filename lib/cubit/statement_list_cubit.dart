@@ -37,6 +37,7 @@ class StatementListCubit extends Cubit<StatementListState> {
                   (summary) => MonthlyStatement(
                     date: DateFormat('yyyy-MM').parse(summary.month),
                     amount: summary.total,
+                    netAmount: 0,
                   ),
                 )
                 .toList(),
