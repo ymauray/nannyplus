@@ -1,8 +1,8 @@
 import 'package:nannyplus/cubit/child_list_state.dart';
 import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/provider/children_repository_provider.dart';
-import 'package:nannyplus/provider/invoices_repository_provider.dart';
-import 'package:nannyplus/provider/services_repository_provider.dart';
+import 'package:nannyplus/provider/repository/children_repository_provider.dart';
+import 'package:nannyplus/provider/repository/invoices_repository_provider.dart';
+import 'package:nannyplus/provider/repository/services_repository_provider.dart';
 import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

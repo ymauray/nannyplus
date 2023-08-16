@@ -13,7 +13,7 @@ import 'package:nannyplus/data/model/invoice.dart';
 import 'package:nannyplus/provider/invoice_average_provider.dart';
 import 'package:nannyplus/src/common/loading_indicator_list_view.dart';
 import 'package:nannyplus/src/constants.dart';
-import 'package:nannyplus/src/invoice_form/invoice_form.dart';
+import 'package:nannyplus/forms/invoice_form/invoice_form.dart';
 import 'package:nannyplus/src/invoice_view/child_statement_view.dart';
 import 'package:nannyplus/src/invoice_view/invoice_view.dart';
 import 'package:nannyplus/src/ui/list_view.dart';

@@ -6,7 +6,7 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
 import 'package:nannyplus/cubit/child_list_state.dart';
 import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/provider/child_list_provider.dart';
+import 'package:nannyplus/provider/legacy/child_list_provider.dart';
 import 'package:nannyplus/provider/show_pending_invoice_provider.dart';
 import 'package:nannyplus/src/app_settings/app_settings_view.dart';
 import 'package:nannyplus/src/child_form/child_form.dart';
