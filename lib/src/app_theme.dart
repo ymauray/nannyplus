@@ -6,6 +6,7 @@ class AppTheme {
   static ThemeData create() {
     return ThemeData(
       fontFamily: GoogleFonts.poppins().fontFamily,
+      useMaterial3: false,
       colorScheme: const ColorScheme(
         primary: kcPrimaryColor,
         onPrimary: kcOnPrimaryColor,
