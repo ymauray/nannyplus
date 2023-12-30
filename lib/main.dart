@@ -16,7 +16,7 @@ import 'package:timezone/data/latest_all.dart' as tz;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GoogleFonts.config.allowRuntimeFetching = false;
-  if (!Platform.isLinux && !Platform.isWindows) {
+  if (!Platform.isLinux && !Platform.isWindows && !Platform.isMacOS) {
     // await NotificationUtil().init();
     // await NotificationUtil().requestIOSPermissions();
     tz.initializeTimeZones();
