@@ -607,3 +607,6 @@ msgstr "De"
 
 msgid "to"
 msgstr "à"
+
+msgid "Color"
+msgstr "Couleur"

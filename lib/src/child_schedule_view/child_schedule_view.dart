@@ -1,9 +1,11 @@
+import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/data/model/period.dart';
 import 'package:nannyplus/provider/child_info_provider.dart';
 import 'package:nannyplus/provider/periods_provider.dart';
+import 'package:nannyplus/provider/schedule_color_provider.dart';
 import 'package:nannyplus/src/constants.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
@@ -24,6 +26,7 @@ class ChildScheduleView extends ConsumerWidget {
     final periods = ref.watch(periodsProvider(childId));
     final periodsNotifier = ref.watch(periodsProvider(childId).notifier);
     final child = ref.watch(childInfoProvider(childId));
+    final scheduleColor = ref.watch(scheduleColorProvider(childId));
 
     return UIView(
       title: Text(
@@ -46,16 +49,63 @@ class ChildScheduleView extends ConsumerWidget {
       ),
       body: UIListView.fromChildren(
         children: periods.when(
-          data: (periods) => periods.map((period) {
-            return ScheduleEntry(
-              label: context.t(period.day),
-              period: period,
-              updateTime: (from, time) =>
-                  periodsNotifier.updateTime(period.id!, from, time),
-              updateDay: (day) => periodsNotifier.updateDay(period.id!, day),
-              delete: () => periodsNotifier.delete(period.id!),
-            );
-          }).toList(),
+          data: (periods) => [
+            UICard(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(kdMediumPadding),
+                  child: Row(
+                    children: [
+                      Text(
+                        context.t('Color'),
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const Text(' :'),
+                      const SizedBox(width: kdMediumPadding),
+                      Expanded(
+                        child: ColorIndicator(
+                          color: scheduleColor.valueOrNull ?? Colors.purple,
+                          borderRadius: 4,
+                          onSelectFocus: false,
+                          onSelect: () async {
+                            final selectedColor = await showColorPickerDialog(
+                              context,
+                              scheduleColor.valueOrNull ?? Colors.purple,
+                              borderRadius: 4,
+                              spacing: 2,
+                              runSpacing: 2,
+                              selectedPickerTypeColor:
+                                  Theme.of(context).colorScheme.primary,
+                              pickersEnabled: const <ColorPickerType, bool>{
+                                ColorPickerType.both: true,
+                                ColorPickerType.primary: false,
+                                ColorPickerType.accent: false,
+                                ColorPickerType.bw: false,
+                                ColorPickerType.custom: false,
+                                ColorPickerType.wheel: false,
+                              },
+                            );
+                            await ref
+                                .read(scheduleColorProvider(childId).notifier)
+                                .updateColor(selectedColor);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            ...periods.map((period) {
+              return ScheduleEntry(
+                period: period,
+                updateTime: (from, time) =>
+                    periodsNotifier.updateTime(period.id!, from, time),
+                updateDay: (day) => periodsNotifier.updateDay(period.id!, day),
+                delete: () => periodsNotifier.delete(period.id!),
+              );
+            }).toList(),
+          ],
           error: (_, __) => [Text('$_')],
           loading: () => [const Text('loading')],
         ),
@@ -66,7 +116,6 @@ class ChildScheduleView extends ConsumerWidget {
 
 class ScheduleEntry extends StatelessWidget {
   const ScheduleEntry({
-    required this.label,
     required this.period,
     required this.updateTime,
     required this.updateDay,
@@ -74,7 +123,6 @@ class ScheduleEntry extends StatelessWidget {
     super.key,
   });
 
-  final String label;
   final Period period;
   final void Function(bool from, TimeOfDay? time) updateTime;
   final void Function(String day) updateDay;
@@ -91,9 +139,9 @@ class ScheduleEntry extends StatelessWidget {
               DropdownButton(
                 value: period.day,
                 items: [
-                  DropdownMenuItem<String>(
+                  const DropdownMenuItem<String>(
                     value: '',
-                    child: Text(context.t('------')),
+                    child: Text('------'),
                   ),
                   DropdownMenuItem<String>(
                     value: 'monday',

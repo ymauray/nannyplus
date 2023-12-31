@@ -90,8 +90,8 @@ class _ChildInfo extends ConsumerWidget {
               data: (periods) => periods.isEmpty
                   ? context.t('No schedule yet')
                   : context.t('A schedule is defined'),
-              error: (_, __) => context.t('$_'),
-              loading: () => context.t('Loading'),
+              error: (_, __) => 'error : $_',
+              loading: () => 'Loading',
             ),
             icon: IconButton(
               icon: const Icon(FontAwesomeIcons.pencil),

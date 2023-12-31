@@ -415,6 +415,14 @@ class DatabaseUtil {
       sortOrder INTEGER NOT NULL DEFAULT 0
     )
       ''');
+
+      await db.execute('''
+    CREATE TABLE schedule_colors(
+      id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+      childId INTEGER NOT NULL,
+      color INTEGER NOT NULL
+    )
+      ''');
     }
   }
 }

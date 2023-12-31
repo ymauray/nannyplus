@@ -342,3 +342,6 @@ msgstr "From"
 
 msgid "to"
 msgstr "to"
+
+msgid "Color"
+msgstr "Color"
