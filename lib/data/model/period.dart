@@ -46,14 +46,27 @@ class Period with _$Period {
 
   int compareTo(Period other) {
     if (_mapDay(day) != _mapDay(other.day)) {
-      return _mapDay(day).compareTo(_mapDay(other.day));
+      final ret = _mapDay(day).compareTo(_mapDay(other.day));
+      return ret;
     }
 
     if (from.hour != other.from.hour) {
-      return from.hour.compareTo(other.from.hour);
+      final ret = from.hour.compareTo(other.from.hour);
+      return ret;
     }
 
-    return from.minute.compareTo(other.from.minute);
+    if (from.minute != other.from.minute) {
+      final ret = from.minute.compareTo(other.from.minute);
+      return ret;
+    }
+
+    if (to.hour != other.to.hour) {
+      final ret = to.hour.compareTo(other.to.hour);
+      return ret;
+    }
+
+    final ret = to.minute.compareTo(other.to.minute);
+    return ret;
   }
 
   int _mapDay(String day) {

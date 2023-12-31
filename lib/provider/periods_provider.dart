@@ -8,9 +8,8 @@ part 'periods_provider.g.dart';
 @riverpod
 class Periods extends _$Periods {
   @override
-  FutureOr<List<Period>> build(int childId) async {
+  FutureOr<List<Period>> build(int childId) {
     final repository = ref.read(periodsRepositoryProvider);
-    await repository.sortPeriods(childId);
     return repository.load(childId);
   }
 
@@ -58,6 +57,15 @@ class Periods extends _$Periods {
       final repository = ref.read(periodsRepositoryProvider);
       await repository.deletePeriod(periodId);
       return repository.load(childId);
+    });
+  }
+
+  FutureOr<void> sortPeriods(int childId) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final repository = ref.read(periodsRepositoryProvider);
+      await repository.sortPeriods(childId);
+      return await repository.load(childId);
     });
   }
 }

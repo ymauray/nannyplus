@@ -95,14 +95,17 @@ class _ChildInfo extends ConsumerWidget {
             ),
             icon: IconButton(
               icon: const Icon(FontAwesomeIcons.pencil),
-              onPressed: () {
-                Navigator.of(context).push(
+              onPressed: () async {
+                await Navigator.of(context).push(
                   MaterialPageRoute<void>(
                     builder: (context) => ChildScheduleView(
                       childId: child.id!,
                     ),
                   ),
                 );
+                await ref
+                    .read(periodsProvider(child.id!).notifier)
+                    .sortPeriods(child.id!);
               },
             ),
           ),
