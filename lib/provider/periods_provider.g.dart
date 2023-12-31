@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'invoice_average_provider.dart';
+part of 'periods_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$invoiceAveragesHash() => r'9112c7dd8ab98aafce5aa6dd505c185f61e357a9';
+String _$periodsHash() => r'f87f2f1c7b21647caa552a821b116c3e7d778d6e';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,27 +29,36 @@ class _SystemHash {
   }
 }
 
-/// See also [invoiceAverages].
-@ProviderFor(invoiceAverages)
-const invoiceAveragesProvider = InvoiceAveragesFamily();
+abstract class _$Periods
+    extends BuildlessAutoDisposeAsyncNotifier<List<Period>> {
+  late final int childId;
 
-/// See also [invoiceAverages].
-class InvoiceAveragesFamily extends Family<AsyncValue<Map<int, double>>> {
-  /// See also [invoiceAverages].
-  const InvoiceAveragesFamily();
+  FutureOr<List<Period>> build(
+    int childId,
+  );
+}
 
-  /// See also [invoiceAverages].
-  InvoiceAveragesProvider call(
+/// See also [Periods].
+@ProviderFor(Periods)
+const periodsProvider = PeriodsFamily();
+
+/// See also [Periods].
+class PeriodsFamily extends Family<AsyncValue<List<Period>>> {
+  /// See also [Periods].
+  const PeriodsFamily();
+
+  /// See also [Periods].
+  PeriodsProvider call(
     int childId,
   ) {
-    return InvoiceAveragesProvider(
+    return PeriodsProvider(
       childId,
     );
   }
 
   @override
-  InvoiceAveragesProvider getProviderOverride(
-    covariant InvoiceAveragesProvider provider,
+  PeriodsProvider getProviderOverride(
+    covariant PeriodsProvider provider,
   ) {
     return call(
       provider.childId,
@@ -68,33 +77,29 @@ class InvoiceAveragesFamily extends Family<AsyncValue<Map<int, double>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'invoiceAveragesProvider';
+  String? get name => r'periodsProvider';
 }
 
-/// See also [invoiceAverages].
-class InvoiceAveragesProvider
-    extends AutoDisposeFutureProvider<Map<int, double>> {
-  /// See also [invoiceAverages].
-  InvoiceAveragesProvider(
+/// See also [Periods].
+class PeriodsProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<Periods, List<Period>> {
+  /// See also [Periods].
+  PeriodsProvider(
     int childId,
   ) : this._internal(
-          (ref) => invoiceAverages(
-            ref as InvoiceAveragesRef,
-            childId,
-          ),
-          from: invoiceAveragesProvider,
-          name: r'invoiceAveragesProvider',
+          () => Periods()..childId = childId,
+          from: periodsProvider,
+          name: r'periodsProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$invoiceAveragesHash,
-          dependencies: InvoiceAveragesFamily._dependencies,
-          allTransitiveDependencies:
-              InvoiceAveragesFamily._allTransitiveDependencies,
+                  : _$periodsHash,
+          dependencies: PeriodsFamily._dependencies,
+          allTransitiveDependencies: PeriodsFamily._allTransitiveDependencies,
           childId: childId,
         );
 
-  InvoiceAveragesProvider._internal(
+  PeriodsProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -107,13 +112,20 @@ class InvoiceAveragesProvider
   final int childId;
 
   @override
-  Override overrideWith(
-    FutureOr<Map<int, double>> Function(InvoiceAveragesRef provider) create,
+  FutureOr<List<Period>> runNotifierBuild(
+    covariant Periods notifier,
   ) {
+    return notifier.build(
+      childId,
+    );
+  }
+
+  @override
+  Override overrideWith(Periods Function() create) {
     return ProviderOverride(
       origin: this,
-      override: InvoiceAveragesProvider._internal(
-        (ref) => create(ref as InvoiceAveragesRef),
+      override: PeriodsProvider._internal(
+        () => create()..childId = childId,
         from: from,
         name: null,
         dependencies: null,
@@ -125,13 +137,14 @@ class InvoiceAveragesProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<Map<int, double>> createElement() {
-    return _InvoiceAveragesProviderElement(this);
+  AutoDisposeAsyncNotifierProviderElement<Periods, List<Period>>
+      createElement() {
+    return _PeriodsProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is InvoiceAveragesProvider && other.childId == childId;
+    return other is PeriodsProvider && other.childId == childId;
   }
 
   @override
@@ -143,18 +156,18 @@ class InvoiceAveragesProvider
   }
 }
 
-mixin InvoiceAveragesRef on AutoDisposeFutureProviderRef<Map<int, double>> {
+mixin PeriodsRef on AutoDisposeAsyncNotifierProviderRef<List<Period>> {
   /// The parameter `childId` of this provider.
   int get childId;
 }
 
-class _InvoiceAveragesProviderElement
-    extends AutoDisposeFutureProviderElement<Map<int, double>>
-    with InvoiceAveragesRef {
-  _InvoiceAveragesProviderElement(super.provider);
+class _PeriodsProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<Periods, List<Period>>
+    with PeriodsRef {
+  _PeriodsProviderElement(super.provider);
 
   @override
-  int get childId => (origin as InvoiceAveragesProvider).childId;
+  int get childId => (origin as PeriodsProvider).childId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

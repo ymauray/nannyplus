@@ -33,6 +33,13 @@ class AppTheme {
       ),
       scaffoldBackgroundColor: kcBackgroundColor,
       indicatorColor: kcPrimaryColor,
+      timePickerTheme: const TimePickerThemeData(
+        backgroundColor: kcAlmostWhite,
+        dialHandColor: kcPrimaryColor,
+        dialTextColor: kcTextColor,
+        hourMinuteTextColor: kcTextColor,
+        dayPeriodTextColor: kcTextColor,
+      ),
     );
   }
 

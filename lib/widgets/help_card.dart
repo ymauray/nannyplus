@@ -49,7 +49,7 @@ class HelpCard extends ConsumerWidget {
                       icon: const Icon(Icons.close),
                       padding: const EdgeInsets.only(left: 4, top: 4, right: 4),
                       constraints: const BoxConstraints(),
-                    )
+                    ),
                   ],
                 ),
               ),

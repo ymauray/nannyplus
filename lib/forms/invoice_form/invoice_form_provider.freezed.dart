@@ -68,22 +68,22 @@ class _$InvoiceFormChildCopyWithImpl<$Res, $Val extends InvoiceFormChild>
 }
 
 /// @nodoc
-abstract class _$$_InvoiceFormChildCopyWith<$Res>
+abstract class _$$InvoiceFormChildImplCopyWith<$Res>
     implements $InvoiceFormChildCopyWith<$Res> {
-  factory _$$_InvoiceFormChildCopyWith(
-          _$_InvoiceFormChild value, $Res Function(_$_InvoiceFormChild) then) =
-      __$$_InvoiceFormChildCopyWithImpl<$Res>;
+  factory _$$InvoiceFormChildImplCopyWith(_$InvoiceFormChildImpl value,
+          $Res Function(_$InvoiceFormChildImpl) then) =
+      __$$InvoiceFormChildImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Child child, bool selected});
 }
 
 /// @nodoc
-class __$$_InvoiceFormChildCopyWithImpl<$Res>
-    extends _$InvoiceFormChildCopyWithImpl<$Res, _$_InvoiceFormChild>
-    implements _$$_InvoiceFormChildCopyWith<$Res> {
-  __$$_InvoiceFormChildCopyWithImpl(
-      _$_InvoiceFormChild _value, $Res Function(_$_InvoiceFormChild) _then)
+class __$$InvoiceFormChildImplCopyWithImpl<$Res>
+    extends _$InvoiceFormChildCopyWithImpl<$Res, _$InvoiceFormChildImpl>
+    implements _$$InvoiceFormChildImplCopyWith<$Res> {
+  __$$InvoiceFormChildImplCopyWithImpl(_$InvoiceFormChildImpl _value,
+      $Res Function(_$InvoiceFormChildImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -92,7 +92,7 @@ class __$$_InvoiceFormChildCopyWithImpl<$Res>
     Object? child = null,
     Object? selected = null,
   }) {
-    return _then(_$_InvoiceFormChild(
+    return _then(_$InvoiceFormChildImpl(
       child: null == child
           ? _value.child
           : child // ignore: cast_nullable_to_non_nullable
@@ -107,11 +107,11 @@ class __$$_InvoiceFormChildCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_InvoiceFormChild implements _InvoiceFormChild {
-  const _$_InvoiceFormChild({required this.child, required this.selected});
+class _$InvoiceFormChildImpl implements _InvoiceFormChild {
+  const _$InvoiceFormChildImpl({required this.child, required this.selected});
 
-  factory _$_InvoiceFormChild.fromJson(Map<String, dynamic> json) =>
-      _$$_InvoiceFormChildFromJson(json);
+  factory _$InvoiceFormChildImpl.fromJson(Map<String, dynamic> json) =>
+      _$$InvoiceFormChildImplFromJson(json);
 
   @override
   final Child child;
@@ -124,10 +124,10 @@ class _$_InvoiceFormChild implements _InvoiceFormChild {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_InvoiceFormChild &&
+            other is _$InvoiceFormChildImpl &&
             (identical(other.child, child) || other.child == child) &&
             (identical(other.selected, selected) ||
                 other.selected == selected));
@@ -140,12 +140,13 @@ class _$_InvoiceFormChild implements _InvoiceFormChild {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_InvoiceFormChildCopyWith<_$_InvoiceFormChild> get copyWith =>
-      __$$_InvoiceFormChildCopyWithImpl<_$_InvoiceFormChild>(this, _$identity);
+  _$$InvoiceFormChildImplCopyWith<_$InvoiceFormChildImpl> get copyWith =>
+      __$$InvoiceFormChildImplCopyWithImpl<_$InvoiceFormChildImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_InvoiceFormChildToJson(
+    return _$$InvoiceFormChildImplToJson(
       this,
     );
   }
@@ -154,10 +155,10 @@ class _$_InvoiceFormChild implements _InvoiceFormChild {
 abstract class _InvoiceFormChild implements InvoiceFormChild {
   const factory _InvoiceFormChild(
       {required final Child child,
-      required final bool selected}) = _$_InvoiceFormChild;
+      required final bool selected}) = _$InvoiceFormChildImpl;
 
   factory _InvoiceFormChild.fromJson(Map<String, dynamic> json) =
-      _$_InvoiceFormChild.fromJson;
+      _$InvoiceFormChildImpl.fromJson;
 
   @override
   Child get child;
@@ -165,7 +166,7 @@ abstract class _InvoiceFormChild implements InvoiceFormChild {
   bool get selected;
   @override
   @JsonKey(ignore: true)
-  _$$_InvoiceFormChildCopyWith<_$_InvoiceFormChild> get copyWith =>
+  _$$InvoiceFormChildImplCopyWith<_$InvoiceFormChildImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -239,11 +240,11 @@ class _$InvoiceFormStateCopyWithImpl<$Res, $Val extends InvoiceFormState>
 }
 
 /// @nodoc
-abstract class _$$_InvoiceFormStateCopyWith<$Res>
+abstract class _$$InvoiceFormStateImplCopyWith<$Res>
     implements $InvoiceFormStateCopyWith<$Res> {
-  factory _$$_InvoiceFormStateCopyWith(
-          _$_InvoiceFormState value, $Res Function(_$_InvoiceFormState) then) =
-      __$$_InvoiceFormStateCopyWithImpl<$Res>;
+  factory _$$InvoiceFormStateImplCopyWith(_$InvoiceFormStateImpl value,
+          $Res Function(_$InvoiceFormStateImpl) then) =
+      __$$InvoiceFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -254,11 +255,11 @@ abstract class _$$_InvoiceFormStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_InvoiceFormStateCopyWithImpl<$Res>
-    extends _$InvoiceFormStateCopyWithImpl<$Res, _$_InvoiceFormState>
-    implements _$$_InvoiceFormStateCopyWith<$Res> {
-  __$$_InvoiceFormStateCopyWithImpl(
-      _$_InvoiceFormState _value, $Res Function(_$_InvoiceFormState) _then)
+class __$$InvoiceFormStateImplCopyWithImpl<$Res>
+    extends _$InvoiceFormStateCopyWithImpl<$Res, _$InvoiceFormStateImpl>
+    implements _$$InvoiceFormStateImplCopyWith<$Res> {
+  __$$InvoiceFormStateImplCopyWithImpl(_$InvoiceFormStateImpl _value,
+      $Res Function(_$InvoiceFormStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -269,7 +270,7 @@ class __$$_InvoiceFormStateCopyWithImpl<$Res>
     Object? months = null,
     Object? selectedMonth = freezed,
   }) {
-    return _then(_$_InvoiceFormState(
+    return _then(_$InvoiceFormStateImpl(
       child: null == child
           ? _value.child
           : child // ignore: cast_nullable_to_non_nullable
@@ -292,8 +293,8 @@ class __$$_InvoiceFormStateCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_InvoiceFormState implements _InvoiceFormState {
-  const _$_InvoiceFormState(
+class _$InvoiceFormStateImpl implements _InvoiceFormState {
+  const _$InvoiceFormStateImpl(
       {required this.child,
       required final List<InvoiceFormChild> children,
       required final List<String> months,
@@ -301,8 +302,8 @@ class _$_InvoiceFormState implements _InvoiceFormState {
       : _children = children,
         _months = months;
 
-  factory _$_InvoiceFormState.fromJson(Map<String, dynamic> json) =>
-      _$$_InvoiceFormStateFromJson(json);
+  factory _$InvoiceFormStateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$InvoiceFormStateImplFromJson(json);
 
   @override
   final Child child;
@@ -331,10 +332,10 @@ class _$_InvoiceFormState implements _InvoiceFormState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_InvoiceFormState &&
+            other is _$InvoiceFormStateImpl &&
             (identical(other.child, child) || other.child == child) &&
             const DeepCollectionEquality().equals(other._children, _children) &&
             const DeepCollectionEquality().equals(other._months, _months) &&
@@ -354,12 +355,13 @@ class _$_InvoiceFormState implements _InvoiceFormState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_InvoiceFormStateCopyWith<_$_InvoiceFormState> get copyWith =>
-      __$$_InvoiceFormStateCopyWithImpl<_$_InvoiceFormState>(this, _$identity);
+  _$$InvoiceFormStateImplCopyWith<_$InvoiceFormStateImpl> get copyWith =>
+      __$$InvoiceFormStateImplCopyWithImpl<_$InvoiceFormStateImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_InvoiceFormStateToJson(
+    return _$$InvoiceFormStateImplToJson(
       this,
     );
   }
@@ -370,10 +372,10 @@ abstract class _InvoiceFormState implements InvoiceFormState {
       {required final Child child,
       required final List<InvoiceFormChild> children,
       required final List<String> months,
-      required final String? selectedMonth}) = _$_InvoiceFormState;
+      required final String? selectedMonth}) = _$InvoiceFormStateImpl;
 
   factory _InvoiceFormState.fromJson(Map<String, dynamic> json) =
-      _$_InvoiceFormState.fromJson;
+      _$InvoiceFormStateImpl.fromJson;
 
   @override
   Child get child;
@@ -385,6 +387,6 @@ abstract class _InvoiceFormState implements InvoiceFormState {
   String? get selectedMonth;
   @override
   @JsonKey(ignore: true)
-  _$$_InvoiceFormStateCopyWith<_$_InvoiceFormState> get copyWith =>
+  _$$InvoiceFormStateImplCopyWith<_$InvoiceFormStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

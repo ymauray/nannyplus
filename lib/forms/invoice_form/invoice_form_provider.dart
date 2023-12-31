@@ -115,7 +115,7 @@ class InvoiceForm extends _$InvoiceForm {
             (service) =>
                 service.date.substring(0, 7) ==
                 state.asData!.value.selectedMonth,
-          )
+          ),
         ]) {
           await servicesRepository.update(
             service.copyWith(

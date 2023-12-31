@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'children.dart';
+part of 'child_info_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$childListHash() => r'97a9f10f695dfe3068ced4f57d3939fb861e130c';
+String _$childInfoHash() => r'da523306f3e68eacb8a76c1a5026a8e4a726d5d9';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,30 +29,30 @@ class _SystemHash {
   }
 }
 
-/// See also [childList].
-@ProviderFor(childList)
-const childListProvider = ChildListFamily();
+/// See also [childInfo].
+@ProviderFor(childInfo)
+const childInfoProvider = ChildInfoFamily();
 
-/// See also [childList].
-class ChildListFamily extends Family<Raw<FutureOr<List<Child>>>> {
-  /// See also [childList].
-  const ChildListFamily();
+/// See also [childInfo].
+class ChildInfoFamily extends Family<AsyncValue<Child>> {
+  /// See also [childInfo].
+  const ChildInfoFamily();
 
-  /// See also [childList].
-  ChildListProvider call(
-    int? excludeId,
+  /// See also [childInfo].
+  ChildInfoProvider call(
+    int childId,
   ) {
-    return ChildListProvider(
-      excludeId,
+    return ChildInfoProvider(
+      childId,
     );
   }
 
   @override
-  ChildListProvider getProviderOverride(
-    covariant ChildListProvider provider,
+  ChildInfoProvider getProviderOverride(
+    covariant ChildInfoProvider provider,
   ) {
     return call(
-      provider.excludeId,
+      provider.childId,
     );
   }
 
@@ -68,92 +68,90 @@ class ChildListFamily extends Family<Raw<FutureOr<List<Child>>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'childListProvider';
+  String? get name => r'childInfoProvider';
 }
 
-/// See also [childList].
-class ChildListProvider
-    extends AutoDisposeProvider<Raw<FutureOr<List<Child>>>> {
-  /// See also [childList].
-  ChildListProvider(
-    int? excludeId,
+/// See also [childInfo].
+class ChildInfoProvider extends AutoDisposeFutureProvider<Child> {
+  /// See also [childInfo].
+  ChildInfoProvider(
+    int childId,
   ) : this._internal(
-          (ref) => childList(
-            ref as ChildListRef,
-            excludeId,
+          (ref) => childInfo(
+            ref as ChildInfoRef,
+            childId,
           ),
-          from: childListProvider,
-          name: r'childListProvider',
+          from: childInfoProvider,
+          name: r'childInfoProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$childListHash,
-          dependencies: ChildListFamily._dependencies,
-          allTransitiveDependencies: ChildListFamily._allTransitiveDependencies,
-          excludeId: excludeId,
+                  : _$childInfoHash,
+          dependencies: ChildInfoFamily._dependencies,
+          allTransitiveDependencies: ChildInfoFamily._allTransitiveDependencies,
+          childId: childId,
         );
 
-  ChildListProvider._internal(
+  ChildInfoProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.excludeId,
+    required this.childId,
   }) : super.internal();
 
-  final int? excludeId;
+  final int childId;
 
   @override
   Override overrideWith(
-    Raw<FutureOr<List<Child>>> Function(ChildListRef provider) create,
+    FutureOr<Child> Function(ChildInfoRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: ChildListProvider._internal(
-        (ref) => create(ref as ChildListRef),
+      override: ChildInfoProvider._internal(
+        (ref) => create(ref as ChildInfoRef),
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        excludeId: excludeId,
+        childId: childId,
       ),
     );
   }
 
   @override
-  AutoDisposeProviderElement<Raw<FutureOr<List<Child>>>> createElement() {
-    return _ChildListProviderElement(this);
+  AutoDisposeFutureProviderElement<Child> createElement() {
+    return _ChildInfoProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is ChildListProvider && other.excludeId == excludeId;
+    return other is ChildInfoProvider && other.childId == childId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, excludeId.hashCode);
+    hash = _SystemHash.combine(hash, childId.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin ChildListRef on AutoDisposeProviderRef<Raw<FutureOr<List<Child>>>> {
-  /// The parameter `excludeId` of this provider.
-  int? get excludeId;
+mixin ChildInfoRef on AutoDisposeFutureProviderRef<Child> {
+  /// The parameter `childId` of this provider.
+  int get childId;
 }
 
-class _ChildListProviderElement
-    extends AutoDisposeProviderElement<Raw<FutureOr<List<Child>>>>
-    with ChildListRef {
-  _ChildListProviderElement(super.provider);
+class _ChildInfoProviderElement extends AutoDisposeFutureProviderElement<Child>
+    with ChildInfoRef {
+  _ChildInfoProviderElement(super.provider);
 
   @override
-  int? get excludeId => (origin as ChildListProvider).excludeId;
+  int get childId => (origin as ChildInfoProvider).childId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -25,7 +25,7 @@ GROUP BY
   );
 
   return {
-    for (var row in result)
-      int.parse(row['year'] as String): row['avg']! as double
+    for (final row in result)
+      int.parse(row['year'] as String): row['avg']! as double,
   };
 }

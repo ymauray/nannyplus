@@ -2,12 +2,15 @@ import 'dart:io' as io;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/cubit/child_info_cubit.dart';
 import 'package:nannyplus/cubit/file_list_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/provider/periods_provider.dart';
 import 'package:nannyplus/src/child_form/profile_photo.dart';
+import 'package:nannyplus/src/child_schedule_view/child_schedule_view.dart';
 import 'package:nannyplus/src/common/loading_indicator.dart';
 import 'package:nannyplus/src/constants.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
@@ -16,7 +19,7 @@ import 'package:nannyplus/utils/date_format_extension.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
-class ChildInfoTabView extends StatelessWidget {
+class ChildInfoTabView extends ConsumerWidget {
   const ChildInfoTabView({
     required this.childId,
     super.key,
@@ -25,7 +28,7 @@ class ChildInfoTabView extends StatelessWidget {
   final int childId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     context.read<ChildInfoCubit>().read(childId);
 
     return BlocConsumer<ChildInfoCubit, ChildInfoState>(
@@ -47,7 +50,7 @@ class ChildInfoTabView extends StatelessWidget {
   }
 }
 
-class _ChildInfo extends StatelessWidget {
+class _ChildInfo extends ConsumerWidget {
   const _ChildInfo({
     required this.child,
   });
@@ -63,9 +66,10 @@ class _ChildInfo extends StatelessWidget {
   EdgeInsets get fieldPadding => const EdgeInsets.all(kdSmallPadding);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     context.read<FileListCubit>().loadFiles(child.id ?? 0);
     final profilePhotoController = ProfilePhotoController()..bytes = child.pic;
+    final periods = ref.watch(periodsProvider(child.id ?? 0));
 
     return BlocBuilder<FileListCubit, FileListState>(
       builder: (context, state) => UIListView.fromChildren(
@@ -80,6 +84,28 @@ class _ChildInfo extends StatelessWidget {
                 ),
               ],
             ),
+          _InfoCard(
+            label: context.t('Schedule'),
+            value: periods.when(
+              data: (periods) => periods.isEmpty
+                  ? context.t('No schedule yet')
+                  : context.t('A schedule is defined'),
+              error: (_, __) => context.t('$_'),
+              loading: () => context.t('Loading'),
+            ),
+            icon: IconButton(
+              icon: const Icon(FontAwesomeIcons.pencil),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (context) => ChildScheduleView(
+                      childId: child.id!,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
           _InfoCard(
             label: context.t('Birthdate'),
             value: child.birthdate?.formatDate() ?? '',
@@ -174,7 +200,7 @@ class _InfoCard extends StatelessWidget {
 
   final String label;
   final String value;
-  final Icon? icon;
+  final Widget? icon;
 
   @override
   Widget build(BuildContext context) {

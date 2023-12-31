@@ -131,7 +131,7 @@ class ServicesRepository {
         .toList();
 
     final map = <int, ServiceInfo>{
-      for (var group in groupedRows)
+      for (final group in groupedRows)
         group.key as int: ServiceInfo(
           pendingInvoice: 0,
           pendingTotal: group.value.fold(
@@ -148,7 +148,7 @@ class ServicesRepository {
       [0],
     );
     final map2 = <int, String>{
-      for (var row in rows) row['childId'] as int: row['MAX(date)'] as String,
+      for (final row in rows) row['childId'] as int: row['MAX(date)'] as String,
     };
 
     for (final childId in map.keys) {
@@ -179,7 +179,7 @@ class ServicesRepository {
         rows.groupBy<num>((row) => row['childId'] as int).toList();
 
     final invoicesMap = <int, double>{
-      for (var group in groupedInvoices)
+      for (final group in groupedInvoices)
         group.key as int: group.value.fold(
           0,
           (previousValue, row) =>

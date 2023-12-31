@@ -43,7 +43,7 @@ class DatabaseUtil {
 
     _database = await sqlite.openDatabase(
       await _databasePath,
-      version: 10,
+      version: 11,
       onCreate: (db, version) async {
         await _create(db);
         for (var i = 2; i <= version; i++) {
@@ -400,6 +400,21 @@ class DatabaseUtil {
       periodicity TEXT
     )
     ''');
+    }
+
+    if (version == 11) {
+      await db.execute('''
+    CREATE TABLE periods(
+      id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+      childId INTEGER NOT NULL,
+      day TEXT,
+      hourFrom INTEGER,
+      minuteFrom INTEGER,
+      hourTo INTEGER,
+      minuteTo INTEGER,
+      sortOrder INTEGER NOT NULL DEFAULT 0
+    )
+      ''');
     }
   }
 }

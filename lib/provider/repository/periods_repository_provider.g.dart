@@ -1,27 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'deduction_repository.dart';
+part of 'periods_repository_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$deductionRepositoryHash() =>
-    r'70c6f716487fa448ff4d82c61b7ccf2cc69e6898';
+String _$periodsRepositoryHash() => r'3da07934ce5a525f0e8c2d75cd21620bd86be524';
 
-/// See also [deductionRepository].
-@ProviderFor(deductionRepository)
-final deductionRepositoryProvider =
-    AutoDisposeProvider<DeductionRepository>.internal(
-  deductionRepository,
-  name: r'deductionRepositoryProvider',
+/// See also [PeriodsRepository].
+@ProviderFor(PeriodsRepository)
+final periodsRepositoryProvider = AutoDisposeNotifierProvider<PeriodsRepository,
+    data.PeriodRepository>.internal(
+  PeriodsRepository.new,
+  name: r'periodsRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$deductionRepositoryHash,
+      : _$periodsRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef DeductionRepositoryRef = AutoDisposeProviderRef<DeductionRepository>;
+typedef _$PeriodsRepository = AutoDisposeNotifier<data.PeriodRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

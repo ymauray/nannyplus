@@ -60,7 +60,7 @@ class PricesRepository {
           .rawQuery('SELECT MAX(sortOrder) AS maxSortOrder FROM prices');
       var maxSortOrder = 0;
       if (rows.isNotEmpty) {
-        maxSortOrder = ((rows.first)['maxSortOrder'] ?? 0) as int;
+        maxSortOrder = (rows.first['maxSortOrder'] ?? 0) as int;
       }
       final id = await database.insert(
         'prices',

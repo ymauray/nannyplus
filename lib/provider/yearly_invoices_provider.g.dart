@@ -29,8 +29,6 @@ class _SystemHash {
   }
 }
 
-typedef YearlyInvoicesRef = AutoDisposeFutureProviderRef<List<Invoice>>;
-
 /// See also [yearlyInvoices].
 @ProviderFor(yearlyInvoices)
 const yearlyInvoicesProvider = YearlyInvoicesFamily();
@@ -80,11 +78,11 @@ class YearlyInvoicesFamily extends Family<AsyncValue<List<Invoice>>> {
 class YearlyInvoicesProvider extends AutoDisposeFutureProvider<List<Invoice>> {
   /// See also [yearlyInvoices].
   YearlyInvoicesProvider(
-    this.year,
-    this.childId,
-  ) : super.internal(
+    int year,
+    int childId,
+  ) : this._internal(
           (ref) => yearlyInvoices(
-            ref,
+            ref as YearlyInvoicesRef,
             year,
             childId,
           ),
@@ -97,10 +95,47 @@ class YearlyInvoicesProvider extends AutoDisposeFutureProvider<List<Invoice>> {
           dependencies: YearlyInvoicesFamily._dependencies,
           allTransitiveDependencies:
               YearlyInvoicesFamily._allTransitiveDependencies,
+          year: year,
+          childId: childId,
         );
+
+  YearlyInvoicesProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.year,
+    required this.childId,
+  }) : super.internal();
 
   final int year;
   final int childId;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<Invoice>> Function(YearlyInvoicesRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: YearlyInvoicesProvider._internal(
+        (ref) => create(ref as YearlyInvoicesRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        year: year,
+        childId: childId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<Invoice>> createElement() {
+    return _YearlyInvoicesProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -118,5 +153,24 @@ class YearlyInvoicesProvider extends AutoDisposeFutureProvider<List<Invoice>> {
     return _SystemHash.finish(hash);
   }
 }
+
+mixin YearlyInvoicesRef on AutoDisposeFutureProviderRef<List<Invoice>> {
+  /// The parameter `year` of this provider.
+  int get year;
+
+  /// The parameter `childId` of this provider.
+  int get childId;
+}
+
+class _YearlyInvoicesProviderElement
+    extends AutoDisposeFutureProviderElement<List<Invoice>>
+    with YearlyInvoicesRef {
+  _YearlyInvoicesProviderElement(super.provider);
+
+  @override
+  int get year => (origin as YearlyInvoicesProvider).year;
+  @override
+  int get childId => (origin as YearlyInvoicesProvider).childId;
+}
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

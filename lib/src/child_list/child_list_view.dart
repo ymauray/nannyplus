@@ -104,7 +104,7 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
       ),
       body: _currentIndex == 0
           ? _buildChildList(context, childListState, ref)
-          : _buildTabView(context, childListState),
+          : _buildOptionsView(context, childListState),
     );
   }
 
@@ -231,7 +231,7 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
   }
 
   // ignore: long-method
-  Widget _buildTabView(BuildContext context, ChildListState state) {
+  Widget _buildOptionsView(BuildContext context, ChildListState state) {
     return UIListView.fromChildren(
       children: [
         Padding(

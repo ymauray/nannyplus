@@ -6,20 +6,23 @@ part of 'invoice_form_provider.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_InvoiceFormChild _$$_InvoiceFormChildFromJson(Map<String, dynamic> json) =>
-    _$_InvoiceFormChild(
+_$InvoiceFormChildImpl _$$InvoiceFormChildImplFromJson(
+        Map<String, dynamic> json) =>
+    _$InvoiceFormChildImpl(
       child: Child.fromJson(json['child'] as String),
       selected: json['selected'] as bool,
     );
 
-Map<String, dynamic> _$$_InvoiceFormChildToJson(_$_InvoiceFormChild instance) =>
+Map<String, dynamic> _$$InvoiceFormChildImplToJson(
+        _$InvoiceFormChildImpl instance) =>
     <String, dynamic>{
       'child': instance.child,
       'selected': instance.selected,
     };
 
-_$_InvoiceFormState _$$_InvoiceFormStateFromJson(Map<String, dynamic> json) =>
-    _$_InvoiceFormState(
+_$InvoiceFormStateImpl _$$InvoiceFormStateImplFromJson(
+        Map<String, dynamic> json) =>
+    _$InvoiceFormStateImpl(
       child: Child.fromJson(json['child'] as String),
       children: (json['children'] as List<dynamic>)
           .map((e) => InvoiceFormChild.fromJson(e as Map<String, dynamic>))
@@ -29,7 +32,8 @@ _$_InvoiceFormState _$$_InvoiceFormStateFromJson(Map<String, dynamic> json) =>
       selectedMonth: json['selectedMonth'] as String?,
     );
 
-Map<String, dynamic> _$$_InvoiceFormStateToJson(_$_InvoiceFormState instance) =>
+Map<String, dynamic> _$$InvoiceFormStateImplToJson(
+        _$InvoiceFormStateImpl instance) =>
     <String, dynamic>{
       'child': instance.child,
       'children': instance.children,
@@ -120,8 +124,8 @@ class InvoiceFormProvider extends AutoDisposeAsyncNotifierProviderImpl<
     InvoiceForm, InvoiceFormState> {
   /// See also [InvoiceForm].
   InvoiceFormProvider(
-    this.childId,
-  ) : super.internal(
+    int childId,
+  ) : this._internal(
           () => InvoiceForm()..childId = childId,
           from: invoiceFormProvider,
           name: r'invoiceFormProvider',
@@ -132,9 +136,51 @@ class InvoiceFormProvider extends AutoDisposeAsyncNotifierProviderImpl<
           dependencies: InvoiceFormFamily._dependencies,
           allTransitiveDependencies:
               InvoiceFormFamily._allTransitiveDependencies,
+          childId: childId,
         );
 
+  InvoiceFormProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.childId,
+  }) : super.internal();
+
   final int childId;
+
+  @override
+  FutureOr<InvoiceFormState> runNotifierBuild(
+    covariant InvoiceForm notifier,
+  ) {
+    return notifier.build(
+      childId,
+    );
+  }
+
+  @override
+  Override overrideWith(InvoiceForm Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: InvoiceFormProvider._internal(
+        () => create()..childId = childId,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        childId: childId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeAsyncNotifierProviderElement<InvoiceForm, InvoiceFormState>
+      createElement() {
+    return _InvoiceFormProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -148,15 +194,20 @@ class InvoiceFormProvider extends AutoDisposeAsyncNotifierProviderImpl<
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin InvoiceFormRef on AutoDisposeAsyncNotifierProviderRef<InvoiceFormState> {
+  /// The parameter `childId` of this provider.
+  int get childId;
+}
+
+class _InvoiceFormProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<InvoiceForm,
+        InvoiceFormState> with InvoiceFormRef {
+  _InvoiceFormProviderElement(super.provider);
 
   @override
-  FutureOr<InvoiceFormState> runNotifierBuild(
-    covariant InvoiceForm notifier,
-  ) {
-    return notifier.build(
-      childId,
-    );
-  }
+  int get childId => (origin as InvoiceFormProvider).childId;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
