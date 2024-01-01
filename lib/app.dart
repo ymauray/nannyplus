@@ -22,8 +22,8 @@ import 'package:nannyplus/data/invoices_repository.dart';
 import 'package:nannyplus/data/prices_repository.dart';
 import 'package:nannyplus/data/services_repository.dart';
 import 'package:nannyplus/src/app_theme.dart';
-import 'package:nannyplus/src/child_list/child_list_view.dart';
 import 'package:nannyplus/src/constants.dart';
+import 'package:nannyplus/views/main_tab_view.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
@@ -119,7 +119,7 @@ class NannyPlusApp extends riverpod.ConsumerWidget {
         debugShowCheckedModeBanner: false,
         title: ksAppName,
         theme: AppTheme.create(),
-        home: const ChildListView(),
+        home: const MainTabView(),
         supportedLocales: const [Locale('en'), Locale('fr')],
         localizationsDelegates: [
           GettextLocalizationsDelegate(defaultLanguage: 'fr'),

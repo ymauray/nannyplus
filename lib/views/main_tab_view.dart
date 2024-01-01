@@ -8,15 +8,10 @@ import 'package:nannyplus/cubit/child_list_state.dart';
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/provider/legacy/child_list_provider.dart';
 import 'package:nannyplus/provider/show_pending_invoice_provider.dart';
-import 'package:nannyplus/src/app_settings/app_settings_view.dart';
 import 'package:nannyplus/src/child_form/child_form.dart';
 import 'package:nannyplus/src/child_list/main_drawer.dart';
 import 'package:nannyplus/src/common/loading_indicator.dart';
 import 'package:nannyplus/src/constants.dart';
-import 'package:nannyplus/src/deductions/deductions_view.dart';
-import 'package:nannyplus/src/invoice_settings/invoice_settings_view.dart';
-import 'package:nannyplus/src/price_list/price_list_view.dart';
-import 'package:nannyplus/src/statement_list_view/statement_list_view.dart';
 import 'package:nannyplus/src/tab_view/tab_view.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
@@ -24,16 +19,17 @@ import 'package:nannyplus/src/ui/view.dart';
 import 'package:nannyplus/utils/i18n_utils.dart';
 import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:nannyplus/utils/snack_bar_util.dart';
+import 'package:nannyplus/views/options_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ChildListView extends ConsumerStatefulWidget {
-  const ChildListView({super.key});
+class MainTabView extends ConsumerStatefulWidget {
+  const MainTabView({super.key});
 
   @override
-  ConsumerState<ChildListView> createState() => _ChildListViewState();
+  ConsumerState<MainTabView> createState() => _MainTabViewState();
 }
 
-class _ChildListViewState extends ConsumerState<ChildListView> {
+class _MainTabViewState extends ConsumerState<MainTabView> {
   bool showArchivedFolders = false;
   int _currentIndex = 0;
 
@@ -104,7 +100,7 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
       ),
       body: _currentIndex == 0
           ? _buildChildList(context, childListState, ref)
-          : _buildOptionsView(context, childListState),
+          : const OptionsView(),
     );
   }
 
@@ -229,134 +225,6 @@ class _ChildListViewState extends ConsumerState<ChildListView> {
           )
         : const LoadingIndicator();
   }
-
-  // ignore: long-method
-  Widget _buildOptionsView(BuildContext context, ChildListState state) {
-    return UIListView.fromChildren(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: Material(
-            elevation: 4,
-            shape: Theme.of(context).listTileTheme.shape,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (context) => const PriceListView(),
-                  ),
-                );
-              },
-              behavior: HitTestBehavior.opaque,
-              child: ListTile(
-                leading: const Icon(Icons.payment),
-                title: Text(
-                  context.t('Price list'),
-                ),
-                trailing: const Icon(Icons.chevron_right),
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: Material(
-            elevation: 4,
-            shape: Theme.of(context).listTileTheme.shape,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (context) => const DeductionsView(),
-                  ),
-                );
-              },
-              behavior: HitTestBehavior.opaque,
-              child: ListTile(
-                leading: const Icon(Icons.remove_circle_outline),
-                title: Text(
-                  context.t('Deductions'),
-                ),
-                trailing: const Icon(Icons.chevron_right),
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: Material(
-            elevation: 4,
-            shape: Theme.of(context).listTileTheme.shape,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (context) => const AppSettingsView(),
-                  ),
-                );
-              },
-              behavior: HitTestBehavior.opaque,
-              child: ListTile(
-                leading: const Icon(Icons.app_settings_alt),
-                title: Text(
-                  context.t('Application settings'),
-                ),
-                trailing: const Icon(Icons.chevron_right),
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: Material(
-            elevation: 4,
-            shape: Theme.of(context).listTileTheme.shape,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (context) => const InvoiceSettingsView(),
-                  ),
-                );
-              },
-              behavior: HitTestBehavior.opaque,
-              child: ListTile(
-                leading: const Icon(Icons.settings),
-                title: Text(
-                  context.t('Invoice settings'),
-                ),
-                trailing: const Icon(Icons.chevron_right),
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: Material(
-            elevation: 4,
-            shape: Theme.of(context).listTileTheme.shape,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (context) => const StatementListView(),
-                  ),
-                );
-              },
-              behavior: HitTestBehavior.opaque,
-              child: ListTile(
-                leading: const Icon(Icons.description),
-                title: Text(
-                  context.t('Statements'),
-                ),
-                trailing: const Icon(Icons.chevron_right),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 }
 
 class _ChildListTile extends ConsumerWidget {
@@ -479,7 +347,7 @@ class _ChildListTile extends ConsumerWidget {
                             ),
                           );
                         } else {
-                          final archive = await _showConfirmationDialog(
+                          final archive = await showConfirmationDialog(
                             context,
                             child.isArchived
                                 ? context.t(
@@ -501,7 +369,7 @@ class _ChildListTile extends ConsumerWidget {
                             ),
                           );
                         } else {
-                          final delete = await _showConfirmationDialog(
+                          final delete = await showConfirmationDialog(
                             context,
                             context.t(
                               "Are you sure you want to delete this child's folder ?",
@@ -590,7 +458,7 @@ class _ChildListTile extends ConsumerWidget {
     );
   }
 
-  Future<bool?> _showConfirmationDialog(
+  Future<bool?> showConfirmationDialog(
     BuildContext context,
     String message,
   ) async {
