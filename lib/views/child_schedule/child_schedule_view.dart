@@ -5,13 +5,13 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/data/model/period.dart';
 import 'package:nannyplus/provider/child_info_provider.dart';
 import 'package:nannyplus/provider/periods_provider.dart';
-import 'package:nannyplus/provider/schedule_color_provider.dart';
 import 'package:nannyplus/src/constants.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/ui_card.dart';
 import 'package:nannyplus/src/ui/view.dart';
 import 'package:nannyplus/utils/time_of_day_extension.dart';
+import 'package:nannyplus/views/child_schedule/schedule_color_provider.dart';
 import 'package:nannyplus/widgets/time_input_dialog.dart';
 
 class ChildScheduleView extends ConsumerWidget {

@@ -10,12 +10,12 @@ import 'package:nannyplus/cubit/file_list_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/provider/periods_provider.dart';
 import 'package:nannyplus/src/child_form/profile_photo.dart';
-import 'package:nannyplus/src/child_schedule_view/child_schedule_view.dart';
 import 'package:nannyplus/src/common/loading_indicator.dart';
 import 'package:nannyplus/src/constants.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/src/ui/ui_card.dart';
 import 'package:nannyplus/utils/date_format_extension.dart';
+import 'package:nannyplus/views/child_schedule/child_schedule_view.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
