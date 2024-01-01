@@ -69,7 +69,7 @@ class Period with _$Period {
     return ret;
   }
 
-  int _mapDay(String day) {
+  static int _mapDay(String day) {
     switch (day) {
       case 'monday':
         return 1;

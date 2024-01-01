@@ -69,6 +69,12 @@ class Child {
           ? "$firstName ${lastName ?? ''}".trim()
           : "${lastName == null ? '' : '$lastName, '}$firstName".trim();
 
+  String get nGram => displayName.split(' ').fold(
+        '',
+        (previousValue, element) =>
+            '$previousValue${element.substring(0, 1).toUpperCase()}',
+      );
+
   bool get hasPhoneNumber => !(phoneNumber?.isEmpty ?? true);
 
   bool get hasAllergies => !(allergies?.isEmpty ?? true);

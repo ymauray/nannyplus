@@ -8,6 +8,7 @@ import 'package:nannyplus/src/price_list/price_list_view.dart';
 import 'package:nannyplus/src/statement_list_view/statement_list_view.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/src/ui/ui_card.dart';
+import 'package:nannyplus/views/weekly_schedule/weekly_schedule_view.dart';
 
 class _OptionTile extends StatelessWidget {
   const _OptionTile({
@@ -75,6 +76,11 @@ class OptionsView extends ConsumerWidget {
           leading: const Icon(Icons.description),
           label: context.t('Statements'),
           destination: () => const StatementListView(),
+        ),
+        _OptionTile(
+          leading: const Icon(Icons.calendar_view_week),
+          label: context.t('Weekly schedule'),
+          destination: () => const WeeklyScheduleView(),
         ),
       ],
     );

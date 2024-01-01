@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nannyplus/data/model/schedule_color.dart';
 import 'package:nannyplus/utils/database_util.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -40,6 +41,14 @@ class ScheduleColorRepository {
       where: 'childId = ?',
       whereArgs: [childId],
     );
+  }
+
+  Future<List<ScheduleColor>> readScheduleColors() async {
+    final database = await DatabaseUtil.instance;
+    final rows = await database.query('schedule_colors');
+    final colors = rows.map(ScheduleColor.fromJson).toList();
+
+    return colors;
   }
 }
 

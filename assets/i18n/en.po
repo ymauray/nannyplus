@@ -345,3 +345,6 @@ msgstr "to"
 
 msgid "Color"
 msgstr "Color"
+
+msgid "Weekly schedule"
+msgstr "Weekly schedule"

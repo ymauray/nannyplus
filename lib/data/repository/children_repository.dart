@@ -56,6 +56,19 @@ class ChildrenRepository {
     await db.delete('services', where: 'childId = ?', whereArgs: [child.id]);
     await db.delete('children', where: 'id = ?', whereArgs: [child.id]);
   }
+
+  Future<Map<int, String>> readChildrenNGrams() async {
+    final db = await DatabaseUtil.instance;
+    final rows = await db.query('children');
+    final children = rows.map(Child.fromMap).toList();
+
+    final childNames = <int, String>{};
+    for (final child in children) {
+      childNames[child.id as int] = child.nGram;
+    }
+
+    return childNames;
+  }
 }
 
 @riverpod

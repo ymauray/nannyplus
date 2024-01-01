@@ -610,3 +610,6 @@ msgstr "à"
 
 msgid "Color"
 msgstr "Couleur"
+
+msgid "Weekly schedule"
+msgstr "Planning hebdomadaire"
