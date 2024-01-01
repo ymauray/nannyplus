@@ -20,8 +20,8 @@ class Periods extends _$Periods {
       await repository.createPeriod(
         childId,
         '',
-        const TimeOfDay(hour: 0, minute: 0),
-        const TimeOfDay(hour: 0, minute: 0),
+        const TimeOfDay(hour: 7, minute: 0),
+        const TimeOfDay(hour: 18, minute: 0),
         9999,
       );
       return repository.load(childId);

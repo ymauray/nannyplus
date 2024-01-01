@@ -12,6 +12,7 @@ import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/ui_card.dart';
 import 'package:nannyplus/src/ui/view.dart';
 import 'package:nannyplus/utils/time_of_day_extension.dart';
+import 'package:nannyplus/widgets/time_input_dialog.dart';
 
 class ChildScheduleView extends ConsumerWidget {
   const ChildScheduleView({
@@ -174,9 +175,15 @@ class ScheduleEntry extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.edit_calendar),
                 onPressed: () async {
-                  final time = await showTimePicker(
+                  final time = await showDialog<TimeOfDay>(
                     context: context,
-                    initialTime: period.from,
+                    builder: (context) {
+                      return TimeInputDialog(
+                        initialTime: period.from,
+                        hoursRange:
+                            List.generate(13, (index) => index + 7).toList(),
+                      );
+                    },
                   );
                   if (time != null) {
                     updateTime(true, time);
@@ -188,9 +195,15 @@ class ScheduleEntry extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.edit_calendar),
                 onPressed: () async {
-                  final time = await showTimePicker(
+                  final time = await showDialog<TimeOfDay>(
                     context: context,
-                    initialTime: period.to,
+                    builder: (context) {
+                      return TimeInputDialog(
+                        initialTime: period.to,
+                        hoursRange:
+                            List.generate(13, (index) => index + 7).toList(),
+                      );
+                    },
                   );
                   if (time != null) {
                     updateTime(false, time);
