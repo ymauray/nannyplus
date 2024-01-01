@@ -1,4 +1,4 @@
-import 'package:nannyplus/data/children_repository.dart';
+import 'package:nannyplus/data/repository/children_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'children_repository_provider.g.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nannyplus/data/model/monthly_statement.dart';
 import 'package:nannyplus/data/model/yearly_statement.dart';
-import 'package:nannyplus/data/services_repository.dart';
+import 'package:nannyplus/data/repository/services_repository.dart';
 import 'package:nannyplus/utils/list_extensions.dart';
 
 part 'statement_list_state.dart';

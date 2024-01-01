@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:nannyplus/data/files_repository.dart';
 import 'package:nannyplus/data/model/document.dart';
+import 'package:nannyplus/data/repository/files_repository.dart';
 
 part 'file_list_state.dart';
 

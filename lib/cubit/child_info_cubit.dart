@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:nannyplus/data/children_repository.dart';
 import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/data/repository/children_repository.dart';
 
 part 'child_info_state.dart';
 
