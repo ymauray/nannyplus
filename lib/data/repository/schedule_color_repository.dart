@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nannyplus/utils/database_util.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'schedule_color_repository.g.dart';
 
 class ScheduleColorRepository {
+  const ScheduleColorRepository._();
+
   Future<Color> createColor(int childId, Color color) async {
     final database = await DatabaseUtil.instance;
     await database.insert(
@@ -36,4 +41,11 @@ class ScheduleColorRepository {
       whereArgs: [childId],
     );
   }
+}
+
+@riverpod
+ScheduleColorRepository scheduleColorRepository(
+  ScheduleColorRepositoryRef ref,
+) {
+  return const ScheduleColorRepository._();
 }

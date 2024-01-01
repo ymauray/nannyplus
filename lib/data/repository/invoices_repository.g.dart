@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'periods_repository_provider.dart';
+part of 'invoices_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$periodsRepositoryHash() => r'3da07934ce5a525f0e8c2d75cd21620bd86be524';
+String _$invoicesRepositoryHash() =>
+    r'ab29acdc0448440353951c1b40683f3ab3dc5932';
 
-/// See also [PeriodsRepository].
-@ProviderFor(PeriodsRepository)
-final periodsRepositoryProvider = AutoDisposeNotifierProvider<PeriodsRepository,
-    data.PeriodRepository>.internal(
-  PeriodsRepository.new,
-  name: r'periodsRepositoryProvider',
+/// See also [invoicesRepository].
+@ProviderFor(invoicesRepository)
+final invoicesRepositoryProvider =
+    AutoDisposeProvider<InvoicesRepository>.internal(
+  invoicesRepository,
+  name: r'invoicesRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$periodsRepositoryHash,
+      : _$invoicesRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$PeriodsRepository = AutoDisposeNotifier<data.PeriodRepository>;
+typedef InvoicesRepositoryRef = AutoDisposeProviderRef<InvoicesRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -1,5 +1,5 @@
 import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/provider/repository/children_repository_provider.dart';
+import 'package:nannyplus/data/repository/children_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'child_info_provider.g.dart';

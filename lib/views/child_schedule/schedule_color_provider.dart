@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nannyplus/provider/repository/schedule_color_repository_provider.dart';
+import 'package:nannyplus/data/repository/schedule_color_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'schedule_color_provider.g.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nannyplus/data/model/period.dart';
-import 'package:nannyplus/provider/repository/periods_repository_provider.dart';
+import 'package:nannyplus/data/repository/periods_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'periods_provider.g.dart';

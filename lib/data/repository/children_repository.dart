@@ -1,6 +1,9 @@
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/utils/database_util.dart';
 import 'package:nannyplus/utils/prefs_util.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'children_repository.g.dart';
 
 class ChildrenRepository {
   const ChildrenRepository();
@@ -53,4 +56,9 @@ class ChildrenRepository {
     await db.delete('services', where: 'childId = ?', whereArgs: [child.id]);
     await db.delete('children', where: 'id = ?', whereArgs: [child.id]);
   }
+}
+
+@riverpod
+ChildrenRepository childrenRepository(ChildrenRepositoryRef ref) {
+  return const ChildrenRepository();
 }

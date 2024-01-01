@@ -3,8 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:nannyplus/data/model/period.dart';
 import 'package:nannyplus/utils/database_util.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class PeriodRepository {
+part 'periods_repository.g.dart';
+
+class PeriodsRepository {
+  const PeriodsRepository._();
+
   // -- CRUD --
 
   Future<Period> createPeriod(
@@ -101,4 +106,9 @@ class PeriodRepository {
       );
     }
   }
+}
+
+@riverpod
+PeriodsRepository periodsRepository(PeriodsRepositoryRef ref) {
+  return const PeriodsRepository._();
 }

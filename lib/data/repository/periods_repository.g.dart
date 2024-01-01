@@ -1,27 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'children_repository_provider.dart';
+part of 'periods_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$childrenRepositoryHash() =>
-    r'b18296b3b367a8db2a2ecabd4b75dd5fc2821187';
+String _$periodsRepositoryHash() => r'87489f01594b84f6ac9a3d195ad6aa91df235060';
 
-/// See also [childrenRepository].
-@ProviderFor(childrenRepository)
-final childrenRepositoryProvider =
-    AutoDisposeProvider<ChildrenRepository>.internal(
-  childrenRepository,
-  name: r'childrenRepositoryProvider',
+/// See also [periodsRepository].
+@ProviderFor(periodsRepository)
+final periodsRepositoryProvider =
+    AutoDisposeProvider<PeriodsRepository>.internal(
+  periodsRepository,
+  name: r'periodsRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$childrenRepositoryHash,
+      : _$periodsRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef ChildrenRepositoryRef = AutoDisposeProviderRef<ChildrenRepository>;
+typedef PeriodsRepositoryRef = AutoDisposeProviderRef<PeriodsRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

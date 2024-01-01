@@ -3,6 +3,9 @@ import 'package:nannyplus/data/model/invoice.dart';
 import 'package:nannyplus/utils/database_util.dart';
 import 'package:nannyplus/utils/list_extensions.dart';
 import 'package:nannyplus/utils/prefs_util.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'invoices_repository.g.dart';
 
 class InvoicesRepository {
   const InvoicesRepository();
@@ -106,4 +109,9 @@ class InvoicesRepository {
 
     return {for (final group in groupedRows) group.key}.cast<int>().toList();
   }
+}
+
+@riverpod
+InvoicesRepository invoicesRepository(InvoicesRepositoryRef ref) {
+  return const InvoicesRepository();
 }

@@ -7,6 +7,9 @@ import 'package:nannyplus/data/model/statement_summary.dart';
 import 'package:nannyplus/src/statement_view/statement_view.dart';
 import 'package:nannyplus/utils/database_util.dart';
 import 'package:nannyplus/utils/list_extensions.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'services_repository.g.dart';
 
 class ServicesRepository {
   const ServicesRepository();
@@ -328,4 +331,9 @@ class ServicesRepository {
     final list = rows.map(Service.fromMap).toList();
     return list;
   }
+}
+
+@riverpod
+ServicesRepository servicesRepository(ServicesRepositoryRef ref) {
+  return const ServicesRepository();
 }

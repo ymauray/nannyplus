@@ -3,10 +3,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/data/model/invoice.dart';
+import 'package:nannyplus/data/repository/children_repository.dart';
+import 'package:nannyplus/data/repository/invoices_repository.dart';
+import 'package:nannyplus/data/repository/services_repository.dart';
 import 'package:nannyplus/provider/children.dart';
-import 'package:nannyplus/provider/repository/children_repository_provider.dart';
-import 'package:nannyplus/provider/repository/invoices_repository_provider.dart';
-import 'package:nannyplus/provider/repository/services_repository_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'invoice_form_provider.freezed.dart';
