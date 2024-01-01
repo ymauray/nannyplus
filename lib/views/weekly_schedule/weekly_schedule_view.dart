@@ -1,14 +1,15 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/data/model/period.dart';
-import 'package:nannyplus/provider/children.dart';
 import 'package:nannyplus/provider/weekly_schedule_provider.dart';
 import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/view.dart';
 import 'package:nannyplus/utils/list_extensions.dart';
 import 'package:nannyplus/utils/time_of_day_extension.dart';
+import 'package:nannyplus/views/weekly_schedule/weekly_schedule_pdf.dart';
 import 'package:nannyplus/views/weekly_schedule/weekly_schedule_view_state_provider.dart';
 
 class WeeklyScheduleView extends ConsumerWidget {
@@ -20,9 +21,20 @@ class WeeklyScheduleView extends ConsumerWidget {
     final stateNotifier = ref.read(weeklyScheduleViewStateProvider.notifier);
     final schedule = ref.watch(weeklyScheduleProvider).valueOrNull;
     final periods = schedule?.periodsByDay(state.day) ?? <Period>[];
-    final children = ref.watch(childListProvider(null));
 
     return UIView(
+      actions: [
+        IconButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (context) => const WeeklySchedulePdf(),
+              ),
+            );
+          },
+          icon: const Icon(FontAwesomeIcons.filePdf),
+        ),
+      ],
       title: Text(context.t('Weekly schedule')),
       persistentHeader: UISliverCurvedPersistenHeader(
         child: Row(
