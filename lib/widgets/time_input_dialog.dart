@@ -3,25 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 
-class TimeInputData {
-  const TimeInputData({required this.hours, required this.minutes});
-  final int hours;
-  final int minutes;
-}
-
 class TimeInputDialog extends StatelessWidget {
   const TimeInputDialog({
-    this.hours,
-    this.minutes,
+    this.initialTime,
+    this.hoursRange,
+    this.minutesRange,
     super.key,
   });
 
-  final int? hours;
-  final int? minutes;
+  final TimeOfDay? initialTime;
+  final List<int>? hoursRange;
+  final List<int>? minutesRange;
 
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormBuilderState>();
+
+    final hoursRange = this.hoursRange ?? List.generate(13, (index) => index);
+    final minutesRange = this.minutesRange ?? [0, 15, 30, 45];
 
     return Dialog(
       elevation: 0,
@@ -40,8 +39,8 @@ class TimeInputDialog extends StatelessWidget {
         child: FormBuilder(
           key: formKey,
           initialValue: {
-            'hours': hours,
-            'minutes': minutes,
+            'hours': initialTime?.hour,
+            'minutes': initialTime?.minute,
           },
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -55,7 +54,7 @@ class TimeInputDialog extends StatelessWidget {
                         labelText: context.t('Hours'),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                       ),
-                      items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                      items: hoursRange
                           .map(
                             (e) => DropdownMenuItem(
                               value: e,
@@ -74,7 +73,7 @@ class TimeInputDialog extends StatelessWidget {
                         labelText: context.t('Minutes'),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                       ),
-                      items: [0, 15, 30, 45]
+                      items: minutesRange
                           .map(
                             (e) => DropdownMenuItem(
                               value: e,
@@ -93,9 +92,9 @@ class TimeInputDialog extends StatelessWidget {
                   formKey.currentState!.save();
                   if (formKey.currentState!.validate()) {
                     Navigator.of(context).pop(
-                      TimeInputData(
-                        hours: formKey.currentState!.value['hours'] ?? 0,
-                        minutes: formKey.currentState!.value['minutes'] ?? 0,
+                      TimeOfDay(
+                        hour: formKey.currentState!.value['hours'] ?? 0,
+                        minute: formKey.currentState!.value['minutes'] ?? 0,
                       ),
                     );
                   } else {

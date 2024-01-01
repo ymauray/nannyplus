@@ -238,14 +238,14 @@ class _List extends StatelessWidget {
     //GlobalKey<FormBuilderState> formKey,
     DateTime date,
   ) async {
-    final time = await showDialog<TimeInputData>(
+    final time = await showDialog<TimeOfDay>(
       context: context,
       builder: (context) {
         return const TimeInputDialog();
       },
     );
     if (time != null) {
-      if (time.hours == 0 && time.minutes == 0) {
+      if (time.hour == 0 && time.minute == 0) {
         ScaffoldMessenger.of(context).failure(
           context.t('Input canceled'),
         );
@@ -260,9 +260,9 @@ class _List extends StatelessWidget {
           priceLabel: price.label,
           priceAmount: price.amount,
           isFixedPrice: 0,
-          hours: time.hours,
-          minutes: time.minutes,
-          total: price.amount * (time.hours + time.minutes / 60),
+          hours: time.hour,
+          minutes: time.minute,
+          total: price.amount * (time.hour + time.minute / 60),
         );
         await context
             .read<ServiceFormCubit>()
@@ -277,17 +277,19 @@ class _List extends StatelessWidget {
   }
 
   Future<void> editService(BuildContext context, Service service) async {
-    final time = await showDialog<TimeInputData>(
+    final time = await showDialog<TimeOfDay>(
       context: context,
       builder: (context) {
         return TimeInputDialog(
-          hours: service.hours,
-          minutes: service.minutes,
+          initialTime: TimeOfDay(
+            hour: service.hours!,
+            minute: service.minutes!,
+          ),
         );
       },
     );
     if (time != null) {
-      if (time.hours == 0 && time.minutes == 0) {
+      if (time.hour == 0 && time.minute == 0) {
         ScaffoldMessenger.of(context).failure(
           context.t('Input canceled'),
         );
@@ -296,9 +298,9 @@ class _List extends StatelessWidget {
           context.t('Edited successfully'),
         );
         final newService = service.copyWith(
-          hours: time.hours,
-          minutes: time.minutes,
-          total: service.priceAmount! * (time.hours + time.minutes / 60),
+          hours: time.hour,
+          minutes: time.minute,
+          total: service.priceAmount! * (time.hour + time.minute / 60),
         );
         await context.read<ServiceFormCubit>().updateService(newService);
       }
