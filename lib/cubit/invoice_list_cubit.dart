@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:nannyplus/data/children_repository.dart';
-import 'package:nannyplus/data/invoices_repository.dart';
 import 'package:nannyplus/data/model/invoice.dart';
-import 'package:nannyplus/data/services_repository.dart';
+import 'package:nannyplus/data/repository/children_repository.dart';
+import 'package:nannyplus/data/repository/invoices_repository.dart';
+import 'package:nannyplus/data/repository/services_repository.dart';
 import 'package:nannyplus/utils/prefs_util.dart';
 
 part 'invoice_list_state.dart';

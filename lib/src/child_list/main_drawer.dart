@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/data/model/price.dart';
-import 'package:nannyplus/provider/child_list_provider.dart';
+import 'package:nannyplus/provider/legacy/child_list_provider.dart';
 import 'package:nannyplus/src/backup_restore/backup_restore_view.dart';
 import 'package:nannyplus/src/privacy_settings_view/privacy_settings_view.dart';
 import 'package:nannyplus/utils/database_util.dart';

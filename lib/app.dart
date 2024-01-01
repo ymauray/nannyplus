@@ -6,7 +6,7 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/cubit/app_settings_cubit.dart';
 import 'package:nannyplus/cubit/child_info_cubit.dart';
 import 'package:nannyplus/cubit/file_list_cubit.dart';
-import 'package:nannyplus/cubit/invoice_form_cubit.dart';
+//import 'package:nannyplus/cubit/invoice_form_cubit.dart';
 import 'package:nannyplus/cubit/invoice_list_cubit.dart';
 import 'package:nannyplus/cubit/invoice_settings_cubit.dart';
 import 'package:nannyplus/cubit/invoice_view_cubit.dart';
@@ -15,15 +15,15 @@ import 'package:nannyplus/cubit/service_form_cubit.dart';
 import 'package:nannyplus/cubit/service_list_cubit.dart';
 import 'package:nannyplus/cubit/statement_list_cubit.dart';
 import 'package:nannyplus/cubit/statement_view_cubit.dart';
-import 'package:nannyplus/data/children_repository.dart';
-import 'package:nannyplus/data/deduction_repository.dart';
-import 'package:nannyplus/data/files_repository.dart';
-import 'package:nannyplus/data/invoices_repository.dart';
-import 'package:nannyplus/data/prices_repository.dart';
-import 'package:nannyplus/data/services_repository.dart';
+import 'package:nannyplus/data/repository/children_repository.dart';
+import 'package:nannyplus/data/repository/deduction_repository.dart';
+import 'package:nannyplus/data/repository/files_repository.dart';
+import 'package:nannyplus/data/repository/invoices_repository.dart';
+import 'package:nannyplus/data/repository/prices_repository.dart';
+import 'package:nannyplus/data/repository/services_repository.dart';
 import 'package:nannyplus/src/app_theme.dart';
-import 'package:nannyplus/src/child_list/child_list_view.dart';
 import 'package:nannyplus/src/constants.dart';
+import 'package:nannyplus/views/main_tab_view.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
@@ -84,13 +84,13 @@ class NannyPlusApp extends riverpod.ConsumerWidget {
             context.read<PricesRepository>(),
           ),
         ),
-        BlocProvider<InvoiceFormCubit>(
-          create: (context) => InvoiceFormCubit(
-            context.read<ChildrenRepository>(),
-            context.read<ServicesRepository>(),
-            context.read<InvoicesRepository>(),
-          ),
-        ),
+        //BlocProvider<InvoiceFormCubit>(
+        //  create: (context) => InvoiceFormCubit(
+        //    context.read<ChildrenRepository>(),
+        //    context.read<ServicesRepository>(),
+        //    context.read<InvoicesRepository>(),
+        //  ),
+        //),
         BlocProvider<InvoiceViewCubit>(
           create: (context) => InvoiceViewCubit(
             context.read<ServicesRepository>(),
@@ -119,7 +119,7 @@ class NannyPlusApp extends riverpod.ConsumerWidget {
         debugShowCheckedModeBanner: false,
         title: ksAppName,
         theme: AppTheme.create(),
-        home: const ChildListView(),
+        home: const MainTabView(),
         supportedLocales: const [Locale('en'), Locale('fr')],
         localizationsDelegates: [
           GettextLocalizationsDelegate(defaultLanguage: 'fr'),

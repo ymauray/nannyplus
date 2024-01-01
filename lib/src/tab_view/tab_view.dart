@@ -77,23 +77,12 @@ class TabView extends StatelessWidget {
               Tab(text: context.t('Info')),
             ],
           ),
-          //children: [
-          //  Tab(text: context.t('Services')),
-          //  Tab(text: context.t('Invoices')),
-          //  Tab(text: context.t('Info')),
-          //],
           onTap: (index) {
             debugPrint(index.toString());
           },
         ),
         body: TabBarView(
           children: [
-            //ListView.builder(
-            //  padding: EdgeInsets.zero,
-            //  itemBuilder: (context, index) => ListTile(
-            //    title: Text("Tab 1, Child $index"),
-            //  ),
-            //),
             ServiceListTabView(childId: childId),
             InvoiceListTabView(childId: childId),
             ChildInfoTabView(childId: childId),

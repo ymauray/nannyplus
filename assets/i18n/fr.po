@@ -194,6 +194,9 @@ msgstr "Combiné avec"
 msgid "No other child to add to the invoice"
 msgstr "Pas d'autre enfant à ajouter à la facture"
 
+msgid "Nothing to invoice"
+msgstr "Rien à facturer"
+
 msgid "Are you sure you want to delete this invoice ?"
 msgstr "Êtes-vous sûr de vouloir supprimer cette facture ?"
 
@@ -559,3 +562,54 @@ msgstr "Ces relevés mensuels et annuels n'ont aucune valeur officielles. Vérif
 
 msgid "pdf_statements_help"
 msgstr "Rappel : ces relevés n'ont aucune valeur officielles. Vérifier la réglementation en vigueur pour savoir si vous pouvez les utiliser en tant que fiche de salaire ou justificatifs pour les impôts."
+
+msgid "Schedule"
+msgstr "Planning"
+
+msgid "No schedule yet"
+msgstr "Aucun planning défini"
+
+msgid "A schedule is defined"
+msgstr "Un planning est défini"
+
+msgid "Day"
+msgstr "Jour"
+
+msgid "Morning"
+msgstr "Matin"
+
+msgid "Noon"
+msgstr "Midi"
+
+msgid "Afternoon"
+msgstr "Après-midi"
+
+msgid "Monday"
+msgstr "Lundi"
+
+msgid "Tuesday"
+msgstr "Mardi"
+
+msgid "Wednesday"
+msgstr "Mercredi"
+
+msgid "Thursday"
+msgstr "Jeudi"
+
+msgid "Friday"
+msgstr "Vendredi"
+
+msgid "Every"
+msgstr "Chaque"
+
+msgid "From"
+msgstr "De"
+
+msgid "to"
+msgstr "à"
+
+msgid "Color"
+msgstr "Couleur"
+
+msgid "Weekly schedule"
+msgstr "Planning hebdomadaire"

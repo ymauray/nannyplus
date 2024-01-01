@@ -97,10 +97,11 @@ class _$DeductionCopyWithImpl<$Res, $Val extends Deduction>
 }
 
 /// @nodoc
-abstract class _$$_DeductionCopyWith<$Res> implements $DeductionCopyWith<$Res> {
-  factory _$$_DeductionCopyWith(
-          _$_Deduction value, $Res Function(_$_Deduction) then) =
-      __$$_DeductionCopyWithImpl<$Res>;
+abstract class _$$DeductionImplCopyWith<$Res>
+    implements $DeductionCopyWith<$Res> {
+  factory _$$DeductionImplCopyWith(
+          _$DeductionImpl value, $Res Function(_$DeductionImpl) then) =
+      __$$DeductionImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -113,11 +114,11 @@ abstract class _$$_DeductionCopyWith<$Res> implements $DeductionCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_DeductionCopyWithImpl<$Res>
-    extends _$DeductionCopyWithImpl<$Res, _$_Deduction>
-    implements _$$_DeductionCopyWith<$Res> {
-  __$$_DeductionCopyWithImpl(
-      _$_Deduction _value, $Res Function(_$_Deduction) _then)
+class __$$DeductionImplCopyWithImpl<$Res>
+    extends _$DeductionCopyWithImpl<$Res, _$DeductionImpl>
+    implements _$$DeductionImplCopyWith<$Res> {
+  __$$DeductionImplCopyWithImpl(
+      _$DeductionImpl _value, $Res Function(_$DeductionImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -130,7 +131,7 @@ class __$$_DeductionCopyWithImpl<$Res>
     Object? type = null,
     Object? periodicity = null,
   }) {
-    return _then(_$_Deduction(
+    return _then(_$DeductionImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -161,8 +162,8 @@ class __$$_DeductionCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Deduction implements _Deduction {
-  _$_Deduction(
+class _$DeductionImpl implements _Deduction {
+  _$DeductionImpl(
       {required this.id,
       required this.sortOrder,
       required this.label,
@@ -170,8 +171,8 @@ class _$_Deduction implements _Deduction {
       required this.type,
       required this.periodicity});
 
-  factory _$_Deduction.fromJson(Map<String, dynamic> json) =>
-      _$$_DeductionFromJson(json);
+  factory _$DeductionImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DeductionImplFromJson(json);
 
   @override
   final int? id;
@@ -192,10 +193,10 @@ class _$_Deduction implements _Deduction {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Deduction &&
+            other is _$DeductionImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.sortOrder, sortOrder) ||
                 other.sortOrder == sortOrder) &&
@@ -214,12 +215,12 @@ class _$_Deduction implements _Deduction {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DeductionCopyWith<_$_Deduction> get copyWith =>
-      __$$_DeductionCopyWithImpl<_$_Deduction>(this, _$identity);
+  _$$DeductionImplCopyWith<_$DeductionImpl> get copyWith =>
+      __$$DeductionImplCopyWithImpl<_$DeductionImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DeductionToJson(
+    return _$$DeductionImplToJson(
       this,
     );
   }
@@ -232,10 +233,10 @@ abstract class _Deduction implements Deduction {
       required final String label,
       required final double value,
       required final String type,
-      required final String periodicity}) = _$_Deduction;
+      required final String periodicity}) = _$DeductionImpl;
 
   factory _Deduction.fromJson(Map<String, dynamic> json) =
-      _$_Deduction.fromJson;
+      _$DeductionImpl.fromJson;
 
   @override
   int? get id;
@@ -251,6 +252,6 @@ abstract class _Deduction implements Deduction {
   String get periodicity;
   @override
   @JsonKey(ignore: true)
-  _$$_DeductionCopyWith<_$_Deduction> get copyWith =>
+  _$$DeductionImplCopyWith<_$DeductionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

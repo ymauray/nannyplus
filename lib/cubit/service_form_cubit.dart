@@ -4,8 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:nannyplus/data/model/price.dart';
 import 'package:nannyplus/data/model/service.dart';
-import 'package:nannyplus/data/prices_repository.dart';
-import 'package:nannyplus/data/services_repository.dart';
+import 'package:nannyplus/data/repository/prices_repository.dart';
+import 'package:nannyplus/data/repository/services_repository.dart';
 import 'package:nannyplus/utils/list_extensions.dart';
 
 part 'service_form_state.dart';

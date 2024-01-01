@@ -6,7 +6,7 @@ part of 'invoice_average_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$invoiceAveragesHash() => r'703f6581d33461a6b5cd67f2444ed060a88c2a35';
+String _$invoiceAveragesHash() => r'9112c7dd8ab98aafce5aa6dd505c185f61e357a9';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -28,8 +28,6 @@ class _SystemHash {
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 }
-
-typedef InvoiceAveragesRef = AutoDisposeFutureProviderRef<Map<int, double>>;
 
 /// See also [invoiceAverages].
 @ProviderFor(invoiceAverages)
@@ -78,10 +76,10 @@ class InvoiceAveragesProvider
     extends AutoDisposeFutureProvider<Map<int, double>> {
   /// See also [invoiceAverages].
   InvoiceAveragesProvider(
-    this.childId,
-  ) : super.internal(
+    int childId,
+  ) : this._internal(
           (ref) => invoiceAverages(
-            ref,
+            ref as InvoiceAveragesRef,
             childId,
           ),
           from: invoiceAveragesProvider,
@@ -93,9 +91,43 @@ class InvoiceAveragesProvider
           dependencies: InvoiceAveragesFamily._dependencies,
           allTransitiveDependencies:
               InvoiceAveragesFamily._allTransitiveDependencies,
+          childId: childId,
         );
 
+  InvoiceAveragesProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.childId,
+  }) : super.internal();
+
   final int childId;
+
+  @override
+  Override overrideWith(
+    FutureOr<Map<int, double>> Function(InvoiceAveragesRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: InvoiceAveragesProvider._internal(
+        (ref) => create(ref as InvoiceAveragesRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        childId: childId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Map<int, double>> createElement() {
+    return _InvoiceAveragesProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -110,5 +142,19 @@ class InvoiceAveragesProvider
     return _SystemHash.finish(hash);
   }
 }
+
+mixin InvoiceAveragesRef on AutoDisposeFutureProviderRef<Map<int, double>> {
+  /// The parameter `childId` of this provider.
+  int get childId;
+}
+
+class _InvoiceAveragesProviderElement
+    extends AutoDisposeFutureProviderElement<Map<int, double>>
+    with InvoiceAveragesRef {
+  _InvoiceAveragesProviderElement(super.provider);
+
+  @override
+  int get childId => (origin as InvoiceAveragesProvider).childId;
+}
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

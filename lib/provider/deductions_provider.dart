@@ -1,5 +1,5 @@
-import 'package:nannyplus/data/deduction_repository.dart';
 import 'package:nannyplus/data/model/deduction.dart';
+import 'package:nannyplus/data/repository/deduction_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'deductions_provider.g.dart';

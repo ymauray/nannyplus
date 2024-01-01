@@ -76,6 +76,15 @@ msgstr "No open invoice found"
 msgid "Invoice of {0}"
 msgstr "Invoice of {0}"
 
+msgid "Combined with"
+msgstr "Combined with"
+
+msgid "No other child to add to the invoice"
+msgstr "No other child to add to the invoice"
+
+msgid "Nothing to invoice"
+msgstr "Nothing to invoice"
+
 msgid "Mark as paid"
 msgstr "Mark as paid"
 
@@ -288,3 +297,54 @@ msgstr "These monthly and annual statements have no official value. Check the re
 
 msgid "pdf_statements_help"
 msgstr "Reminder: these statements have no official value. Check with the relevant financial authorities to see if you can use them as pay slips or tax receipts."
+
+msgid "Schedule"
+msgstr "Schedule"
+
+msgid "No schedule yet"
+msgstr "No schedule yet"
+
+msgid "A schedule is defined"
+msgstr "A schedule is defined"
+
+msgid "Day"
+msgstr "Day"
+
+msgid "Morning"
+msgstr "Morning"
+
+msgid "Noon"
+msgstr "Noon"
+
+msgid "Afternoon"
+msgstr "Afternoon"
+
+msgid "Monday"
+msgstr "Monday"
+
+msgid "Tuesday"
+msgstr "Tuesday"
+
+msgid "Wednesday"
+msgstr "Wednesday"
+
+msgid "Thursday"
+msgstr "Thursday"
+
+msgid "Friday"
+msgstr "Friday"
+
+msgid "Every"
+msgstr "Every"
+
+msgid "From"
+msgstr "From"
+
+msgid "to"
+msgstr "to"
+
+msgid "Color"
+msgstr "Color"
+
+msgid "Weekly schedule"
+msgstr "Weekly schedule"

@@ -85,8 +85,8 @@ class HelpCardStatusProvider
     extends AutoDisposeAsyncNotifierProviderImpl<HelpCardStatus, bool> {
   /// See also [HelpCardStatus].
   HelpCardStatusProvider(
-    this.code,
-  ) : super.internal(
+    int code,
+  ) : this._internal(
           () => HelpCardStatus()..code = code,
           from: helpCardStatusProvider,
           name: r'helpCardStatusProvider',
@@ -97,9 +97,51 @@ class HelpCardStatusProvider
           dependencies: HelpCardStatusFamily._dependencies,
           allTransitiveDependencies:
               HelpCardStatusFamily._allTransitiveDependencies,
+          code: code,
         );
 
+  HelpCardStatusProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.code,
+  }) : super.internal();
+
   final int code;
+
+  @override
+  FutureOr<bool> runNotifierBuild(
+    covariant HelpCardStatus notifier,
+  ) {
+    return notifier.build(
+      code,
+    );
+  }
+
+  @override
+  Override overrideWith(HelpCardStatus Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: HelpCardStatusProvider._internal(
+        () => create()..code = code,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        code: code,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeAsyncNotifierProviderElement<HelpCardStatus, bool>
+      createElement() {
+    return _HelpCardStatusProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -113,15 +155,20 @@ class HelpCardStatusProvider
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin HelpCardStatusRef on AutoDisposeAsyncNotifierProviderRef<bool> {
+  /// The parameter `code` of this provider.
+  int get code;
+}
+
+class _HelpCardStatusProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<HelpCardStatus, bool>
+    with HelpCardStatusRef {
+  _HelpCardStatusProviderElement(super.provider);
 
   @override
-  FutureOr<bool> runNotifierBuild(
-    covariant HelpCardStatus notifier,
-  ) {
-    return notifier.build(
-      code,
-    );
-  }
+  int get code => (origin as HelpCardStatusProvider).code;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -6,7 +6,8 @@ part of 'deduction.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Deduction _$$_DeductionFromJson(Map<String, dynamic> json) => _$_Deduction(
+_$DeductionImpl _$$DeductionImplFromJson(Map<String, dynamic> json) =>
+    _$DeductionImpl(
       id: json['id'] as int?,
       sortOrder: json['sortOrder'] as int?,
       label: json['label'] as String,
@@ -15,7 +16,7 @@ _$_Deduction _$$_DeductionFromJson(Map<String, dynamic> json) => _$_Deduction(
       periodicity: json['periodicity'] as String,
     );
 
-Map<String, dynamic> _$$_DeductionToJson(_$_Deduction instance) =>
+Map<String, dynamic> _$$DeductionImplToJson(_$DeductionImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'sortOrder': instance.sortOrder,

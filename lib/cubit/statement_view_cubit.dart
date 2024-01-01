@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:nannyplus/data/deduction_repository.dart';
 import 'package:nannyplus/data/model/statement.dart';
-import 'package:nannyplus/data/services_repository.dart';
+import 'package:nannyplus/data/repository/deduction_repository.dart';
+import 'package:nannyplus/data/repository/services_repository.dart';
 import 'package:nannyplus/src/statement_view/statement_view.dart';
 
 part 'statement_view_state.dart';

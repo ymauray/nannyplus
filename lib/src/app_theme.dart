@@ -6,6 +6,7 @@ class AppTheme {
   static ThemeData create() {
     return ThemeData(
       fontFamily: GoogleFonts.poppins().fontFamily,
+      useMaterial3: false,
       colorScheme: const ColorScheme(
         primary: kcPrimaryColor,
         onPrimary: kcOnPrimaryColor,
@@ -32,6 +33,13 @@ class AppTheme {
       ),
       scaffoldBackgroundColor: kcBackgroundColor,
       indicatorColor: kcPrimaryColor,
+      timePickerTheme: const TimePickerThemeData(
+        backgroundColor: kcAlmostWhite,
+        dialHandColor: kcPrimaryColor,
+        dialTextColor: kcTextColor,
+        hourMinuteTextColor: kcTextColor,
+        dayPeriodTextColor: kcTextColor,
+      ),
     );
   }
 
