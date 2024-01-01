@@ -60,6 +60,23 @@ class Periods extends _$Periods {
     });
   }
 
+  FutureOr<void> duplicate(int periodId) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final repository = ref.read(periodsRepositoryProvider);
+      final period = await repository.readPeriod(periodId);
+      final newPeriod = period.copyWith(id: null);
+      await repository.createPeriod(
+        newPeriod.childId,
+        newPeriod.day,
+        newPeriod.from,
+        newPeriod.to,
+        9999,
+      );
+      return repository.load(childId);
+    });
+  }
+
   FutureOr<void> sortPeriods(int childId) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {

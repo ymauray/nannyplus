@@ -104,6 +104,7 @@ class ChildScheduleView extends ConsumerWidget {
                     periodsNotifier.updateTime(period.id!, from, time),
                 updateDay: (day) => periodsNotifier.updateDay(period.id!, day),
                 delete: () => periodsNotifier.delete(period.id!),
+                duplicate: () => periodsNotifier.duplicate(period.id!),
               );
             }).toList(),
           ],
@@ -121,6 +122,7 @@ class ScheduleEntry extends StatelessWidget {
     required this.updateTime,
     required this.updateDay,
     required this.delete,
+    this.duplicate,
     super.key,
   });
 
@@ -128,6 +130,7 @@ class ScheduleEntry extends StatelessWidget {
   final void Function(bool from, TimeOfDay? time) updateTime;
   final void Function(String day) updateDay;
   final void Function() delete;
+  final void Function()? duplicate;
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +193,6 @@ class ScheduleEntry extends StatelessWidget {
                   }
                 },
               ),
-              const SizedBox(width: kdMediumPadding),
               Text(period.to.formatTimeOfDay()),
               IconButton(
                 icon: const Icon(Icons.edit_calendar),
@@ -210,7 +212,17 @@ class ScheduleEntry extends StatelessWidget {
                   }
                 },
               ),
-              const SizedBox(width: kdMediumPadding),
+              const SizedBox(
+                height: 24,
+                child: VerticalDivider(
+                  width: 0,
+                ),
+              ),
+              if (duplicate != null)
+                IconButton(
+                  icon: const Icon(Icons.copy),
+                  onPressed: duplicate,
+                ),
               IconButton(
                 icon: const Icon(Icons.clear),
                 onPressed: delete,
