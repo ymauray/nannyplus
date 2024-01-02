@@ -613,3 +613,6 @@ msgstr "Couleur"
 
 msgid "Weekly schedule"
 msgstr "Planning hebdomadaire"
+
+msgid "Yearly schedule"
+msgstr "Planning annuel"

@@ -348,3 +348,6 @@ msgstr "Color"
 
 msgid "Weekly schedule"
 msgstr "Weekly schedule"
+
+msgid "Yearly schedule"
+msgstr "Yearly schedule"
