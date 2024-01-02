@@ -6,7 +6,7 @@ part of 'periods_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$periodsHash() => r'b6ce59abf60339832002fbc7ec1700ee785aca05';
+String _$periodsHash() => r'2e5ca4e368298dca5b59a0b53a61724e0cbf195c';
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/src/app_settings/app_settings_view.dart';
 import 'package:nannyplus/src/deductions/deductions_view.dart';
@@ -9,6 +10,7 @@ import 'package:nannyplus/src/statement_list_view/statement_list_view.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/src/ui/ui_card.dart';
 import 'package:nannyplus/views/weekly_schedule/weekly_schedule_view.dart';
+import 'package:nannyplus/views/yearly_schedule_pdf.dart';
 
 class _OptionTile extends StatelessWidget {
   const _OptionTile({
@@ -81,6 +83,11 @@ class OptionsView extends ConsumerWidget {
           leading: const Icon(Icons.calendar_view_week),
           label: context.t('Weekly schedule'),
           destination: () => const WeeklyScheduleView(),
+        ),
+        _OptionTile(
+          leading: const Icon(FontAwesomeIcons.calendar),
+          label: context.t('Yearly schedule'),
+          destination: () => const YearlySchedulePdf(),
         ),
       ],
     );
