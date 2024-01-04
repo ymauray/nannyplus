@@ -1,111 +1,135 @@
 //import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:nannyplus/utils/database_util.dart';
+import 'package:timezone/timezone.dart' as tz;
+
 class NotificationUtil {
-  // factory NotificationUtil() {
-  //   return _singleton;
-  // }
-  // NotificationUtil._internal();
-  // static final NotificationUtil _singleton = NotificationUtil._internal();
+  NotificationUtil._();
 
-  // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  //     FlutterLocalNotificationsPlugin();
+  static NotificationUtil instance = NotificationUtil._();
 
-  // Future<void> init() async {
-  //   const initializationSettingsAndroid =
-  //       AndroidInitializationSettings('app_icon');
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
-  //   final initializationSettingsIOS = DarwinInitializationSettings(
-  //     requestSoundPermission: false,
-  //     requestBadgePermission: false,
-  //     requestAlertPermission: false,
-  //     onDidReceiveLocalNotification: (id, title, body, payload) async {
-  //       debugPrint('onDidReceiveLocalNotification: $payload');
-  //     },
-  //   );
+  Future<void> init() async {
+    const initializationSettingsAndroid =
+        AndroidInitializationSettings('app_icon');
 
-  //   final initializationSettings = InitializationSettings(
-  //     android: initializationSettingsAndroid,
-  //     iOS: initializationSettingsIOS,
-  //   );
+    final initializationSettingsIOS = DarwinInitializationSettings(
+      requestSoundPermission: false,
+      requestBadgePermission: false,
+      requestAlertPermission: false,
+      onDidReceiveLocalNotification: (id, title, body, payload) async {
+        debugPrint('onDidReceiveLocalNotification: $payload');
+      },
+    );
 
-  //   await flutterLocalNotificationsPlugin.initialize(
-  //     initializationSettings,
-  //     onDidReceiveNotificationResponse: (payload) async {
-  //       debugPrint('onDidReceiveNotificationResponse: $payload');
-  //     },
-  //     onDidReceiveBackgroundNotificationResponse: (payload) async {
-  //       debugPrint('onDidReceiveBackgroundNotificationResponse: $payload');
-  //     },
-  //   );
-  // }
+    final initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS,
+    );
 
-  // Future<void> requestIOSPermissions() async {
-  //   await flutterLocalNotificationsPlugin
-  //       .resolvePlatformSpecificImplementation<
-  //           IOSFlutterLocalNotificationsPlugin>()
-  //       ?.requestPermissions(
-  //         alert: true,
-  //         badge: true,
-  //         sound: true,
-  //       );
-  // }
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: didReceiveNotificationResponse,
+      onDidReceiveBackgroundNotificationResponse:
+          didReceiveBackgroundNotificationResponse,
+    );
+  }
 
-  // Future<void> sendNotification() async {
-  //   const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-  //     'nannyplus',
-  //     'Nanny+',
-  //     channelDescription: 'Channel Description',
-  //     importance: Importance.max,
-  //     priority: Priority.high,
-  //     ticker: 'Ticker',
-  //   );
+  Future<void> requestIOSPermissions() async {
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+  }
 
-  //   const iOSPlatformChannelSpecifics = DarwinNotificationDetails();
+  Future<void> sendNotification() async {
+    const androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'nannyplus',
+      'Nanny+',
+      channelDescription: 'Channel Description',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'Ticker',
+    );
 
-  //   const platformChannelSpecifics = NotificationDetails(
-  //     android: androidPlatformChannelSpecifics,
-  //     iOS: iOSPlatformChannelSpecifics,
-  //   );
+    const iOSPlatformChannelSpecifics = DarwinNotificationDetails();
 
-  //   await flutterLocalNotificationsPlugin.show(
-  //     0,
-  //     'Facture à payer !',
-  //     'Vous avez une facture à payer !',
-  //     platformChannelSpecifics,
-  //     payload: 'Item x',
-  //   );
+    const platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
+      iOS: iOSPlatformChannelSpecifics,
+    );
 
-  //   debugPrint('Ok !');
-  // }
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      'Facture à payer !',
+      'Vous avez une facture à payer !',
+      platformChannelSpecifics,
+      payload: 'Item x',
+    );
 
-  // Future<void> scheduleNotification() async {
-  //   const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-  //     'nannyplus',
-  //     'Nanny+',
-  //     channelDescription: 'Channel Description',
-  //     importance: Importance.max,
-  //     priority: Priority.high,
-  //     ticker: 'Ticker',
-  //     visibility: NotificationVisibility.public,
-  //     fullScreenIntent: true,
-  //   );
+    debugPrint('Ok !');
+  }
 
-  //   const iOSPlatformChannelSpecifics = DarwinNotificationDetails();
+  Future<void> scheduleNotification() async {
+    const androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'nannyplus',
+      'Nanny+',
+      channelDescription: 'Channel Description',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'Ticker',
+      visibility: NotificationVisibility.public,
+      fullScreenIntent: true,
+    );
 
-  //   const platformChannelSpecifics = NotificationDetails(
-  //     android: androidPlatformChannelSpecifics,
-  //     iOS: iOSPlatformChannelSpecifics,
-  //   );
+    const iOSPlatformChannelSpecifics = DarwinNotificationDetails();
 
-  //   await flutterLocalNotificationsPlugin.zonedSchedule(
-  //     0,
-  //     'scheduled title',
-  //     'scheduled body',
-  //     tz.TZDateTime.now(tz.local).add(const Duration(seconds: 15)),
-  //     platformChannelSpecifics,
-  //     androidAllowWhileIdle: true,
-  //     uiLocalNotificationDateInterpretation:
-  //         UILocalNotificationDateInterpretation.absoluteTime,
-  //   );
-  // }
+    const platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
+      iOS: iOSPlatformChannelSpecifics,
+    );
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      0,
+      'Anniversaire de Zoé Mauray !',
+      'Dimanche 14 avril',
+      tz.TZDateTime.now(tz.local).add(const Duration(seconds: 15)),
+      platformChannelSpecifics,
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+    );
+  }
+
+  Future<void> cancelAll() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
+  }
+
+  Future<void> scheduleBirthdayNotifications() async {
+    final database = await DatabaseUtil.instance;
+    final rows = await database
+        .query('children', where: 'archived <= ?', whereArgs: [0]);
+  }
+}
+
+@pragma('vm:entry-point')
+Future<void> didReceiveNotificationResponse(
+  NotificationResponse payload,
+) async {
+  debugPrint('onDidReceiveNotificationResponse: $payload');
+}
+
+@pragma('vm:entry-point')
+Future<void> didReceiveBackgroundNotificationResponse(
+  NotificationResponse payload,
+) async {
+  debugPrint('onDidReceiveBackgroundNotificationResponse: $payload');
 }
