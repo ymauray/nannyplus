@@ -13,7 +13,7 @@ import 'package:nannyplus/src/ui/view.dart';
 import 'package:nannyplus/utils/prefs_util.dart';
 import 'package:nannyplus/utils/snack_bar_util.dart';
 import 'package:nannyplus/views/child_list_view.dart';
-import 'package:nannyplus/views/options_view.dart';
+import 'package:nannyplus/views/options/options_view.dart';
 
 class MainTabView extends ConsumerStatefulWidget {
   const MainTabView({super.key});
