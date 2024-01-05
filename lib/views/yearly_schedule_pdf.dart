@@ -78,10 +78,23 @@ class YearlySchedulePdf extends ConsumerWidget {
         monthName.substring(1).toLowerCase();
     final endDate = DateTime(startOfMonth.year, startOfMonth.month + 1)
         .add(const Duration(microseconds: -1));
+    final nGrams = schedule?.childIds.map((childId) {
+          return pw.Expanded(
+            child: pw.Center(
+              child: pw.Text(
+                schedule.childrenNames[childId] ?? '',
+                style: const pw.TextStyle(fontSize: 5),
+              ),
+            ),
+          );
+        }).toList() ??
+        <pw.Widget>[];
+
     return pw.Expanded(
       child: pw.Column(
         children: [
           monthNameCell(displayName),
+          nGramsCell(nGrams),
           ...List.generate(
             endDate.day,
             (index) => dayCell(
@@ -111,31 +124,52 @@ class YearlySchedulePdf extends ConsumerWidget {
     final itemPeriods = periods;
 
     final colorIndicators = schedule.childIds.map((childId) {
-      final period = itemPeriods
+      final morningPeriod = itemPeriods
           .where(
-            (period) => period.childId == childId,
+            (period) => period.childId == childId && period.isMorning,
           )
           .firstOrNull;
-      if (period != null) {
-        return pw.Expanded(
-          child: pw.Container(
-            color: PdfColor.fromInt(
-              schedule.scheduleColors
-                  .where(
-                    (scheduleColor) => scheduleColor.childId == childId,
-                  )
-                  .first
-                  .color,
+      final afternoonPeriod = itemPeriods
+          .where(
+            (period) => period.childId == childId && !period.isMorning,
+          )
+          .firstOrNull;
+      return pw.Expanded(
+        child: pw.Column(
+          children: [
+            pw.Expanded(
+              child: pw.Container(
+                color: morningPeriod != null
+                    ? PdfColor.fromInt(
+                        schedule.scheduleColors
+                            .where(
+                              (scheduleColor) =>
+                                  scheduleColor.childId == childId,
+                            )
+                            .first
+                            .color,
+                      )
+                    : const PdfColor(1, 1, 1),
+              ),
             ),
-          ),
-        );
-      } else {
-        return pw.Expanded(
-          child: pw.Container(
-            color: const PdfColor(1, 1, 1),
-          ),
-        );
-      }
+            pw.Expanded(
+              child: pw.Container(
+                color: afternoonPeriod != null
+                    ? PdfColor.fromInt(
+                        schedule.scheduleColors
+                            .where(
+                              (scheduleColor) =>
+                                  scheduleColor.childId == childId,
+                            )
+                            .first
+                            .color,
+                      )
+                    : const PdfColor(1, 1, 1),
+              ),
+            ),
+          ],
+        ),
+      );
     }).toList();
 
     return pw.SizedBox(
@@ -183,6 +217,43 @@ class YearlySchedulePdf extends ConsumerWidget {
                   : pw.Row(
                       children: colorIndicators,
                     ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  pw.Widget nGramsCell(List<pw.Widget> nGrams) {
+    return pw.SizedBox(
+      height: rowHeight,
+      child: pw.Row(
+        children: [
+          pw.Container(
+            height: rowHeight,
+            width: rowHeight,
+            decoration: pw.BoxDecoration(
+              border: pw.Border.all(),
+              color: PdfColors.grey300,
+            ),
+          ),
+          pw.Container(
+            height: rowHeight,
+            width: rowHeight * .75,
+            decoration: pw.BoxDecoration(
+              border: pw.Border.all(),
+            ),
+          ),
+          pw.Expanded(
+            child: pw.Container(
+              height: rowHeight,
+              width: rowHeight,
+              decoration: pw.BoxDecoration(
+                border: pw.Border.all(),
+              ),
+              child: pw.Row(
+                children: nGrams,
+              ),
             ),
           ),
         ],

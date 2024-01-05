@@ -9,7 +9,7 @@ import 'package:nannyplus/src/price_list/price_list_view.dart';
 import 'package:nannyplus/src/statement_list_view/statement_list_view.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/views/options/option_tile.dart';
-import 'package:nannyplus/views/weekly_schedule/weekly_schedule_pdf.dart';
+import 'package:nannyplus/views/weekly_schedule_pdf.dart';
 import 'package:nannyplus/views/yearly_schedule_pdf.dart';
 
 class OptionsView extends ConsumerWidget {
