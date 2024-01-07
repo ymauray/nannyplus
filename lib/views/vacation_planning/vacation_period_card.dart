@@ -73,8 +73,8 @@ class VacationPeriodCard extends ConsumerWidget {
                   ),
                   Switch(
                     value: period.end != null,
-                    onChanged: (value) {
-                      viewStateNotifier.setPeriodEnd(
+                    onChanged: (value) async {
+                      await viewStateNotifier.setPeriodEnd(
                         index,
                         value ? period.start : null,
                       );

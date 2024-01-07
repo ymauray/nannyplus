@@ -73,7 +73,7 @@ class VacationPlanningViewState extends _$VacationPlanningViewState {
       final vacationPeriodRepository =
           ref.read(vacationPeriodRepositoryProvider);
       var newPeriod = period.copyWith(end: end);
-      if (period.start.compareTo(end!) > 0) {
+      if (end != null && newPeriod.start.compareTo(end) > 0) {
         newPeriod = newPeriod.copyWith(start: end);
       }
       await vacationPeriodRepository.update(newPeriod);
