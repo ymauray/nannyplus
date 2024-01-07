@@ -80,11 +80,12 @@ class VacationPeriodCard extends ConsumerWidget {
                       );
                     },
                   ),
-                  IconButton(
-                    visualDensity: VisualDensity.compact,
-                    icon: const Icon(Icons.copy),
-                    onPressed: duplicate,
-                  ),
+                  if (duplicate != null)
+                    IconButton(
+                      visualDensity: VisualDensity.compact,
+                      icon: const Icon(Icons.copy),
+                      onPressed: duplicate,
+                    ),
                   IconButton(
                     visualDensity: VisualDensity.compact,
                     icon: const Icon(Icons.clear),

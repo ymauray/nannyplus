@@ -17,8 +17,7 @@ class VacationPlanningView extends ConsumerWidget {
     final viewStateNotifier =
         ref.read(vacationPlanningViewStateProvider.notifier);
 
-    final lastDay =
-        '${viewState.valueOrNull?.year ?? DateTime.now().year}-01-01';
+    var lastDay = '${viewState.valueOrNull?.year ?? DateTime.now().year}-01-01';
 
     return UIView(
       title: Text(context.t('Vacation planning')),
@@ -75,18 +74,25 @@ class VacationPlanningView extends ConsumerWidget {
                 child: LoadingIndicator(),
               )
             : UIListView(
-                itemBuilder: (context, index) => VacationPeriodCard(
-                  index: index,
-                  duplicate: () async {
-                    await viewStateNotifier
-                        .duplicatePeriod(viewState.requireValue.periods[index]);
-                  },
-                  delete: () async {
-                    await viewStateNotifier.deletePeriod(
-                      viewState.requireValue.periods[index],
-                    );
-                  },
-                ),
+                itemBuilder: (context, index) {
+                  final period = viewState.requireValue.periods[index];
+                  if (period.start.compareTo(lastDay) > 0) {
+                    lastDay = period.start;
+                  }
+                  if (period.end != null &&
+                      period.end!.compareTo(lastDay) > 0) {
+                    lastDay = period.end!;
+                  }
+                  return VacationPeriodCard(
+                    index: index,
+                    //duplicate: () async {
+                    //  await viewStateNotifier.duplicatePeriod(period);
+                    //},
+                    delete: () async {
+                      await viewStateNotifier.deletePeriod(period);
+                    },
+                  );
+                },
                 itemCount: viewState.valueOrNull?.periods.length ?? 0,
               ),
       ),
