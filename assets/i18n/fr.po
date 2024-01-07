@@ -608,6 +608,12 @@ msgstr "De"
 msgid "to"
 msgstr "à"
 
+msgid "from.date"
+msgstr "Du"
+
+msgid "to.date"
+msgstr "Au"
+
 msgid "Color"
 msgstr "Couleur"
 
@@ -616,3 +622,42 @@ msgstr "Planning hebdomadaire"
 
 msgid "Yearly schedule"
 msgstr "Planning annuel"
+
+msgid "January"
+msgstr "Janvier"
+
+msgid "February"
+msgstr "Février"
+
+msgid "March"
+msgstr "Mars"
+
+msgid "April"
+msgstr "Avril"
+
+msgid "May"
+msgstr "Mai"
+
+msgid "June"
+msgstr "Juin"
+
+msgid "July"
+msgstr "Juillet"
+
+msgid "August"
+msgstr "Août"
+
+msgid "September"
+msgstr "Septembre"
+
+msgid "October"
+msgstr "Octobre"
+
+msgid "November"
+msgstr "Novembre"
+
+msgid "December"
+msgstr "Décembre"
+
+msgid "Vacation planning"
+msgstr "Planning des congés"

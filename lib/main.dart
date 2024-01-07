@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:nannyplus/app.dart';
 import 'package:nannyplus/firebase_options.dart';
@@ -18,6 +19,10 @@ import 'package:timezone/timezone.dart' as tz;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  final locale = await findSystemLocale();
+  await initializeDateFormatting(locale);
+
   GoogleFonts.config.allowRuntimeFetching = false;
   if (!Platform.isLinux && !Platform.isWindows && !Platform.isMacOS) {
     await NotificationUtil.instance.init();
@@ -44,8 +49,6 @@ Future<void> main() async {
     final license = await rootBundle.loadString('google_fonts/Poppins-OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
-
-  await findSystemLocale();
 
   if (Platform.isLinux || Platform.isWindows) {
     sqfliteFfiInit();

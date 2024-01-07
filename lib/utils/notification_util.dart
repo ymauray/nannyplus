@@ -147,24 +147,6 @@ class NotificationUtil {
         );
       }
     }
-
-    final twelveHoursFromNow = DateTime.now().add(const Duration(hours: 12));
-    await scheduleNotification(
-      serial++,
-      twelveHoursFromNow,
-      'Anniversaire de Yannick Mauray',
-      'Dans quelques mois',
-    );
-
-    final pendingNotificationRequests =
-        await flutterLocalNotificationsPlugin.pendingNotificationRequests();
-    debugPrint(
-      'pendingNotificationRequests : ${pendingNotificationRequests.length}',
-    );
-
-    final activeNotifications =
-        await flutterLocalNotificationsPlugin.getActiveNotifications();
-    debugPrint('activeNotifications : ${activeNotifications.length}');
   }
 }
 

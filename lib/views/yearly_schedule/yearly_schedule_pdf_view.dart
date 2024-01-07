@@ -3,22 +3,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
 import 'package:nannyplus/data/model/schedule.dart';
+import 'package:nannyplus/data/model/vacation_period.dart';
+import 'package:nannyplus/provider/vacation_period_provider.dart';
 import 'package:nannyplus/provider/weekly_schedule_provider.dart';
 import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/view.dart';
+import 'package:nannyplus/views/yearly_schedule/yearly_schedule_pdf_view_state_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-class YearlySchedulePdf extends ConsumerWidget {
-  const YearlySchedulePdf({super.key});
+class YearlySchedulePdfView extends ConsumerWidget {
+  const YearlySchedulePdfView({super.key});
 
   static const rowHeight = 15.0;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final startOfYear = DateTime(DateTime.now().year);
     final schedule = ref.watch(weeklyScheduleProvider).valueOrNull;
+    final viewState = ref.watch(yearlySchedulePdfViewStateProvider);
+    final startOfYear = DateTime(viewState.year);
+    final vacationPeriods =
+        ref.watch(vacationPeriodsProvider(viewState.year)).valueOrNull;
 
     final doc = pw.Document()
       ..addPage(
@@ -41,6 +47,7 @@ class YearlySchedulePdf extends ConsumerWidget {
                           context,
                           DateTime(startOfYear.year, month),
                           schedule,
+                          vacationPeriods,
                         ),
                       )
                       .toList(),
@@ -53,7 +60,45 @@ class YearlySchedulePdf extends ConsumerWidget {
 
     return UIView(
       title: Text(context.t('Yearly schedule')),
-      persistentHeader: const UISliverCurvedPersistenHeader(),
+      persistentHeader: UISliverCurvedPersistenHeader(
+        child: Row(
+          children: [
+            IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+              onPressed: () {
+                ref
+                    .read(yearlySchedulePdfViewStateProvider.notifier)
+                    .decrement();
+              },
+            ),
+            TextButton(
+              child: Text(
+                viewState.year.toString(),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+              ),
+              onPressed: () {
+                ref.read(yearlySchedulePdfViewStateProvider.notifier).reset();
+              },
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+              onPressed: () {
+                ref
+                    .read(yearlySchedulePdfViewStateProvider.notifier)
+                    .increment();
+              },
+            ),
+          ],
+        ),
+      ),
       body: PdfPreview(
         canChangePageFormat: false,
         canChangeOrientation: false,
@@ -72,8 +117,9 @@ class YearlySchedulePdf extends ConsumerWidget {
     BuildContext context,
     DateTime startOfMonth,
     Schedule? schedule,
+    List<VacationPeriod>? vacationPeriods,
   ) {
-    final monthName = DateFormat('MMMM').format(startOfMonth);
+    final monthName = context.t(DateFormat('MMMM').format(startOfMonth));
     final displayName = monthName.substring(0, 1).toUpperCase() +
         monthName.substring(1).toLowerCase();
     final endDate = DateTime(startOfMonth.year, startOfMonth.month + 1)
@@ -97,25 +143,42 @@ class YearlySchedulePdf extends ConsumerWidget {
           nGramsCell(nGrams),
           ...List.generate(
             endDate.day,
-            (index) => dayCell(
-              DateTime(
-                startOfMonth.year,
-                startOfMonth.month,
-                index + 1,
-              ),
-              schedule,
-            ),
+            (index) {
+              final day =
+                  DateTime(startOfMonth.year, startOfMonth.month, index + 1);
+              final fmtDay = DateFormat('yyyy-MM-dd').format(day);
+              final onVacation = vacationPeriods
+                      ?.where(
+                        (p) =>
+                            (p.end == null && p.start == fmtDay) ||
+                            (p.end != null &&
+                                p.start.compareTo(fmtDay) <= 0 &&
+                                p.end!.compareTo(fmtDay) >= 0),
+                      )
+                      .isNotEmpty ??
+                  false;
+              return dayCell(context, day, schedule, onVacation);
+            },
           ),
         ],
       ),
     );
   }
 
-  pw.Widget dayCell(DateTime date, Schedule? schedule) {
+  pw.Widget dayCell(
+    BuildContext context,
+    DateTime date,
+    Schedule? schedule,
+    bool onVacation,
+  ) {
     if (schedule == null) return pw.Container();
 
-    final dayLabel =
-        DateFormat('EEEE').format(date).toUpperCase().substring(0, 1);
+    final dayLabel = context
+        .t(
+          DateFormat('EEEE').format(date),
+        )
+        .toUpperCase()
+        .substring(0, 1);
 
     final dayKey = DateFormat.EEEE('en').format(date);
 
@@ -134,6 +197,7 @@ class YearlySchedulePdf extends ConsumerWidget {
             (period) => period.childId == childId && !period.isMorning,
           )
           .firstOrNull;
+
       return pw.Expanded(
         child: pw.Column(
           children: [
@@ -212,11 +276,18 @@ class YearlySchedulePdf extends ConsumerWidget {
                 border: pw.Border.all(),
                 color: date.weekday >= 6 ? PdfColors.grey300 : PdfColors.white,
               ),
-              child: date.weekday >= 6
-                  ? pw.Center(child: pw.Text(''))
-                  : pw.Row(
-                      children: colorIndicators,
-                    ),
+              child: onVacation
+                  ? pw.Center(
+                      child: pw.Container(
+                        decoration:
+                            const pw.BoxDecoration(color: PdfColors.grey500),
+                      ),
+                    )
+                  : date.weekday >= 6
+                      ? pw.Center(child: pw.Text(''))
+                      : pw.Row(
+                          children: colorIndicators,
+                        ),
             ),
           ),
         ],

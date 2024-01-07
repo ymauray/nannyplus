@@ -9,8 +9,9 @@ import 'package:nannyplus/src/price_list/price_list_view.dart';
 import 'package:nannyplus/src/statement_list_view/statement_list_view.dart';
 import 'package:nannyplus/src/ui/list_view.dart';
 import 'package:nannyplus/views/options/option_tile.dart';
+import 'package:nannyplus/views/vacation_planning/vacation_planning_view.dart';
 import 'package:nannyplus/views/weekly_schedule_pdf.dart';
-import 'package:nannyplus/views/yearly_schedule_pdf.dart';
+import 'package:nannyplus/views/yearly_schedule/yearly_schedule_pdf_view.dart';
 
 class OptionsView extends ConsumerWidget {
   const OptionsView({super.key});
@@ -52,7 +53,12 @@ class OptionsView extends ConsumerWidget {
         OptionTile(
           leading: const Icon(FontAwesomeIcons.calendar),
           label: context.t('Yearly schedule'),
-          destination: () => const YearlySchedulePdf(),
+          destination: () => const YearlySchedulePdfView(),
+        ),
+        OptionTile(
+          leading: const Icon(FontAwesomeIcons.calendar),
+          label: context.t('Vacation planning'),
+          destination: () => const VacationPlanningView(),
         ),
       ],
     );
