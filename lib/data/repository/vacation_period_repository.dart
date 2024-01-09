@@ -59,6 +59,15 @@ class VacationPeriodRepository {
     );
     return result.map(VacationPeriod.fromJson).toList();
   }
+
+  FutureOr<List<VacationPeriod>> loadAll() async {
+    final database = await DatabaseUtil.instance;
+    final result = await database.query(
+      'vacation_period',
+      orderBy: 'sortOrder',
+    );
+    return result.map(VacationPeriod.fromJson).toList();
+  }
 }
 
 @riverpod

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'vacation_period_provider.dart';
+part of 'vacation_periods_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator

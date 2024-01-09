@@ -23,42 +23,47 @@ class OptionsView extends ConsumerWidget {
         OptionTile(
           leading: const Icon(Icons.payment),
           label: context.t('Price list'),
-          destination: () => const PriceListView(),
+          destinationBuilder: () => const PriceListView(),
         ),
         OptionTile(
           leading: const Icon(Icons.remove_circle_outline),
           label: context.t('Deductions'),
-          destination: () => const DeductionsView(),
+          destinationBuilder: () => const DeductionsView(),
         ),
         OptionTile(
           leading: const Icon(Icons.app_settings_alt),
           label: context.t('Application settings'),
-          destination: () => const AppSettingsView(),
+          destinationBuilder: () => const AppSettingsView(),
         ),
         OptionTile(
           leading: const Icon(Icons.settings),
           label: context.t('Invoice settings'),
-          destination: () => const InvoiceSettingsView(),
+          destinationBuilder: () => const InvoiceSettingsView(),
         ),
         OptionTile(
           leading: const Icon(Icons.description),
           label: context.t('Statements'),
-          destination: () => const StatementListView(),
+          destinationBuilder: () => const StatementListView(),
         ),
         OptionTile(
           leading: const Icon(Icons.calendar_view_week),
           label: context.t('Weekly schedule'),
-          destination: () => const WeeklySchedulePdf(),
+          destinationBuilder: () => const WeeklySchedulePdf(),
         ),
         OptionTile(
           leading: const Icon(FontAwesomeIcons.calendar),
           label: context.t('Yearly schedule'),
-          destination: () => const YearlySchedulePdfView(),
+          destinationBuilder: () => const YearlySchedulePdfView(),
         ),
         OptionTile(
           leading: const Icon(FontAwesomeIcons.calendar),
           label: context.t('Vacation planning'),
-          destination: () => const VacationPlanningView(),
+          destinationBuilder: () {
+            //ref
+            //    .read(vacationPeriodsProvider(DateTime.now().year).notifier)
+            //    .sort();
+            return const VacationPlanningView();
+          },
         ),
       ],
     );

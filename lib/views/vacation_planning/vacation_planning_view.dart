@@ -19,82 +19,97 @@ class VacationPlanningView extends ConsumerWidget {
 
     var lastDay = '${viewState.valueOrNull?.year ?? DateTime.now().year}-01-01';
 
-    return UIView(
-      title: Text(context.t('Vacation planning')),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.add),
-          onPressed: () async {
-            await viewStateNotifier.addPeriod(lastDay);
-          },
-        ),
-      ],
-      persistentHeader: UISliverCurvedPersistenHeader(
-        child: Row(
-          children: [
-            IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
-              onPressed: () {
-                ref
-                    .read(vacationPlanningViewStateProvider.notifier)
-                    .decrement();
-              },
-            ),
-            TextButton(
-              child: Text(
-                viewState.valueOrNull?.year.toString() ?? '----',
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-              ),
-              onPressed: () {
-                ref.read(vacationPlanningViewStateProvider.notifier).reset();
-              },
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.arrow_forward_ios,
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
-              onPressed: () {
-                ref
-                    .read(vacationPlanningViewStateProvider.notifier)
-                    .increment();
-              },
-            ),
-          ],
-        ),
-      ),
-      body: Center(
-        child: viewState.valueOrNull == null
-            ? const Center(
-                child: LoadingIndicator(),
-              )
-            : UIListView(
-                itemBuilder: (context, index) {
-                  final period = viewState.requireValue.periods[index];
-                  if (period.start.compareTo(lastDay) > 0) {
-                    lastDay = period.start;
-                  }
-                  if (period.end != null &&
-                      period.end!.compareTo(lastDay) > 0) {
-                    lastDay = period.end!;
-                  }
-                  return VacationPeriodCard(
-                    index: index,
-                    //duplicate: () async {
-                    //  await viewStateNotifier.duplicatePeriod(period);
-                    //},
-                    delete: () async {
-                      await viewStateNotifier.deletePeriod(period);
-                    },
-                  );
+    return PopScope(
+      onPopInvoked: (didPop) async {
+        if (didPop) {
+          await ref.read(vacationPlanningViewStateProvider.notifier).sort();
+        }
+      },
+      child: UIView(
+        title: Text(context.t('Vacation planning')),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () async {
+              await viewStateNotifier.addPeriod(lastDay);
+            },
+          ),
+        ],
+        persistentHeader: UISliverCurvedPersistenHeader(
+          child: Row(
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+                onPressed: () async {
+                  await ref
+                      .read(vacationPlanningViewStateProvider.notifier)
+                      .sort();
+                  await ref
+                      .read(vacationPlanningViewStateProvider.notifier)
+                      .decrement();
                 },
-                itemCount: viewState.valueOrNull?.periods.length ?? 0,
               ),
+              TextButton(
+                child: Text(
+                  viewState.valueOrNull?.year.toString() ?? '----',
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                ),
+                onPressed: () async {
+                  await ref
+                      .read(vacationPlanningViewStateProvider.notifier)
+                      .reset();
+                },
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+                onPressed: () async {
+                  await ref
+                      .read(vacationPlanningViewStateProvider.notifier)
+                      .sort();
+                  await ref
+                      .read(vacationPlanningViewStateProvider.notifier)
+                      .increment();
+                },
+              ),
+            ],
+          ),
+        ),
+        body: Center(
+          child: viewState.valueOrNull == null
+              ? const Center(
+                  child: LoadingIndicator(),
+                )
+              : UIListView(
+                  itemBuilder: (context, index) {
+                    final period = viewState.requireValue.periods[index];
+                    if (period.start.compareTo(lastDay) > 0) {
+                      lastDay = period.start;
+                    }
+                    if (period.end != null &&
+                        period.end!.compareTo(lastDay) > 0) {
+                      lastDay = period.end!;
+                    }
+                    return VacationPeriodCard(
+                      index: index,
+                      //duplicate: () async {
+                      //  await viewStateNotifier.duplicatePeriod(period);
+                      //},
+                      delete: () async {
+                        await viewStateNotifier.deletePeriod(period);
+                      },
+                    );
+                  },
+                  itemCount: viewState.valueOrNull?.periods.length ?? 0,
+                ),
+        ),
       ),
     );
   }

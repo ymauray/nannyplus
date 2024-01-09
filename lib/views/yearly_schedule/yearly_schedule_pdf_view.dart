@@ -4,7 +4,7 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:intl/intl.dart';
 import 'package:nannyplus/data/model/schedule.dart';
 import 'package:nannyplus/data/model/vacation_period.dart';
-import 'package:nannyplus/provider/vacation_period_provider.dart';
+import 'package:nannyplus/provider/vacation_periods_provider.dart';
 import 'package:nannyplus/provider/weekly_schedule_provider.dart';
 import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/view.dart';

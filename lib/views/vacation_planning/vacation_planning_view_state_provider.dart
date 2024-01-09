@@ -95,4 +95,35 @@ class VacationPlanningViewState extends _$VacationPlanningViewState {
       return load(state.requireValue.year);
     });
   }
+
+  FutureOr<void> sort() async {
+    final mutablePeriods = List<VacationPeriod>.from(state.requireValue.periods)
+      ..sort((a, b) {
+        final aStart = a.start;
+        final bStart = b.start;
+        final aCompare = aStart.compareTo(bStart);
+        if (aCompare != 0) {
+          return aCompare;
+        }
+        final aEnd = a.end;
+        final bEnd = b.end;
+        if (aEnd == null && bEnd == null) {
+          return 0;
+        }
+        if (aEnd == null) {
+          return -1;
+        }
+        if (bEnd == null) {
+          return 1;
+        }
+        return aEnd.compareTo(bEnd);
+      });
+    // update period with sortOrder
+    var sortOrder = 0;
+
+    for (final period in mutablePeriods) {
+      final newPeriod = period.copyWith(sortOrder: sortOrder++);
+      await ref.read(vacationPeriodRepositoryProvider).update(newPeriod);
+    }
+  }
 }

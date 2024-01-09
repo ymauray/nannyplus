@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:nannyplus/src/ui/ui_card.dart';
 
-class OptionTile extends StatelessWidget {
+class OptionTile<T extends Widget> extends StatelessWidget {
   const OptionTile({
     required this.leading,
     required this.label,
-    required this.destination,
+    required this.destinationBuilder,
     super.key,
   });
 
   final Widget leading;
   final String label;
-  final Widget Function() destination;
+  final T Function() destinationBuilder;
 
   @override
   Widget build(BuildContext context) {
+    final destination = destinationBuilder();
     return UICard(
       children: [
         GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
+          onTap: () async {
+            await Navigator.of(context).push(
               MaterialPageRoute<void>(
-                builder: (context) => destination(),
+                builder: (context) => destination,
               ),
             );
           },
