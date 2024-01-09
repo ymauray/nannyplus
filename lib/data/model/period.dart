@@ -69,6 +69,11 @@ class Period with _$Period {
     return ret;
   }
 
+  // isMorning
+  bool get isMorning {
+    return from.hour < 12;
+  }
+
   static int _mapDay(String day) {
     switch (day) {
       case 'monday':

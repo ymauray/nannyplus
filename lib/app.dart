@@ -120,7 +120,11 @@ class NannyPlusApp extends riverpod.ConsumerWidget {
         title: ksAppName,
         theme: AppTheme.create(),
         home: const MainTabView(),
-        supportedLocales: const [Locale('en'), Locale('fr')],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('fr'),
+          Locale('fr', 'CH')
+        ],
         localizationsDelegates: [
           GettextLocalizationsDelegate(defaultLanguage: 'fr'),
           ...GlobalMaterialLocalizations.delegates,

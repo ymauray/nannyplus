@@ -423,6 +423,15 @@ class DatabaseUtil {
       color INTEGER NOT NULL
     )
       ''');
+
+      await db.execute('''
+    CREATE TABLE vacation_period(
+      id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+      start TEXT,
+      end TEXT,
+      sortOrder INTEGER NOT NULL DEFAULT 0
+    )
+      ''');
     }
   }
 }

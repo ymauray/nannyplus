@@ -6,7 +6,7 @@ part of 'weekly_schedule_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$weeklyScheduleHash() => r'af3b5088a4facd1daabf9e6bc5738335c499c0c8';
+String _$weeklyScheduleHash() => r'eaf11b9b60ed3ca8833241c6d09903de4e796f5a';
 
 /// See also [weeklySchedule].
 @ProviderFor(weeklySchedule)
