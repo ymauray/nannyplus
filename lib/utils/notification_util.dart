@@ -85,7 +85,7 @@ class NotificationUtil {
       'Dimanche 14 avril',
       tz.TZDateTime.from(dateTime, tz.local),
       platformChannelSpecifics,
-      androidAllowWhileIdle: true,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
     );

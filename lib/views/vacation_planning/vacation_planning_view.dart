@@ -99,9 +99,6 @@ class VacationPlanningView extends ConsumerWidget {
                     }
                     return VacationPeriodCard(
                       index: index,
-                      //duplicate: () async {
-                      //  await viewStateNotifier.duplicatePeriod(period);
-                      //},
                       delete: () async {
                         await viewStateNotifier.deletePeriod(period);
                       },

@@ -20,7 +20,7 @@ class VacationPeriods extends _$VacationPeriods {
     // sort all periods, regardless of year
     final dateFormatter = DateFormat('yyyy-MM-dd');
     final now = DateTime.now();
-    final startOfYear = dateFormatter.format(DateTime(now.year, 1, 1));
+    final startOfYear = dateFormatter.format(DateTime(now.year));
     final vacationPeriodRepository = ref.read(vacationPeriodRepositoryProvider);
     final periods = await vacationPeriodRepository.loadAll();
     final pastPeriods = periods.where((period) {

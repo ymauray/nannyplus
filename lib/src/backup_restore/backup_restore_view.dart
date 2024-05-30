@@ -82,8 +82,7 @@ class BackupRestoreView extends ConsumerWidget {
 
   Future<void> _backup(BuildContext context) async {
     await DatabaseUtil.closeDatabase();
-    // ignore: deprecated_member_use
-    await Share.shareFiles([await DatabaseUtil.databasePath]);
+    await Share.shareXFiles([XFile(await DatabaseUtil.databasePath)]);
   }
 
   Future<bool> _restore(BuildContext context) async {

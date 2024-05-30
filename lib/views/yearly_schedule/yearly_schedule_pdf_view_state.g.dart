@@ -9,7 +9,7 @@ part of 'yearly_schedule_pdf_view_state.dart';
 _$YearlySchedulePdfViewStateImpl _$$YearlySchedulePdfViewStateImplFromJson(
         Map<String, dynamic> json) =>
     _$YearlySchedulePdfViewStateImpl(
-      json['year'] as int,
+      (json['year'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$YearlySchedulePdfViewStateImplToJson(

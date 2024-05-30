@@ -8,8 +8,8 @@ part of 'deduction.dart';
 
 _$DeductionImpl _$$DeductionImplFromJson(Map<String, dynamic> json) =>
     _$DeductionImpl(
-      id: json['id'] as int?,
-      sortOrder: json['sortOrder'] as int?,
+      id: (json['id'] as num?)?.toInt(),
+      sortOrder: (json['sortOrder'] as num?)?.toInt(),
       label: json['label'] as String,
       value: (json['value'] as num).toDouble(),
       type: json['type'] as String,

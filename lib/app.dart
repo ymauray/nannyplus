@@ -123,7 +123,7 @@ class NannyPlusApp extends riverpod.ConsumerWidget {
         supportedLocales: const [
           Locale('en'),
           Locale('fr'),
-          Locale('fr', 'CH')
+          Locale('fr', 'CH'),
         ],
         localizationsDelegates: [
           GettextLocalizationsDelegate(defaultLanguage: 'fr'),

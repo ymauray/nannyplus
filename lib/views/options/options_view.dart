@@ -45,6 +45,11 @@ class OptionsView extends ConsumerWidget {
           label: context.t('Statements'),
           destinationBuilder: () => const StatementListView(),
         ),
+        //OptionTile(
+        //  leading: const Icon(Icons.calendar_today),
+        //  label: context.t('Schedule options'),
+        //  destinationBuilder: () => const ScheduleOptionsView(),
+        //),
         OptionTile(
           leading: const Icon(Icons.calendar_view_week),
           label: context.t('Weekly schedule'),
@@ -59,9 +64,6 @@ class OptionsView extends ConsumerWidget {
           leading: const Icon(FontAwesomeIcons.calendar),
           label: context.t('Vacation planning'),
           destinationBuilder: () {
-            //ref
-            //    .read(vacationPeriodsProvider(DateTime.now().year).notifier)
-            //    .sort();
             return const VacationPlanningView();
           },
         ),
