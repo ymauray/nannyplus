@@ -661,3 +661,12 @@ msgstr "Décembre"
 
 msgid "Vacation planning"
 msgstr "Planning des congés"
+
+msgid "Schedule options"
+msgstr "Options du planning"
+
+msgid "Here you can set up the starting day for the yearly planning. By default, it is set to August 1st."
+msgstr "Ici, vous pouvez définir le jour de départ pour le planning annuel. Par défaut, il est fixé au 1er août."
+
+msgid "Planning validity"
+msgstr "Validité du planning"

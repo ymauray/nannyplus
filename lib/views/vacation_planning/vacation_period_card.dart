@@ -53,7 +53,7 @@ class VacationPeriodCard extends ConsumerWidget {
                         context: context,
                         initialDate: shortDateFormat.parse(period.start),
                         firstDate: DateTime(DateTime.now().year - 1),
-                        lastDate: DateTime(DateTime.now().year + 1),
+                        lastDate: DateTime(DateTime.now().year + 10),
                       );
                       if (selectedDate != null) {
                         await viewStateNotifier.setPeriodStart(

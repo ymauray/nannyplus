@@ -8,9 +8,9 @@ part of 'schedule_color.dart';
 
 _$ScheduleColorImpl _$$ScheduleColorImplFromJson(Map<String, dynamic> json) =>
     _$ScheduleColorImpl(
-      id: json['id'] as int,
-      childId: json['childId'] as int,
-      color: json['color'] as int,
+      id: (json['id'] as num).toInt(),
+      childId: (json['childId'] as num).toInt(),
+      color: (json['color'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$ScheduleColorImplToJson(_$ScheduleColorImpl instance) =>

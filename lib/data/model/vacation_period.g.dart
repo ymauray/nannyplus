@@ -8,9 +8,9 @@ part of 'vacation_period.dart';
 
 _$VacationPeriodImpl _$$VacationPeriodImplFromJson(Map<String, dynamic> json) =>
     _$VacationPeriodImpl(
-      sortOrder: json['sortOrder'] as int,
+      sortOrder: (json['sortOrder'] as num).toInt(),
       start: json['start'] as String,
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       end: json['end'] as String?,
     );
 

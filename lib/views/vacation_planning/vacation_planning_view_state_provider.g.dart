@@ -7,7 +7,7 @@ part of 'vacation_planning_view_state_provider.dart';
 // **************************************************************************
 
 String _$vacationPlanningViewStateHash() =>
-    r'17ec7300e6fec7f820b99452cdb0f2d4c45589d4';
+    r'eae742bcef383ea6239dae41ffd09afb8c0f6753';
 
 /// See also [VacationPlanningViewState].
 @ProviderFor(VacationPlanningViewState)

@@ -9,7 +9,7 @@ part of 'vacation_planning_view_state.dart';
 _$VacationPlanningViewStateImpl _$$VacationPlanningViewStateImplFromJson(
         Map<String, dynamic> json) =>
     _$VacationPlanningViewStateImpl(
-      year: json['year'] as int,
+      year: (json['year'] as num).toInt(),
       periods: (json['periods'] as List<dynamic>)
           .map((e) => VacationPeriod.fromJson(e as Map<String, dynamic>))
           .toList(),

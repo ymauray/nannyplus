@@ -43,7 +43,7 @@ class DatabaseUtil {
 
     _database = await sqlite.openDatabase(
       await _databasePath,
-      version: 11,
+      version: 12,
       onCreate: (db, version) async {
         await _create(db);
         for (var i = 2; i <= version; i++) {
@@ -432,6 +432,33 @@ class DatabaseUtil {
       sortOrder INTEGER NOT NULL DEFAULT 0
     )
       ''');
+    }
+
+    if (version == 12) {
+      await db.execute('''
+        CREATE TABLE plannings(
+          id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+          start TEXT NOT NULL,
+          end TEXT NOT NULL
+        )
+      ''');
+
+      await db.execute('''
+        ALTER TABLE periods
+        ADD COLUMN planningId INTEGER
+      ''');
+
+      final rows = await db.query('periods', columns: ['COUNT(1) AS pcount']);
+      final count = rows.first['pcount'] as int;
+      if (count > 0) {
+        final planningId = await db.insert('plannings', {
+          'start': '2023-08-01',
+          'end': '2024-07-31',
+        });
+        await db.update('periods', {
+          'planningId': planningId,
+        });
+      }
     }
   }
 }

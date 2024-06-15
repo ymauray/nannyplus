@@ -6,7 +6,7 @@ part of 'vacation_periods_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$vacationPeriodsHash() => r'33215275824caa9cbf6ecbfc6caaf3d4a9ff4477';
+String _$vacationPeriodsHash() => r'a7c0424725a7752dc04815e196cc28a037021c98';
 
 /// Copied from Dart SDK
 class _SystemHash {
