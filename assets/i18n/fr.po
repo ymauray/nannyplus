@@ -670,3 +670,6 @@ msgstr "Ici, vous pouvez définir le jour de départ pour le planning annuel. Pa
 
 msgid "Planning validity"
 msgstr "Validité du planning"
+
+msgid "Hour credits"
+msgstr "Crédits d'heures"

@@ -43,7 +43,7 @@ class DatabaseUtil {
 
     _database = await sqlite.openDatabase(
       await _databasePath,
-      version: 12,
+      version: 13,
       onCreate: (db, version) async {
         await _create(db);
         for (var i = 2; i <= version; i++) {
@@ -459,6 +459,17 @@ class DatabaseUtil {
           'planningId': planningId,
         });
       }
+    }
+
+    if (version == 13) {
+      await db.execute('''
+        ALTER TABLE children
+        ADD COLUMN hourCredits INTEGER NOT NULL DEFAULT 0
+      ''');
+      await db.execute('''
+        ALTER TABLE invoices
+        ADD COLUMN hourCredits TEXT NOT NULL DEFAULT ''
+      ''');
     }
   }
 }

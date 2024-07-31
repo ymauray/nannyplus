@@ -101,6 +101,7 @@ class InvoiceForm extends _$InvoiceForm {
           parentsName: child.parentsName!,
           address: child.address!,
           paid: 0,
+          hourCredits: '',
         ),
       );
 
@@ -127,7 +128,23 @@ class InvoiceForm extends _$InvoiceForm {
         }
       }
 
-      await invoicesRepository.update(invoice.copyWith(total: total));
+      var hourCredits = '';
+      for (final child in children) {
+        if (child.hourCredits > 0) {
+          hourCredits += '${child.firstName}: ${child.hourCredits}, ';
+        }
+      }
+      //remove the last colon and space
+      if (hourCredits.isNotEmpty) {
+        hourCredits = hourCredits.substring(0, hourCredits.length - 2);
+      }
+
+      await invoicesRepository.update(
+        invoice.copyWith(
+          total: total,
+          hourCredits: hourCredits,
+        ),
+      );
 
       return true;
     }

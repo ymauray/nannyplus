@@ -8,6 +8,7 @@ import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/cubit/child_info_cubit.dart';
 import 'package:nannyplus/cubit/file_list_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
+import 'package:nannyplus/provider/hour_credit_provider.dart';
 import 'package:nannyplus/provider/periods_provider.dart';
 import 'package:nannyplus/src/child_form/profile_photo.dart';
 import 'package:nannyplus/src/common/loading_indicator.dart';
@@ -70,6 +71,7 @@ class _ChildInfo extends ConsumerWidget {
     context.read<FileListCubit>().loadFiles(child.id ?? 0);
     final profilePhotoController = ProfilePhotoController()..bytes = child.pic;
     final periods = ref.watch(periodsProvider(child.id ?? 0));
+    final hourCredits = ref.watch(hourCreditProvider(child.id ?? 0));
 
     return BlocBuilder<FileListCubit, FileListState>(
       builder: (context, state) => UIListView.fromChildren(
@@ -108,6 +110,24 @@ class _ChildInfo extends ConsumerWidget {
                     .sortPeriods(child.id!);
               },
             ),
+          ),
+          _InfoCard(
+            label: "Réserve d'heures",
+            value: hourCredits.when(
+              data: (data) => '$data',
+              error: (_, __) => 'Error',
+              loading: child.hourCredits.toString,
+            ),
+            plus: () async {
+              await ref
+                  .read(hourCreditProvider(child.id ?? 0).notifier)
+                  .addHourCredit();
+            },
+            minus: () async {
+              await ref
+                  .read(hourCreditProvider(child.id ?? 0).notifier)
+                  .subtractHourCredit();
+            },
           ),
           _InfoCard(
             label: context.t('Birthdate'),
@@ -199,11 +219,26 @@ class _InfoCard extends StatelessWidget {
     required this.label,
     required this.value,
     this.icon,
-  });
+    this.plus,
+    this.minus,
+  })  : assert(
+          icon != null && (plus == null && minus == null) || icon == null,
+          'Cannot provide both icon and plus/minus',
+        ),
+        assert(
+          plus == null || minus != null,
+          'Cannot provide minus without plus',
+        ),
+        assert(
+          minus == null || plus != null,
+          'Cannot provide plus without minus',
+        );
 
   final String label;
   final String value;
   final Widget? icon;
+  final void Function()? plus;
+  final void Function()? minus;
 
   @override
   Widget build(BuildContext context) {
@@ -230,6 +265,19 @@ class _InfoCard extends StatelessWidget {
                     ),
                   ),
                   if (icon != null) icon!,
+                  if (plus != null)
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(FontAwesomeIcons.minus),
+                          onPressed: minus,
+                        ),
+                        IconButton(
+                          icon: const Icon(FontAwesomeIcons.plus),
+                          onPressed: plus,
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ],
