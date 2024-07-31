@@ -15,6 +15,7 @@ class Invoice {
     required this.parentsName,
     required this.address,
     required this.paid,
+    required this.hourCredits,
     this.id,
   });
   factory Invoice.fromJson(String source) =>
@@ -32,6 +33,7 @@ class Invoice {
       parentsName: map['parentsName'] ?? '',
       address: map['address'] ?? '',
       paid: map['paid']?.toInt() ?? 0,
+      hourCredits: map['hourCredits'] ?? '',
     );
   }
   final int? id;
@@ -44,6 +46,7 @@ class Invoice {
   final String parentsName;
   final String address;
   final int paid;
+  final String hourCredits;
 
   Invoice copyWith({
     int? id,
@@ -56,6 +59,7 @@ class Invoice {
     String? parentsName,
     String? address,
     int? paid,
+    String? hourCredits,
   }) {
     return Invoice(
       id: id ?? this.id,
@@ -68,6 +72,7 @@ class Invoice {
       parentsName: parentsName ?? this.parentsName,
       address: address ?? this.address,
       paid: paid ?? this.paid,
+      hourCredits: hourCredits ?? this.hourCredits,
     );
   }
 
@@ -83,6 +88,7 @@ class Invoice {
       'parentsName': parentsName,
       'address': address,
       'paid': paid,
+      'hourCredits': hourCredits,
     };
   }
 
@@ -107,7 +113,8 @@ class Invoice {
         other.total == total &&
         other.parentsName == parentsName &&
         other.address == address &&
-        other.paid == paid;
+        other.paid == paid &&
+        other.hourCredits == hourCredits;
   }
 
   @override
@@ -121,6 +128,7 @@ class Invoice {
         total.hashCode ^
         parentsName.hashCode ^
         address.hashCode ^
-        paid.hashCode;
+        paid.hashCode ^
+        hourCredits.hashCode;
   }
 }

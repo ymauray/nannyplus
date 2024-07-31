@@ -405,3 +405,6 @@ msgstr "Here you can set up the starting day for the yearly planning. By default
 
 msgid "Planning validity"
 msgstr "Planning validity"
+
+msgid "Hour credits"
+msgstr "Hour credits"

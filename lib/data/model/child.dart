@@ -24,6 +24,7 @@ class Child {
     this.phoneNumber3,
     this.freeText,
     this.pic,
+    this.hourCredits = 0,
   });
   factory Child.fromJson(String source) => Child.fromMap(json.decode(source));
 
@@ -45,6 +46,7 @@ class Child {
       phoneNumber3: map['phoneNumber3'],
       freeText: map['freeText'],
       pic: map['pic'],
+      hourCredits: map['hourCredits']?.toInt() ?? 0,
     );
   }
   final int? id;
@@ -63,6 +65,7 @@ class Child {
   final String? phoneNumber3;
   final String? freeText;
   final Uint8List? pic;
+  final int hourCredits;
 
   String get displayName =>
       PrefsUtil.getInstanceSync().showFirstNameBeforeLastName
@@ -100,6 +103,7 @@ class Child {
     String? phoneNumber3,
     String? freeText,
     Uint8List? pic,
+    int? hourCredits,
   }) {
     return Child(
       id: id ?? this.id,
@@ -118,6 +122,7 @@ class Child {
       phoneNumber3: phoneNumber3 ?? this.phoneNumber3,
       freeText: freeText ?? this.freeText,
       pic: pic ?? this.pic,
+      hourCredits: hourCredits ?? this.hourCredits,
     );
   }
 
@@ -139,6 +144,7 @@ class Child {
       'phoneNumber3': phoneNumber3,
       'freeText': freeText,
       'pic': pic,
+      'hourCredits': hourCredits,
     };
   }
 
@@ -153,7 +159,8 @@ class Child {
         'labelForPhoneNumber2: $labelForPhoneNumber2, '
         'phoneNumber2: $phoneNumber2, '
         'labelForPhoneNumber3: $labelForPhoneNumber3, '
-        'phoneNumber3: $phoneNumber3, freeText: $freeText)';
+        'phoneNumber3: $phoneNumber3, freeText: $freeText, '
+        'hourCredits: $hourCredits)';
   }
 
   @override
@@ -176,7 +183,8 @@ class Child {
         other.labelForPhoneNumber3 == labelForPhoneNumber3 &&
         other.phoneNumber3 == phoneNumber3 &&
         other.freeText == freeText &&
-        other.pic == pic;
+        other.pic == pic &&
+        other.hourCredits == hourCredits;
   }
 
   @override
@@ -196,6 +204,7 @@ class Child {
         labelForPhoneNumber3.hashCode ^
         phoneNumber3.hashCode ^
         freeText.hashCode ^
-        pic.hashCode;
+        pic.hashCode ^
+        hourCredits.hashCode;
   }
 }

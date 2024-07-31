@@ -87,7 +87,7 @@ class _DocumentBuilder extends StatelessWidget {
           for (final child in state.children) child.id!: child,
         };
 
-        var maxHeight = 15.0;
+        var maxHeight = 14.0;
         var currentHeight = 0.0;
         var page = 1;
         final pages = <List<Group<String, Service>>>[[]];
@@ -212,7 +212,7 @@ class _DocumentBuilder extends StatelessWidget {
           canDebug: false,
           padding: EdgeInsets.zero,
           scrollViewDecoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.surface,
           ),
           pdfFileName: "${context.t(
                 'Invoice {0}',
@@ -493,6 +493,22 @@ class _DocumentBuilder extends StatelessWidget {
             invoice.date.formatDate(),
             style: const pw.TextStyle(fontSize: 14),
           ),
+          if (invoice.hourCredits.isNotEmpty) ...[
+            pw.SizedBox(height: 8),
+            pw.Text(
+              gettext.t('Hour credits', null),
+              style: pw.TextStyle(
+                fontWeight: pw.FontWeight.bold,
+                color: PdfColors.blue,
+                fontSize: 14,
+              ),
+              textAlign: pw.TextAlign.right,
+            ),
+            pw.Text(
+              invoice.hourCredits,
+              style: const pw.TextStyle(fontSize: 14),
+            ),
+          ],
         ],
       ),
     );
@@ -574,7 +590,10 @@ class _DocumentBuilder extends StatelessWidget {
         pw.Row(
           mainAxisAlignment: pw.MainAxisAlignment.end,
           children: [
-            pw.Text(conditions, style: const pw.TextStyle(fontSize: 12)),
+            pw.Text(
+              "Crédit d'heure : ${invoice.hourCredits}",
+              style: const pw.TextStyle(fontSize: 12),
+            ),
           ],
         ),
         pw.SizedBox(height: 42),

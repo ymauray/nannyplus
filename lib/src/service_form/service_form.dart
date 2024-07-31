@@ -225,7 +225,7 @@ class _List extends StatelessWidget {
       total: price.amount,
     );
     await context.read<ServiceFormCubit>().addService(service, child.id!, date);
-    if (!Platform.isLinux && !Platform.isWindows) {
+    if (!Platform.isLinux && !Platform.isWindows && !Platform.isMacOS) {
       await FirebaseAnalytics.instance.logEvent(
         name: 'service_added',
       );
@@ -267,7 +267,7 @@ class _List extends StatelessWidget {
         await context
             .read<ServiceFormCubit>()
             .addService(service, child.id!, date);
-        if (!Platform.isLinux && !Platform.isWindows) {
+        if (!Platform.isLinux && !Platform.isWindows && !Platform.isMacOS) {
           await FirebaseAnalytics.instance.logEvent(
             name: 'service_added',
           );

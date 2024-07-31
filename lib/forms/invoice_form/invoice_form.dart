@@ -47,7 +47,9 @@ class InvoiceForm extends ConsumerWidget {
                     .read(invoiceFormProvider(childId).notifier)
                     .createInvoice();
                 if (ok) {
-                  if (!Platform.isLinux && !Platform.isWindows) {
+                  if (!Platform.isLinux &&
+                      !Platform.isWindows &&
+                      !Platform.isMacOS) {
                     await FirebaseAnalytics.instance.logEvent(
                       name: 'invoice_created',
                     );
