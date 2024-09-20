@@ -28,10 +28,8 @@ class HourCredit extends _$HourCredit {
     state = await AsyncValue.guard(() async {
       final childrenRepository = ref.read(childrenRepositoryProvider);
       var child = await childrenRepository.read(childId);
-      if (child.hourCredits > 0) {
-        child = child.copyWith(hourCredits: child.hourCredits - 1);
-        await childrenRepository.update(child);
-      }
+      child = child.copyWith(hourCredits: child.hourCredits - 1);
+      await childrenRepository.update(child);
       return child.hourCredits;
     });
   }
