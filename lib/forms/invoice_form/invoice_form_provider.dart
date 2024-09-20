@@ -130,9 +130,7 @@ class InvoiceForm extends _$InvoiceForm {
 
       var hourCredits = '';
       for (final child in children) {
-        if (child.hourCredits > 0) {
-          hourCredits += '${child.firstName}: ${child.hourCredits}, ';
-        }
+        hourCredits += '${child.firstName}: ${child.hourCredits}, ';
       }
       //remove the last colon and space
       if (hourCredits.isNotEmpty) {
