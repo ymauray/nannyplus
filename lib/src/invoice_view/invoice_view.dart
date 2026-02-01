@@ -149,7 +149,7 @@ class _DocumentBuilder extends StatelessWidget {
                           pw.MemoryImage(
                             logoFile.readAsBytesSync(),
                           ),
-                          height: 120,
+                          height: 100,
                         ),
                       ),
                     if (page == pages.length - 1)
@@ -265,8 +265,8 @@ class _DocumentBuilder extends StatelessWidget {
                 state.children.length == 1
                     ? ''
                     : newChild
-                        ? childrenMap[service.childId]!.firstName
-                        : '',
+                    ? childrenMap[service.childId]!.firstName
+                    : '',
                 style: pw.TextStyle(
                   fontStyle: pw.FontStyle.italic,
                 ),
@@ -290,8 +290,8 @@ class _DocumentBuilder extends StatelessWidget {
                 service.isFixedPrice == 1
                     ? '-'
                     : '${service.hours}h'
-                        "${service.minutes.toString().padLeft(2, '0')} x "
-                        '${service.priceAmount!.toStringAsFixed(2)}',
+                          "${service.minutes.toString().padLeft(2, '0')} x "
+                          '${service.priceAmount!.toStringAsFixed(2)}',
                 textAlign: pw.TextAlign.center,
                 style: const pw.TextStyle(fontSize: 14),
               ),
