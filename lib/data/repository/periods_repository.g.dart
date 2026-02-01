@@ -12,20 +12,24 @@ part of 'periods_repository.dart';
 @ProviderFor(periodsRepository)
 final periodsRepositoryProvider = PeriodsRepositoryProvider._();
 
-final class PeriodsRepositoryProvider extends $FunctionalProvider<
-    PeriodsRepository,
-    PeriodsRepository,
-    PeriodsRepository> with $Provider<PeriodsRepository> {
+final class PeriodsRepositoryProvider
+    extends
+        $FunctionalProvider<
+          PeriodsRepository,
+          PeriodsRepository,
+          PeriodsRepository
+        >
+    with $Provider<PeriodsRepository> {
   PeriodsRepositoryProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'periodsRepositoryProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'periodsRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$periodsRepositoryHash();
@@ -33,8 +37,8 @@ final class PeriodsRepositoryProvider extends $FunctionalProvider<
   @$internal
   @override
   $ProviderElement<PeriodsRepository> $createElement(
-          $ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
 
   @override
   PeriodsRepository create(Ref ref) {

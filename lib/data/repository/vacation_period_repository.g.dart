@@ -12,20 +12,24 @@ part of 'vacation_period_repository.dart';
 @ProviderFor(vacationPeriodRepository)
 final vacationPeriodRepositoryProvider = VacationPeriodRepositoryProvider._();
 
-final class VacationPeriodRepositoryProvider extends $FunctionalProvider<
-    VacationPeriodRepository,
-    VacationPeriodRepository,
-    VacationPeriodRepository> with $Provider<VacationPeriodRepository> {
+final class VacationPeriodRepositoryProvider
+    extends
+        $FunctionalProvider<
+          VacationPeriodRepository,
+          VacationPeriodRepository,
+          VacationPeriodRepository
+        >
+    with $Provider<VacationPeriodRepository> {
   VacationPeriodRepositoryProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'vacationPeriodRepositoryProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'vacationPeriodRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$vacationPeriodRepositoryHash();
@@ -33,8 +37,8 @@ final class VacationPeriodRepositoryProvider extends $FunctionalProvider<
   @$internal
   @override
   $ProviderElement<VacationPeriodRepository> $createElement(
-          $ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
 
   @override
   VacationPeriodRepository create(Ref ref) {

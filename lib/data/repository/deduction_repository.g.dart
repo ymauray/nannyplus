@@ -12,20 +12,24 @@ part of 'deduction_repository.dart';
 @ProviderFor(deductionRepository)
 final deductionRepositoryProvider = DeductionRepositoryProvider._();
 
-final class DeductionRepositoryProvider extends $FunctionalProvider<
-    DeductionRepository,
-    DeductionRepository,
-    DeductionRepository> with $Provider<DeductionRepository> {
+final class DeductionRepositoryProvider
+    extends
+        $FunctionalProvider<
+          DeductionRepository,
+          DeductionRepository,
+          DeductionRepository
+        >
+    with $Provider<DeductionRepository> {
   DeductionRepositoryProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'deductionRepositoryProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'deductionRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$deductionRepositoryHash();
@@ -33,8 +37,8 @@ final class DeductionRepositoryProvider extends $FunctionalProvider<
   @$internal
   @override
   $ProviderElement<DeductionRepository> $createElement(
-          $ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
 
   @override
   DeductionRepository create(Ref ref) {

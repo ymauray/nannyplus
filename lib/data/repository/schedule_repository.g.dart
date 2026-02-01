@@ -12,20 +12,24 @@ part of 'schedule_repository.dart';
 @ProviderFor(scheduleRepository)
 final scheduleRepositoryProvider = ScheduleRepositoryProvider._();
 
-final class ScheduleRepositoryProvider extends $FunctionalProvider<
-    ScheduleRepository,
-    ScheduleRepository,
-    ScheduleRepository> with $Provider<ScheduleRepository> {
+final class ScheduleRepositoryProvider
+    extends
+        $FunctionalProvider<
+          ScheduleRepository,
+          ScheduleRepository,
+          ScheduleRepository
+        >
+    with $Provider<ScheduleRepository> {
   ScheduleRepositoryProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'scheduleRepositoryProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'scheduleRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$scheduleRepositoryHash();
@@ -33,8 +37,8 @@ final class ScheduleRepositoryProvider extends $FunctionalProvider<
   @$internal
   @override
   $ProviderElement<ScheduleRepository> $createElement(
-          $ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
 
   @override
   ScheduleRepository create(Ref ref) {

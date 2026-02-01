@@ -12,19 +12,20 @@ part of 'weekly_schedule_provider.dart';
 @ProviderFor(weeklySchedule)
 final weeklyScheduleProvider = WeeklyScheduleProvider._();
 
-final class WeeklyScheduleProvider extends $FunctionalProvider<
-        AsyncValue<Schedule>, Schedule, FutureOr<Schedule>>
+final class WeeklyScheduleProvider
+    extends
+        $FunctionalProvider<AsyncValue<Schedule>, Schedule, FutureOr<Schedule>>
     with $FutureModifier<Schedule>, $FutureProvider<Schedule> {
   WeeklyScheduleProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'weeklyScheduleProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'weeklyScheduleProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$weeklyScheduleHash();

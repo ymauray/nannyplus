@@ -12,20 +12,24 @@ part of 'planning_repository.dart';
 @ProviderFor(planningRepository)
 final planningRepositoryProvider = PlanningRepositoryProvider._();
 
-final class PlanningRepositoryProvider extends $FunctionalProvider<
-    PlanningRepository,
-    PlanningRepository,
-    PlanningRepository> with $Provider<PlanningRepository> {
+final class PlanningRepositoryProvider
+    extends
+        $FunctionalProvider<
+          PlanningRepository,
+          PlanningRepository,
+          PlanningRepository
+        >
+    with $Provider<PlanningRepository> {
   PlanningRepositoryProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'planningRepositoryProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'planningRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$planningRepositoryHash();
@@ -33,8 +37,8 @@ final class PlanningRepositoryProvider extends $FunctionalProvider<
   @$internal
   @override
   $ProviderElement<PlanningRepository> $createElement(
-          $ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
 
   @override
   PlanningRepository create(Ref ref) {

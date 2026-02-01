@@ -12,20 +12,24 @@ part of 'schedule_color_repository.dart';
 @ProviderFor(scheduleColorRepository)
 final scheduleColorRepositoryProvider = ScheduleColorRepositoryProvider._();
 
-final class ScheduleColorRepositoryProvider extends $FunctionalProvider<
-    ScheduleColorRepository,
-    ScheduleColorRepository,
-    ScheduleColorRepository> with $Provider<ScheduleColorRepository> {
+final class ScheduleColorRepositoryProvider
+    extends
+        $FunctionalProvider<
+          ScheduleColorRepository,
+          ScheduleColorRepository,
+          ScheduleColorRepository
+        >
+    with $Provider<ScheduleColorRepository> {
   ScheduleColorRepositoryProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'scheduleColorRepositoryProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'scheduleColorRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$scheduleColorRepositoryHash();
@@ -33,8 +37,8 @@ final class ScheduleColorRepositoryProvider extends $FunctionalProvider<
   @$internal
   @override
   $ProviderElement<ScheduleColorRepository> $createElement(
-          $ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
 
   @override
   ScheduleColorRepository create(Ref ref) {

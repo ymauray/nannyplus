@@ -15,15 +15,15 @@ final childListControllerProvider = ChildListControllerProvider._();
 final class ChildListControllerProvider
     extends $NotifierProvider<ChildListController, ChildListState> {
   ChildListControllerProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'childListControllerProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'childListControllerProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$childListControllerHash();
@@ -50,11 +50,14 @@ abstract class _$ChildListController extends $Notifier<ChildListState> {
   @override
   void runBuild() {
     final ref = this.ref as $Ref<ChildListState, ChildListState>;
-    final element = ref.element as $ClassProviderElement<
-        AnyNotifier<ChildListState, ChildListState>,
-        ChildListState,
-        Object?,
-        Object?>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<ChildListState, ChildListState>,
+              ChildListState,
+              Object?,
+              Object?
+            >;
     element.handleCreate(ref, build);
   }
 }

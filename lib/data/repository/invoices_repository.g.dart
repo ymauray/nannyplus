@@ -12,20 +12,24 @@ part of 'invoices_repository.dart';
 @ProviderFor(invoicesRepository)
 final invoicesRepositoryProvider = InvoicesRepositoryProvider._();
 
-final class InvoicesRepositoryProvider extends $FunctionalProvider<
-    InvoicesRepository,
-    InvoicesRepository,
-    InvoicesRepository> with $Provider<InvoicesRepository> {
+final class InvoicesRepositoryProvider
+    extends
+        $FunctionalProvider<
+          InvoicesRepository,
+          InvoicesRepository,
+          InvoicesRepository
+        >
+    with $Provider<InvoicesRepository> {
   InvoicesRepositoryProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'invoicesRepositoryProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'invoicesRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$invoicesRepositoryHash();
@@ -33,8 +37,8 @@ final class InvoicesRepositoryProvider extends $FunctionalProvider<
   @$internal
   @override
   $ProviderElement<InvoicesRepository> $createElement(
-          $ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
 
   @override
   InvoicesRepository create(Ref ref) {

@@ -13,18 +13,22 @@ part of 'yearly_schedule_pdf_view_state_provider.dart';
 final yearlySchedulePdfViewStateProvider =
     YearlySchedulePdfViewStateProvider._();
 
-final class YearlySchedulePdfViewStateProvider extends $NotifierProvider<
-    YearlySchedulePdfViewState, view.YearlySchedulePdfViewState> {
+final class YearlySchedulePdfViewStateProvider
+    extends
+        $NotifierProvider<
+          YearlySchedulePdfViewState,
+          view.YearlySchedulePdfViewState
+        > {
   YearlySchedulePdfViewStateProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'yearlySchedulePdfViewStateProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'yearlySchedulePdfViewStateProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$yearlySchedulePdfViewStateHash();
@@ -37,8 +41,9 @@ final class YearlySchedulePdfViewStateProvider extends $NotifierProvider<
   Override overrideWithValue(view.YearlySchedulePdfViewState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride:
-          $SyncValueProvider<view.YearlySchedulePdfViewState>(value),
+      providerOverride: $SyncValueProvider<view.YearlySchedulePdfViewState>(
+        value,
+      ),
     );
   }
 }
@@ -52,14 +57,23 @@ abstract class _$YearlySchedulePdfViewState
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<view.YearlySchedulePdfViewState,
-        view.YearlySchedulePdfViewState>;
-    final element = ref.element as $ClassProviderElement<
-        AnyNotifier<view.YearlySchedulePdfViewState,
-            view.YearlySchedulePdfViewState>,
-        view.YearlySchedulePdfViewState,
-        Object?,
-        Object?>;
+    final ref =
+        this.ref
+            as $Ref<
+              view.YearlySchedulePdfViewState,
+              view.YearlySchedulePdfViewState
+            >;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<
+                view.YearlySchedulePdfViewState,
+                view.YearlySchedulePdfViewState
+              >,
+              view.YearlySchedulePdfViewState,
+              Object?,
+              Object?
+            >;
     element.handleCreate(ref, build);
   }
 }

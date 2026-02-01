@@ -12,20 +12,24 @@ part of 'children_repository.dart';
 @ProviderFor(childrenRepository)
 final childrenRepositoryProvider = ChildrenRepositoryProvider._();
 
-final class ChildrenRepositoryProvider extends $FunctionalProvider<
-    ChildrenRepository,
-    ChildrenRepository,
-    ChildrenRepository> with $Provider<ChildrenRepository> {
+final class ChildrenRepositoryProvider
+    extends
+        $FunctionalProvider<
+          ChildrenRepository,
+          ChildrenRepository,
+          ChildrenRepository
+        >
+    with $Provider<ChildrenRepository> {
   ChildrenRepositoryProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'childrenRepositoryProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'childrenRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$childrenRepositoryHash();
@@ -33,8 +37,8 @@ final class ChildrenRepositoryProvider extends $FunctionalProvider<
   @$internal
   @override
   $ProviderElement<ChildrenRepository> $createElement(
-          $ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
 
   @override
   ChildrenRepository create(Ref ref) {

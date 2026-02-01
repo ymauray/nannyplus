@@ -15,15 +15,16 @@ final childInfoProvider = ChildInfoFamily._();
 final class ChildInfoProvider
     extends $FunctionalProvider<AsyncValue<Child>, Child, FutureOr<Child>>
     with $FutureModifier<Child>, $FutureProvider<Child> {
-  ChildInfoProvider._(
-      {required ChildInfoFamily super.from, required int super.argument})
-      : super(
-          retry: null,
-          name: r'childInfoProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+  ChildInfoProvider._({
+    required ChildInfoFamily super.from,
+    required int super.argument,
+  }) : super(
+         retry: null,
+         name: r'childInfoProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
   @override
   String debugGetCreateSourceHash() => _$childInfoHash();
@@ -43,10 +44,7 @@ final class ChildInfoProvider
   @override
   FutureOr<Child> create(Ref ref) {
     final argument = this.argument as int;
-    return childInfo(
-      ref,
-      argument,
-    );
+    return childInfo(ref, argument);
   }
 
   @override
@@ -65,17 +63,15 @@ String _$childInfoHash() => r'c0fe1eea445efee6cfd0cd68f97e584c56b281a9';
 final class ChildInfoFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<Child>, int> {
   ChildInfoFamily._()
-      : super(
-          retry: null,
-          name: r'childInfoProvider',
-          dependencies: null,
-          $allTransitiveDependencies: null,
-          isAutoDispose: true,
-        );
+    : super(
+        retry: null,
+        name: r'childInfoProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
 
-  ChildInfoProvider call(
-    int childId,
-  ) =>
+  ChildInfoProvider call(int childId) =>
       ChildInfoProvider._(argument: childId, from: this);
 
   @override

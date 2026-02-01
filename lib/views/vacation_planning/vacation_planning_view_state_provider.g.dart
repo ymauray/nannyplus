@@ -12,18 +12,22 @@ part of 'vacation_planning_view_state_provider.dart';
 @ProviderFor(VacationPlanningViewState)
 final vacationPlanningViewStateProvider = VacationPlanningViewStateProvider._();
 
-final class VacationPlanningViewStateProvider extends $AsyncNotifierProvider<
-    VacationPlanningViewState, view.VacationPlanningViewState> {
+final class VacationPlanningViewStateProvider
+    extends
+        $AsyncNotifierProvider<
+          VacationPlanningViewState,
+          view.VacationPlanningViewState
+        > {
   VacationPlanningViewStateProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'vacationPlanningViewStateProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'vacationPlanningViewStateProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$vacationPlanningViewStateHash();
@@ -42,14 +46,23 @@ abstract class _$VacationPlanningViewState
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<view.VacationPlanningViewState>,
-        view.VacationPlanningViewState>;
-    final element = ref.element as $ClassProviderElement<
-        AnyNotifier<AsyncValue<view.VacationPlanningViewState>,
-            view.VacationPlanningViewState>,
-        AsyncValue<view.VacationPlanningViewState>,
-        Object?,
-        Object?>;
+    final ref =
+        this.ref
+            as $Ref<
+              AsyncValue<view.VacationPlanningViewState>,
+              view.VacationPlanningViewState
+            >;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<
+                AsyncValue<view.VacationPlanningViewState>,
+                view.VacationPlanningViewState
+              >,
+              AsyncValue<view.VacationPlanningViewState>,
+              Object?,
+              Object?
+            >;
     element.handleCreate(ref, build);
   }
 }

@@ -15,15 +15,15 @@ final planningProvider = PlanningProvider._();
 final class PlanningProvider
     extends $AsyncNotifierProvider<Planning, List<view.Planning>> {
   PlanningProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'planningProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'planningProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$planningHash();
@@ -42,11 +42,14 @@ abstract class _$Planning extends $AsyncNotifier<List<view.Planning>> {
   void runBuild() {
     final ref =
         this.ref as $Ref<AsyncValue<List<view.Planning>>, List<view.Planning>>;
-    final element = ref.element as $ClassProviderElement<
-        AnyNotifier<AsyncValue<List<view.Planning>>, List<view.Planning>>,
-        AsyncValue<List<view.Planning>>,
-        Object?,
-        Object?>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<List<view.Planning>>, List<view.Planning>>,
+              AsyncValue<List<view.Planning>>,
+              Object?,
+              Object?
+            >;
     element.handleCreate(ref, build);
   }
 }

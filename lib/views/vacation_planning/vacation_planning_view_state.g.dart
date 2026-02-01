@@ -7,17 +7,14 @@ part of 'vacation_planning_view_state.dart';
 // **************************************************************************
 
 _VacationPlanningViewState _$VacationPlanningViewStateFromJson(
-        Map<String, dynamic> json) =>
-    _VacationPlanningViewState(
-      year: (json['year'] as num).toInt(),
-      periods: (json['periods'] as List<dynamic>)
-          .map((e) => VacationPeriod.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
+  Map<String, dynamic> json,
+) => _VacationPlanningViewState(
+  year: (json['year'] as num).toInt(),
+  periods: (json['periods'] as List<dynamic>)
+      .map((e) => VacationPeriod.fromJson(e as Map<String, dynamic>))
+      .toList(),
+);
 
 Map<String, dynamic> _$VacationPlanningViewStateToJson(
-        _VacationPlanningViewState instance) =>
-    <String, dynamic>{
-      'year': instance.year,
-      'periods': instance.periods,
-    };
+  _VacationPlanningViewState instance,
+) => <String, dynamic>{'year': instance.year, 'periods': instance.periods};
