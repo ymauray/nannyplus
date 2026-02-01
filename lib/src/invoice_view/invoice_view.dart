@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-// ignore: implementation_imports
-import 'package:gettext_i18n/src/gettext_localizations.dart';
 import 'package:nannyplus/cubit/child_info_cubit.dart';
 import 'package:nannyplus/cubit/invoice_view_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
@@ -77,8 +75,9 @@ class _DocumentBuilder extends StatelessWidget {
         final line2Font = await _getLine2Font(prefs);
 
         final conditions = prefs.conditions;
-        final groupedServices =
-            state.services.groupBy((service) => service.date);
+        final groupedServices = state.services.groupBy(
+          (service) => service.date,
+        );
 
         final logoFile = await _getLogoFile();
 
@@ -214,7 +213,8 @@ class _DocumentBuilder extends StatelessWidget {
           scrollViewDecoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surface,
           ),
-          pdfFileName: "${context.t(
+          pdfFileName:
+              "${context.t(
                 'Invoice {0}',
                 args: [
                   invoice.number,
