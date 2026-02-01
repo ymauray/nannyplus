@@ -347,7 +347,10 @@ class ServicesRepository {
 
   Future<List<Service>> getNonInvoicedServices() async {
     final db = await DatabaseUtil.instance;
-    final rows = await db.query('services', where: 'invoiceId is null');
+    final rows = await db.query(
+      'services',
+      where: 'invoiceId is null and total > 0',
+    );
     final list = rows.map(Service.fromMap).toList();
     return list;
   }
