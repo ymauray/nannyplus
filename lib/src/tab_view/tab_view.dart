@@ -49,9 +49,9 @@ class TabView extends StatelessWidget {
                 ),
               );
               if (updatedChild != null) {
-                await context
-                    .read<ChildInfoCubit>()
-                    .update(updatedChild.copyWith(id: child.id));
+                await context.read<ChildInfoCubit>().update(
+                  updatedChild.copyWith(id: child.id),
+                );
               }
             },
           ),
@@ -61,10 +61,9 @@ class TabView extends StatelessWidget {
             builder: (context, state) => state is ServiceListLoaded
                 ? Text(
                     '${context.t('Pending total')} : ${state.services.fold<double>(
-                          0,
-                          (previousValue, service) =>
-                              previousValue + service.total,
-                        ).toStringAsFixed(2)}',
+                      0,
+                      (previousValue, service) => previousValue + service.total,
+                    ).toStringAsFixed(2)}',
                   )
                 : Text(context.t('Loading...')),
           ),

@@ -41,8 +41,7 @@ class _Delegate extends SliverPersistentHeaderDelegate {
     bool overlapsContent,
   ) {
     return DecoratedBox(
-      decoration:
-          BoxDecoration(color: Theme.of(context).colorScheme.background),
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
       child: Padding(
         padding: EdgeInsets.only(
           left: 8,
@@ -59,12 +58,10 @@ class _Delegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent =>
-      tabBar.preferredSize.height; //48 + (padding ?? kdMediumPadding);
+  double get maxExtent => tabBar.preferredSize.height; //48 + (padding ?? kdMediumPadding);
 
   @override
-  double get minExtent =>
-      tabBar.preferredSize.height; // 48 + (padding ?? kdMediumPadding);
+  double get minExtent => tabBar.preferredSize.height; // 48 + (padding ?? kdMediumPadding);
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {

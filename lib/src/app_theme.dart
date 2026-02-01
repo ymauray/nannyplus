@@ -16,7 +16,7 @@ class AppTheme {
         brightness: Brightness.light,
         error: Colors.red,
         onError: Colors.blue,
-        surface: Colors.lime,
+        surface: kcBackgroundColor,
       ),
       appBarTheme: appBarTheme(),
       tabBarTheme: tabBarTheme(),
