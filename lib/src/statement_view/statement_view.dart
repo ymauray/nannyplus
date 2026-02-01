@@ -5,8 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-// ignore: implementation_imports
-import 'package:gettext_i18n/src/gettext_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:nannyplus/cubit/statement_view_cubit.dart';
 import 'package:nannyplus/data/model/statement.dart';
@@ -32,9 +30,9 @@ class StatementView extends ConsumerWidget {
     required DateTime date,
     required GettextLocalizations gettext,
     super.key,
-  })  : _type = type,
-        _date = date,
-        _gettext = gettext;
+  }) : _type = type,
+       _date = date,
+       _gettext = gettext;
 
   final StatementViewType _type;
   final DateTime _date;
@@ -98,10 +96,10 @@ class _DocumentBuilder extends StatelessWidget {
     DateTime date,
     Statement statement,
     GettextLocalizations gettext,
-  )   : _type = type,
-        _date = date,
-        _statement = statement,
-        _gettext = gettext;
+  ) : _type = type,
+      _date = date,
+      _statement = statement,
+      _gettext = gettext;
 
   final StatementViewType _type;
   final DateTime _date;
@@ -454,9 +452,9 @@ class _DocumentBuilder extends StatelessWidget {
     for (final entry in map.entries) {
       documentContext.yearlyLinesCount++;
       highlight = !highlight;
-      final dt = DateFormat('MMMM yyyy')
-          .format(DateTime.parse('${entry.key}-01'))
-          .capitalize();
+      final dt = DateFormat(
+        'MMMM yyyy',
+      ).format(DateTime.parse('${entry.key}-01')).capitalize();
       documentContext.grossTotal += entry.value;
       yield pw.TableRow(
         decoration: pw.BoxDecoration(

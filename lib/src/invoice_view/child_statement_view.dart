@@ -5,8 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
-// ignore: implementation_imports
-import 'package:gettext_i18n/src/gettext_localizations.dart';
 import 'package:nannyplus/cubit/child_info_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
 import 'package:nannyplus/data/model/invoice.dart';
@@ -139,9 +137,10 @@ class _DocumentBuilder extends StatelessWidget {
           canDebug: false,
           padding: EdgeInsets.zero,
           scrollViewDecoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.surface,
           ),
-          pdfFileName: "${context.t(
+          pdfFileName:
+              "${context.t(
                 'Statement {0}',
                 args: [year],
               ).toLowerCase().replaceAll(' ', '_')}.pdf",
