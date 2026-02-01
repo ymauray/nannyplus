@@ -185,7 +185,7 @@ class _DocumentBuilder extends StatelessWidget {
                     pw.MemoryImage(
                       logoFile.readAsBytesSync(),
                     ),
-                    height: 120,
+                    height: 100,
                   ),
                 ),
             ],
