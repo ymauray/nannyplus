@@ -128,7 +128,7 @@ class _DocumentBuilder extends StatelessWidget {
           canDebug: false,
           padding: EdgeInsets.zero,
           scrollViewDecoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.surface,
           ),
           pdfFileName: fileName,
           build: (pageFormat) => snapshot.data!.save(),
@@ -604,10 +604,10 @@ class _DocumentBuilder extends StatelessWidget {
       final amount = line.type == 'percent'
           ? -documentContext.grossTotal * (line.value / 100.0)
           : -line.value *
-              (line.periodicity == 'monthly' &&
-                      _type == StatementViewType.yearly
-                  ? documentContext.yearlyLinesCount
-                  : 1);
+                (line.periodicity == 'monthly' &&
+                        _type == StatementViewType.yearly
+                    ? documentContext.yearlyLinesCount
+                    : 1);
       documentContext.netTotal += amount;
       yield pw.TableRow(
         decoration: pw.BoxDecoration(
@@ -635,8 +635,8 @@ class _DocumentBuilder extends StatelessWidget {
               line.type == 'percent'
                   ? '-'
                   : line.periodicity == 'monthly'
-                      ? _gettext.t('Monthly', [])
-                      : _gettext.t('Yearly', []),
+                  ? _gettext.t('Monthly', [])
+                  : _gettext.t('Yearly', []),
               style: const pw.TextStyle(fontSize: 14 * scale),
               textAlign: pw.TextAlign.center,
             ),
