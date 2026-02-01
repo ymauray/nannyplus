@@ -6,23 +6,49 @@ part of 'schedule_color_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$scheduleColorRepositoryHash() =>
-    r'4f6c9a571669ab6d3e64a531f2d29d2a734cbc46';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [scheduleColorRepository].
 @ProviderFor(scheduleColorRepository)
-final scheduleColorRepositoryProvider =
-    AutoDisposeProvider<ScheduleColorRepository>.internal(
-  scheduleColorRepository,
-  name: r'scheduleColorRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$scheduleColorRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final scheduleColorRepositoryProvider = ScheduleColorRepositoryProvider._();
 
-typedef ScheduleColorRepositoryRef
-    = AutoDisposeProviderRef<ScheduleColorRepository>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class ScheduleColorRepositoryProvider extends $FunctionalProvider<
+    ScheduleColorRepository,
+    ScheduleColorRepository,
+    ScheduleColorRepository> with $Provider<ScheduleColorRepository> {
+  ScheduleColorRepositoryProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'scheduleColorRepositoryProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$scheduleColorRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<ScheduleColorRepository> $createElement(
+          $ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  ScheduleColorRepository create(Ref ref) {
+    return scheduleColorRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ScheduleColorRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ScheduleColorRepository>(value),
+    );
+  }
+}
+
+String _$scheduleColorRepositoryHash() =>
+    r'fdad631038902b7e0437fb32ce33f9c579be2361';

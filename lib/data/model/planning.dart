@@ -4,7 +4,7 @@ part 'planning.freezed.dart';
 part 'planning.g.dart';
 
 @freezed
-class Planning with _$Planning {
+abstract class Planning with _$Planning {
   const factory Planning({
     required int id,
     required String? planningStart,

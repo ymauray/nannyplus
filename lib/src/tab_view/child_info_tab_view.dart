@@ -59,10 +59,10 @@ class _ChildInfo extends ConsumerWidget {
   final Child child;
 
   EdgeInsets get labelPadding => const EdgeInsets.only(
-        left: kdSmallPadding,
-        top: kdSmallPadding,
-        right: kdSmallPadding,
-      );
+    left: kdSmallPadding,
+    top: kdSmallPadding,
+    right: kdSmallPadding,
+  );
 
   EdgeInsets get fieldPadding => const EdgeInsets.all(kdSmallPadding);
 
@@ -92,7 +92,7 @@ class _ChildInfo extends ConsumerWidget {
               data: (periods) => periods.isEmpty
                   ? context.t('No schedule yet')
                   : context.t('A schedule is defined'),
-              error: (_, __) => 'error : $_',
+              error: (a, _) => 'error : $a',
               loading: () => 'Loading',
             ),
             icon: IconButton(
@@ -197,14 +197,14 @@ class _ChildInfo extends ConsumerWidget {
                           color: Colors.green,
                         )
                       : io.File(file.path).existsSync()
-                          ? const Icon(
-                              FontAwesomeIcons.fileCircleCheck,
-                              color: Colors.green,
-                            )
-                          : const Icon(
-                              FontAwesomeIcons.fileCircleExclamation,
-                              color: Colors.red,
-                            ),
+                      ? const Icon(
+                          FontAwesomeIcons.fileCircleCheck,
+                          color: Colors.green,
+                        )
+                      : const Icon(
+                          FontAwesomeIcons.fileCircleExclamation,
+                          color: Colors.red,
+                        ),
                 ),
               ),
             ),
@@ -221,18 +221,18 @@ class _InfoCard extends StatelessWidget {
     this.icon,
     this.plus,
     this.minus,
-  })  : assert(
-          icon != null && (plus == null && minus == null) || icon == null,
-          'Cannot provide both icon and plus/minus',
-        ),
-        assert(
-          plus == null || minus != null,
-          'Cannot provide minus without plus',
-        ),
-        assert(
-          minus == null || plus != null,
-          'Cannot provide plus without minus',
-        );
+  }) : assert(
+         icon != null && (plus == null && minus == null) || icon == null,
+         'Cannot provide both icon and plus/minus',
+       ),
+       assert(
+         plus == null || minus != null,
+         'Cannot provide minus without plus',
+       ),
+       assert(
+         minus == null || plus != null,
+         'Cannot provide plus without minus',
+       );
 
   final String label;
   final String value;
@@ -251,10 +251,10 @@ class _InfoCard extends StatelessWidget {
             children: [
               Text(
                 label,
-                style:
-                    Theme.of(context).inputDecorationTheme.labelStyle!.copyWith(
-                          fontSize: 12,
-                        ),
+                style: Theme.of(context).inputDecorationTheme.labelStyle!
+                    .copyWith(
+                      fontSize: 12,
+                    ),
               ),
               Row(
                 children: [
@@ -264,7 +264,7 @@ class _InfoCard extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
-                  if (icon != null) icon!,
+                  ?icon,
                   if (plus != null)
                     Row(
                       children: [

@@ -5,7 +5,7 @@ part 'invoice_average_provider.g.dart';
 
 @riverpod
 FutureOr<Map<int, double>> invoiceAverages(
-  InvoiceAveragesRef ref,
+  Ref ref,
   int childId,
 ) async {
   final db = await DatabaseUtil.instance;

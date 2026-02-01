@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,116 +9,248 @@ part of 'vacation_planning_view_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-VacationPlanningViewState _$VacationPlanningViewStateFromJson(
-    Map<String, dynamic> json) {
-  return _VacationPlanningViewState.fromJson(json);
-}
 
 /// @nodoc
 mixin _$VacationPlanningViewState {
-  int get year => throw _privateConstructorUsedError;
-  List<VacationPeriod> get periods => throw _privateConstructorUsedError;
+  int get year;
+  List<VacationPeriod> get periods;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $VacationPlanningViewStateCopyWith<VacationPlanningViewState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $VacationPlanningViewStateCopyWith<$Res> {
-  factory $VacationPlanningViewStateCopyWith(VacationPlanningViewState value,
-          $Res Function(VacationPlanningViewState) then) =
-      _$VacationPlanningViewStateCopyWithImpl<$Res, VacationPlanningViewState>;
-  @useResult
-  $Res call({int year, List<VacationPeriod> periods});
-}
-
-/// @nodoc
-class _$VacationPlanningViewStateCopyWithImpl<$Res,
-        $Val extends VacationPlanningViewState>
-    implements $VacationPlanningViewStateCopyWith<$Res> {
-  _$VacationPlanningViewStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
+  /// Create a copy of VacationPlanningViewState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
+  $VacationPlanningViewStateCopyWith<VacationPlanningViewState> get copyWith =>
+      _$VacationPlanningViewStateCopyWithImpl<VacationPlanningViewState>(
+          this as VacationPlanningViewState, _$identity);
+
+  /// Serializes this VacationPlanningViewState to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? year = null,
-    Object? periods = null,
-  }) {
-    return _then(_value.copyWith(
-      year: null == year
-          ? _value.year
-          : year // ignore: cast_nullable_to_non_nullable
-              as int,
-      periods: null == periods
-          ? _value.periods
-          : periods // ignore: cast_nullable_to_non_nullable
-              as List<VacationPeriod>,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is VacationPlanningViewState &&
+            (identical(other.year, year) || other.year == year) &&
+            const DeepCollectionEquality().equals(other.periods, periods));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, year, const DeepCollectionEquality().hash(periods));
+
+  @override
+  String toString() {
+    return 'VacationPlanningViewState(year: $year, periods: $periods)';
   }
 }
 
 /// @nodoc
-abstract class _$$VacationPlanningViewStateImplCopyWith<$Res>
-    implements $VacationPlanningViewStateCopyWith<$Res> {
-  factory _$$VacationPlanningViewStateImplCopyWith(
-          _$VacationPlanningViewStateImpl value,
-          $Res Function(_$VacationPlanningViewStateImpl) then) =
-      __$$VacationPlanningViewStateImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $VacationPlanningViewStateCopyWith<$Res> {
+  factory $VacationPlanningViewStateCopyWith(VacationPlanningViewState value,
+          $Res Function(VacationPlanningViewState) _then) =
+      _$VacationPlanningViewStateCopyWithImpl;
   @useResult
   $Res call({int year, List<VacationPeriod> periods});
 }
 
 /// @nodoc
-class __$$VacationPlanningViewStateImplCopyWithImpl<$Res>
-    extends _$VacationPlanningViewStateCopyWithImpl<$Res,
-        _$VacationPlanningViewStateImpl>
-    implements _$$VacationPlanningViewStateImplCopyWith<$Res> {
-  __$$VacationPlanningViewStateImplCopyWithImpl(
-      _$VacationPlanningViewStateImpl _value,
-      $Res Function(_$VacationPlanningViewStateImpl) _then)
-      : super(_value, _then);
+class _$VacationPlanningViewStateCopyWithImpl<$Res>
+    implements $VacationPlanningViewStateCopyWith<$Res> {
+  _$VacationPlanningViewStateCopyWithImpl(this._self, this._then);
 
+  final VacationPlanningViewState _self;
+  final $Res Function(VacationPlanningViewState) _then;
+
+  /// Create a copy of VacationPlanningViewState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? year = null,
     Object? periods = null,
   }) {
-    return _then(_$VacationPlanningViewStateImpl(
+    return _then(_self.copyWith(
       year: null == year
-          ? _value.year
+          ? _self.year
           : year // ignore: cast_nullable_to_non_nullable
               as int,
       periods: null == periods
-          ? _value._periods
+          ? _self.periods
           : periods // ignore: cast_nullable_to_non_nullable
               as List<VacationPeriod>,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [VacationPlanningViewState].
+extension VacationPlanningViewStatePatterns on VacationPlanningViewState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_VacationPlanningViewState value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _VacationPlanningViewState() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_VacationPlanningViewState value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _VacationPlanningViewState():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_VacationPlanningViewState value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _VacationPlanningViewState() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(int year, List<VacationPeriod> periods)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _VacationPlanningViewState() when $default != null:
+        return $default(_that.year, _that.periods);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(int year, List<VacationPeriod> periods) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _VacationPlanningViewState():
+        return $default(_that.year, _that.periods);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(int year, List<VacationPeriod> periods)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _VacationPlanningViewState() when $default != null:
+        return $default(_that.year, _that.periods);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$VacationPlanningViewStateImpl implements _VacationPlanningViewState {
-  const _$VacationPlanningViewStateImpl(
+class _VacationPlanningViewState implements VacationPlanningViewState {
+  const _VacationPlanningViewState(
       {required this.year, required final List<VacationPeriod> periods})
       : _periods = periods;
-
-  factory _$VacationPlanningViewStateImpl.fromJson(Map<String, dynamic> json) =>
-      _$$VacationPlanningViewStateImplFromJson(json);
+  factory _VacationPlanningViewState.fromJson(Map<String, dynamic> json) =>
+      _$VacationPlanningViewStateFromJson(json);
 
   @override
   final int year;
@@ -130,55 +262,81 @@ class _$VacationPlanningViewStateImpl implements _VacationPlanningViewState {
     return EqualUnmodifiableListView(_periods);
   }
 
+  /// Create a copy of VacationPlanningViewState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'VacationPlanningViewState(year: $year, periods: $periods)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$VacationPlanningViewStateCopyWith<_VacationPlanningViewState>
+      get copyWith =>
+          __$VacationPlanningViewStateCopyWithImpl<_VacationPlanningViewState>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$VacationPlanningViewStateToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$VacationPlanningViewStateImpl &&
+            other is _VacationPlanningViewState &&
             (identical(other.year, year) || other.year == year) &&
             const DeepCollectionEquality().equals(other._periods, _periods));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, year, const DeepCollectionEquality().hash(_periods));
 
-  @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
-  _$$VacationPlanningViewStateImplCopyWith<_$VacationPlanningViewStateImpl>
-      get copyWith => __$$VacationPlanningViewStateImplCopyWithImpl<
-          _$VacationPlanningViewStateImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$VacationPlanningViewStateImplToJson(
-      this,
-    );
+  String toString() {
+    return 'VacationPlanningViewState(year: $year, periods: $periods)';
   }
 }
 
-abstract class _VacationPlanningViewState implements VacationPlanningViewState {
-  const factory _VacationPlanningViewState(
-          {required final int year,
-          required final List<VacationPeriod> periods}) =
-      _$VacationPlanningViewStateImpl;
-
-  factory _VacationPlanningViewState.fromJson(Map<String, dynamic> json) =
-      _$VacationPlanningViewStateImpl.fromJson;
-
+/// @nodoc
+abstract mixin class _$VacationPlanningViewStateCopyWith<$Res>
+    implements $VacationPlanningViewStateCopyWith<$Res> {
+  factory _$VacationPlanningViewStateCopyWith(_VacationPlanningViewState value,
+          $Res Function(_VacationPlanningViewState) _then) =
+      __$VacationPlanningViewStateCopyWithImpl;
   @override
-  int get year;
-  @override
-  List<VacationPeriod> get periods;
-  @override
-  @JsonKey(ignore: true)
-  _$$VacationPlanningViewStateImplCopyWith<_$VacationPlanningViewStateImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  @useResult
+  $Res call({int year, List<VacationPeriod> periods});
 }
+
+/// @nodoc
+class __$VacationPlanningViewStateCopyWithImpl<$Res>
+    implements _$VacationPlanningViewStateCopyWith<$Res> {
+  __$VacationPlanningViewStateCopyWithImpl(this._self, this._then);
+
+  final _VacationPlanningViewState _self;
+  final $Res Function(_VacationPlanningViewState) _then;
+
+  /// Create a copy of VacationPlanningViewState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? year = null,
+    Object? periods = null,
+  }) {
+    return _then(_VacationPlanningViewState(
+      year: null == year
+          ? _self.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as int,
+      periods: null == periods
+          ? _self._periods
+          : periods // ignore: cast_nullable_to_non_nullable
+              as List<VacationPeriod>,
+    ));
+  }
+}
+
+// dart format on

@@ -6,14 +6,14 @@ part of 'schedule_color.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ScheduleColorImpl _$$ScheduleColorImplFromJson(Map<String, dynamic> json) =>
-    _$ScheduleColorImpl(
+_ScheduleColor _$ScheduleColorFromJson(Map<String, dynamic> json) =>
+    _ScheduleColor(
       id: (json['id'] as num).toInt(),
       childId: (json['childId'] as num).toInt(),
       color: (json['color'] as num).toInt(),
     );
 
-Map<String, dynamic> _$$ScheduleColorImplToJson(_$ScheduleColorImpl instance) =>
+Map<String, dynamic> _$ScheduleColorToJson(_ScheduleColor instance) =>
     <String, dynamic>{
       'id': instance.id,
       'childId': instance.childId,

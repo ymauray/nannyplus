@@ -112,6 +112,6 @@ class InvoicesRepository {
 }
 
 @riverpod
-InvoicesRepository invoicesRepository(InvoicesRepositoryRef ref) {
+InvoicesRepository invoicesRepository(Ref ref) {
   return const InvoicesRepository();
 }

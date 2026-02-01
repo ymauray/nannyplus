@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,243 +9,377 @@ part of 'invoice_form_provider.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-InvoiceFormChild _$InvoiceFormChildFromJson(Map<String, dynamic> json) {
-  return _InvoiceFormChild.fromJson(json);
-}
 
 /// @nodoc
 mixin _$InvoiceFormChild {
-  Child get child => throw _privateConstructorUsedError;
-  bool get selected => throw _privateConstructorUsedError;
+  Child get child;
+  bool get selected;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $InvoiceFormChildCopyWith<InvoiceFormChild> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $InvoiceFormChildCopyWith<$Res> {
-  factory $InvoiceFormChildCopyWith(
-          InvoiceFormChild value, $Res Function(InvoiceFormChild) then) =
-      _$InvoiceFormChildCopyWithImpl<$Res, InvoiceFormChild>;
-  @useResult
-  $Res call({Child child, bool selected});
-}
-
-/// @nodoc
-class _$InvoiceFormChildCopyWithImpl<$Res, $Val extends InvoiceFormChild>
-    implements $InvoiceFormChildCopyWith<$Res> {
-  _$InvoiceFormChildCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
+  /// Create a copy of InvoiceFormChild
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
+  $InvoiceFormChildCopyWith<InvoiceFormChild> get copyWith =>
+      _$InvoiceFormChildCopyWithImpl<InvoiceFormChild>(
+          this as InvoiceFormChild, _$identity);
+
+  /// Serializes this InvoiceFormChild to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? child = null,
-    Object? selected = null,
-  }) {
-    return _then(_value.copyWith(
-      child: null == child
-          ? _value.child
-          : child // ignore: cast_nullable_to_non_nullable
-              as Child,
-      selected: null == selected
-          ? _value.selected
-          : selected // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is InvoiceFormChild &&
+            (identical(other.child, child) || other.child == child) &&
+            (identical(other.selected, selected) ||
+                other.selected == selected));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, child, selected);
+
+  @override
+  String toString() {
+    return 'InvoiceFormChild(child: $child, selected: $selected)';
   }
 }
 
 /// @nodoc
-abstract class _$$InvoiceFormChildImplCopyWith<$Res>
-    implements $InvoiceFormChildCopyWith<$Res> {
-  factory _$$InvoiceFormChildImplCopyWith(_$InvoiceFormChildImpl value,
-          $Res Function(_$InvoiceFormChildImpl) then) =
-      __$$InvoiceFormChildImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $InvoiceFormChildCopyWith<$Res> {
+  factory $InvoiceFormChildCopyWith(
+          InvoiceFormChild value, $Res Function(InvoiceFormChild) _then) =
+      _$InvoiceFormChildCopyWithImpl;
   @useResult
   $Res call({Child child, bool selected});
 }
 
 /// @nodoc
-class __$$InvoiceFormChildImplCopyWithImpl<$Res>
-    extends _$InvoiceFormChildCopyWithImpl<$Res, _$InvoiceFormChildImpl>
-    implements _$$InvoiceFormChildImplCopyWith<$Res> {
-  __$$InvoiceFormChildImplCopyWithImpl(_$InvoiceFormChildImpl _value,
-      $Res Function(_$InvoiceFormChildImpl) _then)
-      : super(_value, _then);
+class _$InvoiceFormChildCopyWithImpl<$Res>
+    implements $InvoiceFormChildCopyWith<$Res> {
+  _$InvoiceFormChildCopyWithImpl(this._self, this._then);
 
+  final InvoiceFormChild _self;
+  final $Res Function(InvoiceFormChild) _then;
+
+  /// Create a copy of InvoiceFormChild
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? child = null,
     Object? selected = null,
   }) {
-    return _then(_$InvoiceFormChildImpl(
+    return _then(_self.copyWith(
       child: null == child
-          ? _value.child
+          ? _self.child
           : child // ignore: cast_nullable_to_non_nullable
               as Child,
       selected: null == selected
-          ? _value.selected
+          ? _self.selected
           : selected // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [InvoiceFormChild].
+extension InvoiceFormChildPatterns on InvoiceFormChild {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_InvoiceFormChild value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _InvoiceFormChild() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_InvoiceFormChild value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _InvoiceFormChild():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_InvoiceFormChild value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _InvoiceFormChild() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(Child child, bool selected)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _InvoiceFormChild() when $default != null:
+        return $default(_that.child, _that.selected);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(Child child, bool selected) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _InvoiceFormChild():
+        return $default(_that.child, _that.selected);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(Child child, bool selected)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _InvoiceFormChild() when $default != null:
+        return $default(_that.child, _that.selected);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$InvoiceFormChildImpl implements _InvoiceFormChild {
-  const _$InvoiceFormChildImpl({required this.child, required this.selected});
-
-  factory _$InvoiceFormChildImpl.fromJson(Map<String, dynamic> json) =>
-      _$$InvoiceFormChildImplFromJson(json);
+class _InvoiceFormChild implements InvoiceFormChild {
+  const _InvoiceFormChild({required this.child, required this.selected});
+  factory _InvoiceFormChild.fromJson(Map<String, dynamic> json) =>
+      _$InvoiceFormChildFromJson(json);
 
   @override
   final Child child;
   @override
   final bool selected;
 
+  /// Create a copy of InvoiceFormChild
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'InvoiceFormChild(child: $child, selected: $selected)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$InvoiceFormChildCopyWith<_InvoiceFormChild> get copyWith =>
+      __$InvoiceFormChildCopyWithImpl<_InvoiceFormChild>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$InvoiceFormChildToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$InvoiceFormChildImpl &&
+            other is _InvoiceFormChild &&
             (identical(other.child, child) || other.child == child) &&
             (identical(other.selected, selected) ||
                 other.selected == selected));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, child, selected);
 
-  @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
-  _$$InvoiceFormChildImplCopyWith<_$InvoiceFormChildImpl> get copyWith =>
-      __$$InvoiceFormChildImplCopyWithImpl<_$InvoiceFormChildImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$InvoiceFormChildImplToJson(
-      this,
-    );
+  String toString() {
+    return 'InvoiceFormChild(child: $child, selected: $selected)';
   }
 }
 
-abstract class _InvoiceFormChild implements InvoiceFormChild {
-  const factory _InvoiceFormChild(
-      {required final Child child,
-      required final bool selected}) = _$InvoiceFormChildImpl;
-
-  factory _InvoiceFormChild.fromJson(Map<String, dynamic> json) =
-      _$InvoiceFormChildImpl.fromJson;
-
+/// @nodoc
+abstract mixin class _$InvoiceFormChildCopyWith<$Res>
+    implements $InvoiceFormChildCopyWith<$Res> {
+  factory _$InvoiceFormChildCopyWith(
+          _InvoiceFormChild value, $Res Function(_InvoiceFormChild) _then) =
+      __$InvoiceFormChildCopyWithImpl;
   @override
-  Child get child;
-  @override
-  bool get selected;
-  @override
-  @JsonKey(ignore: true)
-  _$$InvoiceFormChildImplCopyWith<_$InvoiceFormChildImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @useResult
+  $Res call({Child child, bool selected});
 }
 
-InvoiceFormState _$InvoiceFormStateFromJson(Map<String, dynamic> json) {
-  return _InvoiceFormState.fromJson(json);
+/// @nodoc
+class __$InvoiceFormChildCopyWithImpl<$Res>
+    implements _$InvoiceFormChildCopyWith<$Res> {
+  __$InvoiceFormChildCopyWithImpl(this._self, this._then);
+
+  final _InvoiceFormChild _self;
+  final $Res Function(_InvoiceFormChild) _then;
+
+  /// Create a copy of InvoiceFormChild
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? child = null,
+    Object? selected = null,
+  }) {
+    return _then(_InvoiceFormChild(
+      child: null == child
+          ? _self.child
+          : child // ignore: cast_nullable_to_non_nullable
+              as Child,
+      selected: null == selected
+          ? _self.selected
+          : selected // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
 /// @nodoc
 mixin _$InvoiceFormState {
-  Child get child => throw _privateConstructorUsedError;
-  List<InvoiceFormChild> get children => throw _privateConstructorUsedError;
-  List<String> get months => throw _privateConstructorUsedError;
-  String? get selectedMonth => throw _privateConstructorUsedError;
+  Child get child;
+  List<InvoiceFormChild> get children;
+  List<String> get months;
+  String? get selectedMonth;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $InvoiceFormStateCopyWith<InvoiceFormState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $InvoiceFormStateCopyWith<$Res> {
-  factory $InvoiceFormStateCopyWith(
-          InvoiceFormState value, $Res Function(InvoiceFormState) then) =
-      _$InvoiceFormStateCopyWithImpl<$Res, InvoiceFormState>;
-  @useResult
-  $Res call(
-      {Child child,
-      List<InvoiceFormChild> children,
-      List<String> months,
-      String? selectedMonth});
-}
-
-/// @nodoc
-class _$InvoiceFormStateCopyWithImpl<$Res, $Val extends InvoiceFormState>
-    implements $InvoiceFormStateCopyWith<$Res> {
-  _$InvoiceFormStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
+  /// Create a copy of InvoiceFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
+  $InvoiceFormStateCopyWith<InvoiceFormState> get copyWith =>
+      _$InvoiceFormStateCopyWithImpl<InvoiceFormState>(
+          this as InvoiceFormState, _$identity);
+
+  /// Serializes this InvoiceFormState to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? child = null,
-    Object? children = null,
-    Object? months = null,
-    Object? selectedMonth = freezed,
-  }) {
-    return _then(_value.copyWith(
-      child: null == child
-          ? _value.child
-          : child // ignore: cast_nullable_to_non_nullable
-              as Child,
-      children: null == children
-          ? _value.children
-          : children // ignore: cast_nullable_to_non_nullable
-              as List<InvoiceFormChild>,
-      months: null == months
-          ? _value.months
-          : months // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      selectedMonth: freezed == selectedMonth
-          ? _value.selectedMonth
-          : selectedMonth // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is InvoiceFormState &&
+            (identical(other.child, child) || other.child == child) &&
+            const DeepCollectionEquality().equals(other.children, children) &&
+            const DeepCollectionEquality().equals(other.months, months) &&
+            (identical(other.selectedMonth, selectedMonth) ||
+                other.selectedMonth == selectedMonth));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      child,
+      const DeepCollectionEquality().hash(children),
+      const DeepCollectionEquality().hash(months),
+      selectedMonth);
+
+  @override
+  String toString() {
+    return 'InvoiceFormState(child: $child, children: $children, months: $months, selectedMonth: $selectedMonth)';
   }
 }
 
 /// @nodoc
-abstract class _$$InvoiceFormStateImplCopyWith<$Res>
-    implements $InvoiceFormStateCopyWith<$Res> {
-  factory _$$InvoiceFormStateImplCopyWith(_$InvoiceFormStateImpl value,
-          $Res Function(_$InvoiceFormStateImpl) then) =
-      __$$InvoiceFormStateImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $InvoiceFormStateCopyWith<$Res> {
+  factory $InvoiceFormStateCopyWith(
+          InvoiceFormState value, $Res Function(InvoiceFormState) _then) =
+      _$InvoiceFormStateCopyWithImpl;
   @useResult
   $Res call(
       {Child child,
@@ -255,13 +389,15 @@ abstract class _$$InvoiceFormStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$InvoiceFormStateImplCopyWithImpl<$Res>
-    extends _$InvoiceFormStateCopyWithImpl<$Res, _$InvoiceFormStateImpl>
-    implements _$$InvoiceFormStateImplCopyWith<$Res> {
-  __$$InvoiceFormStateImplCopyWithImpl(_$InvoiceFormStateImpl _value,
-      $Res Function(_$InvoiceFormStateImpl) _then)
-      : super(_value, _then);
+class _$InvoiceFormStateCopyWithImpl<$Res>
+    implements $InvoiceFormStateCopyWith<$Res> {
+  _$InvoiceFormStateCopyWithImpl(this._self, this._then);
 
+  final InvoiceFormState _self;
+  final $Res Function(InvoiceFormState) _then;
+
+  /// Create a copy of InvoiceFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -270,40 +406,205 @@ class __$$InvoiceFormStateImplCopyWithImpl<$Res>
     Object? months = null,
     Object? selectedMonth = freezed,
   }) {
-    return _then(_$InvoiceFormStateImpl(
+    return _then(_self.copyWith(
       child: null == child
-          ? _value.child
+          ? _self.child
           : child // ignore: cast_nullable_to_non_nullable
               as Child,
       children: null == children
-          ? _value._children
+          ? _self.children
           : children // ignore: cast_nullable_to_non_nullable
               as List<InvoiceFormChild>,
       months: null == months
-          ? _value._months
+          ? _self.months
           : months // ignore: cast_nullable_to_non_nullable
               as List<String>,
       selectedMonth: freezed == selectedMonth
-          ? _value.selectedMonth
+          ? _self.selectedMonth
           : selectedMonth // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [InvoiceFormState].
+extension InvoiceFormStatePatterns on InvoiceFormState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_InvoiceFormState value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _InvoiceFormState() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_InvoiceFormState value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _InvoiceFormState():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_InvoiceFormState value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _InvoiceFormState() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(Child child, List<InvoiceFormChild> children,
+            List<String> months, String? selectedMonth)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _InvoiceFormState() when $default != null:
+        return $default(
+            _that.child, _that.children, _that.months, _that.selectedMonth);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(Child child, List<InvoiceFormChild> children,
+            List<String> months, String? selectedMonth)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _InvoiceFormState():
+        return $default(
+            _that.child, _that.children, _that.months, _that.selectedMonth);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(Child child, List<InvoiceFormChild> children,
+            List<String> months, String? selectedMonth)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _InvoiceFormState() when $default != null:
+        return $default(
+            _that.child, _that.children, _that.months, _that.selectedMonth);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$InvoiceFormStateImpl implements _InvoiceFormState {
-  const _$InvoiceFormStateImpl(
+class _InvoiceFormState implements InvoiceFormState {
+  const _InvoiceFormState(
       {required this.child,
       required final List<InvoiceFormChild> children,
       required final List<String> months,
       required this.selectedMonth})
       : _children = children,
         _months = months;
-
-  factory _$InvoiceFormStateImpl.fromJson(Map<String, dynamic> json) =>
-      _$$InvoiceFormStateImplFromJson(json);
+  factory _InvoiceFormState.fromJson(Map<String, dynamic> json) =>
+      _$InvoiceFormStateFromJson(json);
 
   @override
   final Child child;
@@ -326,16 +627,26 @@ class _$InvoiceFormStateImpl implements _InvoiceFormState {
   @override
   final String? selectedMonth;
 
+  /// Create a copy of InvoiceFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'InvoiceFormState(child: $child, children: $children, months: $months, selectedMonth: $selectedMonth)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$InvoiceFormStateCopyWith<_InvoiceFormState> get copyWith =>
+      __$InvoiceFormStateCopyWithImpl<_InvoiceFormState>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$InvoiceFormStateToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$InvoiceFormStateImpl &&
+            other is _InvoiceFormState &&
             (identical(other.child, child) || other.child == child) &&
             const DeepCollectionEquality().equals(other._children, _children) &&
             const DeepCollectionEquality().equals(other._months, _months) &&
@@ -343,7 +654,7 @@ class _$InvoiceFormStateImpl implements _InvoiceFormState {
                 other.selectedMonth == selectedMonth));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -352,41 +663,64 @@ class _$InvoiceFormStateImpl implements _InvoiceFormState {
       const DeepCollectionEquality().hash(_months),
       selectedMonth);
 
-  @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
-  _$$InvoiceFormStateImplCopyWith<_$InvoiceFormStateImpl> get copyWith =>
-      __$$InvoiceFormStateImplCopyWithImpl<_$InvoiceFormStateImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$InvoiceFormStateImplToJson(
-      this,
-    );
+  String toString() {
+    return 'InvoiceFormState(child: $child, children: $children, months: $months, selectedMonth: $selectedMonth)';
   }
 }
 
-abstract class _InvoiceFormState implements InvoiceFormState {
-  const factory _InvoiceFormState(
-      {required final Child child,
-      required final List<InvoiceFormChild> children,
-      required final List<String> months,
-      required final String? selectedMonth}) = _$InvoiceFormStateImpl;
-
-  factory _InvoiceFormState.fromJson(Map<String, dynamic> json) =
-      _$InvoiceFormStateImpl.fromJson;
-
+/// @nodoc
+abstract mixin class _$InvoiceFormStateCopyWith<$Res>
+    implements $InvoiceFormStateCopyWith<$Res> {
+  factory _$InvoiceFormStateCopyWith(
+          _InvoiceFormState value, $Res Function(_InvoiceFormState) _then) =
+      __$InvoiceFormStateCopyWithImpl;
   @override
-  Child get child;
-  @override
-  List<InvoiceFormChild> get children;
-  @override
-  List<String> get months;
-  @override
-  String? get selectedMonth;
-  @override
-  @JsonKey(ignore: true)
-  _$$InvoiceFormStateImplCopyWith<_$InvoiceFormStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @useResult
+  $Res call(
+      {Child child,
+      List<InvoiceFormChild> children,
+      List<String> months,
+      String? selectedMonth});
 }
+
+/// @nodoc
+class __$InvoiceFormStateCopyWithImpl<$Res>
+    implements _$InvoiceFormStateCopyWith<$Res> {
+  __$InvoiceFormStateCopyWithImpl(this._self, this._then);
+
+  final _InvoiceFormState _self;
+  final $Res Function(_InvoiceFormState) _then;
+
+  /// Create a copy of InvoiceFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? child = null,
+    Object? children = null,
+    Object? months = null,
+    Object? selectedMonth = freezed,
+  }) {
+    return _then(_InvoiceFormState(
+      child: null == child
+          ? _self.child
+          : child // ignore: cast_nullable_to_non_nullable
+              as Child,
+      children: null == children
+          ? _self._children
+          : children // ignore: cast_nullable_to_non_nullable
+              as List<InvoiceFormChild>,
+      months: null == months
+          ? _self._months
+          : months // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      selectedMonth: freezed == selectedMonth
+          ? _self.selectedMonth
+          : selectedMonth // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+// dart format on

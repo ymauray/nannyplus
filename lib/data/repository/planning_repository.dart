@@ -29,6 +29,6 @@ class PlanningRepository {
 }
 
 @riverpod
-PlanningRepository planningRepository(PlanningRepositoryRef ref) {
+PlanningRepository planningRepository(Ref ref) {
   return PlanningRepository._();
 }

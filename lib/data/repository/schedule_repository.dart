@@ -17,6 +17,6 @@ class ScheduleRepository {
 }
 
 @riverpod
-ScheduleRepository scheduleRepository(ScheduleRepositoryRef ref) {
+ScheduleRepository scheduleRepository(Ref ref) {
   return const ScheduleRepository._();
 }

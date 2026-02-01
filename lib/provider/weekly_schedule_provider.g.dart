@@ -6,20 +6,38 @@ part of 'weekly_schedule_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$weeklyScheduleHash() => r'eaf11b9b60ed3ca8833241c6d09903de4e796f5a';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [weeklySchedule].
 @ProviderFor(weeklySchedule)
-final weeklyScheduleProvider = AutoDisposeFutureProvider<Schedule>.internal(
-  weeklySchedule,
-  name: r'weeklyScheduleProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$weeklyScheduleHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final weeklyScheduleProvider = WeeklyScheduleProvider._();
 
-typedef WeeklyScheduleRef = AutoDisposeFutureProviderRef<Schedule>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class WeeklyScheduleProvider extends $FunctionalProvider<
+        AsyncValue<Schedule>, Schedule, FutureOr<Schedule>>
+    with $FutureModifier<Schedule>, $FutureProvider<Schedule> {
+  WeeklyScheduleProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'weeklyScheduleProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$weeklyScheduleHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Schedule> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Schedule> create(Ref ref) {
+    return weeklySchedule(ref);
+  }
+}
+
+String _$weeklyScheduleHash() => r'f31550bd5dc40dcac4b631a0f4abbffc9aa87bc2';

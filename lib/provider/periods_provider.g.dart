@@ -6,168 +6,93 @@ part of 'periods_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$periodsHash() => r'2e5ca4e368298dca5b59a0b53a61724e0cbf195c';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$Periods
-    extends BuildlessAutoDisposeAsyncNotifier<List<Period>> {
-  late final int childId;
-
-  FutureOr<List<Period>> build(
-    int childId,
-  );
-}
-
-/// See also [Periods].
 @ProviderFor(Periods)
-const periodsProvider = PeriodsFamily();
+final periodsProvider = PeriodsFamily._();
 
-/// See also [Periods].
-class PeriodsFamily extends Family<AsyncValue<List<Period>>> {
-  /// See also [Periods].
-  const PeriodsFamily();
-
-  /// See also [Periods].
-  PeriodsProvider call(
-    int childId,
-  ) {
-    return PeriodsProvider(
-      childId,
-    );
-  }
-
-  @override
-  PeriodsProvider getProviderOverride(
-    covariant PeriodsProvider provider,
-  ) {
-    return call(
-      provider.childId,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'periodsProvider';
-}
-
-/// See also [Periods].
-class PeriodsProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<Periods, List<Period>> {
-  /// See also [Periods].
-  PeriodsProvider(
-    int childId,
-  ) : this._internal(
-          () => Periods()..childId = childId,
-          from: periodsProvider,
+final class PeriodsProvider
+    extends $AsyncNotifierProvider<Periods, List<Period>> {
+  PeriodsProvider._(
+      {required PeriodsFamily super.from, required int super.argument})
+      : super(
+          retry: null,
           name: r'periodsProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$periodsHash,
-          dependencies: PeriodsFamily._dependencies,
-          allTransitiveDependencies: PeriodsFamily._allTransitiveDependencies,
-          childId: childId,
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
         );
 
-  PeriodsProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.childId,
-  }) : super.internal();
-
-  final int childId;
+  @override
+  String debugGetCreateSourceHash() => _$periodsHash();
 
   @override
-  FutureOr<List<Period>> runNotifierBuild(
-    covariant Periods notifier,
-  ) {
-    return notifier.build(
-      childId,
-    );
+  String toString() {
+    return r'periodsProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  Override overrideWith(Periods Function() create) {
-    return ProviderOverride(
-      origin: this,
-      override: PeriodsProvider._internal(
-        () => create()..childId = childId,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        childId: childId,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeAsyncNotifierProviderElement<Periods, List<Period>>
-      createElement() {
-    return _PeriodsProviderElement(this);
-  }
+  Periods create() => Periods();
 
   @override
   bool operator ==(Object other) {
-    return other is PeriodsProvider && other.childId == childId;
+    return other is PeriodsProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, childId.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-mixin PeriodsRef on AutoDisposeAsyncNotifierProviderRef<List<Period>> {
-  /// The parameter `childId` of this provider.
-  int get childId;
-}
+String _$periodsHash() => r'2e5ca4e368298dca5b59a0b53a61724e0cbf195c';
 
-class _PeriodsProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<Periods, List<Period>>
-    with PeriodsRef {
-  _PeriodsProviderElement(super.provider);
+final class PeriodsFamily extends $Family
+    with
+        $ClassFamilyOverride<Periods, AsyncValue<List<Period>>, List<Period>,
+            FutureOr<List<Period>>, int> {
+  PeriodsFamily._()
+      : super(
+          retry: null,
+          name: r'periodsProvider',
+          dependencies: null,
+          $allTransitiveDependencies: null,
+          isAutoDispose: true,
+        );
+
+  PeriodsProvider call(
+    int childId,
+  ) =>
+      PeriodsProvider._(argument: childId, from: this);
 
   @override
-  int get childId => (origin as PeriodsProvider).childId;
+  String toString() => r'periodsProvider';
 }
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+
+abstract class _$Periods extends $AsyncNotifier<List<Period>> {
+  late final _$args = ref.$arg as int;
+  int get childId => _$args;
+
+  FutureOr<List<Period>> build(
+    int childId,
+  );
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<List<Period>>, List<Period>>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<List<Period>>, List<Period>>,
+        AsyncValue<List<Period>>,
+        Object?,
+        Object?>;
+    element.handleCreate(
+        ref,
+        () => build(
+              _$args,
+            ));
+  }
+}

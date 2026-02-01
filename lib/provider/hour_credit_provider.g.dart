@@ -6,167 +6,89 @@ part of 'hour_credit_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$hourCreditHash() => r'2b82a600d6a427f12864a23e59c23b8b28441102';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$HourCredit extends BuildlessAutoDisposeAsyncNotifier<int> {
-  late final int childId;
-
-  FutureOr<int> build(
-    int childId,
-  );
-}
-
-/// See also [HourCredit].
 @ProviderFor(HourCredit)
-const hourCreditProvider = HourCreditFamily();
+final hourCreditProvider = HourCreditFamily._();
 
-/// See also [HourCredit].
-class HourCreditFamily extends Family<AsyncValue<int>> {
-  /// See also [HourCredit].
-  const HourCreditFamily();
-
-  /// See also [HourCredit].
-  HourCreditProvider call(
-    int childId,
-  ) {
-    return HourCreditProvider(
-      childId,
-    );
-  }
-
-  @override
-  HourCreditProvider getProviderOverride(
-    covariant HourCreditProvider provider,
-  ) {
-    return call(
-      provider.childId,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'hourCreditProvider';
-}
-
-/// See also [HourCredit].
-class HourCreditProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<HourCredit, int> {
-  /// See also [HourCredit].
-  HourCreditProvider(
-    int childId,
-  ) : this._internal(
-          () => HourCredit()..childId = childId,
-          from: hourCreditProvider,
+final class HourCreditProvider extends $AsyncNotifierProvider<HourCredit, int> {
+  HourCreditProvider._(
+      {required HourCreditFamily super.from, required int super.argument})
+      : super(
+          retry: null,
           name: r'hourCreditProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$hourCreditHash,
-          dependencies: HourCreditFamily._dependencies,
-          allTransitiveDependencies:
-              HourCreditFamily._allTransitiveDependencies,
-          childId: childId,
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
         );
 
-  HourCreditProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.childId,
-  }) : super.internal();
-
-  final int childId;
+  @override
+  String debugGetCreateSourceHash() => _$hourCreditHash();
 
   @override
-  FutureOr<int> runNotifierBuild(
-    covariant HourCredit notifier,
-  ) {
-    return notifier.build(
-      childId,
-    );
+  String toString() {
+    return r'hourCreditProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  Override overrideWith(HourCredit Function() create) {
-    return ProviderOverride(
-      origin: this,
-      override: HourCreditProvider._internal(
-        () => create()..childId = childId,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        childId: childId,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeAsyncNotifierProviderElement<HourCredit, int> createElement() {
-    return _HourCreditProviderElement(this);
-  }
+  HourCredit create() => HourCredit();
 
   @override
   bool operator ==(Object other) {
-    return other is HourCreditProvider && other.childId == childId;
+    return other is HourCreditProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, childId.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-mixin HourCreditRef on AutoDisposeAsyncNotifierProviderRef<int> {
-  /// The parameter `childId` of this provider.
-  int get childId;
-}
+String _$hourCreditHash() => r'7ff0c697e5e5bddc6d1e78c0bd9dc6f6f3379132';
 
-class _HourCreditProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<HourCredit, int>
-    with HourCreditRef {
-  _HourCreditProviderElement(super.provider);
+final class HourCreditFamily extends $Family
+    with
+        $ClassFamilyOverride<HourCredit, AsyncValue<int>, int, FutureOr<int>,
+            int> {
+  HourCreditFamily._()
+      : super(
+          retry: null,
+          name: r'hourCreditProvider',
+          dependencies: null,
+          $allTransitiveDependencies: null,
+          isAutoDispose: true,
+        );
+
+  HourCreditProvider call(
+    int childId,
+  ) =>
+      HourCreditProvider._(argument: childId, from: this);
 
   @override
-  int get childId => (origin as HourCreditProvider).childId;
+  String toString() => r'hourCreditProvider';
 }
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+
+abstract class _$HourCredit extends $AsyncNotifier<int> {
+  late final _$args = ref.$arg as int;
+  int get childId => _$args;
+
+  FutureOr<int> build(
+    int childId,
+  );
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<int>, int>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<int>, int>, AsyncValue<int>, Object?, Object?>;
+    element.handleCreate(
+        ref,
+        () => build(
+              _$args,
+            ));
+  }
+}

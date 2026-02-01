@@ -6,22 +6,49 @@ part of 'planning_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$planningRepositoryHash() =>
-    r'76b9180bf84ac607bac5c29a9b979e4cba9f77fb';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [planningRepository].
 @ProviderFor(planningRepository)
-final planningRepositoryProvider =
-    AutoDisposeProvider<PlanningRepository>.internal(
-  planningRepository,
-  name: r'planningRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$planningRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final planningRepositoryProvider = PlanningRepositoryProvider._();
 
-typedef PlanningRepositoryRef = AutoDisposeProviderRef<PlanningRepository>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class PlanningRepositoryProvider extends $FunctionalProvider<
+    PlanningRepository,
+    PlanningRepository,
+    PlanningRepository> with $Provider<PlanningRepository> {
+  PlanningRepositoryProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'planningRepositoryProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$planningRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<PlanningRepository> $createElement(
+          $ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  PlanningRepository create(Ref ref) {
+    return planningRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(PlanningRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<PlanningRepository>(value),
+    );
+  }
+}
+
+String _$planningRepositoryHash() =>
+    r'50c5aea3f6d63b35ec941797356674a925b660b0';

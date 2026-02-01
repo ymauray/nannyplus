@@ -25,7 +25,7 @@ class WeeklySchedulePdf extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final schedule = ref.watch(weeklyScheduleProvider).valueOrNull;
+    final schedule = ref.watch(weeklyScheduleProvider).value;
     final nGrams = schedule?.childIds.map((childId) {
           return pw.Expanded(
             child: pw.Center(
@@ -85,7 +85,7 @@ class WeeklySchedulePdf extends ConsumerWidget {
         canDebug: false,
         padding: EdgeInsets.zero,
         scrollViewDecoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.surface,
         ),
         pdfFileName: 'schedule.pdf',
         build: (pageFormat) => doc.save(),

@@ -20,11 +20,11 @@ class YearlySchedulePdfView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final schedule = ref.watch(weeklyScheduleProvider).valueOrNull;
+    final schedule = ref.watch(weeklyScheduleProvider).value;
     final viewState = ref.watch(yearlySchedulePdfViewStateProvider);
     final startOfYear = DateTime(viewState.year);
     final vacationPeriods =
-        ref.watch(vacationPeriodsProvider(viewState.year)).valueOrNull;
+        ref.watch(vacationPeriodsProvider(viewState.year)).value;
 
     final doc = pw.Document()
       ..addPage(
@@ -105,7 +105,7 @@ class YearlySchedulePdfView extends ConsumerWidget {
         canDebug: false,
         padding: EdgeInsets.zero,
         scrollViewDecoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.surface,
         ),
         pdfFileName: 'yearly_schedule.pdf',
         build: (pageFormat) => doc.save(),

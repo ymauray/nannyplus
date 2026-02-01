@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'period.freezed.dart';
 
 @freezed
-class Period with _$Period {
+abstract class Period with _$Period {
   factory Period({
     required int childId,
     required String day,

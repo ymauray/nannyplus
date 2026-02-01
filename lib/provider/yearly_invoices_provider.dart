@@ -6,7 +6,7 @@ part 'yearly_invoices_provider.g.dart';
 
 @riverpod
 FutureOr<List<Invoice>> yearlyInvoices(
-  YearlyInvoicesRef ref,
+  Ref ref,
   int year,
   int childId,
 ) async {

@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,89 +9,65 @@ part of 'schedule_color.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-ScheduleColor _$ScheduleColorFromJson(Map<String, dynamic> json) {
-  return _ScheduleColor.fromJson(json);
-}
 
 /// @nodoc
 mixin _$ScheduleColor {
-  int get id => throw _privateConstructorUsedError;
-  int get childId => throw _privateConstructorUsedError;
-  int get color => throw _privateConstructorUsedError;
+  int get id;
+  int get childId;
+  int get color;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $ScheduleColorCopyWith<ScheduleColor> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ScheduleColorCopyWith<$Res> {
-  factory $ScheduleColorCopyWith(
-          ScheduleColor value, $Res Function(ScheduleColor) then) =
-      _$ScheduleColorCopyWithImpl<$Res, ScheduleColor>;
-  @useResult
-  $Res call({int id, int childId, int color});
-}
-
-/// @nodoc
-class _$ScheduleColorCopyWithImpl<$Res, $Val extends ScheduleColor>
-    implements $ScheduleColorCopyWith<$Res> {
-  _$ScheduleColorCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
+  /// Create a copy of ScheduleColor
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
+  $ScheduleColorCopyWith<ScheduleColor> get copyWith =>
+      _$ScheduleColorCopyWithImpl<ScheduleColor>(
+          this as ScheduleColor, _$identity);
+
+  /// Serializes this ScheduleColor to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? childId = null,
-    Object? color = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      childId: null == childId
-          ? _value.childId
-          : childId // ignore: cast_nullable_to_non_nullable
-              as int,
-      color: null == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ScheduleColor &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.childId, childId) || other.childId == childId) &&
+            (identical(other.color, color) || other.color == color));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, childId, color);
+
+  @override
+  String toString() {
+    return 'ScheduleColor(id: $id, childId: $childId, color: $color)';
   }
 }
 
 /// @nodoc
-abstract class _$$ScheduleColorImplCopyWith<$Res>
-    implements $ScheduleColorCopyWith<$Res> {
-  factory _$$ScheduleColorImplCopyWith(
-          _$ScheduleColorImpl value, $Res Function(_$ScheduleColorImpl) then) =
-      __$$ScheduleColorImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $ScheduleColorCopyWith<$Res> {
+  factory $ScheduleColorCopyWith(
+          ScheduleColor value, $Res Function(ScheduleColor) _then) =
+      _$ScheduleColorCopyWithImpl;
   @useResult
   $Res call({int id, int childId, int color});
 }
 
 /// @nodoc
-class __$$ScheduleColorImplCopyWithImpl<$Res>
-    extends _$ScheduleColorCopyWithImpl<$Res, _$ScheduleColorImpl>
-    implements _$$ScheduleColorImplCopyWith<$Res> {
-  __$$ScheduleColorImplCopyWithImpl(
-      _$ScheduleColorImpl _value, $Res Function(_$ScheduleColorImpl) _then)
-      : super(_value, _then);
+class _$ScheduleColorCopyWithImpl<$Res>
+    implements $ScheduleColorCopyWith<$Res> {
+  _$ScheduleColorCopyWithImpl(this._self, this._then);
 
+  final ScheduleColor _self;
+  final $Res Function(ScheduleColor) _then;
+
+  /// Create a copy of ScheduleColor
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -99,31 +75,187 @@ class __$$ScheduleColorImplCopyWithImpl<$Res>
     Object? childId = null,
     Object? color = null,
   }) {
-    return _then(_$ScheduleColorImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
       childId: null == childId
-          ? _value.childId
+          ? _self.childId
           : childId // ignore: cast_nullable_to_non_nullable
               as int,
       color: null == color
-          ? _value.color
+          ? _self.color
           : color // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [ScheduleColor].
+extension ScheduleColorPatterns on ScheduleColor {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ScheduleColor value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ScheduleColor() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ScheduleColor value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ScheduleColor():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ScheduleColor value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ScheduleColor() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(int id, int childId, int color)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ScheduleColor() when $default != null:
+        return $default(_that.id, _that.childId, _that.color);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(int id, int childId, int color) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ScheduleColor():
+        return $default(_that.id, _that.childId, _that.color);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(int id, int childId, int color)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ScheduleColor() when $default != null:
+        return $default(_that.id, _that.childId, _that.color);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$ScheduleColorImpl implements _ScheduleColor {
-  _$ScheduleColorImpl(
+class _ScheduleColor implements ScheduleColor {
+  _ScheduleColor(
       {required this.id, required this.childId, required this.color});
-
-  factory _$ScheduleColorImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ScheduleColorImplFromJson(json);
+  factory _ScheduleColor.fromJson(Map<String, dynamic> json) =>
+      _$ScheduleColorFromJson(json);
 
   @override
   final int id;
@@ -132,56 +264,84 @@ class _$ScheduleColorImpl implements _ScheduleColor {
   @override
   final int color;
 
+  /// Create a copy of ScheduleColor
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ScheduleColor(id: $id, childId: $childId, color: $color)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ScheduleColorCopyWith<_ScheduleColor> get copyWith =>
+      __$ScheduleColorCopyWithImpl<_ScheduleColor>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ScheduleColorToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ScheduleColorImpl &&
+            other is _ScheduleColor &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.childId, childId) || other.childId == childId) &&
             (identical(other.color, color) || other.color == color));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, childId, color);
 
-  @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ScheduleColorImplCopyWith<_$ScheduleColorImpl> get copyWith =>
-      __$$ScheduleColorImplCopyWithImpl<_$ScheduleColorImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ScheduleColorImplToJson(
-      this,
-    );
+  String toString() {
+    return 'ScheduleColor(id: $id, childId: $childId, color: $color)';
   }
 }
 
-abstract class _ScheduleColor implements ScheduleColor {
-  factory _ScheduleColor(
-      {required final int id,
-      required final int childId,
-      required final int color}) = _$ScheduleColorImpl;
-
-  factory _ScheduleColor.fromJson(Map<String, dynamic> json) =
-      _$ScheduleColorImpl.fromJson;
-
+/// @nodoc
+abstract mixin class _$ScheduleColorCopyWith<$Res>
+    implements $ScheduleColorCopyWith<$Res> {
+  factory _$ScheduleColorCopyWith(
+          _ScheduleColor value, $Res Function(_ScheduleColor) _then) =
+      __$ScheduleColorCopyWithImpl;
   @override
-  int get id;
-  @override
-  int get childId;
-  @override
-  int get color;
-  @override
-  @JsonKey(ignore: true)
-  _$$ScheduleColorImplCopyWith<_$ScheduleColorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @useResult
+  $Res call({int id, int childId, int color});
 }
+
+/// @nodoc
+class __$ScheduleColorCopyWithImpl<$Res>
+    implements _$ScheduleColorCopyWith<$Res> {
+  __$ScheduleColorCopyWithImpl(this._self, this._then);
+
+  final _ScheduleColor _self;
+  final $Res Function(_ScheduleColor) _then;
+
+  /// Create a copy of ScheduleColor
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? childId = null,
+    Object? color = null,
+  }) {
+    return _then(_ScheduleColor(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      childId: null == childId
+          ? _self.childId
+          : childId // ignore: cast_nullable_to_non_nullable
+              as int,
+      color: null == color
+          ? _self.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+// dart format on

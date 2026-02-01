@@ -72,7 +72,7 @@ class VacationPeriodRepository {
 
 @riverpod
 VacationPeriodRepository vacationPeriodRepository(
-  VacationPeriodRepositoryRef ref,
+  Ref ref,
 ) {
   return const VacationPeriodRepository._();
 }

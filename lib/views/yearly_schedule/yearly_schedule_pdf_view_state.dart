@@ -4,7 +4,7 @@ part 'yearly_schedule_pdf_view_state.freezed.dart';
 part 'yearly_schedule_pdf_view_state.g.dart';
 
 @freezed
-class YearlySchedulePdfViewState with _$YearlySchedulePdfViewState {
+abstract class YearlySchedulePdfViewState with _$YearlySchedulePdfViewState {
   const factory YearlySchedulePdfViewState(
     int year,
   ) = _YearlySchedulePdfViewState;

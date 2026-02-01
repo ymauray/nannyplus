@@ -23,8 +23,11 @@ class ServicesRepository {
 
   Future<Service> read(int id) async {
     final db = await DatabaseUtil.instance;
-    final service =
-        await db.query('services', where: 'id = ?', whereArgs: [id]);
+    final service = await db.query(
+      'services',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
 
     return Service.fromMap(service.first);
   }
@@ -124,8 +127,11 @@ class ServicesRepository {
   Future<Map<int, ServiceInfo>> getServiceInfoPerChild() async {
     final db = await DatabaseUtil.instance;
 
-    var rows =
-        await db.query('services', where: 'invoiced = ?', whereArgs: [0]);
+    var rows = await db.query(
+      'services',
+      where: 'invoiced = ?',
+      whereArgs: [0],
+    );
 
     final groupedRows = rows
         .map(Service.fromMap)
@@ -178,8 +184,9 @@ class ServicesRepository {
       whereArgs: [0],
     );
 
-    final groupedInvoices =
-        rows.groupBy<num>((row) => row['childId'] as int).toList();
+    final groupedInvoices = rows
+        .groupBy<num>((row) => row['childId'] as int)
+        .toList();
 
     final invoicesMap = <int, double>{
       for (final group in groupedInvoices)
@@ -334,6 +341,6 @@ class ServicesRepository {
 }
 
 @riverpod
-ServicesRepository servicesRepository(ServicesRepositoryRef ref) {
+ServicesRepository servicesRepository(Ref ref) {
   return const ServicesRepository();
 }

@@ -7,7 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'weekly_schedule_provider.g.dart';
 
 @riverpod
-Future<Schedule> weeklySchedule(WeeklyScheduleRef ref) async {
+Future<Schedule> weeklySchedule(Ref ref) async {
   final scheduleRepository = ref.read(scheduleRepositoryProvider);
   final childrenRepository = ref.read(childrenRepositoryProvider);
 

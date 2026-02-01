@@ -54,7 +54,7 @@ class ScheduleColorRepository {
 
 @riverpod
 ScheduleColorRepository scheduleColorRepository(
-  ScheduleColorRepositoryRef ref,
+  Ref ref,
 ) {
   return const ScheduleColorRepository._();
 }

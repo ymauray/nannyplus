@@ -5,7 +5,7 @@ part 'vacation_planning_view_state.freezed.dart';
 part 'vacation_planning_view_state.g.dart';
 
 @freezed
-class VacationPlanningViewState with _$VacationPlanningViewState {
+abstract class VacationPlanningViewState with _$VacationPlanningViewState {
   const factory VacationPlanningViewState({
     required int year,
     required List<VacationPeriod> periods,

@@ -6,170 +6,94 @@ part of 'vacation_periods_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$vacationPeriodsHash() => r'a7c0424725a7752dc04815e196cc28a037021c98';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$VacationPeriods
-    extends BuildlessAutoDisposeAsyncNotifier<List<VacationPeriod>> {
-  late final int year;
-
-  FutureOr<List<VacationPeriod>> build(
-    int year,
-  );
-}
-
-/// See also [VacationPeriods].
 @ProviderFor(VacationPeriods)
-const vacationPeriodsProvider = VacationPeriodsFamily();
+final vacationPeriodsProvider = VacationPeriodsFamily._();
 
-/// See also [VacationPeriods].
-class VacationPeriodsFamily extends Family<AsyncValue<List<VacationPeriod>>> {
-  /// See also [VacationPeriods].
-  const VacationPeriodsFamily();
-
-  /// See also [VacationPeriods].
-  VacationPeriodsProvider call(
-    int year,
-  ) {
-    return VacationPeriodsProvider(
-      year,
-    );
-  }
-
-  @override
-  VacationPeriodsProvider getProviderOverride(
-    covariant VacationPeriodsProvider provider,
-  ) {
-    return call(
-      provider.year,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'vacationPeriodsProvider';
-}
-
-/// See also [VacationPeriods].
-class VacationPeriodsProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    VacationPeriods, List<VacationPeriod>> {
-  /// See also [VacationPeriods].
-  VacationPeriodsProvider(
-    int year,
-  ) : this._internal(
-          () => VacationPeriods()..year = year,
-          from: vacationPeriodsProvider,
+final class VacationPeriodsProvider
+    extends $AsyncNotifierProvider<VacationPeriods, List<VacationPeriod>> {
+  VacationPeriodsProvider._(
+      {required VacationPeriodsFamily super.from, required int super.argument})
+      : super(
+          retry: null,
           name: r'vacationPeriodsProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$vacationPeriodsHash,
-          dependencies: VacationPeriodsFamily._dependencies,
-          allTransitiveDependencies:
-              VacationPeriodsFamily._allTransitiveDependencies,
-          year: year,
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
         );
 
-  VacationPeriodsProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.year,
-  }) : super.internal();
-
-  final int year;
+  @override
+  String debugGetCreateSourceHash() => _$vacationPeriodsHash();
 
   @override
-  FutureOr<List<VacationPeriod>> runNotifierBuild(
-    covariant VacationPeriods notifier,
-  ) {
-    return notifier.build(
-      year,
-    );
+  String toString() {
+    return r'vacationPeriodsProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  Override overrideWith(VacationPeriods Function() create) {
-    return ProviderOverride(
-      origin: this,
-      override: VacationPeriodsProvider._internal(
-        () => create()..year = year,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        year: year,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeAsyncNotifierProviderElement<VacationPeriods, List<VacationPeriod>>
-      createElement() {
-    return _VacationPeriodsProviderElement(this);
-  }
+  VacationPeriods create() => VacationPeriods();
 
   @override
   bool operator ==(Object other) {
-    return other is VacationPeriodsProvider && other.year == year;
+    return other is VacationPeriodsProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, year.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-mixin VacationPeriodsRef
-    on AutoDisposeAsyncNotifierProviderRef<List<VacationPeriod>> {
-  /// The parameter `year` of this provider.
-  int get year;
-}
+String _$vacationPeriodsHash() => r'a7c0424725a7752dc04815e196cc28a037021c98';
 
-class _VacationPeriodsProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<VacationPeriods,
-        List<VacationPeriod>> with VacationPeriodsRef {
-  _VacationPeriodsProviderElement(super.provider);
+final class VacationPeriodsFamily extends $Family
+    with
+        $ClassFamilyOverride<VacationPeriods, AsyncValue<List<VacationPeriod>>,
+            List<VacationPeriod>, FutureOr<List<VacationPeriod>>, int> {
+  VacationPeriodsFamily._()
+      : super(
+          retry: null,
+          name: r'vacationPeriodsProvider',
+          dependencies: null,
+          $allTransitiveDependencies: null,
+          isAutoDispose: true,
+        );
+
+  VacationPeriodsProvider call(
+    int year,
+  ) =>
+      VacationPeriodsProvider._(argument: year, from: this);
 
   @override
-  int get year => (origin as VacationPeriodsProvider).year;
+  String toString() => r'vacationPeriodsProvider';
 }
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+
+abstract class _$VacationPeriods extends $AsyncNotifier<List<VacationPeriod>> {
+  late final _$args = ref.$arg as int;
+  int get year => _$args;
+
+  FutureOr<List<VacationPeriod>> build(
+    int year,
+  );
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref
+        as $Ref<AsyncValue<List<VacationPeriod>>, List<VacationPeriod>>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<List<VacationPeriod>>, List<VacationPeriod>>,
+        AsyncValue<List<VacationPeriod>>,
+        Object?,
+        Object?>;
+    element.handleCreate(
+        ref,
+        () => build(
+              _$args,
+            ));
+  }
+}

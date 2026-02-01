@@ -84,6 +84,6 @@ class DeductionRepository {
 }
 
 @riverpod
-DeductionRepository deductionRepository(DeductionRepositoryRef ref) {
+DeductionRepository deductionRepository(Ref ref) {
   return DeductionRepository();
 }

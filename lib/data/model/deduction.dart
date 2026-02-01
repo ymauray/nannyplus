@@ -4,7 +4,7 @@ part 'deduction.freezed.dart';
 part 'deduction.g.dart';
 
 @freezed
-class Deduction with _$Deduction {
+abstract class Deduction with _$Deduction {
   factory Deduction({
     required int? id,
     required int? sortOrder,

@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'child_info_provider.g.dart';
 
 @riverpod
-FutureOr<Child> childInfo(ChildInfoRef ref, int childId) async {
+FutureOr<Child> childInfo(Ref ref, int childId) async {
   final childrenRepository = ref.read(childrenRepositoryProvider);
   return childrenRepository.read(childId);
 }

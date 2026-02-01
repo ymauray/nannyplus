@@ -13,7 +13,7 @@ part 'invoice_form_provider.freezed.dart';
 part 'invoice_form_provider.g.dart';
 
 @freezed
-class InvoiceFormChild with _$InvoiceFormChild {
+abstract class InvoiceFormChild with _$InvoiceFormChild {
   const factory InvoiceFormChild({
     required Child child,
     required bool selected,
@@ -24,7 +24,7 @@ class InvoiceFormChild with _$InvoiceFormChild {
 }
 
 @freezed
-class InvoiceFormState with _$InvoiceFormState {
+abstract class InvoiceFormState with _$InvoiceFormState {
   const factory InvoiceFormState({
     required Child child,
     required List<InvoiceFormChild> children,

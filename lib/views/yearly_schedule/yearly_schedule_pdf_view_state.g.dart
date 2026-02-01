@@ -6,14 +6,14 @@ part of 'yearly_schedule_pdf_view_state.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$YearlySchedulePdfViewStateImpl _$$YearlySchedulePdfViewStateImplFromJson(
+_YearlySchedulePdfViewState _$YearlySchedulePdfViewStateFromJson(
         Map<String, dynamic> json) =>
-    _$YearlySchedulePdfViewStateImpl(
+    _YearlySchedulePdfViewState(
       (json['year'] as num).toInt(),
     );
 
-Map<String, dynamic> _$$YearlySchedulePdfViewStateImplToJson(
-        _$YearlySchedulePdfViewStateImpl instance) =>
+Map<String, dynamic> _$YearlySchedulePdfViewStateToJson(
+        _YearlySchedulePdfViewState instance) =>
     <String, dynamic>{
       'year': instance.year,
     };

@@ -4,7 +4,7 @@ part 'vacation_period.freezed.dart';
 part 'vacation_period.g.dart';
 
 @freezed
-class VacationPeriod with _$VacationPeriod {
+abstract class VacationPeriod with _$VacationPeriod {
   const factory VacationPeriod({
     required int sortOrder,
     required String start,

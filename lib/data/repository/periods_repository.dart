@@ -109,6 +109,6 @@ class PeriodsRepository {
 }
 
 @riverpod
-PeriodsRepository periodsRepository(PeriodsRepositoryRef ref) {
+PeriodsRepository periodsRepository(Ref ref) {
   return const PeriodsRepository._();
 }

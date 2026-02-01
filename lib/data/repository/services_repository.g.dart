@@ -6,22 +6,49 @@ part of 'services_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$servicesRepositoryHash() =>
-    r'b97959cc603e209d8665c8105f9c8cc880f6052b';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [servicesRepository].
 @ProviderFor(servicesRepository)
-final servicesRepositoryProvider =
-    AutoDisposeProvider<ServicesRepository>.internal(
-  servicesRepository,
-  name: r'servicesRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$servicesRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final servicesRepositoryProvider = ServicesRepositoryProvider._();
 
-typedef ServicesRepositoryRef = AutoDisposeProviderRef<ServicesRepository>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class ServicesRepositoryProvider extends $FunctionalProvider<
+    ServicesRepository,
+    ServicesRepository,
+    ServicesRepository> with $Provider<ServicesRepository> {
+  ServicesRepositoryProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'servicesRepositoryProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$servicesRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<ServicesRepository> $createElement(
+          $ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  ServicesRepository create(Ref ref) {
+    return servicesRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ServicesRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ServicesRepository>(value),
+    );
+  }
+}
+
+String _$servicesRepositoryHash() =>
+    r'4273e456fa276af90740fe9874ca7ceef4e74a65';

@@ -6,17 +6,17 @@ part of 'vacation_planning_view_state.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$VacationPlanningViewStateImpl _$$VacationPlanningViewStateImplFromJson(
+_VacationPlanningViewState _$VacationPlanningViewStateFromJson(
         Map<String, dynamic> json) =>
-    _$VacationPlanningViewStateImpl(
+    _VacationPlanningViewState(
       year: (json['year'] as num).toInt(),
       periods: (json['periods'] as List<dynamic>)
           .map((e) => VacationPeriod.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$VacationPlanningViewStateImplToJson(
-        _$VacationPlanningViewStateImpl instance) =>
+Map<String, dynamic> _$VacationPlanningViewStateToJson(
+        _VacationPlanningViewState instance) =>
     <String, dynamic>{
       'year': instance.year,
       'periods': instance.periods,

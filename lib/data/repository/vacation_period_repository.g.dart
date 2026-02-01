@@ -6,23 +6,49 @@ part of 'vacation_period_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$vacationPeriodRepositoryHash() =>
-    r'a6f9cde228fdd7b918f00137eb20fd36bbac2435';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [vacationPeriodRepository].
 @ProviderFor(vacationPeriodRepository)
-final vacationPeriodRepositoryProvider =
-    AutoDisposeProvider<VacationPeriodRepository>.internal(
-  vacationPeriodRepository,
-  name: r'vacationPeriodRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$vacationPeriodRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final vacationPeriodRepositoryProvider = VacationPeriodRepositoryProvider._();
 
-typedef VacationPeriodRepositoryRef
-    = AutoDisposeProviderRef<VacationPeriodRepository>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class VacationPeriodRepositoryProvider extends $FunctionalProvider<
+    VacationPeriodRepository,
+    VacationPeriodRepository,
+    VacationPeriodRepository> with $Provider<VacationPeriodRepository> {
+  VacationPeriodRepositoryProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'vacationPeriodRepositoryProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$vacationPeriodRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<VacationPeriodRepository> $createElement(
+          $ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  VacationPeriodRepository create(Ref ref) {
+    return vacationPeriodRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(VacationPeriodRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<VacationPeriodRepository>(value),
+    );
+  }
+}
+
+String _$vacationPeriodRepositoryHash() =>
+    r'278f621be4816b42306e4dce84002d64dc292872';

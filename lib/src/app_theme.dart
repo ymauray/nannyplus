@@ -12,9 +12,7 @@ class AppTheme {
         onPrimary: kcOnPrimaryColor,
         secondary: kcSecondaryColor,
         onSecondary: kcOnSecondaryColor,
-        background: kcBackgroundColor,
         onSurface: kcAlmostBlack,
-        onBackground: Colors.brown,
         brightness: Brightness.light,
         error: Colors.red,
         onError: Colors.blue,
@@ -32,7 +30,6 @@ class AppTheme {
         ),
       ),
       scaffoldBackgroundColor: kcBackgroundColor,
-      indicatorColor: kcPrimaryColor,
       timePickerTheme: const TimePickerThemeData(
         backgroundColor: kcAlmostWhite,
         dialHandColor: kcPrimaryColor,
@@ -87,8 +84,8 @@ class AppTheme {
     );
   }
 
-  static TabBarTheme tabBarTheme() {
-    return TabBarTheme(
+  static TabBarThemeData tabBarTheme() {
+    return TabBarThemeData(
       labelColor: kcTextColor,
       labelStyle: GoogleFonts.poppins(
         textStyle: const TextStyle(

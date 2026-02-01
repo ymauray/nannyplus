@@ -17,7 +17,7 @@ class VacationPlanningView extends ConsumerWidget {
     final viewStateNotifier =
         ref.read(vacationPlanningViewStateProvider.notifier);
 
-    var lastDay = '${viewState.valueOrNull?.year ?? DateTime.now().year}-01-01';
+    var lastDay = '${viewState.value?.year ?? DateTime.now().year}-01-01';
 
     return PopScope(
       onPopInvoked: (didPop) async {
@@ -54,7 +54,7 @@ class VacationPlanningView extends ConsumerWidget {
               ),
               TextButton(
                 child: Text(
-                  viewState.valueOrNull?.year.toString() ?? '----',
+                  viewState.value?.year.toString() ?? '----',
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: Theme.of(context).colorScheme.onPrimary,
                       ),
@@ -83,7 +83,7 @@ class VacationPlanningView extends ConsumerWidget {
           ),
         ),
         body: Center(
-          child: viewState.valueOrNull == null
+          child: viewState.value == null
               ? const Center(
                   child: LoadingIndicator(),
                 )
@@ -104,7 +104,7 @@ class VacationPlanningView extends ConsumerWidget {
                       },
                     );
                   },
-                  itemCount: viewState.valueOrNull?.periods.length ?? 0,
+                  itemCount: viewState.value?.periods.length ?? 0,
                 ),
         ),
       ),

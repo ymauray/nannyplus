@@ -72,6 +72,6 @@ class ChildrenRepository {
 }
 
 @riverpod
-ChildrenRepository childrenRepository(ChildrenRepositoryRef ref) {
+ChildrenRepository childrenRepository(Ref ref) {
   return const ChildrenRepository();
 }

@@ -63,18 +63,19 @@ class ChildScheduleView extends ConsumerWidget {
                       const SizedBox(width: kdMediumPadding),
                       Expanded(
                         child: ColorIndicator(
-                          color: scheduleColor.valueOrNull ?? Colors.purple,
+                          color: scheduleColor.value ?? Colors.purple,
                           borderRadius: 4,
                           onSelectFocus: false,
                           onSelect: () async {
                             final selectedColor = await showColorPickerDialog(
                               context,
-                              scheduleColor.valueOrNull ?? Colors.purple,
+                              scheduleColor.value ?? Colors.purple,
                               borderRadius: 4,
                               spacing: 2,
                               runSpacing: 2,
-                              selectedPickerTypeColor:
-                                  Theme.of(context).colorScheme.primary,
+                              selectedPickerTypeColor: Theme.of(
+                                context,
+                              ).colorScheme.primary,
                               pickersEnabled: const <ColorPickerType, bool>{
                                 ColorPickerType.both: true,
                                 ColorPickerType.primary: false,
@@ -106,7 +107,7 @@ class ChildScheduleView extends ConsumerWidget {
               );
             }).toList(),
           ],
-          error: (_, __) => [Text('$_')],
+          error: (a, _) => [Text('$a')],
           loading: () => [const Text('loading')],
         ),
       ),

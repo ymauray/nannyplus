@@ -4,7 +4,7 @@ part 'schedule_color.freezed.dart';
 part 'schedule_color.g.dart';
 
 @freezed
-class ScheduleColor with _$ScheduleColor {
+abstract class ScheduleColor with _$ScheduleColor {
   factory ScheduleColor({
     required int id,
     required int childId,
