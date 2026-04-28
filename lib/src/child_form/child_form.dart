@@ -71,11 +71,13 @@ class ChildForm extends StatelessWidget {
               onPressed: () {
                 formKey.currentState!.save();
                 if (formKey.currentState!.validate()) {
-                  final map =
-                      Map<String, dynamic>.from(formKey.currentState!.value);
+                  final map = Map<String, dynamic>.from(
+                    formKey.currentState!.value,
+                  );
                   if (map['birthdate'] != null) {
-                    map['birthdate'] = DateFormat('yyyy-MM-dd')
-                        .format(map['birthdate'] as DateTime);
+                    map['birthdate'] = DateFormat(
+                      'yyyy-MM-dd',
+                    ).format(map['birthdate'] as DateTime);
                   }
                   map['pic'] = profilePhotoController.bytes;
                   final data = Child.fromMap(map);
@@ -220,7 +222,6 @@ class ChildForm extends StatelessWidget {
             ),
 
             ///* Phonenumber 2 */
-
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: FormBuilderTextField(
@@ -234,8 +235,9 @@ class ChildForm extends StatelessWidget {
                 keyboardType: TextInputType.text,
                 validator: (value) {
                   final labelIsEmpty = value?.isEmpty ?? true;
-                  final phoneNumber2 = formKey
-                      .currentState!.fields['phoneNumber2']?.value as String?;
+                  final phoneNumber2 =
+                      formKey.currentState!.fields['phoneNumber2']?.value
+                          as String?;
                   final valueIsEmpty = phoneNumber2?.isEmpty ?? true;
 
                   return labelIsEmpty && !valueIsEmpty
@@ -258,8 +260,12 @@ class ChildForm extends StatelessWidget {
                 autocorrect: false,
                 keyboardType: TextInputType.phone,
                 validator: (value) {
-                  final labelForPhoneNumber2 = formKey.currentState!
-                      .fields['labelForPhoneNumber2']?.value as String?;
+                  final labelForPhoneNumber2 =
+                      formKey
+                              .currentState!
+                              .fields['labelForPhoneNumber2']
+                              ?.value
+                          as String?;
                   final labelEmpty = labelForPhoneNumber2?.isEmpty ?? true;
                   final valueEmpty = value?.isEmpty ?? true;
 
@@ -274,7 +280,6 @@ class ChildForm extends StatelessWidget {
             ),
 
             ///* Phonenumber 3 */
-
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: FormBuilderTextField(
@@ -288,8 +293,9 @@ class ChildForm extends StatelessWidget {
                 keyboardType: TextInputType.text,
                 validator: (value) {
                   final labelIsEmpty = value?.isEmpty ?? true;
-                  final phoneNumber3 = formKey
-                      .currentState!.fields['phoneNumber3']?.value as String?;
+                  final phoneNumber3 =
+                      formKey.currentState!.fields['phoneNumber3']?.value
+                          as String?;
                   final valueIsEmpty = phoneNumber3?.isEmpty ?? true;
 
                   return labelIsEmpty && !valueIsEmpty
@@ -312,8 +318,12 @@ class ChildForm extends StatelessWidget {
                 autocorrect: false,
                 keyboardType: TextInputType.phone,
                 validator: (value) {
-                  final labelForPhoneNumber3 = formKey.currentState!
-                      .fields['labelForPhoneNumber3']?.value as String?;
+                  final labelForPhoneNumber3 =
+                      formKey
+                              .currentState!
+                              .fields['labelForPhoneNumber3']
+                              ?.value
+                          as String?;
                   final labelEmpty = labelForPhoneNumber3?.isEmpty ?? true;
                   final valueEmpty = value?.isEmpty ?? true;
 
@@ -352,9 +362,10 @@ class ChildForm extends StatelessWidget {
                 onPressed: () async {
                   final file = await openFileChooser(context);
                   if (file != null) {
-                    await context
-                        .read<FileListCubit>()
-                        .addFile(child?.id ?? 0, file);
+                    await context.read<FileListCubit>().addFile(
+                      child?.id ?? 0,
+                      file,
+                    );
                   }
                 },
                 child: Padding(
@@ -426,7 +437,7 @@ class ChildForm extends StatelessWidget {
                               child: Text(
                                 context.t('Cancel'),
                               ),
-                              onPressed: () => Navigator.of(context).pop(null),
+                              onPressed: () => Navigator.of(context).pop(),
                             ),
                           ],
                         ),
@@ -468,8 +479,8 @@ class _DocumentList extends StatelessWidget {
   const _DocumentList({
     required Iterable<Document> documents,
     required Child? child,
-  })  : _documents = documents,
-        _child = child;
+  }) : _documents = documents,
+       _child = child;
 
   final Child? _child;
   final Iterable<Document> _documents;
@@ -529,12 +540,16 @@ class _DocumentList extends StatelessWidget {
                     ),
                   IconButton(
                     onPressed: () async {
-                      final newLabel =
-                          await _showEditDialog(context, file.label);
+                      final newLabel = await _showEditDialog(
+                        context,
+                        file.label,
+                      );
                       if (newLabel != null) {
-                        await context
-                            .read<FileListCubit>()
-                            .editFile(_child?.id ?? 0, file, newLabel);
+                        await context.read<FileListCubit>().editFile(
+                          _child?.id ?? 0,
+                          file,
+                          newLabel,
+                        );
                       }
                     },
                     icon: const Icon(Icons.edit),
@@ -545,9 +560,10 @@ class _DocumentList extends StatelessWidget {
                     onPressed: () async {
                       final shouldDelete = await _showDeleteDialog(context);
                       if (shouldDelete ?? false) {
-                        await context
-                            .read<FileListCubit>()
-                            .removeFile(_child?.id ?? 0, file);
+                        await context.read<FileListCubit>().removeFile(
+                          _child?.id ?? 0,
+                          file,
+                        );
                       }
                     },
                     icon: const Icon(
@@ -569,8 +585,9 @@ class _DocumentList extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(context.t('Delete document')),
-        content:
-            Text(context.t('Are you sure you want to delete this document?')),
+        content: Text(
+          context.t('Are you sure you want to delete this document?'),
+        ),
         actions: [
           TextButton(
             onPressed: () {
@@ -636,7 +653,7 @@ class _DocumentList extends StatelessWidget {
             TextButton(
               child: Text(context.t('Cancel')),
               onPressed: () {
-                Navigator.of(context).pop(null);
+                Navigator.of(context).pop();
               },
             ),
             ElevatedButton(
@@ -644,8 +661,9 @@ class _DocumentList extends StatelessWidget {
               onPressed: () {
                 formKey.currentState!.save();
                 if (formKey.currentState!.validate()) {
-                  Navigator.of(context)
-                      .pop(formKey.currentState!.value['label']);
+                  Navigator.of(
+                    context,
+                  ).pop(formKey.currentState!.value['label']);
                 }
               },
             ),
