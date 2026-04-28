@@ -176,7 +176,7 @@ class _DocumentBuilder extends StatelessWidget {
               vertical: 8,
             ),
             child: pw.Text(
-              invoice.total.toStringAsFixed(2),
+              invoice.paid != 0 ? invoice.total.toStringAsFixed(2) : '0.00',
               textAlign: pw.TextAlign.right,
               style: const pw.TextStyle(fontSize: 14),
             ),
@@ -310,7 +310,8 @@ class _DocumentBuilder extends StatelessWidget {
   pw.Widget _statementTotal(List<Invoice> invoices) {
     final total = invoices.fold<double>(
       0,
-      (previousValue, element) => previousValue + element.total,
+      (previousValue, element) =>
+          previousValue + (element.paid == 0 ? 0 : element.total),
     );
 
     return pw.Row(
