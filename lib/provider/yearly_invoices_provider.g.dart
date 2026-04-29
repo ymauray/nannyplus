@@ -15,11 +15,13 @@ final yearlyInvoicesProvider = YearlyInvoicesFamily._();
 final class YearlyInvoicesProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<Invoice>>,
-          List<Invoice>,
-          FutureOr<List<Invoice>>
+          AsyncValue<List<InvoiceWithServices>>,
+          List<InvoiceWithServices>,
+          FutureOr<List<InvoiceWithServices>>
         >
-    with $FutureModifier<List<Invoice>>, $FutureProvider<List<Invoice>> {
+    with
+        $FutureModifier<List<InvoiceWithServices>>,
+        $FutureProvider<List<InvoiceWithServices>> {
   YearlyInvoicesProvider._({
     required YearlyInvoicesFamily super.from,
     required (int, int) super.argument,
@@ -43,12 +45,12 @@ final class YearlyInvoicesProvider
 
   @$internal
   @override
-  $FutureProviderElement<List<Invoice>> $createElement(
+  $FutureProviderElement<List<InvoiceWithServices>> $createElement(
     $ProviderPointer pointer,
   ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<List<Invoice>> create(Ref ref) {
+  FutureOr<List<InvoiceWithServices>> create(Ref ref) {
     final argument = this.argument as (int, int);
     return yearlyInvoices(ref, argument.$1, argument.$2);
   }
@@ -64,10 +66,14 @@ final class YearlyInvoicesProvider
   }
 }
 
-String _$yearlyInvoicesHash() => r'de5cf571b1d3fbb2e990cb03e4679112c96027d9';
+String _$yearlyInvoicesHash() => r'0e4caa99834f7d126bd6edbdbc01779f36188ff3';
 
 final class YearlyInvoicesFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<List<Invoice>>, (int, int)> {
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<List<InvoiceWithServices>>,
+          (int, int)
+        > {
   YearlyInvoicesFamily._()
     : super(
         retry: null,

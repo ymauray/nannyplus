@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 import 'package:nannyplus/cubit/child_info_cubit.dart';
 import 'package:nannyplus/data/model/child.dart';
-import 'package:nannyplus/data/model/invoice.dart';
+import 'package:nannyplus/data/model/invoice_with_services.dart';
 import 'package:nannyplus/provider/yearly_invoices_provider.dart';
 import 'package:nannyplus/src/ui/sliver_curved_persistent_header.dart';
 import 'package:nannyplus/src/ui/view.dart';
@@ -73,7 +74,7 @@ class _DocumentBuilder extends StatelessWidget {
 
   final Child child;
   final int year;
-  final List<Invoice> invoices;
+  final List<InvoiceWithServices> invoices;
   final GettextLocalizations gettext;
 
   @override
@@ -104,7 +105,7 @@ class _DocumentBuilder extends StatelessWidget {
                           line2Font,
                         ),
                         _statementTitle(
-                          '${child.displayName} - '
+                          /*'${child.displayName} - '*/
                           '${gettext.t('Yearly statement', null)} $year',
                         ),
                         _statementTable(_buildTable(invoices)),
@@ -151,9 +152,19 @@ class _DocumentBuilder extends StatelessWidget {
   }
 
   Iterable<pw.TableRow> _buildTable(
-    List<Invoice> invoices,
+    List<InvoiceWithServices> invoices,
   ) sync* {
     for (final invoice in invoices) {
+      final montants = <int, double>{};
+      for (final service in invoice.services) {
+        if (invoice.invoice.paid == 0) {
+          montants[service.childId] = 0;
+        } else {
+          montants[service.childId] =
+              (montants[service.childId] ?? 0) + service.total;
+        }
+      }
+
       yield pw.TableRow(
         decoration: const pw.BoxDecoration(
           border: pw.Border(
@@ -163,22 +174,54 @@ class _DocumentBuilder extends StatelessWidget {
         children: [
           pw.Padding(
             padding: const pw.EdgeInsets.symmetric(
-              vertical: 8,
+              vertical: 2,
             ),
-            child: pw.Text(
-              invoice.date.formatDate(),
-              textAlign: pw.TextAlign.left,
-              style: const pw.TextStyle(fontSize: 14),
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Text(
+                  invoice.invoice.date.formatDate(),
+                  style: const pw.TextStyle(fontSize: 14),
+                ),
+              ],
             ),
           ),
           pw.Padding(
             padding: const pw.EdgeInsets.symmetric(
-              vertical: 8,
+              vertical: 2,
             ),
-            child: pw.Text(
-              invoice.paid != 0 ? invoice.total.toStringAsFixed(2) : '0.00',
-              textAlign: pw.TextAlign.right,
-              style: const pw.TextStyle(fontSize: 14),
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: invoice.services
+                  .map((service) => service.childId)
+                  .toSet()
+                  .sorted((a, b) => a - b)
+                  .map(
+                    (id) => pw.Text(
+                      invoice.enfants[id] ?? '$id',
+                      style: const pw.TextStyle(fontSize: 14),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+          pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(
+              vertical: 2,
+            ),
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.end,
+              children: invoice.services
+                  .map((service) => service.childId)
+                  .toSet()
+                  .sorted((a, b) => a - b)
+                  .map(
+                    (id) => pw.Text(
+                      montants[id]!.toStringAsFixed(2),
+                      style: const pw.TextStyle(fontSize: 14),
+                    ),
+                  )
+                  .toList(),
             ),
           ),
         ],
@@ -293,6 +336,7 @@ class _DocumentBuilder extends StatelessWidget {
               ),
               children: [
                 _blueText(gettext.t('Date', null)),
+                _blueText(gettext.t('Child', null)),
                 _blueText(
                   gettext.t('Amount', null),
                   textAlign: pw.TextAlign.right,
@@ -302,16 +346,16 @@ class _DocumentBuilder extends StatelessWidget {
             ...rows,
           ],
         ),
-        pw.SizedBox(height: 28),
       ],
     );
   }
 
-  pw.Widget _statementTotal(List<Invoice> invoices) {
+  pw.Widget _statementTotal(List<InvoiceWithServices> invoices) {
     final total = invoices.fold<double>(
       0,
       (previousValue, element) =>
-          previousValue + (element.paid == 0 ? 0 : element.total),
+          previousValue +
+          (element.invoice.paid == 0 ? 0 : element.invoice.total),
     );
 
     return pw.Row(
