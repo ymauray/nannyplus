@@ -318,6 +318,20 @@ class _DocumentBuilder extends StatelessWidget {
             ),
           ],
         ),
+        pw.Text(
+          gettext.t('The amounts due are shown on the relevant invoices.', null),
+          textAlign: pw.TextAlign.center,
+          style: const pw.TextStyle(
+            fontSize: 10,
+          ),
+        ),
+        pw.Text(
+          gettext.t('Unpaid invoices are noted with an amount of 0.00', null),
+          textAlign: pw.TextAlign.center,
+          style: const pw.TextStyle(
+            fontSize: 10,
+          ),
+        ),
         pw.SizedBox(height: 28),
       ],
     );
@@ -335,10 +349,10 @@ class _DocumentBuilder extends StatelessWidget {
                 ),
               ),
               children: [
-                _blueText(gettext.t('Date', null)),
+                _blueText(gettext.t('Invoice date', null)),
                 _blueText(gettext.t('Child', null)),
                 _blueText(
-                  gettext.t('Amount', null),
+                  gettext.t('Amount paid', null),
                   textAlign: pw.TextAlign.right,
                 ),
               ],

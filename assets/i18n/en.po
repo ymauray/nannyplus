@@ -408,3 +408,15 @@ msgstr "Planning validity"
 
 msgid "Hour credits"
 msgstr "Hour credits"
+
+msgid "The amounts due are shown on the relevant invoices."
+msgstr "The amounts due are shown on the relevant invoices."
+
+msgid "Unpaid invoices are noted with an amount of 0.00"
+msgstr "Unpaid invoices are noted with an amount of 0.00"
+
+msgid "Invoice date"
+msgstr "Invoice date"
+
+msgid "Amount paid"
+msgstr "Amount paid"

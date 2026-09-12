@@ -393,10 +393,10 @@ msgid "Options"
 msgstr "Options"
 
 msgid "Yearly statements"
-msgstr "Relevés annuels"
+msgstr "Décomptes annuels"
 
 msgid "Yearly statement"
-msgstr "Relevé annuel"
+msgstr "Décompte annuel"
 
 msgid "Monthly statement"
 msgstr "Relevé mensuel"
@@ -405,7 +405,7 @@ msgid "Statements"
 msgstr "Relevés"
 
 msgid "(Re)generate yearly statements"
-msgstr "(Re)générer les relevés annuels"
+msgstr "(Re)générer les décomptes annuels"
 
 msgid "Please wait..."
 msgstr "Veuillez patienter..."
@@ -673,3 +673,15 @@ msgstr "Validité du planning"
 
 msgid "Hour credits"
 msgstr "Crédits d'heures"
+
+msgid "The amounts due are shown on the relevant invoices."
+msgstr "Les montants dus sont indiqués sur les factures correspondantes."
+
+msgid "Unpaid invoices are noted with an amount of 0.00"
+msgstr "Les factures impayées sont notées avec un montant de 0.00"
+
+msgid "Invoice date"
+msgstr "Date de la facture"
+
+msgid "Amount paid"
+msgstr "Montant payé"
